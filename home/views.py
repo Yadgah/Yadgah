@@ -27,7 +27,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.safestring import mark_safe
 from django.views.decorators.csrf import csrf_exempt
 
-from blog.models import Post  # برای دسترسی به پست‌ها
+from blog.models import Post
 
 from .forms import (
     LoginForm,

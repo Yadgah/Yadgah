@@ -5,7 +5,7 @@ from django.urls import path
 
 from blog.views import post_list
 
-from .sitemaps import NewsSitemap, QuestionSitemap, StaticViewSitemap
+from .sitemaps import QuestionSitemap, StaticViewSitemap
 from .views import (
     approve_reply,
     ask_question,
@@ -35,7 +35,6 @@ from .views import (
 # Sitemap configuration
 sitemaps = {
     "questions": QuestionSitemap,
-    "news": NewsSitemap,
     "static": StaticViewSitemap,
 }
 

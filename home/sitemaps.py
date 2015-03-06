@@ -18,22 +18,6 @@ class QuestionSitemap(Sitemap):
         return reverse("question_detail", args=[str(obj.id)])
 
 
-class NewsSitemap(Sitemap):
-    changefreq = "daily"
-    priority = 0.9
-
-    def items(self):
-        return News.objects.filter(is_active=True).order_by(
-            "-published_at"
-        )  # Ensure ordering
-
-    def lastmod(self, obj):
-        return obj.published_at
-
-    def location(self, obj):
-        return reverse("news_list")
-
-
 class StaticViewSitemap(Sitemap):
     changefreq = "monthly"
     priority = 0.5
