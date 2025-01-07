@@ -7,7 +7,7 @@
     <title>{% block title %}Yadgah - یادگاه{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
-<body>
+<body dir='rtl'>
     <header>
         <div class="left-section">
             <h1><a href="#">یادگاه</a></h1>
@@ -39,7 +39,7 @@
         <div class="right-section">
             <div class="search">
                 <form action="{% url 'search' %}" method="get">
-                    <input type="text" name="q" placeholder="...جست و جو" aria-label="Search">
+                    <input type="text" name="q" placeholder="جست و جو..." aria-label="Search">
                     <button type="submit" aria-label="Search Button">جست و جو</button>
                 </form>
             </div>

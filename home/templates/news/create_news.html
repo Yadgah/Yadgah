@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ایجاد خبر جدید</title>
+</head>
+<body>
+    <h1>ایجاد خبر جدید</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}  <!-- فرم را به صورت پاراگراف نمایش می‌دهد -->
+        <button type="submit">ایجاد خبر</button>
+    </form>
+</body>
+</html>
