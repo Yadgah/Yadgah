@@ -1,24 +1,27 @@
 {% extends 'base.html' %}
+{% load custom_filters %}
 
 {% block content %}
-    <div class="content">
-        <!-- بخش اخبار -->
+    <div class="content-wrapper">
+        <!-- اخبار بخش -->
         <div class="news-section">
-            <h1>اخبار جدید</h1>
+            <h2>اخبار جدید</h2>
             {% for news in news_items %}
                 <div class="news-item">
-                    <h2>{{ news.title }}</h2>
-                    <p>{{ news.content|truncatewords:20 }}</p> <!-- نمایش فقط 20 کلمه اول محتوا -->
-                    <p class="published-at">{{ news.published_at }}</p>
+                    <h3>{{ news.title }}</h3>
+                    <p>{{ news.content|truncatewords:20 }}</p> <!-- محتوای کوتاه شده -->
+                    <p>تاریخ انتشار: {{ news.published_at|jalali_date }}</p>
                 </div>
-            {% empty %}
-                <p>هیچ خبری برای نمایش وجود ندارد.</p>
             {% endfor %}
         </div>
 
-        <!-- سایر محتواهای صفحه -->
+        <!-- خط عمودی -->
+        <div class="vl"></div> 
+            
+        <!-- مطالب اصلی -->
         <div class="main-content">
-            <!-- اینجا می‌توانید سایر محتواهای صفحه را اضافه کنید -->
+            <h2>محتوای اصلی</h2>
+            <p>اینجا محتوای اصلی وب‌سایت شما قرار می‌گیرد. می‌توانید متنی مانند این را برای توضیحات بیشتر بنویسید.</p>
         </div>
     </div>
 {% endblock %}
