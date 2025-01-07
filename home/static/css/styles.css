@@ -300,7 +300,6 @@ h2 {
 
 
 .vl {
-  border-left: 2px solid green;  /* ایجاد خط عمودی */
+  border-left: 2px solid #333;  /* ایجاد خط عمودی */
   height: 100vh;  /* ارتفاع 100 درصد صفحه */
 }
-
