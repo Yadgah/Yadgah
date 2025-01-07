@@ -9,7 +9,7 @@
             {% for news in news_items %}
                 <div class="news-item">
                     <h3>{{ news.title }}</h3>
-                    <p>{{ news.content|truncatewords:20 }}</p> <!-- محتوای کوتاه شده -->
+                    <ap>{{ news.content|truncatewords:20 }}</p> <!-- محتوای کوتاه شده -->
                     <p>تاریخ انتشار: {{ news.published_at|jalali_date }}</p>
                 </div>
             {% endfor %}
@@ -17,7 +17,7 @@
 
         <!-- خط عمودی -->
         <div class="vl"></div> 
-            
+
         <!-- مطالب اصلی -->
         <div class="main-content">
             <h2>محتوای اصلی</h2>
