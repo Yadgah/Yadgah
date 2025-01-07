@@ -2,6 +2,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h2>Welcome to My Django Site!</h2>
-    <!-- More content here -->
+    <h1>اخبار جدید</h1>
+    {% for news in news_items %}
+        <div class="news-item">
+            <h2>{{ news.title }}</h2>
+            <p>{{ news.content }}</p>
+            <p>تاریخ انتشار: {{ news.published_at }}</p>
+        </div>
+    {% empty %}
+        <p>هیچ خبری برای نمایش وجود ندارد.</p>
+    {% endfor %}
 {% endblock %}
