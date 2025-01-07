@@ -213,11 +213,10 @@ a:hover {
 
 
 /* index.html styels */
-
 /* استایل برای بخش اخبار */
 .news-section {
-    width: 30%;  /* اختصاص 15٪ از عرض صفحه */
-    padding: 20px;
+    width: 20%;  /* به آن ۷۰ درصد از عرض صفحه داده می‌شود */
+    padding-right: 20px;
     box-sizing: border-box;
     height: 100vh; /* ارتفاع کامل صفحه */
     overflow-y: auto; /* در صورت نیاز به اسکرول */
@@ -233,11 +232,6 @@ a:hover {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* افکت های انیمیشن برای کارت هنگام هاور */
-.news-item:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
 
 /* عنوان خبر */
 .news-item h2 {
@@ -260,7 +254,6 @@ a:hover {
     text-overflow: ellipsis; /* اضافه کردن "..." در انتهای متن */
 }
 
-
 /* استایل برای تاریخ انتشار */
 .news-item .published-at {
     font-size: 0.8em;
@@ -269,8 +262,45 @@ a:hover {
 }
 
 /* اضافه کردن فاصله بین عنوان و اخبار */
-.news-section h1 {
+h2 {
     margin-bottom: 30px;  /* فاصله 30 پیکسل از پایین عنوان */
 }
 
+/* قالب کلی برای نمایش دو بخش کنار هم */
+.content-wrapper {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-top: 20px;  /* اضافه کردن فاصله از بالای صفحه */
+}
+
+/* خط عمودی جدا کننده */
+.vertical-line {
+    width: 23px;
+    background-color: #ccc;  /* رنگ خط */
+    height: 100%;
+    margin-top: 20px;  /* فاصله از بالا */
+}
+
+/* بخش محتوای اصلی */
+.main-content {
+    width: 70%;  /* به آن ۳۰ درصد از عرض صفحه داده می‌شود */
+    padding-left: 20px;
+}
+
+/* فاصله بین بخش اخبار و محتوای اصلی */
+.content-wrapper > .news-section {
+    margin-right: 20px;  /* فاصله ۲۰ پیکسل از بخش مطالب اصلی */
+}
+
+/* استایل برای فاصله بین اخبار */
+.news-item {
+    margin-bottom: 20px;
+}
+
+
+.vl {
+  border-left: 2px solid green;  /* ایجاد خط عمودی */
+  height: 100vh;  /* ارتفاع 100 درصد صفحه */
+}
 
