@@ -1,0 +1,45 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    padding: 10px 20px;
+    color: white;
+}
+
+.site-title a {
+    color: white;
+    text-decoration: none;
+    font-size: 24px;
+}
+
+.categories ul {
+    display: flex;
+    gap: 15px;
+    list-style: none;
+}
+
+.categories a {
+    color: white;
+    text-decoration: none;
+}
+
+.search input {
+    padding: 5px;
+    margin-right: 5px;
+}
+
+.search button {
+    padding: 5px;
+}
+
+.profile a {
+    color: white;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+.profile a:hover {
+    text-decoration: underline;
+}
+
