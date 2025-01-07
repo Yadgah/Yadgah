@@ -68,7 +68,7 @@ header {
     display: none;
     position: absolute;
     top: 100%;
-    left: 0;
+    right: 0; /* تغییر از left به right */
     background-color: #444;
     list-style: none;
     padding: 10px;
@@ -101,7 +101,7 @@ header {
 .submenu li:hover > .submenu {
     display: block;
     top: 0;
-    left: 100%;
+    right: 100%;
 }
 
 /* Right section (Search and Profile) */
@@ -206,3 +206,71 @@ a {
 a:hover {
     color: #ccc;
 }
+
+
+
+
+
+
+/* index.html styels */
+
+/* استایل برای بخش اخبار */
+.news-section {
+    width: 30%;  /* اختصاص 15٪ از عرض صفحه */
+    padding: 20px;
+    box-sizing: border-box;
+    height: 100vh; /* ارتفاع کامل صفحه */
+    overflow-y: auto; /* در صورت نیاز به اسکرول */
+}
+
+/* طراحی کارت برای نمایش اخبار */
+.news-item {
+    background-color: #fff;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* افکت های انیمیشن برای کارت هنگام هاور */
+.news-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* عنوان خبر */
+.news-item h2 {
+    font-size: 1.2em;
+    margin: 0;
+    font-weight: bold;
+    color: #333;
+}
+
+/* استایل برای توضیحات خبر */
+.news-item p {
+    color: #555;
+    font-size: 0.9em;
+    margin-top: 10px;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;  /* تعداد خطوط قابل نمایش */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis; /* اضافه کردن "..." در انتهای متن */
+}
+
+
+/* استایل برای تاریخ انتشار */
+.news-item .published-at {
+    font-size: 0.8em;
+    color: #888;
+    margin-top: 10px;
+}
+
+/* اضافه کردن فاصله بین عنوان و اخبار */
+.news-section h1 {
+    margin-bottom: 30px;  /* فاصله 30 پیکسل از پایین عنوان */
+}
+
+

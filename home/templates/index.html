@@ -1,15 +1,24 @@
-<!-- myapp/templates/home.html -->
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>اخبار جدید</h1>
-    {% for news in news_items %}
-        <div class="news-item">
-            <h2>{{ news.title }}</h2>
-            <p>{{ news.content }}</p>
-            <p>تاریخ انتشار: {{ news.published_at }}</p>
+    <div class="content">
+        <!-- بخش اخبار -->
+        <div class="news-section">
+            <h1>اخبار جدید</h1>
+            {% for news in news_items %}
+                <div class="news-item">
+                    <h2>{{ news.title }}</h2>
+                    <p>{{ news.content|truncatewords:20 }}</p> <!-- نمایش فقط 20 کلمه اول محتوا -->
+                    <p class="published-at">{{ news.published_at }}</p>
+                </div>
+            {% empty %}
+                <p>هیچ خبری برای نمایش وجود ندارد.</p>
+            {% endfor %}
         </div>
-    {% empty %}
-        <p>هیچ خبری برای نمایش وجود ندارد.</p>
-    {% endfor %}
+
+        <!-- سایر محتواهای صفحه -->
+        <div class="main-content">
+            <!-- اینجا می‌توانید سایر محتواهای صفحه را اضافه کنید -->
+        </div>
+    </div>
 {% endblock %}
