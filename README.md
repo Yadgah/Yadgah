@@ -13,6 +13,7 @@ Similar to platforms like Quora or StackOverflow, users can share their experien
 - **User Ranking System:** Based on their contributions, such as identifying top contributors or best answer providers.  
 
 # Structure
+
 ```
                        Home Page
                            |
@@ -23,3 +24,4 @@ Similar to platforms like Quora or StackOverflow, users can share their experien
    ------------------   		         ------------------------------------------
   |                 |                    |                     |                  |
 Experiences     Questions       Search by Title/Tags   Profile Settings   Posted Questions
+```
