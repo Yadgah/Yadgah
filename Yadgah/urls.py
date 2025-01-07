@@ -17,8 +17,19 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
+from home import views
+
+# Adds site header, site title, index title to the admin side.
+admin.site.site_header = 'Yadgah'
+admin.site.site_title = 'Yadgah'
+admin.site.index_title = 'Welcome Yadgah'
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path('login/', views.login_view, name='login'),
+    path('signup/', views.signup_view, name='signup'),
+    path('logout/', views.logout_view, name='logout'),
+    path('profile/', views.profile_view, name='profile'),
+    path('search/', views.search_view, name='search'),
     path('', include('home.urls')),
 ]

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %} <!-- Load the static template tag library -->
+    <title>{% block title %}My Django Site{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}"> <!-- Add your styles here -->
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <!-- Site title -->
+            <h1 class="site-title"><a href="/">My Django Site</a></h1>
+
+            <!-- Categories -->
+            <nav class="categories">
+                <ul>
+                    <li><a href="/category/technology/">Technology</a></li>
+                    <li><a href="/category/health/">Health</a></li>
+                    <li><a href="/category/business/">Business</a></li>
+                    <!-- Add more categories here -->
+                </ul>
+            </nav>
+
+            <!-- Search box -->
+            <div class="search">
+                <form action="{% url 'search' %}" method="get">
+                    <input type="text" name="q" placeholder="Search...">
+                    <button type="submit">Search</button>
+                </form>
+            </div>
+
+            <!-- User profile (if authenticated) -->
+			<div class="profile">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'profile' %}">Hello, {{ user.username }}</a> | <a href="{% url 'logout' %}">Logout</a>
+                {% else %}
+                    <a href="{% url 'login' %}">Login</a> | <a href="{% url 'signup' %}">Sign Up</a>
+                {% endif %}
+            </div>
+
+        </div>
+    </header>
+
+    <div class="content">
+        {% block content %}
+        <!-- Content goes here -->
+        {% endblock %}
+    </div>
+</body>
+</html>
+
