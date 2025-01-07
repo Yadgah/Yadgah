@@ -1,0 +1,14 @@
+### Optional Enhancements
+- **Add CSS/JavaScript**: Use static files to style and add interactivity to your home page.
+- **Dynamic Content**: Pass data to the template using the `context` argument in `render`:
+
+  ```python
+  def home_view(request):
+      context = {'greeting': 'Welcome to My Site!'}
+      return render(request, 'home/index.html', context)
+  ```
+
+  Update the template to display the data:
+  ```html
+  <h1>{{ greeting }}</h1>
+  ```
