@@ -1,0 +1,208 @@
+/* Add box-sizing to make padding/border calculation easier */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Header Styles */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+    position: relative;
+}
+
+/* Left section (Logo and Categories) */
+.left-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.left-section h1 a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.8rem;
+}
+
+.categories ul {
+    display: flex;
+    gap: 15px;
+    list-style: none;
+    flex-wrap: wrap; /* Ensures items wrap if there's not enough space */
+}
+
+.categories a {
+    display: block;
+    padding: 10px 15px;
+    color: white;
+    text-decoration: none;
+    background-color: transparent;
+    transition: background-color 0.3s ease;
+    min-width: 100px; /* Prevents the box from shrinking too small */
+    word-wrap: break-word; /* Ensures text wraps and doesn't overflow */
+}
+
+.categories a:hover {
+    background-color: #555;
+}
+
+/* Dropdown menu styles */
+.categories li {
+    position: relative;
+}
+
+.categories .submenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #444;
+    list-style: none;
+    padding: 10px;
+    margin: 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.categories .submenu li {
+    margin-bottom: 5px;
+}
+
+.categories .submenu li a {
+    color: white;
+    text-decoration: none;
+}
+
+.categories .submenu li a:hover {
+    text-decoration: underline;
+}
+
+/* Show submenu on hover with animation */
+.categories li:hover > .submenu {
+    display: block;
+    opacity: 1;
+}
+
+/* Submenu item hover: reveal next submenu */
+.submenu li:hover > .submenu {
+    display: block;
+    top: 0;
+    left: 100%;
+}
+
+/* Right section (Search and Profile) */
+.right-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Search box */
+.search {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.search input {
+    padding: 5px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.search button {
+    padding: 7px 10px;
+    background-color: #555;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.search button:hover {
+    background-color: #777;
+}
+
+/* Profile Links */
+.profile a {
+    color: white;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+.profile a:hover {
+    text-decoration: underline;
+}
+
+/* Profile buttons (for logged in users) */
+.profile button {
+    color: white;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.profile button:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .left-section, .right-section {
+        width: 100%;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .categories ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .search {
+        margin-top: 10px;
+    }
+
+    .profile {
+        margin-top: 10px;
+    }
+}
+
+/* Extra Improvements */
+button:focus, input:focus {
+    outline: none;
+}
+
+button, input {
+    font-size: 1rem;
+    font-family: inherit;
+}
+
+/* Smooth transitions for links */
+a {
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #ccc;
+}
