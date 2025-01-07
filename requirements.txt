@@ -1,1 +1,2 @@
 django==5.1.4
+jdatetime==5.0.0
