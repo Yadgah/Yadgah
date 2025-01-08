@@ -6,13 +6,18 @@
         <!-- اخبار بخش -->
         <div class="news-section">
             <h2>اخبار جدید</h2>
-            {% for news in news_items %}
-                <div class="news-item">
-                    <h3>{{ news.title }}</h3>
-                    <p>{{ news.content|truncatewords:20 }}</p> <!-- محتوای کوتاه شده -->
-                    <p>تاریخ انتشار: {{ news.published_at|jalali_date }}</p>
-                </div>
-            {% endfor %}
+            {% if news_items %}
+                {% for news in news_items %}
+                    <div class="news-item">
+                        <h3>{{ news.title }}</h3>
+                        <p>{{ news.content|truncatewords:20 }}</p>
+                        <p>تاریخ انتشار: {{ news.published_at|jalali_date }}</p>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>هیچ خبری در حال حاضر موجود نیست.</p>
+            {% endif %}
+
         </div>
 
         <!-- خط عمودی -->
