@@ -7,10 +7,12 @@
     <title>{% block title %}Yadgah - یادگاه{% endblock %}</title>
     <link rel ="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
 </head>
 <body dir='rtl'>
     <header>
         <div class="left-section">
+            <img class="site-logo" src="{% static 'favicon.ico' %}">
             <h1><a href="#">یادگاه</a></h1>
             <nav class="categories" aria-label="Main Categories">
                 <ul>
@@ -49,11 +51,12 @@
 
             <div class="profile">
                 {% if user.is_authenticated %}
-                    <button onclick="window.location.href='{% url 'profile' %}'" class="profile-button">سلام, {{ user.username }}</button> | 
+                    <button onclick="window.location.href='{% url 'profile' %}'" class="profile-button">سلام, {{ user.username }}</button> |
                     <button onclick="window.location.href='{% url 'logout' %}'" class="profile-button">خروج از سیستم</button>
                 {% else %}
-                    <a href="{% url 'login' %}">وارد شوید</a> | 
-                    <a href="{% url 'signup' %}">ثبت نام کنید</a>
+                    <a href="{% url 'login' %}" class="profile-button">وارد شوید</a>
+                    
+                    <a href="{% url 'signup' %}" class="profile-button">ثبت نام کنید</a>
                 {% endif %}
             </div>
         </div>
