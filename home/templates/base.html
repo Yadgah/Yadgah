@@ -57,7 +57,7 @@
 
             <div class="profile">
                 {% if user.is_authenticated %}
-                    <span>سلام، {{ user.username }}</span>
+                    <a href="{% url 'profile' %}">سلام، {{ user.username }}</a>
                     <a href="{% url 'logout' %}">خروج</a>
                 {% else %}
                     <a href="{% url 'login' %}">ورود</a>
@@ -69,13 +69,13 @@
 
     <div class="content">
         {% block content %}
-        {% if messages %}
+        <!-- {% if messages %}
             <ul>
                 {% for message in messages %}
                     <li>{{ message }}</li>
                 {% endfor %}
             </ul>
-        {% endif %}
+        {% endif %} -->
         {% endblock %}
     </div>
 
