@@ -7,8 +7,7 @@
     padding: 0;
 }
 
-body {
-    font-family: Arial, sans-serif;
+body {    
     background-color: #f4f4f4;
     color: #333;
 }
@@ -248,7 +247,7 @@ a:hover {
     margin-top: 10px;
     line-height: 1.4;
     display: -webkit-box;
-    -webkit-line-clamp: 3;  /* تعداد خطوط قابل نمایش */
+
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis; /* اضافه کردن "..." در انتهای متن */
@@ -302,4 +301,8 @@ h2 {
 .vl {
   border-left: 2px solid #333;  /* ایجاد خط عمودی */
   height: 100vh;  /* ارتفاع 100 درصد صفحه */
+}
+
+.site-logo {
+    width: 15%;
 }
