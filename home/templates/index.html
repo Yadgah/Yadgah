@@ -9,7 +9,7 @@
             {% for news in news_items %}
                 <div class="news-item">
                     <h3>{{ news.title }}</h3>
-                    <ap>{{ news.content|truncatewords:20 }}</p> <!-- محتوای کوتاه شده -->
+                    <p>{{ news.content|truncatewords:20 }}</p> <!-- محتوای کوتاه شده -->
                     <p>تاریخ انتشار: {{ news.published_at|jalali_date }}</p>
                 </div>
             {% endfor %}
@@ -20,8 +20,9 @@
 
         <!-- مطالب اصلی -->
         <div class="main-content">
-            <h2>محتوای اصلی</h2>
-            <p>اینجا محتوای اصلی وب‌سایت شما قرار می‌گیرد. می‌توانید متنی مانند این را برای توضیحات بیشتر بنویسید.</p>
-        </div>
+            <h1 class="inline h1-margin">عنوان</h1>
+            <button class="inline button-margin">دکمه</button>
+            <p>سوالات اخیر</p>
+        </div>    
     </div>
 {% endblock %}
