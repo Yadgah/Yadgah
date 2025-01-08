@@ -6,13 +6,17 @@
     {% load static %}
     <title>{% block title %}Yadgah - یادگاه{% endblock %}</title>
     <link rel ="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}?v=1.0">
+    
+    <!-- SEO Optimze -->
+    <meta name="description" content="وبسایت یادگاه - اخبار، سوالات و مطالب مفید برای یادگیری و اشتراک تجربیات.">
+    <meta name="keywords" content="یادگاه, اخبار, سوالات, تجربه, یادگیری">
 
 </head>
 <body dir='rtl'>
     <header>
         <div class="left-section">
-            <img class="site-logo" src="{% static 'favicon.ico' %}">
+            <img class="site-logo" src="{% static 'favicon.ico' %}" alt="یادگاه لوگو">
             <h1><a href="#">یادگاه</a></h1>
             <nav class="categories" aria-label="Main Categories">
                 <ul>
@@ -44,9 +48,11 @@
         <div class="right-section">
             <div class="search">
                 <form action="{% url 'search' %}" method="get">
+                    {% csrf_token %}
                     <button type="submit" aria-label="Search Button">جست و جو</button>
                     <input type="text" name="q" placeholder="جست و جو..." aria-label="Search">
                 </form>
+
             </div>
 
             <div class="profile">
