@@ -1,9 +1,10 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import login, logout
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.shortcuts import get_object_or_404, redirect, render
 
-from django.contrib.auth.decorators import user_passes_test
-from .forms import NewsForm
+from .forms import LoginForm, NewsForm, SignUpForm
 from .models import News
 
 
@@ -40,27 +41,34 @@ def edit_news(request, news_id):
     return render(request, "news/edit_news.html", {"form": form, "news": news})
 
 
+# ویوی ثبت‌نام
+def signup_view(request):
+    if request.method == "POST":
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)  # ورود خودکار پس از ثبت‌نام
+            messages.success(request, "ثبت‌نام موفقیت‌آمیز بود!")
+            return redirect("index")  # به صفحه اصلی هدایت شوید
+    else:
+        form = SignUpForm()
+    return render(request, "signup.html", {"form": form})
+
+
+# ویوی ورود
 def login_view(request):
     if request.method == "POST":
-        form = AuthenticationForm(request, data=request.POST)
+        form = LoginForm(data=request.POST)
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect("home")  # Redirect to the home page after login
+            messages.success(request, "ورود موفقیت‌آمیز بود!")
+            return redirect("index")
+        else:
+            messages.error(request, "نام کاربری یا رمز عبور اشتباه است.")
     else:
-        form = AuthenticationForm()
+        form = LoginForm()
     return render(request, "login.html", {"form": form})
-
-
-def signup_view(request):
-    if request.method == "POST":
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect("login")
-    else:
-        form = UserCreationForm()
-    return render(request, "signup.html", {"form": form})
 
 
 def logout_view(request):
@@ -68,8 +76,9 @@ def logout_view(request):
     return redirect("/")
 
 
+@login_required
 def profile_view(request):
-    return render(request, "profile.html")  # Profile page
+    return render(request, "profile.html")
 
 
 def search_view(request):

@@ -17,7 +17,7 @@
     <header>
         <div class="left-section">
             <img class="site-logo" src="{% static 'favicon.ico' %}" alt="یادگاه لوگو">
-            <h1><a href="#">یادگاه</a></h1>
+            <h1><a href="/">یادگاه</a></h1>
             <nav class="categories" aria-label="Main Categories">
                 <ul>
                     <li>
@@ -57,12 +57,11 @@
 
             <div class="profile">
                 {% if user.is_authenticated %}
-                    <button onclick="window.location.href='{% url 'profile' %}'" class="profile-button">سلام, {{ user.username }}</button> |
-                    <button onclick="window.location.href='{% url 'logout' %}'" class="profile-button">خروج از سیستم</button>
+                    <span>سلام، {{ user.username }}</span>
+                    <a href="{% url 'logout' %}">خروج</a>
                 {% else %}
-                    <a href="{% url 'login' %}" class="profile-button">وارد شوید</a>
-                    
-                    <a href="{% url 'signup' %}" class="profile-button">ثبت نام کنید</a>
+                    <a href="{% url 'login' %}">ورود</a>
+                    <a href="{% url 'signup' %}">ثبت‌نام</a>
                 {% endif %}
             </div>
         </div>
@@ -70,7 +69,16 @@
 
     <div class="content">
         {% block content %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
         {% endblock %}
     </div>
+
+
 </body>
 </html>
