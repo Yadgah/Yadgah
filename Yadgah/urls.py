@@ -32,9 +32,12 @@ urlpatterns = [
     path("login/", views.login_view, name="login"),
     path("signup/", views.signup_view, name="signup"),
     path("logout/", views.logout_view, name="logout"),
-    path("profile/", views.profile_view, name="profile"),
+    path('profile/', views.profile_view, name='profile'),
     path("search/", views.search_view, name="search"),
     path("", include("home.urls")),
     path("create/", views.create_news, name="create_news"),
     path("edit/<int:news_id>/", views.edit_news, name="edit_news"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
