@@ -20,7 +20,7 @@ Similar to platforms like Quora or StackOverflow, users can share their experien
          -------------------------------------------------------
          |                 |                                   |
     Categories Page    Search Page                     User Profile Page
-		 |                                             |  
+         |                                                     |  
    ------------------   		 ------------------------------------------
   |                 |                    |                     |                  |
 Experiences     Questions       Search by Title/Tags   Profile Settings   Posted Questions
