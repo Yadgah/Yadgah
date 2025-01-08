@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>ثبت‌نام</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">ثبت‌نام</button>
+</form>
+<!-- برای دسترسی به عکس پروفایل در قالب‌ها یا در کد، می‌توانید از رابطه مرتبط استفاده کنید. مثلاً:
+
+user.profile.profile_picture.url
+ -->
+{% endblock %}
