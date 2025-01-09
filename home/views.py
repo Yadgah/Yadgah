@@ -7,8 +7,8 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, redirect, render
 
-from .forms import LoginForm, NewsForm, SignUpForm, UserForm, UserProfileForm
-from .models import News, UserProfile
+from .forms import LoginForm, NewsForm, SignUpForm, UserForm, UserProfileForm, QuestionForm, ReplyForm
+from .models import News, UserProfile, Question
 
 
 # Decorator to restrict access to staff members only
@@ -145,10 +145,15 @@ def search_view(request):
     return render(request, "search_results.html", {"query": query})
 
 
-# Home view
 def home_view(request):
-    return render(request, "index.html")
-
+    # دریافت سوالات اخیر
+    questions = Question.objects.all().order_by('-created_at')[:5]
+    
+    # دریافت اخبار جدید
+    news_items = News.objects.filter(is_active=True).order_by('-published_at')[:5]
+    
+    # ارسال داده‌ها به قالب
+    return render(request, 'index.html', {'questions': questions, 'news_items': news_items})
 
 # View to list news
 def news_list(request):
@@ -156,3 +161,35 @@ def news_list(request):
     if not news_items:
         messages.warning(request, "No news available.")
     return render(request, "news/news_list.html", {"news_items": news_items})
+
+@login_required
+def ask_question(request):
+    if request.method == "POST":
+        form = QuestionForm(request.POST)
+        if form.is_valid():
+            question = form.save(commit=False)
+            question.author = request.user  # کاربر وارد شده را به عنوان نویسنده سوال تنظیم می‌کنیم
+            question.save()
+            messages.success(request, 'سوال شما با موفقیت ثبت شد.')
+            return redirect('index')  # به صفحه اصلی هدایت می‌شود
+    else:
+        form = QuestionForm()
+
+    return render(request, 'ask_question.html', {'form': form})
+
+def question_detail(request, question_id):
+    question = get_object_or_404(Question, id=question_id)
+    
+    # بررسی ارسال پاسخ
+    if request.method == 'POST':
+        form = ReplyForm(request.POST)
+        if form.is_valid():
+            reply = form.save(commit=False)
+            reply.question = question
+            reply.user = request.user
+            reply.save()
+            return redirect('question_detail', question_id=question.id)
+    else:
+        form = ReplyForm()
+
+    return render(request, 'question_detail.html', {'question': question, 'form': form})
