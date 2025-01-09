@@ -1,19 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
-    <title>{% block title %}Yadgah - یادگاه{% endblock %}</title>
-    <link rel ="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}?v=1.0">
+    <title>{% block title %}یادگاه - Yadgah{% endblock %}</title>
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     
-    <!-- SEO Optimze -->
+    <!-- SEO Optimization -->
     <meta name="description" content="وبسایت یادگاه - اخبار، سوالات و مطالب مفید برای یادگیری و اشتراک تجربیات.">
     <meta name="keywords" content="یادگاه, اخبار, سوالات, تجربه, یادگیری">
-
 </head>
-<body dir='rtl'>
+
+<body dir="rtl">
+
+    <!-- Header Section -->
     <header>
         <div class="left-section">
             <img class="site-logo" src="{% static 'favicon.ico' %}" alt="یادگاه لوگو">
@@ -41,20 +44,19 @@
                     </li>
                 </ul>
             </nav>
-        </div>
 
-
-
-        <div class="right-section">
+            <!-- Search Section -->
             <div class="search">
                 <form action="{% url 'search' %}" method="get">
                     {% csrf_token %}
                     <button type="submit" aria-label="Search Button">جست و جو</button>
                     <input type="text" name="q" placeholder="جست و جو..." aria-label="Search">
                 </form>
-
             </div>
+        </div>
 
+        <!-- User Authentication Section -->
+        <div class="right-section">
             <div class="profile">
                 {% if user.is_authenticated %}
                     <a href="{% url 'profile' %}">سلام، {{ user.username }}</a>
@@ -67,18 +69,22 @@
         </div>
     </header>
 
+    <!-- Main Content Section -->
     <div class="content">
         {% block content %}
-        <!-- {% if messages %}
+        <!-- You can uncomment the following block if you want to show messages -->
+        <!--
+        {% if messages %}
             <ul>
                 {% for message in messages %}
                     <li>{{ message }}</li>
                 {% endfor %}
             </ul>
-        {% endif %} -->
+        {% endif %}
+        -->
         {% endblock %}
     </div>
 
-
 </body>
+
 </html>

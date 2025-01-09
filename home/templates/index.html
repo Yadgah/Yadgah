@@ -3,34 +3,37 @@
 
 {% block content %}
     <div class="content-wrapper">
-        <!-- اخبار بخش -->
+
+        <!-- News Section -->
         <div class="news-section">
             <h2>اخبار جدید</h2>
+
             {% if news_items %}
-                {% for news in news_items %}
-                    <div class="news-item">
-                        <h3>{{ news.title }}</h3>
-                        <p>{{ news.content|truncatewords:20 }}</p>
-                        <p>تاریخ انتشار: {{ news.published_at|jalali_date }}</p>
-                    </div>
-                {% endfor %}
+                <div class="news-items">
+                    {% for news in news_items %}
+                        <div class="news-item">
+                            <h3>{{ news.title }}</h3>
+                            <p>{{ news.content|truncatewords:20 }}</p>
+                            <p>تاریخ انتشار: {{ news.published_at|jalali_date }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
             {% else %}
                 <p>هیچ خبری در حال حاضر موجود نیست.</p>
             {% endif %}
-
         </div>
 
-        <!-- خط عمودی -->
-        <div class="vl"></div> 
+        <!-- Vertical Line Divider -->
+        <div class="vl"></div>
 
-        <!-- مطالب اصلی -->
+        <!-- Main Content -->
         <div class="main-content">
             <div class="title-button-container">
                 <h1 class="inline h1-margin">عنوان</h1>
                 <button class="inline button-margin">دکمه</button>
             </div>
-
             <p>سوالات اخیر</p>
-        </div>    
+        </div>
+
     </div>
 {% endblock %}
