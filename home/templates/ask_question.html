@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="content-wrapper">
+        <div class="main-content">
+            <h1>ارسال سوال</h1>
+
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="button-margin">ارسال سوال</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

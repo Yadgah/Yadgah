@@ -5,7 +5,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
-from .models import News, UserProfile
+from .models import News, UserProfile, Question, Reply
 
 
 class NewsForm(forms.ModelForm):
@@ -126,3 +126,17 @@ class UserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ["username", "first_name", "last_name", "email"]
+
+class QuestionForm(forms.ModelForm):
+    class Meta:
+        model = Question
+        fields = ['title', 'content']  # عنوان و محتوای سوال
+        labels = {
+            'title': 'عنوان سوال',
+            'content': 'توضیحات سوال',
+        }
+
+class ReplyForm(forms.ModelForm):
+    class Meta:
+        model = Reply
+        fields = ['content']

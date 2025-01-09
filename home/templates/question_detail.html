@@ -1,0 +1,37 @@
+<!-- question_detail.html -->
+{% extends 'base.html' %}
+{% load custom_filters %}
+
+{% block content %}
+    <div class="question-detail">
+        <h2>{{ question.title }}</h2>
+        <p>{{ question.content }}</p>
+        <p>تاریخ ایجاد: {{ question.created_at|jalali_date }}</p>
+        <p>پرسش توسط: {{ question.user.username }}</p>
+        
+        <h3>پاسخ‌ها:</h3>
+        {% if question.replies.all %}
+            <ul>
+                {% for reply in question.replies.all %}
+                    <li>
+                        <p>{{ reply.content }}</p>
+                        <p>پاسخ توسط: {{ reply.user.username }} - تاریخ پاسخ: {{ reply.created_at|jalali_date }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>هیچ پاسخی برای این سوال ثبت نشده است.</p>
+        {% endif %}
+        
+        {% if user.is_authenticated %}
+            <h3>ارسال پاسخ</h3>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">ارسال پاسخ</button>
+            </form>
+        {% else %}
+            <p>برای ارسال پاسخ باید وارد حساب کاربری خود شوید.</p>
+        {% endif %}
+    </div>
+{% endblock %}
