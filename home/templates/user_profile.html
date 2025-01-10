@@ -20,12 +20,33 @@
         .user-profile li {
             margin-bottom: 10px;
         }
+        .user-profile img {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+        }
+        .user-profile .profile-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .user-profile .profile-info .username {
+            font-size: 24px;
+            color: #007bff;
+            margin-left: 15px;
+        }
     </style>
 
     <div class="user-profile">
-        <h2>پروفایل کاربر: {{ profile_user.username }}</h2>
+        <div class="profile-info">
+            <!-- Profile Picture (with fallback) -->
+            <img src="{{ profile_user.profile.picture.url|default:'/static/default-avatar.png' }}" alt="{{ profile_user.username }}'s profile picture">
+            <h2 class="username">پروفایل کاربر: {{ profile_user.username }}</h2>
+        </div>
+        
         <p>ایمیل: {{ profile_user.email }}</p>
-        <p>تاریخ عضویت: {{ profile_user.date_joined|date:"Y/m/d" }}</p>
+        <p>تاریخ عضویت: {{ profile_user.date_joined|date:"d F Y" }}</p>
 
         <h3>سوالات پرسیده شده:</h3>
         {% if questions %}

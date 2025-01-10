@@ -1,5 +1,5 @@
 import re
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage
 from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -7,23 +7,13 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, redirect, render
-from django.core.paginator import EmptyPage
 from django.core.exceptions import ValidationError
-from django.core.files.storage import default_storage
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
-from .forms import QuestionForm
-from django.core.paginator import Paginator, EmptyPage
-
-from .forms import LoginForm, NewsForm, SignUpForm, UserForm, UserProfileForm, QuestionForm, ReplyForm
+from .forms import QuestionForm, LoginForm, NewsForm, SignUpForm, UserForm, UserProfileForm, ReplyForm
 from .models import News, UserProfile, Question
-
 
 # Decorator to restrict access to staff members only
 def staff_member_required(view_func):
     return user_passes_test(lambda u: u.is_staff)(view_func)
-
 
 # View to create news (staff only)
 @staff_member_required
@@ -39,7 +29,6 @@ def create_news(request):
         form = NewsForm()
     return render(request, "news/create_news.html", {"form": form})
 
-
 # View to edit news (staff only)
 @staff_member_required
 def edit_news(request, news_id):
@@ -53,7 +42,7 @@ def edit_news(request, news_id):
         form = NewsForm(instance=news)
     return render(request, "news/edit_news.html", {"form": form, "news": news})
 
-
+# User signup view
 def signup_view(request):
     if request.method == "POST":
         form = SignUpForm(request.POST, request.FILES)
@@ -91,9 +80,9 @@ def signup_view(request):
             user.username = username
             user.set_password(password)
 
-            # استفاده از تصویر پروفایل پیش‌فرض در صورتی که کاربر عکسی ارسال نکرده باشد
+            # Use default profile picture if none is provided by user
             if not request.FILES.get('profile_picture'):
-                # مسیر تصویر پیش‌فرض
+                # Path to default profile picture
                 user.profile_picture = 'profile_picture.jpg'
 
             user.save()
@@ -106,7 +95,6 @@ def signup_view(request):
         form = SignUpForm()
     
     return render(request, "signup.html", {"form": form})
-
 
 # View for user login
 def login_view(request):
@@ -123,12 +111,10 @@ def login_view(request):
         form = LoginForm()
     return render(request, "login.html", {"form": form})
 
-
 # View for user logout
 def logout_view(request):
     logout(request)
     return redirect("index")
-
 
 # View for user profile
 @login_required
@@ -153,21 +139,20 @@ def profile_view(request):
         request, "profile.html", {"user_form": user_form, "profile_form": profile_form}
     )
 
-
 # View for searching (example, logic needs implementation)
 def search_view(request):
     query = request.GET.get("q", "")
     return render(request, "search_results.html", {"query": query})
 
-
+# Home view to show recent questions and news
 def home_view(request):
-    # دریافت سوالات اخیر
+    # Get the most recent questions
     questions = Question.objects.all().order_by('-created_at')[:5]
     
-    # دریافت اخبار جدید
+    # Get the most recent active news
     news_items = News.objects.filter(is_active=True).order_by('-published_at')[:5]
     
-    # ارسال داده‌ها به قالب
+    # Send data to the template
     return render(request, 'index.html', {'questions': questions, 'news_items': news_items})
 
 # View to list news
@@ -177,27 +162,26 @@ def news_list(request):
         messages.warning(request, "No news available.")
     return render(request, "news/news_list.html", {"news_items": news_items})
 
-
-
+# View to ask a question
 @login_required
 def ask_question(request):
     if request.method == "POST":
         form = QuestionForm(request.POST)
         if form.is_valid():
             question = form.save(commit=False)
-            question.user = request.user  # تنظیم کاربر وارد شده به عنوان نویسنده سوال
+            question.user = request.user  # Set the logged-in user as the question author
             question.save()
-            messages.success(request, 'سوال شما با موفقیت ثبت شد.')
-            return redirect('index')  # هدایت به صفحه اصلی
+            messages.success(request, 'Your question has been submitted successfully.')
+            return redirect('index')  # Redirect to the home page
     else:
         form = QuestionForm()
 
     return render(request, 'ask_question.html', {'form': form})
 
-
+# View for question detail and replies
 def question_detail(request, question_id):
     question = get_object_or_404(Question, id=question_id)    
-    # بررسی ارسال پاسخ
+    # Handling reply submission
     if request.method == 'POST':
         form = ReplyForm(request.POST)
         if form.is_valid():
@@ -211,33 +195,33 @@ def question_detail(request, question_id):
 
     return render(request, 'question_detail.html', {'question': question, 'form': form})
 
-
+# View for user's profile and their questions
 def user_profile(request, username):
     user = get_object_or_404(User, username=username)
-    questions = user.questions.all()  # سؤالات پرسیده شده توسط کاربر
+    questions = user.questions.all()  # Get questions asked by the user
     return render(request, 'user_profile.html', {'profile_user': user, 'questions': questions})
 
-
+# View to load questions for pagination
 def load_questions(request):
-    page = request.GET.get('page', 1)  # دریافت صفحه (پیش‌فرض 1)
-    page = int(page)  # تبدیل صفحه به عدد صحیح
+    page = request.GET.get('page', 1)  # Get page number (default is 1)
+    page = int(page)  # Convert page number to integer
 
-    # بارگذاری سوالات و استفاده از Paginator برای صفحه‌بندی
+    # Load questions and use Paginator for pagination
     questions = Question.objects.all().order_by('-created_at')
-    paginator = Paginator(questions, 5)  # 5 سوال در هر صفحه
+    paginator = Paginator(questions, 5)  # 5 questions per page
 
     try:
         questions_page = paginator.page(page)
     except EmptyPage:
-        return HttpResponse('')  # اگر صفحه‌ای وجود نداشت، چیزی برنگردان
+        return HttpResponse('')  # Return empty response if page is out of range
 
     return render(request, 'partials/question_list.html', {'questions': questions_page})
 
-
+# View to delete user profile
 @login_required
 def delete_profile(request):
     user_profile = request.user.userprofile
-    user_profile.delete()  # حذف پروفایل
-    request.user.delete()   # حذف کاربر
-    messages.success(request, 'پروفایل شما با موفقیت حذف شد.')
-    return redirect('home')  # هدایت به صفحه اصلی یا هر صفحه دلخواه
+    user_profile.delete()  # Delete user profile
+    request.user.delete()   # Delete user account
+    messages.success(request, 'Your profile has been successfully deleted.')
+    return redirect('home')  # Redirect to home or any other page

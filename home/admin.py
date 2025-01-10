@@ -1,34 +1,30 @@
 from django.contrib import admin
 from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
-
-from .models import News, UserProfile
-
 from django.utils.html import format_html
 
-from django.contrib import admin
-from .models import Question, Reply, News, UserProfile
+from .models import News, UserProfile, Question, Reply
 
-# مدل Question را برای ادمین ثبت می‌کنیم
+
+# Register the Question model for the admin
 class QuestionAdmin(admin.ModelAdmin):
-    list_display = ('title', 'user', 'created_at')  # ستون‌هایی که در صفحه لیست نمایش داده شوند
-    search_fields = ('title', 'content')  # قابلیت جستجو بر اساس عنوان و محتوا
-    list_filter = ('created_at',)  # فیلتر بر اساس تاریخ ایجاد
-    ordering = ('-created_at',)  # ترتیب نمایش سوالات بر اساس تاریخ ایجاد به صورت نزولی
+    list_display = ('title', 'user', 'created_at')  # Columns to display in the list view
+    search_fields = ('title', 'content')  # Enable search by title and content
+    list_filter = ('created_at',)  # Filter by creation date
+    ordering = ('-created_at',)  # Order by creation date in descending order
 
-# مدل Reply را برای ادمین ثبت می‌کنیم
+# Register the Reply model for the admin
 class ReplyAdmin(admin.ModelAdmin):
-    list_display = ('question', 'user', 'created_at')  # ستون‌هایی که در صفحه لیست نمایش داده شوند
-    search_fields = ('content',)  # جستجو بر اساس محتوا
-    list_filter = ('created_at',)  # فیلتر بر اساس تاریخ ایجاد
-    ordering = ('-created_at',)  # ترتیب نمایش پاسخ‌ها بر اساس تاریخ ایجاد
+    list_display = ('question', 'user', 'created_at')  # Columns to display in the list view
+    search_fields = ('content',)  # Enable search by content
+    list_filter = ('created_at',)  # Filter by creation date
+    ordering = ('-created_at',)  # Order by creation date in descending order
 
-# مدل UserProfile را برای ادمین ثبت می‌کنیم
+# Register the UserProfile model for the admin
 class UserProfileAdmin(admin.ModelAdmin):
-    list_display = ('user', 'avatar')  # نمایش کاربر و آواتار در پنل ادمین
+    list_display = ('user', 'avatar')  # Display user and avatar in the admin panel
 
-
-
+# Function to display profile picture in the admin
 def profile_picture_display(obj):
     try:
         if obj.userprofile.avatar:
@@ -39,25 +35,16 @@ def profile_picture_display(obj):
 
 profile_picture_display.short_description = "Profile Picture"
 
-
-
+# Inline model for UserProfile, allowing profile editing directly from the User admin
 class UserProfileInline(admin.StackedInline):
-    """
-    Inline model for UserProfile, allowing profile editing directly from the User admin.
-    """
-
     model = UserProfile
     can_delete = False
     verbose_name_plural = "Profile"
     fk_name = "user"
     fields = ("avatar",)  # Display avatar field in the user edit form
 
-
+# Custom admin for the User model, including the UserProfile inline
 class UserAdmin(admin.ModelAdmin):
-    """
-    Custom admin for the User model, including the UserProfile inline.
-    """
-
     inlines = [UserProfileInline]
     list_display = (
         "username",
@@ -88,22 +75,16 @@ class UserAdmin(admin.ModelAdmin):
     profile_picture_display.short_description = "Profile Picture"
 
 
-
-
-
+# Admin configuration for the News model
 @admin.register(News)
 class NewsAdmin(admin.ModelAdmin):
-    """
-    Admin configuration for the News model.
-    """
-
     list_display = ("title", "author", "published_at", "is_active")
     list_filter = ("is_active", "published_at")
     search_fields = ("title", "content")
     ordering = ("-published_at",)
 
 
-# ثبت مدل‌ها در پنل ادمین
+# Register the models in the admin panel
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(Reply, ReplyAdmin)
 admin.site.register(UserProfile, UserProfileAdmin)

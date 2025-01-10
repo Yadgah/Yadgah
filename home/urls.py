@@ -24,14 +24,21 @@ urlpatterns = [
     path("logout/", logout_view, name="logout"),  # User logout
     path("profile/", profile_view, name="profile"),  # User profile
     path("news/", news_list, name="news_list"),  # News list
-    path('ask/', ask_question, name='ask_question'),  # صفحه ارسال سوال
+    path('ask/', ask_question, name='ask_question'),  # Ask a question
     
+    # Question details page
     path('question/<int:question_id>/', question_detail, name='question_detail'),
-    path('load-questions/', load_questions, name='load_questions'),  # مسیر جدید برای سوالات بیشتر
+    
+    # Load more questions with pagination
+    path('load-questions/', load_questions, name='load_questions'),
+    
+    # User profile by username
     path('profile/<str:username>/', user_profile, name='user_profile'),
+    
+    # Delete user profile
     path('delete-profile/', delete_profile, name='delete_profile'),
 ]
 
-# Serve media files in development
+# Serve media files during development
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
