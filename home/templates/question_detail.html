@@ -1,37 +1,156 @@
-<!-- question_detail.html -->
 {% extends 'base.html' %}
 {% load custom_filters %}
 
 {% block content %}
-    <div class="question-detail">
+<style>
+    .question-detail-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .question-header {
+        border-bottom: 1px solid #ddd;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+    }
+
+    .question-header h2 {
+        font-size: 24px;
+        margin: 0;
+        color: #007bff;
+    }
+
+    .question-meta {
+        font-size: 14px;
+        color: #888;
+        margin-top: 5px;
+    }
+
+    .question-content {
+        margin-top: 15px;
+        font-size: 16px;
+        line-height: 1.6;
+        color: #333;
+    }
+
+    .replies-section {
+        margin-top: 30px;
+    }
+
+    .replies-section h3 {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+
+    .reply-item {
+        margin-bottom: 15px;
+        padding: 10px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .reply-item p {
+        margin: 5px 0;
+    }
+
+    .reply-meta {
+        font-size: 12px;
+        color: #888;
+        margin-top: 5px;
+    }
+
+    .reply-form {
+        margin-top: 30px;
+        padding: 15px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    .reply-form button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .reply-form button:hover {
+        background-color: #0056b3;
+    }
+
+    .login-notice {
+        margin-top: 20px;
+        padding: 15px;
+        background-color: #fbe9e7;
+        border: 1px solid #f5c6cb;
+        border-radius: 5px;
+    }
+
+    .login-notice a {
+        color: #d9534f;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    .login-notice a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<div class="question-detail-container">
+    <div class="question-header">
         <h2>{{ question.title }}</h2>
+        <p class="question-meta">تاریخ ایجاد: {{ question.created_at|jalali_date }}</p>
+        {% if question.user and question.user.username %}
+            <a href="{% url 'user_profile' question.user.username %}">{{ question.user.username }}</a>
+        {% else %}
+            <span>کاربر ناشناس</span>
+        {% endif %}
+
+    </div>
+
+    <div class="question-content">
         <p>{{ question.content }}</p>
-        <p>تاریخ ایجاد: {{ question.created_at|jalali_date }}</p>
-        <p>پرسش توسط: {{ question.user.username }}</p>
-        
-        <h3>پاسخ‌ها:</h3>
+    </div>
+
+    <div class="replies-section">
+        <h3>پاسخ‌ها</h3>
         {% if question.replies.all %}
             <ul>
                 {% for reply in question.replies.all %}
-                    <li>
+                    <li class="reply-item">
                         <p>{{ reply.content }}</p>
-                        <p>پاسخ توسط: {{ reply.user.username }} - تاریخ پاسخ: {{ reply.created_at|jalali_date }}</p>
+                        <p class="reply-meta">پاسخ توسط: {{ reply.user.username }} - تاریخ پاسخ: {{ reply.created_at|jalali_date }}</p>
                     </li>
                 {% endfor %}
             </ul>
         {% else %}
             <p>هیچ پاسخی برای این سوال ثبت نشده است.</p>
         {% endif %}
-        
-        {% if user.is_authenticated %}
+    </div>
+
+    {% if user.is_authenticated %}
+        <div class="reply-form">
             <h3>ارسال پاسخ</h3>
             <form method="POST">
                 {% csrf_token %}
                 {{ form.as_p }}
                 <button type="submit">ارسال پاسخ</button>
             </form>
-        {% else %}
-            <p>برای ارسال پاسخ باید وارد حساب کاربری خود شوید.</p>
-        {% endif %}
-    </div>
+        </div>
+    {% else %}
+        <div class="login-notice">
+            <p>برای ارسال پاسخ باید <a href="{% url 'login' %}">وارد حساب کاربری خود</a> شوید.</p>
+        </div>
+    {% endif %}
+</div>
 {% endblock %}

@@ -1,11 +1,20 @@
 import re
-
+from django.core.paginator import Paginator
+from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, redirect, render
+from django.core.paginator import EmptyPage
+from django.core.exceptions import ValidationError
+from django.core.files.storage import default_storage
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from .forms import QuestionForm
+from django.core.paginator import Paginator, EmptyPage
 
 from .forms import LoginForm, NewsForm, SignUpForm, UserForm, UserProfileForm, QuestionForm, ReplyForm
 from .models import News, UserProfile, Question
@@ -45,7 +54,6 @@ def edit_news(request, news_id):
     return render(request, "news/edit_news.html", {"form": form, "news": news})
 
 
-# View for user signup
 def signup_view(request):
     if request.method == "POST":
         form = SignUpForm(request.POST, request.FILES)
@@ -82,6 +90,12 @@ def signup_view(request):
             user = form.save(commit=False)
             user.username = username
             user.set_password(password)
+
+            # استفاده از تصویر پروفایل پیش‌فرض در صورتی که کاربر عکسی ارسال نکرده باشد
+            if not request.FILES.get('profile_picture'):
+                # مسیر تصویر پیش‌فرض
+                user.profile_picture = 'profile_picture.jpg'
+
             user.save()
             login(request, user)
             messages.success(request, "Signup successful!")
@@ -90,6 +104,7 @@ def signup_view(request):
             messages.error(request, "Please correct the errors below.")
     else:
         form = SignUpForm()
+    
     return render(request, "signup.html", {"form": form})
 
 
@@ -162,24 +177,26 @@ def news_list(request):
         messages.warning(request, "No news available.")
     return render(request, "news/news_list.html", {"news_items": news_items})
 
+
+
 @login_required
 def ask_question(request):
     if request.method == "POST":
         form = QuestionForm(request.POST)
         if form.is_valid():
             question = form.save(commit=False)
-            question.author = request.user  # کاربر وارد شده را به عنوان نویسنده سوال تنظیم می‌کنیم
+            question.user = request.user  # تنظیم کاربر وارد شده به عنوان نویسنده سوال
             question.save()
             messages.success(request, 'سوال شما با موفقیت ثبت شد.')
-            return redirect('index')  # به صفحه اصلی هدایت می‌شود
+            return redirect('index')  # هدایت به صفحه اصلی
     else:
         form = QuestionForm()
 
     return render(request, 'ask_question.html', {'form': form})
 
+
 def question_detail(request, question_id):
-    question = get_object_or_404(Question, id=question_id)
-    
+    question = get_object_or_404(Question, id=question_id)    
     # بررسی ارسال پاسخ
     if request.method == 'POST':
         form = ReplyForm(request.POST)
@@ -193,3 +210,34 @@ def question_detail(request, question_id):
         form = ReplyForm()
 
     return render(request, 'question_detail.html', {'question': question, 'form': form})
+
+
+def user_profile(request, username):
+    user = get_object_or_404(User, username=username)
+    questions = user.questions.all()  # سؤالات پرسیده شده توسط کاربر
+    return render(request, 'user_profile.html', {'profile_user': user, 'questions': questions})
+
+
+def load_questions(request):
+    page = request.GET.get('page', 1)  # دریافت صفحه (پیش‌فرض 1)
+    page = int(page)  # تبدیل صفحه به عدد صحیح
+
+    # بارگذاری سوالات و استفاده از Paginator برای صفحه‌بندی
+    questions = Question.objects.all().order_by('-created_at')
+    paginator = Paginator(questions, 5)  # 5 سوال در هر صفحه
+
+    try:
+        questions_page = paginator.page(page)
+    except EmptyPage:
+        return HttpResponse('')  # اگر صفحه‌ای وجود نداشت، چیزی برنگردان
+
+    return render(request, 'partials/question_list.html', {'questions': questions_page})
+
+
+@login_required
+def delete_profile(request):
+    user_profile = request.user.userprofile
+    user_profile.delete()  # حذف پروفایل
+    request.user.delete()   # حذف کاربر
+    messages.success(request, 'پروفایل شما با موفقیت حذف شد.')
+    return redirect('home')  # هدایت به صفحه اصلی یا هر صفحه دلخواه

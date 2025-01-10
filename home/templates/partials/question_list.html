@@ -1,0 +1,17 @@
+{% load custom_filters %}
+
+{% for question in questions %}
+    <div class="d-flex mb-4">
+        <div class="d-flex flex-column align-items-center me-3">
+            <span class="text-muted small">{{ question.created_at|jalali_date }}</span>
+        </div>
+        <div class="card flex-grow-1">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <a href="{% url 'question_detail' question.id %}" class="text-decoration-none text-primary">{{ question.title }}</a>
+                </h5>
+                <p class="card-text">{{ question.content|truncatewords:20 }}</p>
+            </div>
+        </div>
+    </div>
+{% endfor %}

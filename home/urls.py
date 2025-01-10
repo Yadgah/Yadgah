@@ -11,6 +11,9 @@ from .views import (
     signup_view,
     ask_question,
     question_detail,
+    load_questions,
+    user_profile,
+    delete_profile,
 )
 
 # URL patterns for the home app
@@ -22,7 +25,11 @@ urlpatterns = [
     path("profile/", profile_view, name="profile"),  # User profile
     path("news/", news_list, name="news_list"),  # News list
     path('ask/', ask_question, name='ask_question'),  # صفحه ارسال سوال
+    
     path('question/<int:question_id>/', question_detail, name='question_detail'),
+    path('load-questions/', load_questions, name='load_questions'),  # مسیر جدید برای سوالات بیشتر
+    path('profile/<str:username>/', user_profile, name='user_profile'),
+    path('delete-profile/', delete_profile, name='delete_profile'),
 ]
 
 # Serve media files in development

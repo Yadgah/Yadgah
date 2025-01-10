@@ -7,7 +7,10 @@
     {% load static %}
     <title>{% block title %}یادگاه - Yadgah{% endblock %}</title>
     <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
     
     <!-- SEO Optimization -->
     <meta name="description" content="وبسایت یادگاه - اخبار، سوالات و مطالب مفید برای یادگیری و اشتراک تجربیات.">
@@ -15,73 +18,61 @@
 </head>
 
 <body dir="rtl">
-
     <!-- Header Section -->
-    <header>
-        <div class="left-section">
-            <img class="site-logo" src="{% static 'favicon.ico' %}" alt="یادگاه لوگو">
-            <h1><a href="/">یادگاه</a></h1>
-            <nav class="categories" aria-label="Main Categories">
-                <ul>
-                    <li>
-                        <a href="/category/technology/" aria-haspopup="true" aria-expanded="false">دسته بندی</a>
-                        <ul class="submenu" aria-hidden="true">
-                            <li>
-                                <a href="/category/technology/ai/" aria-haspopup="true" aria-expanded="false">سوالات</a>
-                                <ul class="submenu" aria-hidden="true">
-                                    <li><a href="/category/technology/ai/machine-learning/">1</a></li>
-                                    <li><a href="/category/technology/ai/deep-learning/">2</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="/category/technology/ai/" aria-haspopup="true" aria-expanded="false">تجربه ها</a>
-                                <ul class="submenu" aria-hidden="true">
-                                    <li><a href="/category/technology/ai/machine-learning/">1</a></li>
-                                    <li><a href="/category/technology/ai/deep-learning/">3</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
+    <header class="p-3 bg-dark text-white">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-between">
+                <!-- Logo and Title -->
+                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                    <img src="{% static 'favicon.ico' %}" alt="یادگاه لوگو" width="40" height="40">
+                    <span class="ms-2">یادگاه</span>
+                </a>
+
+                <!-- Navigation Menu -->
+                <ul class="nav col-12 col-lg-auto mb-2 mb-lg-0 justify-content-center">
+                    <li><a href="#" class="nav-link px-2 text-white">خانه</a></li>
+                    <li><a href="#" class="nav-link px-2 text-white">ویژگی‌ها</a></li>
+                    <li><a href="#" class="nav-link px-2 text-white">قیمت‌گذاری</a></li>
+                    <li><a href="#" class="nav-link px-2 text-white">سوالات متداول</a></li>
+                    <li><a href="#" class="nav-link px-2 text-white">درباره ما</a></li>
                 </ul>
-            </nav>
 
-            <!-- Search Section -->
-            <div class="search">
-                <form action="{% url 'search' %}" method="get">
-                    {% csrf_token %}
-                    <button type="submit" aria-label="Search Button">جست و جو</button>
-                    <input type="text" name="q" placeholder="جست و جو..." aria-label="Search">
+                <!-- Search Form -->
+                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+                    <input type="search" class="form-control form-control-dark" placeholder="جست و جو..." aria-label="جست و جو">
                 </form>
-            </div>
-        </div>
 
-        <!-- User Authentication Section -->
-        <div class="right-section">
-            <div class="profile">
-                {% if user.is_authenticated %}
-                    <a href="{% url 'profile' %}">سلام، {{ user.username }}</a>
-                    <a href="{% url 'logout' %}">خروج</a>
-                {% else %}
-                    <a href="{% url 'login' %}">ورود</a>
-                    <a href="{% url 'signup' %}">ثبت‌نام</a>
-                {% endif %}
+                <!-- User Authentication Section -->
+                <div class="text-end">
+                    {% if user.is_authenticated %}
+                        <!-- User Profile Dropdown -->
+                        <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                            {% if user.userprofile.avatar %}
+                                <!-- Display user's profile picture if available -->
+                                <img src="{{ user.userprofile.avatar.url }}" alt="{{ user.username }}'s avatar" width="32" height="32" class="rounded-circle">
+                            {% else %}
+                                <!-- Display default avatar if no profile picture is set -->
+                                <img src="{% static 'profile_picture.jpg' %}" alt="default avatar" width="32" height="32" class="rounded-circle">
+                            {% endif %}
+                        </a>
+                        <!-- Dropdown Menu -->
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser1">
+                            <li><a class="dropdown-item" href="{% url 'profile' %}">پروفایل</a></li>
+                            <li><a class="dropdown-item" href="{% url 'logout' %}">خروج</a></li>
+                        </ul>
+                    {% else %}
+                        <!-- Login and Signup Buttons -->
+                        <a href="{% url 'login' %}" class="btn btn-outline-light me-2">ورود</a>
+                        <a href="{% url 'signup' %}" class="btn btn-warning">ثبت‌نام</a>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </header>
 
     <!-- Main Content Section -->
-    <div class="content">
+    <div class="container my-4">
         {% block content %}
-        <!-- You can uncomment the following block if you want to show messages -->
-        <!--
-        {% if messages %}
-            <ul>
-                {% for message in messages %}
-                    <li>{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-        -->
         {% endblock %}
     </div>
 

@@ -1,15 +1,41 @@
 {% extends 'base.html' %}
-
 {% block content %}
-    <div class="content-wrapper">
-        <div class="main-content">
-            <h1>ارسال سوال</h1>
+{% load custom_filters %}
 
-            <form method="post">
+<div class="container mt-5">
+    <h2 class="text-center mb-4">ثبت سوال جدید</h2>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form method="POST">
                 {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit" class="button-margin">ارسال سوال</button>
+                
+                <!-- نمایش فرم به صورت زیبا با استفاده از کلاس‌های Bootstrap -->
+                <div class="mb-3">
+                    <label for="questionTitle" class="form-label">عنوان سوال</label>
+                    {{ form.title|add_class:"form-control" }}
+                </div>
+
+                <div class="mb-3">
+                    <label for="questionContent" class="form-label">محتوای سوال</label>
+                    {{ form.content|add_class:"form-control" }}
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 mt-3">ثبت سوال</button>
             </form>
         </div>
     </div>
+
+    <!-- نمایش پیام‌ها -->
+    {% if messages %}
+        <div class="alert alert-success mt-3">
+            <ul class="mb-0">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+</div>
+
 {% endblock %}
