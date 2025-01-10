@@ -13,7 +13,7 @@
   --background-color: #f4f4f4;
 }
 
-body {    
+body {
     background-color: var(--background-color);
     color: var(--text-color);
 }
@@ -501,7 +501,7 @@ h2 {
     padding: 0;
 }
 
-body {    
+body {
     background-color: #f4f4f4;
     color: #333;
 }
@@ -989,4 +989,3 @@ h2 {
 hover {
     background-color: #777;
 }
-

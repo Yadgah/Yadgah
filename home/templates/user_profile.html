@@ -44,7 +44,7 @@
             <img src="{{ profile_user.profile.picture.url|default:'/static/default-avatar.png' }}" alt="{{ profile_user.username }}'s profile picture">
             <h2 class="username">پروفایل کاربر: {{ profile_user.username }}</h2>
         </div>
-        
+
         <p>ایمیل: {{ profile_user.email }}</p>
         <p>تاریخ عضویت: {{ profile_user.date_joined|date:"d F Y" }}</p>
 
