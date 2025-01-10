@@ -34,6 +34,34 @@ class Reply(models.Model):
         return f"Reply to {self.question.title} by {self.user.username}"
 
 
+from django.contrib.auth.models import User
+# models.py
+from django.db import models
+
+from .models import Question
+
+
+class QuestionReaction(models.Model):
+    LIKE = 1
+    DISLIKE = -1
+    REACTION_CHOICES = [
+        (LIKE, "Like"),
+        (DISLIKE, "Dislike"),
+    ]
+
+    question = models.ForeignKey(
+        Question, on_delete=models.CASCADE, related_name="reactions"
+    )
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    reaction_type = models.IntegerField(choices=REACTION_CHOICES)
+
+    class Meta:
+        unique_together = ("question", "user")
+
+    def __str__(self):
+        return f"{self.user.username} {self.get_reaction_type_display()} {self.question.title}"
+
+
 class News(models.Model):
     """
     Model representing a news article.
