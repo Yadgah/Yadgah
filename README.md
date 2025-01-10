@@ -1,10 +1,10 @@
-<table width="100%" height="100%" border="0">
-     <tr>
-          <td align="center" valign="middle">
-               <img src="favicon.ico" alt="Favicon" width="100" height="100">
-          </td>
-     </tr>
-</table>
+<div align="center">
+
+<p>
+    <a href="#">
+        <img width="150" src="https://raw.githubusercontent.com/BDadmehr0/Yadgah/refs/heads/main/favicon.ico" alt="The Yadgah Q&A website">
+    </a>
+</p>
 
 
 # Yadgah
