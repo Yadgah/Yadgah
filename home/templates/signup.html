@@ -1,215 +1,65 @@
 {% extends 'base.html' %}
+{% load custom_filters %}
 {% block content %}
-<div class="signup-container rtl">
-    <h2 class="signup-title">ثبت‌نام</h2>
+{% load static %}
 
-    {% if messages %}
-        <div class="alert-container">
-            {% for message in messages %}
-                <div class="alert {{ message.tags }}">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        </div>
-    {% endif %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">ثبت‌نام</h2>
 
-    <form method="POST" enctype="multipart/form-data" class="signup-form">
+    <form method="POST" class="w-50 mx-auto" enctype="multipart/form-data">
         {% csrf_token %}
-        <div class="profile-picture">
-            <label for="id_profile_picture">
-                <img id="profile-preview" src="" alt="عکس پروفایل" style="display: none;">
-                انتخاب عکس
-            </label>
-            {{ form.profile_picture }}
-        </div>
-        <div class="form-row">
-            <div class="form-group">
-                {{ form.first_name.label_tag }}
-                {{ form.first_name }}
+        
+        <!-- نمایش پیام‌ها -->
+        {% if messages %}
+            <div class="alert-container">
+                {% for message in messages %}
+                    <div class="alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %} alert-dismissible fade show" role="alert">
+                        <strong>{% if message.tags == "error" %}خطا!{% elif message.tags == "success" %}موفقیت!{% else %}توجه!{% endif %}</strong> {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
             </div>
-            <div class="form-group">
-                {{ form.last_name.label_tag }}
-                {{ form.last_name }}
-            </div>
+        {% endif %}
+
+        <!-- تصویر پروفایل پیش‌فرض -->
+        <!-- <div class="mb-3 text-center">
+            <img src="{% static 'profile_picture.png' %}" alt="عکس پروفایل پیش‌فرض" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover;">
+        </div> -->
+
+        <!-- فرم فیلدهای ثبت‌نام -->
+        <div class="mb-3">
+            <label for="{{ form.first_name.id_for_label }}" class="form-label">نام</label>
+            {{ form.first_name|add_class:"form-control" }}
         </div>
-        <div class="form-row">
-            <div class="form-group">
-                {{ form.password.label_tag }}
-                {{ form.password }}
-            </div>
-            <div class="form-group">
-                {{ form.confirm_password.label_tag }}
-                {{ form.confirm_password }}
-            </div>
+        
+        <div class="mb-3">
+            <label for="{{ form.last_name.id_for_label }}" class="form-label">نام خانوادگی</label>
+            {{ form.last_name|add_class:"form-control" }}
         </div>
-        <div class="form-group">
-            {{ form.email.label_tag }}
-            {{ form.email }}
+
+        <div class="mb-3">
+            <label for="{{ form.password.id_for_label }}" class="form-label">رمز عبور</label>
+            {{ form.password|add_class:"form-control" }}
         </div>
-        <button type="submit" class="btn btn-primary signup-button">ثبت‌نام</button>
+        
+        <div class="mb-3">
+            <label for="{{ form.confirm_password.id_for_label }}" class="form-label">تکرار رمز عبور</label>
+            {{ form.confirm_password|add_class:"form-control" }}
+        </div>
+
+        <div class="mb-3">
+            <label for="{{ form.email.id_for_label }}" class="form-label">ایمیل</label>
+            {{ form.email|add_class:"form-control" }}
+        </div>
+
+        <!-- فیلد انتخاب تصویر پروفایل (پنهان) -->
+        <input type="file" name="profile_picture" style="display: none;" />
+
+        <!-- دکمه ثبت‌نام -->
+        <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary">ثبت‌نام</button>
+        </div>
     </form>
 </div>
-
-<style>
-    /* طراحی کلی فرم ثبت‌نام */
-    .signup-container {
-        max-width: 500px;
-        margin: 50px auto;
-        padding: 20px;
-        background-color: #f9f9f9;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        text-align: center;
-        direction: rtl; /* راست‌چین */
-    }
-
-    .signup-title {
-        font-size: 24px;
-        color: #333;
-        margin-bottom: 20px;
-        font-weight: bold;
-    }
-
-    /* طراحی پیام‌ها */
-    .alert-container {
-        margin-bottom: 20px;
-    }
-
-    .alert {
-        padding: 15px;
-        border-radius: 5px;
-        margin-bottom: 10px;
-        font-size: 16px;
-        text-align: center;
-    }
-
-    .alert.success {
-        background-color: #d4edda;
-        color: #155724;
-        border: 1px solid #c3e6cb;
-    }
-
-    .alert.error {
-        background-color: #f8d7da;
-        color: #721c24;
-        border: 1px solid #f5c6cb;
-    }
-
-    .alert.warning {
-        background-color: #fff3cd;
-        color: #856404;
-        border: 1px solid #ffeeba;
-    }
-
-    /* طراحی عکس پروفایل */
-    .profile-picture {
-        margin-bottom: 20px;
-        text-align: center;
-    }
-
-    .profile-picture input[type="file"] {
-        display: none;
-    }
-
-    .profile-picture label {
-        display: inline-block;
-        width: 100px;
-        height: 100px;
-        background-color: #ddd;
-        border-radius: 50%;
-        text-align: center;
-        line-height: 100px;
-        font-size: 14px;
-        font-weight: bold;
-        color: #666;
-        cursor: pointer;
-        overflow: hidden;
-        position: relative;
-    }
-
-    .profile-picture img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 50%;
-    }
-
-    /* طراحی فیلدهای فرم */
-    .form-row {
-        display: flex;
-        justify-content: space-between;
-        gap: 10px;
-    }
-
-    .form-group {
-        flex: 1;
-        text-align: right;
-    }
-
-    .form-group label {
-        display: block;
-        font-weight: bold;
-        color: #555;
-        margin-bottom: 5px;
-    }
-
-    .form-group input[type="text"],
-    .form-group input[type="email"],
-    .form-group input[type="password"],
-    .form-group select,
-    .form-group textarea {
-        width: 100%;
-        padding: 10px;
-        margin: 5px 0;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        font-size: 14px;
-        text-align: right;
-    }
-
-    /* دکمه ثبت‌نام */
-    .signup-button {
-        display: inline-block;
-        padding: 10px 20px;
-        font-size: 16px;
-        color: #fff;
-        background-color: #007bff;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-
-    .signup-button:hover {
-        background-color: #0056b3;
-    }
-
-    /* خطاها */
-    .signup-container .errorlist {
-        color: #d9534f;
-        text-align: right;
-    }
-</style>
-<script>
-    document.getElementById('id_profile_picture').addEventListener('change', function(event) {
-        const file = event.target.files[0];
-        const preview = document.getElementById('profile-preview');
-
-        if (file) {
-            const reader = new FileReader();
-
-            reader.onload = function(e) {
-                preview.src = e.target.result;
-                preview.style.display = 'block';
-            };
-
-            reader.readAsDataURL(file);
-        } else {
-            preview.src = '';
-            preview.style.display = 'none';
-        }
-    });
-</script>
 
 {% endblock %}

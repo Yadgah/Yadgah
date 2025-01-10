@@ -1,6 +1,81 @@
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ user_form.as_p }}
-    {{ profile_form.as_p }}
-    <button type="submit">ارسال</button>
-</form>
+{% extends 'base.html' %}
+{% block content %}
+{% load custom_filters %}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">ویرایش پروفایل</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- نمایش عکس پروفایل به‌صورت دایره‌ای و بزرگ -->
+        <div class="text-center mb-4">
+            {% if profile_form.instance.avatar %}
+                <img id="profile-avatar" src="{{ profile_form.instance.avatar.url }}" alt="Avatar" class="rounded-circle" style="width: 150px; height: 150px; object-fit: cover; cursor: pointer;" onclick="document.getElementById('avatar-input').click();">
+            {% else %}
+                <img id="profile-avatar" src="https://via.placeholder.com/150" alt="Avatar" class="rounded-circle" style="width: 150px; height: 150px; object-fit: cover; cursor: pointer;" onclick="document.getElementById('avatar-input').click();">
+            {% endif %}
+            <!-- Input for selecting the avatar -->
+            <input id="avatar-input" type="file" name="avatar" style="display: none;" onchange="previewAvatar(event)">
+        </div>
+
+        <!-- فرم اطلاعات کاربر -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="id_username" class="form-label">نام کاربری</label>
+                    {{ user_form.username }}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="id_email" class="form-label">ایمیل</label>
+                    {{ user_form.email }}
+                </div>
+            </div>
+        </div>
+
+        <!-- فرم پروفایل کاربر -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="id_first_name" class="form-label">نام</label>
+                    {{ profile_form.first_name }}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="id_last_name" class="form-label">نام خانوادگی</label>
+                    {{ profile_form.last_name }}
+                </div>
+            </div>
+        </div>
+
+        <!-- دکمه ذخیره تغییرات -->
+        <button type="submit" class="btn btn-primary w-100">ذخیره تغییرات</button>
+    </form>
+
+    <!-- فرم حذف پروفایل -->
+    <form method="POST" action="{% url 'delete_profile' %}" class="mt-4">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger w-100" onclick="return confirm('آیا مطمئن هستید که می‌خواهید پروفایل خود را حذف کنید؟')">حذف پروفایل</button>
+    </form>
+</div>
+
+<script>
+    function previewAvatar(event) {
+        var file = event.target.files[0];
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+            // Update the avatar preview
+            document.getElementById('profile-avatar').src = e.target.result;
+        };
+
+        // Read the file as data URL
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    }
+</script>
+{% endblock %}

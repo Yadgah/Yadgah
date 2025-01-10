@@ -108,24 +108,28 @@ class LoginForm(AuthenticationForm):
     )
 
 
-class UserProfileForm(forms.ModelForm):
-    """
-    Form for updating the user's profile, specifically the avatar.
-    """
-
-    class Meta:
-        model = UserProfile
-        fields = ["avatar"]
-
-
 class UserForm(forms.ModelForm):
-    """
-    Form for updating basic user details.
-    """
-
     class Meta:
         model = User
-        fields = ["username", "first_name", "last_name", "email"]
+        fields = ['username', 'email']
+    
+    # اضافه کردن کلاس به هر فیلد
+    def __init__(self, *args, **kwargs):
+        super(UserForm, self).__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs.update({'class': 'form-control'})
+        self.fields['email'].widget.attrs.update({'class': 'form-control'})
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ['first_name', 'last_name', 'avatar']
+    
+    def __init__(self, *args, **kwargs):
+        super(UserProfileForm, self).__init__(*args, **kwargs)
+        self.fields['first_name'].widget.attrs.update({'class': 'form-control'})
+        self.fields['last_name'].widget.attrs.update({'class': 'form-control'})
+        self.fields['avatar'].widget.attrs.update({'class': 'form-control'})
+
 
 class QuestionForm(forms.ModelForm):
     class Meta:

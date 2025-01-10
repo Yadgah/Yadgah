@@ -1,9 +1,38 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>ورود</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">ورود</button>
-</form>
+{% load custom_filters %}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">ورود به حساب کاربری</h2>
+    
+    <form method="post" class="w-50 mx-auto">
+        {% csrf_token %}
+        
+        <!-- نمایش فرم ورود به صورت زیبا با استفاده از کلاس‌های Bootstrap -->
+        <div class="mb-3">
+            <label for="id_username" class="form-label">نام کاربری</label>
+            {{ form.username|add_class:"form-control" }}
+        </div>
+
+        <div class="mb-3">
+            <label for="id_password" class="form-label">رمز عبور</label>
+            {{ form.password|add_class:"form-control" }}
+        </div>
+
+        <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary">ورود</button>
+        </div>
+    </form>
+
+    <!-- نمایش پیام خطا در صورت وجود -->
+    {% if form.non_field_errors %}
+        <div class="alert alert-danger mt-3">
+            <ul>
+                {% for error in form.non_field_errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+</div>
 {% endblock %}
