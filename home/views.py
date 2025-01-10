@@ -249,3 +249,94 @@ def delete_profile(request):
     request.user.delete()  # Delete user account
     messages.success(request, "Your profile has been successfully deleted.")
     return redirect("home")  # Redirect to home or any other page
+
+
+import json
+
+# views.py
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from django.views.decorators.csrf import csrf_exempt
+
+from .models import Question, QuestionReaction
+
+
+@csrf_exempt
+def toggle_reaction(request, question_id):
+    if not request.user.is_authenticated:
+        return JsonResponse(
+            {"error": "کاربر باید وارد حساب کاربری خود شود"}, status=401
+        )
+
+    question = get_object_or_404(Question, id=question_id)
+    data = json.loads(request.body)
+    reaction_type = data.get("reaction_type")
+
+    # Check if the reaction is either 'like' or 'dislike'
+    if reaction_type not in ["like", "dislike"]:
+        return JsonResponse({"error": "واکنش معتبر نیست"}, status=400)
+
+    # Get or create the reaction
+    reaction_type_value = (
+        QuestionReaction.LIKE if reaction_type == "like" else QuestionReaction.DISLIKE
+    )
+    reaction, created = QuestionReaction.objects.get_or_create(
+        question=question,
+        user=request.user,
+        defaults={"reaction_type": reaction_type_value},
+    )
+
+    if not created:
+        # If the reaction exists, toggle the reaction type
+        if reaction.reaction_type == reaction_type_value:
+            reaction.delete()  # Remove the reaction if it's the same
+        else:
+            reaction.reaction_type = reaction_type_value
+            reaction.save()
+
+    # Count the reactions
+    likes_count = QuestionReaction.objects.filter(
+        question=question, reaction_type=QuestionReaction.LIKE
+    ).count()
+    dislikes_count = QuestionReaction.objects.filter(
+        question=question, reaction_type=QuestionReaction.DISLIKE
+    ).count()
+
+    return JsonResponse({"likes": likes_count, "dislikes": dislikes_count})
+
+
+# views.py
+from django.shortcuts import get_object_or_404, render
+
+from .forms import ReplyForm
+from .models import Question, QuestionReaction
+
+
+def question_detail(request, question_id):
+    question = get_object_or_404(Question, id=question_id)
+
+    # تعداد لایک‌ها و دیس‌لایک‌ها را محاسبه می‌کنیم
+    likes_count = QuestionReaction.objects.filter(
+        question=question, reaction_type=QuestionReaction.LIKE
+    ).count()
+    dislikes_count = QuestionReaction.objects.filter(
+        question=question, reaction_type=QuestionReaction.DISLIKE
+    ).count()
+
+    # فرض کنید که فرم ارسال پاسخ دارید
+    form = ReplyForm(request.POST or None)
+
+    if form.is_valid():
+        # منطق ذخیره پاسخ
+        form.save()
+
+    return render(
+        request,
+        "question_detail.html",
+        {
+            "question": question,
+            "form": form,
+            "likes_count": likes_count,
+            "dislikes_count": dislikes_count,
+        },
+    )

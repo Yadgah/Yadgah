@@ -4,7 +4,8 @@ from django.urls import path
 
 from .views import (ask_question, delete_profile, home_view, load_questions,
                     login_view, logout_view, news_list, profile_view,
-                    question_detail, signup_view, user_profile)
+                    question_detail, signup_view, toggle_reaction,
+                    user_profile)
 
 # URL patterns for the home app
 urlpatterns = [
@@ -23,6 +24,11 @@ urlpatterns = [
     path("profile/<str:username>/", user_profile, name="user_profile"),
     # Delete user profile
     path("delete-profile/", delete_profile, name="delete_profile"),
+    path(
+        "question/<int:question_id>/toggle-reaction/",
+        toggle_reaction,
+        name="toggle_reaction",
+    ),
 ]
 
 # Serve media files during development
