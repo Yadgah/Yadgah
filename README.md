@@ -12,9 +12,6 @@ Yadgah A Platform for Experience Sharing &amp; Q&amp;A
 </div>
 
 
-
-**Experience Sharing & Q&A Platform**  
-**Description:**  
 Similar to platforms like Quora or StackOverflow, users can share their experiences or ask questions from others.  
 
 ### Features:  
