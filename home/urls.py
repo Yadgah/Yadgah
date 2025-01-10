@@ -2,10 +2,10 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
 
-from .views import (ask_question, delete_profile, home_view, load_questions,
-                    login_view, logout_view, news_list, profile_view,
-                    question_detail, signup_view, toggle_reaction,
-                    user_profile)
+from .views import (approve_reply, ask_question, delete_profile, home_view,
+                    load_questions, login_view, logout_view, news_list,
+                    profile_view, question_detail, signup_view,
+                    toggle_reaction, user_profile)
 
 # URL patterns for the home app
 urlpatterns = [
@@ -29,6 +29,11 @@ urlpatterns = [
         toggle_reaction,
         name="toggle_reaction",
     ),
+    path(
+        "question/<int:question_id>/reaction/", toggle_reaction, name="toggle_reaction"
+    ),
+    path("reply/<int:reply_id>/approve/", approve_reply, name="approve_reply"),
+    path("toggle_reaction/<int:question_id>/", toggle_reaction, name="toggle_reaction"),
 ]
 
 # Serve media files during development

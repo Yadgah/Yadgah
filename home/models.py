@@ -16,29 +16,43 @@ class Question(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="questions")
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    likes_count = models.ManyToManyField(
+        User, related_name="liked_questions", blank=True
+    )
+    dislikes_count = models.ManyToManyField(
+        User, related_name="disliked_questions", blank=True
+    )
+
+    # def likes_count(self):
+    #     return self.likes.count()
+
+    # def dislikes_count(self):
+    #     return self.dislikes.count()
 
     def __str__(self):
         return self.title
 
 
 class Reply(models.Model):
-    question = models.ForeignKey(
-        Question, related_name="replies", on_delete=models.CASCADE
-    )
+    # فیلدهای دیگر
     content = models.TextField()
+    question = models.ForeignKey(
+        "Question", related_name="replies", on_delete=models.CASCADE
+    )
+    user = models.ForeignKey(
+        "auth.User", on_delete=models.SET_NULL, null=True, blank=True
+    )
     created_at = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="replies")
+
+    # اضافه کردن فیلد is_approved
+    is_approved = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"Reply to {self.question.title} by {self.user.username}"
+        return self.content[:50]
 
 
-from django.contrib.auth.models import User
-# models.py
-from django.db import models
-
-from .models import Question
+# from .models import Question
 
 
 class QuestionReaction(models.Model):

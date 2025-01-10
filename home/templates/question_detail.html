@@ -26,6 +26,8 @@
             دیس‌لایک ({{ dislikes_count }})
         </button>
     </div>
+    
+    
 
     <div class="replies-section">
         <h3>پاسخ‌ها به این سوال</h3>
@@ -34,7 +36,28 @@
                 {% for reply in question.replies.all %}
                     <div class="reply-item">
                         <p>{{ reply.content }}</p>
-                        <p class="reply-meta">پاسخ توسط: {{ reply.user.username }} - تاریخ پاسخ: {{ reply.created_at|jalali_date }}</p>
+                        <p class="reply-meta">
+                            پاسخ توسط:
+                            {% if reply.user %}
+                                <a href="{% url 'user_profile' reply.user.username %}">{{ reply.user.username }}</a>
+                            {% else %}
+                                کاربر ناشناس
+                            {% endif %}
+                            - تاریخ پاسخ: {{ reply.created_at|jalali_date }}
+                        </p>
+                        <p class="reply-status">
+                            {% if reply.is_approved %}
+                                <span class="text-success">این پاسخ تایید شده است.</span>
+                            {% else %}
+                                <span class="text-warning">منتظر تایید</span>
+                            {% endif %}
+                        </p>
+                        {% if user == question.user and not reply.is_approved %}
+                            <form action="{% url 'approve_reply' reply.id %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-success">تایید پاسخ</button>
+                            </form>
+                        {% endif %}
                     </div>
                 {% endfor %}
             </div>
@@ -70,14 +93,22 @@
             },
             body: JSON.stringify({ reaction_type: type })
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Failed to update reaction");
+            }
+            return response.json();
+        })
         .then(data => {
-            // Update the reaction counts after the action
-            document.getElementById("like-button").innerText = "لایک (" + data.likes + ")";
-            document.getElementById("dislike-button").innerText = "دیس‌لایک (" + data.dislikes + ")";
+            if (data.error) {
+                console.error(data.error);
+            } else {
+                document.getElementById("like-button").innerText = `لایک (${data.likes})`;
+                document.getElementById("dislike-button").innerText = `دیس‌لایک (${data.dislikes})`;
+            }
         })
         .catch(error => console.error("Error:", error));
     }
 </script>
-{% endblock %}
 
+{% endblock %}
