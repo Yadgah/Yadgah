@@ -1,3 +1,4 @@
+import json
 import re
 
 from django.contrib import messages
@@ -7,12 +8,16 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.paginator import EmptyPage, Paginator
-from django.http import HttpResponse
+from django.http import (HttpResponse, HttpResponseForbidden,
+                         HttpResponseRedirect, JsonResponse)
+# views.py
+# views.py
 from django.shortcuts import get_object_or_404, redirect, render
+from django.views.decorators.csrf import csrf_exempt
 
 from .forms import (LoginForm, NewsForm, QuestionForm, ReplyForm, SignUpForm,
                     UserForm, UserProfileForm)
-from .models import News, Question, UserProfile
+from .models import News, Question, QuestionReaction, Reply, UserProfile
 
 
 # Decorator to restrict access to staff members only
@@ -251,92 +256,80 @@ def delete_profile(request):
     return redirect("home")  # Redirect to home or any other page
 
 
-import json
-
-# views.py
-from django.http import JsonResponse
-from django.shortcuts import get_object_or_404
-from django.views.decorators.csrf import csrf_exempt
-
-from .models import Question, QuestionReaction
-
-
-@csrf_exempt
+@csrf_exempt  # موقتاً برای تست؛ در محیط واقعی نباید استفاده شود.
 def toggle_reaction(request, question_id):
-    if not request.user.is_authenticated:
-        return JsonResponse(
-            {"error": "کاربر باید وارد حساب کاربری خود شود"}, status=401
-        )
+    if request.method == "POST":
+        try:
+            question = get_object_or_404(Question, id=question_id)
+            data = json.loads(request.body)
+            reaction_type = data.get("reaction_type")
 
-    question = get_object_or_404(Question, id=question_id)
-    data = json.loads(request.body)
-    reaction_type = data.get("reaction_type")
+            if reaction_type == "like":
+                if request.user in question.likes_count.all():
+                    question.likes_count.remove(request.user)
+                else:
+                    question.likes_count.add(request.user)
+                    question.dislikes_count.remove(request.user)
+            elif reaction_type == "dislike":
+                if request.user in question.dislikes_count.all():
+                    question.dislikes_count.remove(request.user)
+                else:
+                    question.dislikes_count.add(request.user)
+                    question.likes_count.remove(request.user)
+            else:
+                return JsonResponse({"error": "Invalid reaction type"}, status=400)
 
-    # Check if the reaction is either 'like' or 'dislike'
-    if reaction_type not in ["like", "dislike"]:
-        return JsonResponse({"error": "واکنش معتبر نیست"}, status=400)
+            return JsonResponse(
+                {
+                    "likes": question.likes_count.count(),
+                    "dislikes": question.dislikes_count.count(),
+                }
+            )
 
-    # Get or create the reaction
-    reaction_type_value = (
-        QuestionReaction.LIKE if reaction_type == "like" else QuestionReaction.DISLIKE
-    )
-    reaction, created = QuestionReaction.objects.get_or_create(
-        question=question,
-        user=request.user,
-        defaults={"reaction_type": reaction_type_value},
-    )
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=400)
 
-    if not created:
-        # If the reaction exists, toggle the reaction type
-        if reaction.reaction_type == reaction_type_value:
-            reaction.delete()  # Remove the reaction if it's the same
-        else:
-            reaction.reaction_type = reaction_type_value
-            reaction.save()
-
-    # Count the reactions
-    likes_count = QuestionReaction.objects.filter(
-        question=question, reaction_type=QuestionReaction.LIKE
-    ).count()
-    dislikes_count = QuestionReaction.objects.filter(
-        question=question, reaction_type=QuestionReaction.DISLIKE
-    ).count()
-
-    return JsonResponse({"likes": likes_count, "dislikes": dislikes_count})
-
-
-# views.py
-from django.shortcuts import get_object_or_404, render
-
-from .forms import ReplyForm
-from .models import Question, QuestionReaction
+    return JsonResponse({"error": "Invalid request method"}, status=405)
 
 
 def question_detail(request, question_id):
     question = get_object_or_404(Question, id=question_id)
 
-    # تعداد لایک‌ها و دیس‌لایک‌ها را محاسبه می‌کنیم
-    likes_count = QuestionReaction.objects.filter(
-        question=question, reaction_type=QuestionReaction.LIKE
-    ).count()
-    dislikes_count = QuestionReaction.objects.filter(
-        question=question, reaction_type=QuestionReaction.DISLIKE
-    ).count()
+    # شمارش تعداد لایک‌ها و دیسلایک‌ها
+    likes_count = question.likes_count.count()
+    dislikes_count = question.dislikes_count.count()
 
-    # فرض کنید که فرم ارسال پاسخ دارید
-    form = ReplyForm(request.POST or None)
-
-    if form.is_valid():
-        # منطق ذخیره پاسخ
-        form.save()
+    # بررسی اینکه آیا کاربر این سوال را لایک یا دیسلایک کرده است
+    user_liked = (
+        request.user in question.likes_count.all()
+        if request.user.is_authenticated
+        else False
+    )
+    user_disliked = (
+        request.user in question.dislikes_count.all()
+        if request.user.is_authenticated
+        else False
+    )
 
     return render(
         request,
         "question_detail.html",
         {
             "question": question,
-            "form": form,
             "likes_count": likes_count,
             "dislikes_count": dislikes_count,
+            "user_liked": user_liked,
+            "user_disliked": user_disliked,
         },
     )
+
+
+@login_required
+def approve_reply(request, reply_id):
+    reply = get_object_or_404(Reply, id=reply_id)
+    if (
+        reply.question.user == request.user
+    ):  # اطمینان از اینکه فقط صاحب سوال می‌تواند تایید کند
+        reply.is_approved = True
+        reply.save()
+    return redirect("question_detail", question_id=reply.question.id)
