@@ -7,39 +7,35 @@ from django.core.exceptions import ValidationError
 
 from .models import News, UserProfile, Question, Reply
 
-
 class NewsForm(forms.ModelForm):
     """
     Form for creating and editing news articles.
     """
-
     class Meta:
         model = News
         fields = ["title", "content", "is_active"]
-
 
 class SignUpForm(forms.ModelForm):
     """
     Form for user signup, including custom validations for email and password.
     """
-
     password = forms.CharField(
-        widget=forms.PasswordInput(attrs={"class": "form-control"}), label="رمز عبور"
+        widget=forms.PasswordInput(attrs={"class": "form-control"}), label="Password"
     )
     confirm_password = forms.CharField(
         widget=forms.PasswordInput(attrs={"class": "form-control"}),
-        label="تکرار رمز عبور",
+        label="Confirm Password",
     )
-    profile_picture = forms.ImageField(label="عکس پروفایل", required=False)
+    profile_picture = forms.ImageField(label="Profile Picture", required=False)
 
     class Meta:
         model = User
         fields = ["first_name", "last_name", "email", "password"]
         labels = {
-            "first_name": "نام",
-            "last_name": "نام خانوادگی",
-            "email": "ایمیل",
-            "password": "رمز عبور",
+            "first_name": "First Name",
+            "last_name": "Last Name",
+            "email": "Email",
+            "password": "Password",
         }
         label_suffix = ""  # Remove default colon in field labels
 
@@ -49,7 +45,7 @@ class SignUpForm(forms.ModelForm):
         """
         email = self.cleaned_data.get("email")
         if User.objects.filter(email=email).exists():
-            raise ValidationError("این ایمیل قبلاً ثبت شده است.")
+            raise ValidationError("This email is already registered.")
         return email
 
     def persian_to_latin(self, text):
@@ -57,90 +53,70 @@ class SignUpForm(forms.ModelForm):
         Convert Persian characters to Latin for use in usernames or slugs.
         """
         persian_to_english = {
-            "ا": "a",
-            "ب": "b",
-            "پ": "p",
-            "ت": "t",
-            "ث": "s",
-            "ج": "j",
-            "چ": "ch",
-            "ح": "h",
-            "خ": "kh",
-            "د": "d",
-            "ذ": "z",
-            "ر": "r",
-            "ز": "z",
-            "ژ": "zh",
-            "س": "s",
-            "ش": "sh",
-            "ص": "s",
-            "ض": "z",
-            "ط": "t",
-            "ظ": "z",
-            "ع": "a",
-            "غ": "gh",
-            "ف": "f",
-            "ق": "gh",
-            "ک": "k",
-            "گ": "g",
-            "ل": "l",
-            "م": "m",
-            "ن": "n",
-            "و": "v",
-            "ه": "h",
-            "ی": "y",
-            " ": "_",
+            "ا": "a", "ب": "b", "پ": "p", "ت": "t", "ث": "s", "ج": "j", "چ": "ch",
+            "ح": "h", "خ": "kh", "د": "d", "ذ": "z", "ر": "r", "ز": "z", "ژ": "zh",
+            "س": "s", "ش": "sh", "ص": "s", "ض": "z", "ط": "t", "ظ": "z", "ع": "a",
+            "غ": "gh", "ف": "f", "ق": "gh", "ک": "k", "گ": "g", "ل": "l", "م": "m",
+            "ن": "n", "و": "v", "ه": "h", "ی": "y", " ": "_",
         }
         stripped_text = text.strip()
         return "".join(persian_to_english.get(char, char) for char in stripped_text)
-
 
 class LoginForm(AuthenticationForm):
     """
     Custom login form with styled fields.
     """
-
     username = forms.CharField(
-        label="نام کاربری", widget=forms.TextInput(attrs={"class": "form-control"})
+        label="Username", widget=forms.TextInput(attrs={"class": "form-control"})
     )
     password = forms.CharField(
-        label="رمز عبور", widget=forms.PasswordInput(attrs={"class": "form-control"})
+        label="Password", widget=forms.PasswordInput(attrs={"class": "form-control"})
     )
 
-
 class UserForm(forms.ModelForm):
+    """
+    Form for updating user details like username and email.
+    """
     class Meta:
         model = User
         fields = ['username', 'email']
     
-    # اضافه کردن کلاس به هر فیلد
     def __init__(self, *args, **kwargs):
         super(UserForm, self).__init__(*args, **kwargs)
-        self.fields['username'].widget.attrs.update({'class': 'form-control'})
-        self.fields['email'].widget.attrs.update({'class': 'form-control'})
+        # Add 'form-control' class to each field for consistent styling
+        for field in self.fields.values():
+            field.widget.attrs.update({'class': 'form-control'})
 
 class UserProfileForm(forms.ModelForm):
+    """
+    Form for updating the user's profile details such as first name, last name, and avatar.
+    """
     class Meta:
         model = UserProfile
         fields = ['first_name', 'last_name', 'avatar']
     
     def __init__(self, *args, **kwargs):
         super(UserProfileForm, self).__init__(*args, **kwargs)
-        self.fields['first_name'].widget.attrs.update({'class': 'form-control'})
-        self.fields['last_name'].widget.attrs.update({'class': 'form-control'})
-        self.fields['avatar'].widget.attrs.update({'class': 'form-control'})
-
+        # Add 'form-control' class to each field for consistent styling
+        for field in self.fields.values():
+            field.widget.attrs.update({'class': 'form-control'})
 
 class QuestionForm(forms.ModelForm):
+    """
+    Form for creating a question.
+    """
     class Meta:
         model = Question
-        fields = ['title', 'content']  # عنوان و محتوای سوال
+        fields = ['title', 'content']
         labels = {
-            'title': 'عنوان سوال',
-            'content': 'توضیحات سوال',
+            'title': 'Question Title',
+            'content': 'Question Description',
         }
 
 class ReplyForm(forms.ModelForm):
+    """
+    Form for creating a reply to a question.
+    """
     class Meta:
         model = Reply
         fields = ['content']

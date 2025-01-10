@@ -115,7 +115,6 @@
         {% else %}
             <span>کاربر ناشناس</span>
         {% endif %}
-
     </div>
 
     <div class="question-content">
@@ -123,16 +122,16 @@
     </div>
 
     <div class="replies-section">
-        <h3>پاسخ‌ها</h3>
+        <h3>پاسخ‌ها به این سوال</h3>
         {% if question.replies.all %}
-            <ul>
+            <div>
                 {% for reply in question.replies.all %}
-                    <li class="reply-item">
+                    <div class="reply-item">
                         <p>{{ reply.content }}</p>
                         <p class="reply-meta">پاسخ توسط: {{ reply.user.username }} - تاریخ پاسخ: {{ reply.created_at|jalali_date }}</p>
-                    </li>
+                    </div>
                 {% endfor %}
-            </ul>
+            </div>
         {% else %}
             <p>هیچ پاسخی برای این سوال ثبت نشده است.</p>
         {% endif %}

@@ -8,54 +8,82 @@
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
 
-        <!-- نمایش عکس پروفایل به‌صورت دایره‌ای و بزرگ -->
+        <!-- Display Avatar with preview -->
         <div class="text-center mb-4">
             {% if profile_form.instance.avatar %}
                 <img id="profile-avatar" src="{{ profile_form.instance.avatar.url }}" alt="Avatar" class="rounded-circle" style="width: 150px; height: 150px; object-fit: cover; cursor: pointer;" onclick="document.getElementById('avatar-input').click();">
             {% else %}
                 <img id="profile-avatar" src="https://via.placeholder.com/150" alt="Avatar" class="rounded-circle" style="width: 150px; height: 150px; object-fit: cover; cursor: pointer;" onclick="document.getElementById('avatar-input').click();">
             {% endif %}
-            <!-- Input for selecting the avatar -->
+            <!-- Input for avatar upload -->
             <input id="avatar-input" type="file" name="avatar" style="display: none;" onchange="previewAvatar(event)">
         </div>
 
-        <!-- فرم اطلاعات کاربر -->
+        <!-- User Information Form -->
         <div class="row mb-4">
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="id_username" class="form-label">نام کاربری</label>
                     {{ user_form.username }}
+                    {% if user_form.username.errors %}
+                        <div class="text-danger">
+                            {% for error in user_form.username.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="id_email" class="form-label">ایمیل</label>
                     {{ user_form.email }}
+                    {% if user_form.email.errors %}
+                        <div class="text-danger">
+                            {% for error in user_form.email.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
 
-        <!-- فرم پروفایل کاربر -->
+        <!-- Profile Information Form -->
         <div class="row mb-4">
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="id_first_name" class="form-label">نام</label>
                     {{ profile_form.first_name }}
+                    {% if profile_form.first_name.errors %}
+                        <div class="text-danger">
+                            {% for error in profile_form.first_name.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="id_last_name" class="form-label">نام خانوادگی</label>
                     {{ profile_form.last_name }}
+                    {% if profile_form.last_name.errors %}
+                        <div class="text-danger">
+                            {% for error in profile_form.last_name.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
 
-        <!-- دکمه ذخیره تغییرات -->
+        <!-- Save Changes Button -->
         <button type="submit" class="btn btn-primary w-100">ذخیره تغییرات</button>
     </form>
 
-    <!-- فرم حذف پروفایل -->
+    <!-- Profile Deletion Form -->
     <form method="POST" action="{% url 'delete_profile' %}" class="mt-4">
         {% csrf_token %}
         <button type="submit" class="btn btn-danger w-100" onclick="return confirm('آیا مطمئن هستید که می‌خواهید پروفایل خود را حذف کنید؟')">حذف پروفایل</button>
@@ -78,4 +106,5 @@
         }
     }
 </script>
+
 {% endblock %}
