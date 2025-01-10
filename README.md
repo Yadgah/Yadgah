@@ -2,10 +2,11 @@
 
 <p>
     <a href="#">
-        <img width="150" src="https://raw.githubusercontent.com/BDadmehr0/Yadgah/refs/heads/main/favicon.ico" alt="The Yadgah Q&A website">
+        <img width="150" src="https://github.com/BDadmehr0/Yadgah/blob/main/favicon.ico" alt="The Yadgah Q&A website">
     </a>
 </p>
 
+</div>
 
 # Yadgah
 Yadgah A Platform for Experience Sharing &amp; Q&amp;A
