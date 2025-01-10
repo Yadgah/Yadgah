@@ -2,19 +2,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
 
-from .views import (
-    home_view,
-    login_view,
-    logout_view,
-    news_list,
-    profile_view,
-    signup_view,
-    ask_question,
-    question_detail,
-    load_questions,
-    user_profile,
-    delete_profile,
-)
+from .views import (ask_question, delete_profile, home_view, load_questions,
+                    login_view, logout_view, news_list, profile_view,
+                    question_detail, signup_view, user_profile)
 
 # URL patterns for the home app
 urlpatterns = [
@@ -24,19 +14,15 @@ urlpatterns = [
     path("logout/", logout_view, name="logout"),  # User logout
     path("profile/", profile_view, name="profile"),  # User profile
     path("news/", news_list, name="news_list"),  # News list
-    path('ask/', ask_question, name='ask_question'),  # Ask a question
-    
+    path("ask/", ask_question, name="ask_question"),  # Ask a question
     # Question details page
-    path('question/<int:question_id>/', question_detail, name='question_detail'),
-    
+    path("question/<int:question_id>/", question_detail, name="question_detail"),
     # Load more questions with pagination
-    path('load-questions/', load_questions, name='load_questions'),
-    
+    path("load-questions/", load_questions, name="load_questions"),
     # User profile by username
-    path('profile/<str:username>/', user_profile, name='user_profile'),
-    
+    path("profile/<str:username>/", user_profile, name="user_profile"),
     # Delete user profile
-    path('delete-profile/', delete_profile, name='delete_profile'),
+    path("delete-profile/", delete_profile, name="delete_profile"),
 ]
 
 # Serve media files during development

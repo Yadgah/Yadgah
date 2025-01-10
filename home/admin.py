@@ -1,39 +1,55 @@
 from django.contrib import admin
 from django.contrib.auth.models import User
-from django.utils.safestring import mark_safe
 from django.utils.html import format_html
+from django.utils.safestring import mark_safe
 
-from .models import News, UserProfile, Question, Reply
+from .models import News, Question, Reply, UserProfile
 
 
 # Register the Question model for the admin
 class QuestionAdmin(admin.ModelAdmin):
-    list_display = ('title', 'user', 'created_at')  # Columns to display in the list view
-    search_fields = ('title', 'content')  # Enable search by title and content
-    list_filter = ('created_at',)  # Filter by creation date
-    ordering = ('-created_at',)  # Order by creation date in descending order
+    list_display = (
+        "title",
+        "user",
+        "created_at",
+    )  # Columns to display in the list view
+    search_fields = ("title", "content")  # Enable search by title and content
+    list_filter = ("created_at",)  # Filter by creation date
+    ordering = ("-created_at",)  # Order by creation date in descending order
+
 
 # Register the Reply model for the admin
 class ReplyAdmin(admin.ModelAdmin):
-    list_display = ('question', 'user', 'created_at')  # Columns to display in the list view
-    search_fields = ('content',)  # Enable search by content
-    list_filter = ('created_at',)  # Filter by creation date
-    ordering = ('-created_at',)  # Order by creation date in descending order
+    list_display = (
+        "question",
+        "user",
+        "created_at",
+    )  # Columns to display in the list view
+    search_fields = ("content",)  # Enable search by content
+    list_filter = ("created_at",)  # Filter by creation date
+    ordering = ("-created_at",)  # Order by creation date in descending order
+
 
 # Register the UserProfile model for the admin
 class UserProfileAdmin(admin.ModelAdmin):
-    list_display = ('user', 'avatar')  # Display user and avatar in the admin panel
+    list_display = ("user", "avatar")  # Display user and avatar in the admin panel
+
 
 # Function to display profile picture in the admin
 def profile_picture_display(obj):
     try:
         if obj.userprofile.avatar:
-            return format_html('<img src="{}" style="height:50px;width:50px;" />', obj.userprofile.avatar.url)
+            return format_html(
+                '<img src="{}" style="height:50px;width:50px;" />',
+                obj.userprofile.avatar.url,
+            )
     except UserProfile.DoesNotExist:
         return "No Profile"
     return "No Avatar"
 
+
 profile_picture_display.short_description = "Profile Picture"
+
 
 # Inline model for UserProfile, allowing profile editing directly from the User admin
 class UserProfileInline(admin.StackedInline):
@@ -42,6 +58,7 @@ class UserProfileInline(admin.StackedInline):
     verbose_name_plural = "Profile"
     fk_name = "user"
     fields = ("avatar",)  # Display avatar field in the user edit form
+
 
 # Custom admin for the User model, including the UserProfile inline
 class UserAdmin(admin.ModelAdmin):
