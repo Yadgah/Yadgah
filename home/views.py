@@ -1,6 +1,7 @@
 import json
 import re
 
+import markdown
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -10,9 +11,8 @@ from django.core.exceptions import ValidationError
 from django.core.paginator import EmptyPage, Paginator
 from django.http import (HttpResponse, HttpResponseForbidden,
                          HttpResponseRedirect, JsonResponse)
-# views.py
-# views.py
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils.safestring import mark_safe
 from django.views.decorators.csrf import csrf_exempt
 
 from .forms import (LoginForm, NewsForm, QuestionForm, ReplyForm, SignUpForm,
@@ -25,7 +25,7 @@ def staff_member_required(view_func):
     return user_passes_test(lambda u: u.is_staff)(view_func)
 
 
-# View to create news (staff only)
+# View to create news (accessible by staff only)
 @staff_member_required
 def create_news(request):
     if request.method == "POST":
@@ -40,7 +40,7 @@ def create_news(request):
     return render(request, "news/create_news.html", {"form": form})
 
 
-# View to edit news (staff only)
+# View to edit news (accessible by staff only)
 @staff_member_required
 def edit_news(request, news_id):
     news = get_object_or_404(News, id=news_id)
@@ -92,9 +92,8 @@ def signup_view(request):
             user.username = username
             user.set_password(password)
 
-            # Use default profile picture if none is provided by user
+            # Use default profile picture if none is provided by the user
             if not request.FILES.get("profile_picture"):
-                # Path to default profile picture
                 user.profile_picture = "profile_picture.jpg"
 
             user.save()
@@ -202,25 +201,58 @@ def ask_question(request):
     return render(request, "ask_question.html", {"form": form})
 
 
-# View for question detail and replies
+# View to display question details and handle likes/dislikes
 def question_detail(request, question_id):
     question = get_object_or_404(Question, id=question_id)
-    # Handling reply submission
+
+    # Count likes and dislikes
+    likes_count = question.likes_count.count()
+    dislikes_count = question.dislikes_count.count()
+
+    # Check if the user has liked or disliked this question
+    user_liked = (
+        request.user in question.likes_count.all()
+        if request.user.is_authenticated
+        else False
+    )
+    user_disliked = (
+        request.user in question.dislikes_count.all()
+        if request.user.is_authenticated
+        else False
+    )
+
+    # Convert Markdown content to HTML
+    content_as_html = mark_safe(
+        markdown.markdown(question.content, extensions=["fenced_code"])
+    )
+
+    # Handle the reply form
+    form = ReplyForm()
     if request.method == "POST":
         form = ReplyForm(request.POST)
         if form.is_valid():
             reply = form.save(commit=False)
-            reply.question = question
             reply.user = request.user
+            reply.question = question
             reply.save()
             return redirect("question_detail", question_id=question.id)
-    else:
-        form = ReplyForm()
 
-    return render(request, "question_detail.html", {"question": question, "form": form})
+    return render(
+        request,
+        "question_detail.html",
+        {
+            "question": question,
+            "content_as_html": content_as_html,
+            "likes_count": likes_count,
+            "dislikes_count": dislikes_count,
+            "user_liked": user_liked,
+            "user_disliked": user_disliked,
+            "form": form,  # Pass the form to the template
+        },
+    )
 
 
-# View for user's profile and their questions
+# View for user profiles displaying their questions
 def user_profile(request, username):
     user = get_object_or_404(User, username=username)
     questions = user.questions.all()  # Get questions asked by the user
@@ -256,7 +288,7 @@ def delete_profile(request):
     return redirect("home")  # Redirect to home or any other page
 
 
-@csrf_exempt  # موقتاً برای تست؛ در محیط واقعی نباید استفاده شود.
+@csrf_exempt  # Temporarily for testing; should not be used in production
 def toggle_reaction(request, question_id):
     if request.method == "POST":
         try:
@@ -292,44 +324,12 @@ def toggle_reaction(request, question_id):
     return JsonResponse({"error": "Invalid request method"}, status=405)
 
 
-def question_detail(request, question_id):
-    question = get_object_or_404(Question, id=question_id)
-
-    # شمارش تعداد لایک‌ها و دیسلایک‌ها
-    likes_count = question.likes_count.count()
-    dislikes_count = question.dislikes_count.count()
-
-    # بررسی اینکه آیا کاربر این سوال را لایک یا دیسلایک کرده است
-    user_liked = (
-        request.user in question.likes_count.all()
-        if request.user.is_authenticated
-        else False
-    )
-    user_disliked = (
-        request.user in question.dislikes_count.all()
-        if request.user.is_authenticated
-        else False
-    )
-
-    return render(
-        request,
-        "question_detail.html",
-        {
-            "question": question,
-            "likes_count": likes_count,
-            "dislikes_count": dislikes_count,
-            "user_liked": user_liked,
-            "user_disliked": user_disliked,
-        },
-    )
-
-
+# View to approve a reply
 @login_required
 def approve_reply(request, reply_id):
     reply = get_object_or_404(Reply, id=reply_id)
-    if (
-        reply.question.user == request.user
-    ):  # اطمینان از اینکه فقط صاحب سوال می‌تواند تایید کند
+    # Ensure only the owner of the question can approve
+    if reply.question.user == request.user:
         reply.is_approved = True
         reply.save()
     return redirect("question_detail", question_id=reply.question.id)

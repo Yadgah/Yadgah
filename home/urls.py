@@ -16,24 +16,26 @@ urlpatterns = [
     path("profile/", profile_view, name="profile"),  # User profile
     path("news/", news_list, name="news_list"),  # News list
     path("ask/", ask_question, name="ask_question"),  # Ask a question
-    # Question details page
-    path("question/<int:question_id>/", question_detail, name="question_detail"),
-    # Load more questions with pagination
-    path("load-questions/", load_questions, name="load_questions"),
-    # User profile by username
-    path("profile/<str:username>/", user_profile, name="user_profile"),
-    # Delete user profile
-    path("delete-profile/", delete_profile, name="delete_profile"),
+    path(
+        "question/<int:question_id>/", question_detail, name="question_detail"
+    ),  # Question details
+    path(
+        "load-questions/", load_questions, name="load_questions"
+    ),  # Load more questions with pagination
+    path(
+        "profile/<str:username>/", user_profile, name="user_profile"
+    ),  # User profile by username
+    path(
+        "delete-profile/", delete_profile, name="delete_profile"
+    ),  # Delete user profile
     path(
         "question/<int:question_id>/toggle-reaction/",
         toggle_reaction,
         name="toggle_reaction",
-    ),
+    ),  # Toggle reaction
     path(
-        "question/<int:question_id>/reaction/", toggle_reaction, name="toggle_reaction"
-    ),
-    path("reply/<int:reply_id>/approve/", approve_reply, name="approve_reply"),
-    path("toggle_reaction/<int:question_id>/", toggle_reaction, name="toggle_reaction"),
+        "reply/<int:reply_id>/approve/", approve_reply, name="approve_reply"
+    ),  # Approve a reply
 ]
 
 # Serve media files during development

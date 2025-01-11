@@ -1,33 +1,61 @@
-import os
+import re
 
-from django.contrib.auth.models import User  # Import the User model
-from django.db.models.signals import post_save, pre_save
-from django.dispatch import receiver
+import jdatetime
+import markdown
+from django import template
 
-from .models import UserProfile
-
-
-# Signal to create a UserProfile when a new User is created
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        UserProfile.objects.create(user=instance)
+register = template.Library()
 
 
-# Signal to save the UserProfile whenever the User instance is saved
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.userprofile.save()
+@register.filter
+def strip_markdown(value):
+    """
+    Removes Markdown syntax from the input text.
+    """
+    if not isinstance(value, str):
+        return value
+
+    # Markdown patterns to remove
+    markdown_patterns = [
+        r"\*\*(.*?)\*\*",  # Bold (**text**)
+        r"\*(.*?)\*",  # Italic (*text*)
+        r"__(.*?)__",  # Bold (__text__)
+        r"_(.*?)_",  # Italic (_text_)
+        r"`(.*?)`",  # Inline code (`code`)
+        r"\[(.*?)\]\((.*?)\)",  # Links [text](url)
+        r"!\[(.*?)\]\((.*?)\)",  # Images ![alt](url)
+        r"^> ",  # Blockquote
+        r"#{1,6}\s",  # Headers (#, ##, ###, etc.)
+        r"\-\s|\*\s|\+\s",  # Lists (-, *, +)
+    ]
+
+    # Remove all patterns from the text
+    for pattern in markdown_patterns:
+        value = re.sub(pattern, r"\1", value)
+
+    return value.strip()
 
 
-# Signal to delete the old avatar image if a new one is uploaded
-@receiver(pre_save, sender=UserProfile)
-def delete_old_avatar(sender, instance, **kwargs):
-    if instance.pk:
-        old_avatar = UserProfile.objects.get(pk=instance.pk).avatar
-        new_avatar = instance.avatar
+# @register.filter(name='markdown')
+# def markdown_to_html(value):
+#     """Filter to convert Markdown to HTML."""
+#     return markdown.markdown(value)
 
-        # If a new avatar is different from the old one, delete the old one
-        if old_avatar and old_avatar != new_avatar:
-            if os.path.isfile(old_avatar.path):
-                os.remove(old_avatar.path)
+
+@register.filter
+def jalali_date(value):
+    """
+    Converts a Gregorian date to a Jalali (Persian) date.
+    """
+    if value:
+        # Convert Gregorian date to Jalali
+        return jdatetime.date.fromgregorian(date=value).strftime("%d %B")
+    return value
+
+
+@register.filter
+def add_class(value, arg):
+    """
+    Adds a CSS class to a form field widget.
+    """
+    return value.as_widget(attrs={"class": arg})

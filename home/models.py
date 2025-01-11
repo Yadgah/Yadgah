@@ -3,6 +3,10 @@ from django.db import models
 
 
 class UserProfile(models.Model):
+    """
+    Represents the profile of a user, linked to the Django User model.
+    """
+
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=30, blank=True)
     last_name = models.CharField(max_length=30, blank=True)
@@ -13,6 +17,10 @@ class UserProfile(models.Model):
 
 
 class Question(models.Model):
+    """
+    Represents a question posted by a user.
+    """
+
     title = models.CharField(max_length=255)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -24,19 +32,16 @@ class Question(models.Model):
         User, related_name="disliked_questions", blank=True
     )
 
-    # def likes_count(self):
-    #     return self.likes.count()
-
-    # def dislikes_count(self):
-    #     return self.dislikes.count()
-
     def __str__(self):
         return self.title
 
 
 class Reply(models.Model):
-    # فیلدهای دیگر
-    content = models.TextField()
+    """
+    Represents a reply to a question, with Markdown content.
+    """
+
+    content = models.TextField()  # Stores the reply content in Markdown format
     question = models.ForeignKey(
         "Question", related_name="replies", on_delete=models.CASCADE
     )
@@ -44,18 +49,25 @@ class Reply(models.Model):
         "auth.User", on_delete=models.SET_NULL, null=True, blank=True
     )
     created_at = models.DateTimeField(auto_now_add=True)
-
-    # اضافه کردن فیلد is_approved
     is_approved = models.BooleanField(default=False)
 
     def __str__(self):
         return self.content[:50]
 
+    def get_content_as_html(self):
+        """
+        Converts the Markdown content into HTML for display in the question view.
+        """
+        import markdown
 
-# from .models import Question
+        return markdown.markdown(self.content, extensions=["fenced_code"])
 
 
 class QuestionReaction(models.Model):
+    """
+    Represents a reaction (like or dislike) to a question by a user.
+    """
+
     LIKE = 1
     DISLIKE = -1
     REACTION_CHOICES = [
@@ -78,7 +90,7 @@ class QuestionReaction(models.Model):
 
 class News(models.Model):
     """
-    Model representing a news article.
+    Represents a news article.
     """
 
     title = models.CharField(max_length=200, verbose_name="News Title")
