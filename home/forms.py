@@ -155,10 +155,11 @@ class QuestionForm(forms.ModelForm):
 
 
 class ReplyForm(forms.ModelForm):
-    """
-    Form for creating a reply to a question.
-    """
-
     class Meta:
         model = Reply
         fields = ["content"]
+        widgets = {
+            "content": forms.Textarea(
+                attrs={"placeholder": "Your reply (Markdown supported)", "rows": 5}
+            ),
+        }

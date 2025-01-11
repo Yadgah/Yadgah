@@ -16,6 +16,27 @@
         background-color: #fff;
         margin-bottom: 20px;
     }
+
+    .d-flex .text-muted {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* استایل برای باکس دایره‌ای تاریخ */
+    .date-box {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #f5f5f5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        color: #777;
+        text-align: center;
+    }
+
 </style>
 
 <div class="container my-4">
@@ -56,16 +77,22 @@
                 <div id="recent-questions">
                     {% if questions %}
                         {% for question in questions %}
-                            <div class="d-flex mb-4">
+                            <div class="d-flex mb-4 align-items-start">
+                                <!-- تاریخ در اینجا -->
                                 <div class="d-flex align-items-center me-3">
-                                    <span class="text-muted small">{{ question.created_at|jalali_date }}</span>
+                                    <div class="date-box">
+                                        <span>{{ question.created_at|jalali_date|slice:":10" }}</span>  <!-- نمایش تاریخ کوتاه -->
+                                    </div>
                                 </div>
+
+                                <!-- سوالات در اینجا -->
                                 <div class="card flex-grow-1">
                                     <div class="card-body">
                                         <h5 class="card-title">
                                             <a href="{% url 'question_detail' question.id %}" class="text-decoration-none text-primary">{{ question.title }}</a>
                                         </h5>
-                                        <p class="card-text">{{ question.content|truncatewords:20 }}</p>
+                                        <!-- استفاده از فیلتر striptags برای محتوای سوال -->
+                                        <p class="card-text">{{ question.content|striptags|truncatewords:20 }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -74,6 +101,7 @@
                         <p>هیچ سوالی ارسال نشده است.</p>
                     {% endif %}
                 </div>
+
             </div>
         </div>
     </div>

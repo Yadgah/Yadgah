@@ -3,23 +3,47 @@
 {% load custom_filters %}
 
 {% block content %}
-<div class="question-detail-container">
-    <div class="question-header">
-        <h2>{{ question.title }}</h2>
-        <p class="question-meta">تاریخ ایجاد: {{ question.created_at|jalali_date }}</p>
-        {% if question.user and question.user.username %}
-            <a href="{% url 'user_profile' question.user.username %}">{{ question.user.username }}</a>
-        {% else %}
-            <span>کاربر ناشناس</span>
-        {% endif %}
+
+<style>
+    .approved-reply {
+        background-color: #e6f7e6; /* پس‌زمینه سبز روشن */
+        border-left: 4px solid #28a745; /* حاشیه سبز */
+        /* font-weight: bold; */
+    }
+
+    .approved-reply .reply-status {
+        /* font-size: 0.9rem; */
+        color: #28a745;
+        font-weight: bold;
+    }
+
+</style>
+<div class="question-detail-container container my-4">
+    <!-- Header Section -->
+    <div class="question-header mb-3 border-bottom pb-2">
+        <h2 class="mb-2">{{ question.title }}</h2>
+        <p class="question-meta text-muted">
+            <span>تاریخ ایجاد: {{ question.created_at|jalali_date }}</span> |
+            {% if question.user and question.user.username %}
+                <a href="{% url 'user_profile' question.user.username %}" class="text-decoration-none">
+                    {{ question.user.username }}
+                </a>
+            {% else %}
+                <span>کاربر ناشناس</span>
+            {% endif %}
+        </p>
     </div>
 
-    <div class="question-content">
-        <p>{{ question.content }}</p>
+    <!-- Question Content -->
+    <div class="question-content mb-4">
+        <div class="p-3 bg-light rounded border">
+            {{ content_as_html|safe }}
+        </div>
     </div>
 
-    <div class="question-reactions">
-        <button id="like-button" class="btn btn-success" onclick="toggleReaction('like')">
+    <!-- Reactions Section -->
+    <div class="question-reactions mb-4">
+        <button id="like-button" class="btn btn-success me-2" onclick="toggleReaction('like')">
             لایک ({{ likes_count }})
         </button>
         <button id="dislike-button" class="btn btn-danger" onclick="toggleReaction('dislike')">
@@ -27,61 +51,96 @@
         </button>
     </div>
 
+    <!-- Replies Section -->
+    <div class="replies-section mb-4">
+        <h3 class="mb-3">پاسخ‌ها به این سوال</h3>
 
-
-    <div class="replies-section">
-        <h3>پاسخ‌ها به این سوال</h3>
         {% if question.replies.all %}
-            <div>
+            <!-- پاسخ‌های تایید شده -->
+            <div class="list-group">
                 {% for reply in question.replies.all %}
-                    <div class="reply-item">
-                        <p>{{ reply.content }}</p>
-                        <p class="reply-meta">
-                            پاسخ توسط:
-                            {% if reply.user %}
-                                <a href="{% url 'user_profile' reply.user.username %}">{{ reply.user.username }}</a>
-                            {% else %}
-                                کاربر ناشناس
-                            {% endif %}
-                            - تاریخ پاسخ: {{ reply.created_at|jalali_date }}
-                        </p>
-                        <p class="reply-status">
-                            {% if reply.is_approved %}
+                    {% if reply.is_approved %}
+                        <div class="reply-item list-group-item mb-3 border rounded approved-reply">
+                            <!-- نمایش پاسخ تایید شده -->
+                            <div class="mb-2">
+                                {{ reply.get_content_as_html|safe }}
+                            </div>
+                            <p class="reply-meta text-muted mb-1">
+                                پاسخ توسط:
+                                {% if reply.user %}
+                                    <a href="{% url 'user_profile' reply.user.username %}" class="text-decoration-none">
+                                        {{ reply.user.username }}
+                                    </a>
+                                {% else %}
+                                    کاربر ناشناس
+                                {% endif %}
+                                - تاریخ پاسخ: {{ reply.created_at|jalali_date }}
+                            </p>
+                            <p class="reply-status mb-2">
                                 <span class="text-success">این پاسخ تایید شده است.</span>
-                            {% else %}
+                            </p>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+            <!-- سایر پاسخ‌ها -->
+            <div class="list-group">
+                {% for reply in question.replies.all %}
+                    {% if not reply.is_approved %}
+                        <div class="reply-item list-group-item mb-3 border rounded">
+                            <!-- نمایش پاسخ غیر تایید شده -->
+                            <div class="mb-2">
+                                {{ reply.get_content_as_html|safe }}
+                            </div>
+                            <p class="reply-meta text-muted mb-1">
+                                پاسخ توسط:
+                                {% if reply.user %}
+                                    <a href="{% url 'user_profile' reply.user.username %}" class="text-decoration-none">
+                                        {{ reply.user.username }}
+                                    </a>
+                                {% else %}
+                                    کاربر ناشناس
+                                {% endif %}
+                                - تاریخ پاسخ: {{ reply.created_at|jalali_date }}
+                            </p>
+                            <p class="reply-status mb-2">
                                 <span class="text-warning">منتظر تایید</span>
+                            </p>
+                            {% if user == question.user and not reply.is_approved %}
+                                <form action="{% url 'approve_reply' reply.id %}" method="POST" class="d-inline">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-sm btn-success">تایید پاسخ</button>
+                                </form>
                             {% endif %}
-                        </p>
-                        {% if user == question.user and not reply.is_approved %}
-                            <form action="{% url 'approve_reply' reply.id %}" method="POST">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-success">تایید پاسخ</button>
-                            </form>
-                        {% endif %}
-                    </div>
+                        </div>
+                    {% endif %}
                 {% endfor %}
             </div>
         {% else %}
-            <p>هیچ پاسخی برای این سوال ثبت نشده است.</p>
+            <p class="text-muted">هیچ پاسخی برای این سوال ثبت نشده است.</p>
         {% endif %}
     </div>
 
+    <!-- Reply Form Section -->
     {% if user.is_authenticated %}
-        <div class="reply-form">
-            <h3>ارسال پاسخ</h3>
+        <div class="reply-form mt-4">
+            <h3 class="mb-3">ارسال پاسخ</h3>
             <form method="POST">
                 {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit">ارسال پاسخ</button>
+                {{ form.as_p }}  <!-- نمایش فرم -->
+                <button type="submit" class="btn btn-primary">ارسال پاسخ</button>
             </form>
         </div>
     {% else %}
-        <div class="login-notice">
-            <p>برای ارسال پاسخ باید <a href="{% url 'login' %}">وارد حساب کاربری خود</a> شوید.</p>
+        <div class="login-notice alert alert-info mt-4">
+            <p>برای ارسال پاسخ باید <a href="{% url 'login' %}" class="text-decoration-none">وارد حساب کاربری</a> شوید.</p>
         </div>
     {% endif %}
+
 </div>
 
+<!-- Reaction Script -->
 <script>
     function toggleReaction(type) {
         const csrfToken = '{{ csrf_token }}';
@@ -110,5 +169,4 @@
         .catch(error => console.error("Error:", error));
     }
 </script>
-
 {% endblock %}
