@@ -37,6 +37,17 @@
         text-align: center;
     }
 
+    /* استایل برای لیبل‌ها */
+    .label {
+        display: inline-block;
+        padding: 5px 10px;
+        margin-right: 5px;
+        border-radius: 20px;
+        background-color: #007bff;
+        color: white;
+        font-size: 12px;
+    }
+
 </style>
 
 <div class="container my-4">
@@ -93,6 +104,13 @@
                                         </h5>
                                         <!-- استفاده از فیلتر striptags برای محتوای سوال -->
                                         <p class="card-text">{{ question.content|striptags|truncatewords:20 }}</p>
+
+                                        <!-- نمایش لیبل‌های مربوط به سوال -->
+                                        <div class="mt-2">
+                                            {% for label in question.labels.all %}
+                                                <span class="label" style="background-color: {{ label.color }}">{{ label.name }}</span>
+                                            {% endfor %}
+                                        </div>
                                     </div>
                                 </div>
                             </div>

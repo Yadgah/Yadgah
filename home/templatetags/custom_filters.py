@@ -1,7 +1,7 @@
 import jdatetime
 import markdown
 from django import template
-
+from django.forms import BoundField
 register = template.Library()
 
 
@@ -52,4 +52,6 @@ def jalali_date(value):
 # Filter to add a CSS class to a form field widget
 @register.filter
 def add_class(value, arg):
-    return value.as_widget(attrs={"class": arg})
+    if isinstance(value, BoundField):
+        return value.as_widget(attrs={"class": arg})
+    return value  # Return the value unchanged if it's not a BoundField

@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 
-from .models import News, Question, Reply, UserProfile
+from .models import News, Question, Reply, UserProfile, Label
 
 
 # Register the Question model for the admin
@@ -108,3 +108,5 @@ admin.site.register(UserProfile, UserProfileAdmin)
 # Unregister the default User admin and register the customized one
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
+
+admin.site.register(Label)
