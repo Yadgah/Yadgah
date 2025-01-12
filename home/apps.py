@@ -1,8 +1,8 @@
+# home/apps.py
 from django.apps import AppConfig
 
-
 class HomeConfig(AppConfig):
-    name = "home"
+    name = 'home'
 
     def ready(self):
-        import home.signals  # Loading signals
+        import home.signals  # به این ترتیب سیگنال‌ها بارگذاری می‌شوند

@@ -17,7 +17,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from .forms import (LoginForm, NewsForm, QuestionForm, ReplyForm, SignUpForm,
                     UserForm, UserProfileForm)
-from .models import News, Question, QuestionReaction, Reply, UserProfile
+from .models import News, Question, QuestionReaction, Reply, UserProfile, Label
 
 
 # Decorator to restrict access to staff members only
@@ -164,13 +164,15 @@ def search_view(request):
 def home_view(request):
     # Get the most recent questions
     questions = Question.objects.all().order_by("-created_at")[:5]
-
     # Get the most recent active news
     news_items = News.objects.filter(is_active=True).order_by("-published_at")[:5]
 
     # Send data to the template
     return render(
-        request, "index.html", {"questions": questions, "news_items": news_items}
+        request, "index.html", {
+            "questions": questions,
+            "news_items": news_items
+            }
     )
 
 
@@ -194,7 +196,9 @@ def ask_question(request):
             )  # Set the logged-in user as the question author
             question.save()
             messages.success(request, "Your question has been submitted successfully.")
-            return redirect("index")  # Redirect to the home page
+            # Add labels (if any) after saving the question
+            form.save_m2m()  # Save many-to-many relationships (labels)
+            return redirect('question_detail', question_id=question.id)
     else:
         form = QuestionForm()
 
