@@ -19,7 +19,6 @@ from .forms import (LoginForm, NewsForm, QuestionForm, ReplyForm, SignUpForm,
                     UserForm, UserProfileForm)
 from .models import News, Question, QuestionReaction, Reply, UserProfile, Label
 
-
 # Decorator to restrict access to staff members only
 def staff_member_required(view_func):
     return user_passes_test(lambda u: u.is_staff)(view_func)
