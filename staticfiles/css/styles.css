@@ -1,0 +1,991 @@
+/* Add box-sizing to make padding/border calculation easier */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+:root {
+  --primary-color: #333;
+  --secondary-color: #555;
+  --text-color: #333;
+  --background-color: #f4f4f4;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+/* Header Styles */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: var(--primary-color);    color: white;
+    position: relative;
+}
+
+/* Left section (Logo and Categories) */
+.left-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.left-section h1 a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.8rem;
+}
+
+.categories ul {
+    display: flex;
+    gap: 15px;
+    list-style: none;
+    flex-wrap: wrap; /* Ensures items wrap if there's not enough space */
+}
+
+.categories a {
+    display: block;
+    padding: 10px 15px;
+    color: white;
+    text-decoration: none;
+    background-color: transparent;
+    transition: background-color 0.3s ease;
+    min-width: 100px; /* Prevents the box from shrinking too small */
+    word-wrap: break-word; /* Ensures text wraps and doesn't overflow */
+}
+
+.categories a:hover {
+    background-color: #555;
+}
+
+/* Dropdown menu styles */
+.categories li {
+    position: relative;
+}
+
+.categories .submenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0; /* تغییر از left به right */
+    background-color: #444;
+    list-style: none;
+    padding: 10px;
+    margin: 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.categories .submenu li {
+    margin-bottom: 5px;
+}
+
+.categories .submenu li a {
+    color: white;
+    text-decoration: none;
+}
+
+.categories .submenu li a:hover {
+    text-decoration: underline;
+}
+
+/* Show submenu on hover with animation */
+.categories li:hover > .submenu {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Submenu item hover: reveal next submenu */
+.submenu li:hover > .submenu {
+    display: block;
+    top: 0;
+    right: 100%;
+}
+
+/* Right section (Search and Profile) */
+.right-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Search box */
+.search {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.search input {
+    padding: 5px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.search button {
+    padding: 7px 10px;
+    background-color: #555;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.search button:hover {
+    background-color: #777;
+}
+
+/* Profile Links */
+.profile a {
+    color: white;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+.profile a:hover {
+    text-decoration: underline;
+}
+
+/* Profile buttons (for logged in users) */
+.profile button {
+    color: white;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.profile button:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .left-section,
+    .right-section {
+        justify-content: flex-start;
+        width: 100%;
+    }
+
+    .categories ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .search input {
+        width: 100%;
+    }
+
+    .profile {
+        margin-top: 10px;
+    }
+
+    .profile a,
+    .profile button {
+        display: block;
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    .vl {
+        display: none;
+    }
+
+    .content-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 3px 3fr;
+        gap: 20px;
+        align-items: start;
+    }
+
+    .news-section,
+    .main-content {
+        width: 100%;
+    }
+
+    /* Change news item layout for smaller screens */
+    .news-item {
+        padding: 10px;
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Header: Stack elements vertically */
+    header {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .left-section,
+    .right-section {
+        width: 100%;
+        justify-content: flex-start;
+        gap: 15px;
+    }
+
+    .categories ul {
+        flex-direction: column;
+    }
+
+    /* Adjusting logo size */
+    .site-logo {
+        width: 25%;
+    }
+
+    /* Search bar: Stack input and button */
+    .search {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search input {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    /* Profile links as a column */
+    .profile a,
+    .profile button {
+        display: block;
+        margin-top: 10px;
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Adjust content sections to be full width */
+    .content-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 3px 3fr;
+        gap: 20px;
+        align-items: start;
+    }
+
+    .news-section,
+    .main-content {
+        width: 100%;
+    }
+
+    .vl {
+        display: none;
+    }
+
+    .news-section {
+        padding: 10px;
+    }
+
+    .title-button-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .title-button-container h1,
+    .title-button-container button {
+        width: 100%;
+    }
+}
+
+/* Adjust styles for even smaller screens (mobile) */
+@media (max-width: 480px) {
+    .left-section h1 {
+        font-size: 1.5rem;
+    }
+
+    .categories ul {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .news-section {
+        width: 100%;
+        padding-right: 0;
+    }
+
+    .site-logo {
+        width: 30%;
+    }
+
+    .search input {
+        font-size: 0.9rem;
+    }
+
+    .news-item {
+        font-size: 0.85rem;
+    }
+
+    /* Main content styles */
+    .main-content {
+        padding-left: 10px;
+    }
+
+    .title-button-container h1 {
+        font-size: 1.5rem;
+    }
+
+    .title-button-container button {
+        padding: 8px 12px;
+    }
+}
+
+
+
+/* Extra Improvements */
+button:focus, input:focus {
+    outline: none;
+}
+
+button, input {
+    font-size: 1rem;
+    font-family: inherit;
+}
+
+/* Smooth transitions for links */
+a {
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #ccc;
+}
+
+
+
+
+
+
+/* index.html styels */
+/* استایل برای بخش اخبار */
+.news-section {
+    width: 20%;  /* به آن ۷۰ درصد از عرض صفحه داده می‌شود */
+    padding-right: 20px;
+    box-sizing: border-box;
+    height: 100vh; /* ارتفاع کامل صفحه */
+    overflow-y: auto; /* در صورت نیاز به اسکرول */
+}
+
+/* طراحی کارت برای نمایش اخبار */
+.news-item {
+    background-color: #fff;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+/* عنوان خبر */
+.news-item h2 {
+    font-size: 1.2em;
+    margin: 0;
+    font-weight: bold;
+    color: #333;
+}
+
+/* استایل برای توضیحات خبر */
+.news-item p {
+    color: #333;
+    font-size: 0.9em;
+    margin-top: 10px;
+    line-height: 1.4;
+    display: -webkit-box;
+
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis; /* اضافه کردن "..." در انتهای متن */
+}
+
+/* استایل برای تاریخ انتشار */
+.news-item .published-at {
+    font-size: 0.8em;
+    color: #888;
+    margin-top: 10px;
+}
+
+.published-at {
+    color: #555; /* Slightly darker */
+}
+
+/* اضافه کردن فاصله بین عنوان و اخبار */
+h2 {
+    margin-bottom: 30px;  /* فاصله 30 پیکسل از پایین عنوان */
+}
+
+/* قالب کلی برای نمایش دو بخش کنار هم */
+.content-wrapper {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-top: 20px;  /* اضافه کردن فاصله از بالای صفحه */
+}
+
+/* خط عمودی جدا کننده */
+.vertical-line {
+    width: 23px;
+    background-color: #ccc;  /* رنگ خط */
+    height: 100%;
+    margin-top: 20px;  /* فاصله از بالا */
+}
+
+/* بخش محتوای اصلی */
+.main-content {
+    width: 70%;  /* به آن ۳۰ درصد از عرض صفحه داده می‌شود */
+    padding-left: 20px;
+}
+
+/* فاصله بین بخش اخبار و محتوای اصلی */
+.content-wrapper > .news-section {
+    margin-right: 20px;  /* فاصله ۲۰ پیکسل از بخش مطالب اصلی */
+}
+
+/* استایل برای فاصله بین اخبار */
+.news-item {
+    margin-bottom: 20px;
+}
+
+
+.vl {
+  border-left: 2px solid #333;  /* ایجاد خط عمودی */
+  height: 100vh;  /* ارتفاع 100 درصد صفحه */
+}
+
+.site-logo {
+    width: 10%;
+}
+
+/* کانتینر برای h1 و دکمه */
+.title-button-container {
+    display: flex;
+    justify-content: space-between; /* h1 سمت راست و دکمه سمت چپ */
+    align-items: center; /* هم‌سطح کردن عناصر */
+    margin-bottom: 20px; /* فاصله زیر کانتینر */
+    direction: rtl; /* تنظیم جهت برای زبان فارسی */
+}
+
+/* استایل‌های دیگر برای هماهنگی */
+.title-button-container h1 {
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+.title-button-container button {
+    padding: 10px 15px;
+    background-color: #555;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.title-button-container button:/* Add box-sizing to make padding/border calculation easier */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Header Styles */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+    position: relative;
+}
+
+/* Left section (Logo and Categories) */
+.left-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.left-section h1 a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.8rem;
+}
+
+.categories ul {
+    display: flex;
+    gap: 15px;
+    list-style: none;
+    flex-wrap: wrap; /* Ensures items wrap if there's not enough space */
+}
+
+.categories a {
+    display: block;
+    padding: 10px 15px;
+    color: white;
+    text-decoration: none;
+    background-color: transparent;
+    transition: background-color 0.3s ease;
+    min-width: 100px; /* Prevents the box from shrinking too small */
+    word-wrap: break-word; /* Ensures text wraps and doesn't overflow */
+}
+
+.categories a:hover {
+    background-color: #555;
+}
+
+/* Dropdown menu styles */
+.categories li {
+    position: relative;
+}
+
+.categories .submenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0; /* تغییر از left به right */
+    background-color: #444;
+    list-style: none;
+    padding: 10px;
+    margin: 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.submenu {
+  transform: translateY(-10px);
+}
+
+.categories .submenu li {
+    margin-bottom: 5px;
+}
+
+.categories .submenu li a {
+    color: white;
+    text-decoration: none;
+}
+
+.categories .submenu li a:hover {
+    text-decoration: underline;
+}
+
+/* Show submenu on hover with animation */
+.categories li:hover > .submenu {
+    display: block;
+    opacity: 1;
+}
+
+/* Submenu item hover: reveal next submenu */
+.submenu li:hover > .submenu {
+    display: block;
+    top: 0;
+    right: 100%;
+}
+
+/* Right section (Search and Profile) */
+.right-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Search box */
+.search {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.search input {
+    padding: 5px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.search button {
+    padding: 7px 10px;
+    background-color: #555;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.search button:hover {
+    background-color: #777;
+}
+
+/* Profile Links */
+.profile a {
+    color: white;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+.profile a:hover {
+    text-decoration: underline;
+}
+
+/* Profile buttons (for logged in users) */
+.profile button {
+    color: white;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.profile button:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .left-section,
+    .right-section {
+        justify-content: flex-start;
+        width: 100%;
+    }
+
+    .categories ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .search input {
+        width: 100%;
+    }
+
+    .profile {
+        margin-top: 10px;
+    }
+
+    .profile a,
+    .profile button {
+        display: block;
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    .vl {
+        display: none;
+    }
+
+    .content-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 3px 3fr;
+        gap: 20px;
+        align-items: start;
+    }
+
+    .news-section,
+    .main-content {
+        width: 100%;
+    }
+
+    /* Change news item layout for smaller screens */
+    .news-item {
+        padding: 10px;
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Header: Stack elements vertically */
+    header {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .left-section,
+    .right-section {
+        width: 100%;
+        justify-content: flex-start;
+        gap: 15px;
+    }
+
+    .categories ul {
+        flex-direction: column;
+    }
+
+    /* Adjusting logo size */
+    .site-logo {
+        width: 25%;
+    }
+
+    /* Search bar: Stack input and button */
+    .search {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search input {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    /* Profile links as a column */
+    .profile a,
+    .profile button {
+        display: block;
+        margin-top: 10px;
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Adjust content sections to be full width */
+    .content-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 3px 3fr;
+        gap: 20px;
+        align-items: start;
+    }
+
+    .news-section,
+    .main-content {
+        width: 100%;
+    }
+
+    .vl {
+        display: none;
+    }
+
+    .news-section {
+        padding: 10px;
+    }
+
+    .title-button-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .title-button-container h1,
+    .title-button-container button {
+        width: 100%;
+    }
+}
+
+/* Adjust styles for even smaller screens (mobile) */
+@media (max-width: 480px) {
+    .left-section h1 {
+        font-size: 1.5rem;
+    }
+
+    .categories ul {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .news-section {
+        width: 100%;
+        padding-right: 0;
+    }
+
+    .site-logo {
+        width: 30%;
+    }
+
+    .search input {
+        font-size: 0.9rem;
+    }
+
+    .news-item {
+        font-size: 0.85rem;
+    }
+
+    /* Main content styles */
+    .main-content {
+        padding-left: 10px;
+    }
+
+    .title-button-container h1 {
+        font-size: 1.5rem;
+    }
+
+    .title-button-container button {
+        padding: 8px 12px;
+    }
+}
+
+
+
+/* Extra Improvements */
+button:focus, input:focus {
+    outline: none;
+}
+
+button, input {
+    font-size: 1rem;
+    font-family: inherit;
+}
+
+/* Smooth transitions for links */
+a {
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #ccc;
+}
+
+
+
+
+
+
+/* index.html styels */
+/* استایل برای بخش اخبار */
+.news-section {
+    width: 20%;  /* به آن ۷۰ درصد از عرض صفحه داده می‌شود */
+    padding-right: 20px;
+    box-sizing: border-box;
+    height: 100vh; /* ارتفاع کامل صفحه */
+    overflow-y: auto; /* در صورت نیاز به اسکرول */
+}
+
+/* طراحی کارت برای نمایش اخبار */
+.news-item {
+    background-color: #fff;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+/* عنوان خبر */
+.news-item h2 {
+    font-size: 1.2em;
+    margin: 0;
+    font-weight: bold;
+    color: #333;
+}
+
+/* استایل برای توضیحات خبر */
+.news-item p {
+    color: #333;
+    font-size: 0.9em;
+    margin-top: 10px;
+    line-height: 1.4;
+    display: -webkit-box;
+
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis; /* اضافه کردن "..." در انتهای متن */
+}
+
+/* استایل برای تاریخ انتشار */
+.news-item .published-at {
+    font-size: 0.8em;
+    color: #888;
+    margin-top: 10px;
+}
+
+.published-at {
+    color: #555; /* Slightly darker */
+}
+
+/* اضافه کردن فاصله بین عنوان و اخبار */
+h2 {
+    margin-bottom: 30px;  /* فاصله 30 پیکسل از پایین عنوان */
+}
+
+/* قالب کلی برای نمایش دو بخش کنار هم */
+.content-wrapper {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-top: 20px;  /* اضافه کردن فاصله از بالای صفحه */
+}
+
+/* خط عمودی جدا کننده */
+.vertical-line {
+    width: 23px;
+    background-color: #ccc;  /* رنگ خط */
+    height: 100%;
+    margin-top: 20px;  /* فاصله از بالا */
+}
+
+/* بخش محتوای اصلی */
+.main-content {
+    width: 70%;  /* به آن ۳۰ درصد از عرض صفحه داده می‌شود */
+    padding-left: 20px;
+}
+
+/* فاصله بین بخش اخبار و محتوای اصلی */
+.content-wrapper > .news-section {
+    margin-right: 20px;  /* فاصله ۲۰ پیکسل از بخش مطالب اصلی */
+}
+
+/* استایل برای فاصله بین اخبار */
+.news-item {
+    margin-bottom: 20px;
+}
+
+
+.vl {
+  border-left: 2px solid #333;  /* ایجاد خط عمودی */
+  height: 100vh;  /* ارتفاع 100 درصد صفحه */
+}
+
+.site-logo {
+    width: 10%;
+}
+
+/* کانتینر برای h1 و دکمه */
+.title-button-container {
+    display: flex;
+    justify-content: space-between; /* h1 سمت راست و دکمه سمت چپ */
+    align-items: center; /* هم‌سطح کردن عناصر */
+    margin-bottom: 20px; /* فاصله زیر کانتینر */
+    direction: rtl; /* تنظیم جهت برای زبان فارسی */
+}
+
+/* استایل‌های دیگر برای هماهنگی */
+.title-button-container h1 {
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+.title-button-container button {
+    padding: 10px 15px;
+    background-color: #555;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.title-button-container button:hover {
+    background-color: #777;
+}
+hover {
+    background-color: #777;
+}

@@ -3,8 +3,23 @@
 {% load custom_filters %}
 
 <style>
+    /* General styles for dark theme */
+    body {
+        background-color: #121212;
+        color: #e0e0e0;
+    }
+
+    a {
+        color: #bb86fc;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: #cfbafc;
+    }
+
     .shadow-box {
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.1);
     }
 
     .rounded {
@@ -13,39 +28,77 @@
 
     .news-section,
     .main-content {
-        background-color: #fff;
+        background-color: #1e1e1e;
         margin-bottom: 20px;
+        color: #e0e0e0;
     }
 
     .d-flex .text-muted {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        color: #b0b0b0;
     }
 
-    /* استایل برای باکس دایره‌ای تاریخ */
+    /* Style for card-body */
+    .card-body {
+        background-color: #2c2c2c;
+        color: #e0e0e0;
+        border-radius: 10px;
+        padding: 15px;
+    }
+
+    /* Style for circular date box */
     .date-box {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background-color: #f5f5f5;
+        width: 45px;
+        height: 130px;
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 12px;
-        color: #777;
+        color: #bbbbbb;
         text-align: center;
+        margin-right: -25px;
     }
 
-    /* استایل برای لیبل‌ها */
+    /* Style for labels */
     .label {
         display: inline-block;
         padding: 5px 10px;
         margin-right: 5px;
         border-radius: 20px;
-        background-color: #007bff;
-        color: white;
+        background-color: #03dac6;
+        color: #121212;
         font-size: 12px;
+    }
+
+    /* Buttons */
+    .btn-primary {
+        background-color: #69b987;
+        border: none;
+        color: #121212;
+    }
+
+    .btn-primary:hover {
+        background-color: #198754;
+    }
+
+    /* Spinner */
+    .spinner-border {
+        color: #bb86fc;
+    }
+
+    #loading p {
+        color: #e0e0e0;
+    }
+
+    .card {
+        background-color: #69b987;
+        border-radius: 10px;
+    }
+
+    .d-flex.mb-4.align-items-start {
+        gap: 10px;
     }
 
 </style>
@@ -124,55 +177,5 @@
         </div>
     </div>
 </div>
-
-<!-- Loading Button (using a spinner for better UX) -->
-<div id="loading" style="display: none; text-align: center; margin: 20px 0;">
-    <div class="spinner-border" role="status">
-        <span class="visually-hidden">در حال بارگذاری...</span>
-    </div>
-    <p>در حال بارگذاری...</p>
-</div>
-
-<script type="text/javascript">
-    document.addEventListener("DOMContentLoaded", function () {
-        let page = 2; // Starting page number
-        let loading = false;
-
-        // Adding scroll listener for infinite scrolling
-        window.addEventListener("scroll", async () => {
-            const scrollPosition = window.scrollY + window.innerHeight;
-            const bottomPosition = document.body.offsetHeight - 200;
-
-            // Check if user is near the bottom and prevent repeated requests
-            if (scrollPosition > bottomPosition && !loading) {
-                loading = true;
-                document.getElementById("loading").style.display = "block"; // Show loading message
-
-                // Fetch additional questions from server
-                try {
-                    const response = await fetch(`load-questions/?page=${page}`);
-                    if (response.ok) {
-                        const html = await response.text();
-                        const recentQuestions = document.getElementById("recent-questions");
-                        recentQuestions.insertAdjacentHTML("beforeend", html);
-
-                        page++; // Increment page number for loading next set of questions
-                        loading = false;
-                        document.getElementById("loading").style.display = "none"; // Hide loading message
-                    } else {
-                        // If no more pages or an error occurred
-                        document.getElementById("loading").innerHTML = "تمام سوالات بارگذاری شدند.";
-                        setTimeout(() => {
-                            document.getElementById("loading").style.display = "none"; // Hide after 2 seconds
-                        }, 2000);
-                    }
-                } catch (error) {
-                    console.error("Error loading questions:", error);
-                    document.getElementById("loading").style.display = "none"; // Hide loading message in case of error
-                }
-            }
-        });
-    });
-</script>
 
 {% endblock %}

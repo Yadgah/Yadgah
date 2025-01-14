@@ -164,8 +164,9 @@ class QuestionForm(forms.ModelForm):
 
     labels = forms.ModelMultipleChoiceField(
         queryset=Label.objects.all(),
-        widget=forms.CheckboxSelectMultiple,  # برای نمایش چک‌باکس‌ها
-        required=False)
+        widget=forms.CheckboxSelectMultiple,
+        required=False
+    )
 
 class ReplyForm(forms.ModelForm):
     class Meta:
