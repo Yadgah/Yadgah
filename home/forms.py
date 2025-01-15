@@ -164,10 +164,9 @@ class QuestionForm(forms.ModelForm):
 
     labels = forms.ModelMultipleChoiceField(
         queryset=Label.objects.all(),
-        widget=forms.CheckboxSelectMultiple,
+        widget=forms.SelectMultiple(attrs={'class': 'custom-multi-select'}),
         required=False
     )
-
 class ReplyForm(forms.ModelForm):
     class Meta:
         model = Reply
