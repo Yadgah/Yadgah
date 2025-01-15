@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
 {% block title %}Create Question{% endblock %}
+{% load custom_filters %}
 
 {% block content %}
-
 <style>
     body {
         background-color: #121212;
@@ -26,7 +26,7 @@
         color: #fff;
         font-weight: bold;
         display: block;
-        font-size: 18px; /* یا اندازه دلخواه دیگر */    
+        font-size: 18px;
     }
 
     input, textarea {
@@ -71,6 +71,66 @@
     .errorlist li {
         margin-bottom: 5px;
     }
+
+    .custom-multi-select {
+        width: 100%;
+        height: auto;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: #2b2b2b;
+        color: #fff;
+        font-size: 16px;
+    }
+
+    .custom-multi-select option {
+        padding: 5px;
+        background-color: #2b2b2b;
+        color: #fff;
+    }
+
+    .custom-multi-select option:hover {
+        background-color: #444;
+    }
+
+    .custom-multi-select option.selected {
+        background-color: #198754;
+        color: #fff;
+        font-weight: bold;
+    }
+
+    .selected-labels-container {
+        margin-top: 15px;
+    }
+
+    .selected-labels {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .selected-labels li {
+        background-color: #198754;
+        color: white;
+        border-radius: 5px;
+        padding: 5px 10px;
+        margin: 5px;
+        font-size: 14px;
+        font-weight: bold;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .selected-labels li .remove {
+        margin-left: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: normal;
+    }
+
+    .selected-labels li:hover {
+        background-color: #157347;
+    }
+
 </style>
 
 <div class="container">
@@ -92,24 +152,69 @@
         </div>
 
         <div class="form-group">
-            <label for="id_labels">برچسب</label>
-            <hr></hr>
-            {{ form.labels }}
+		    <label for="id_labels">برچسب</label>
+		    <input type="text" id="search-input" placeholder="جستجوی برچسب..." style="width: 100%; padding: 10px; margin-bottom: 10px;">
+		    {{ form.labels|add_class:"custom-multi-select" }}
+		</div>
+
+        <div class="form-group selected-labels-container">
+            <ul id="selected-list" class="selected-labels">
+                <!-- برچسب‌های انتخاب‌شده در اینجا نمایش داده می‌شود -->
+            </ul>
         </div>
 
         <button type="submit" class="btn-submit">ارسال</button>
-
-        {% if form.errors %}
-            <div class="form-error">
-                <ul>
-                    {% for field in form %}
-                        {% for error in field.errors %}
-                            <li>{{ error }}</li>
-                        {% endfor %}
-                    {% endfor %}
-                </ul>
-            </div>
-        {% endif %}
     </form>
 </div>
+
+<script>
+    const labelSelect = document.getElementById('id_labels');
+    const selectedList = document.getElementById('selected-list');
+    const selectedOptions = new Set(); 
+
+    // افزودن یا حذف گزینه‌ها
+    labelSelect.addEventListener('change', function () {
+        const selectedValues = Array.from(labelSelect.selectedOptions).map(option => option.value);
+        selectedOptions.clear(); // پاک کردن مقادیر قبلی
+        selectedValues.forEach(value => selectedOptions.add(value)); 
+        updateSelectedLabels();
+    });
+
+    // جستجو در برچسب‌ها
+    document.getElementById('search-input').addEventListener('input', function () {
+        const searchTerm = this.value.toLowerCase();
+        const options = document.querySelectorAll('#id_labels option');
+        
+        options.forEach(option => {
+            if (option.textContent.toLowerCase().includes(searchTerm)) {
+                option.style.display = '';
+            } else {
+                option.style.display = 'none';
+            }
+        });
+    });
+
+    // به‌روزرسانی نمایش برچسب‌های انتخاب‌شده
+    function updateSelectedLabels() {
+        selectedList.innerHTML = ''; 
+        selectedOptions.forEach(value => {
+            const option = Array.from(labelSelect.options).find(opt => opt.value === value);
+            if (option) {
+                const li = document.createElement('li');
+                li.textContent = option.textContent; 
+                const removeIcon = document.createElement('span');
+                removeIcon.textContent = '×';
+                removeIcon.classList.add('remove');
+                removeIcon.addEventListener('click', function() {
+                    selectedOptions.delete(value);
+                    updateSelectedLabels();
+                });
+
+                li.appendChild(removeIcon);
+                selectedList.appendChild(li);
+            }
+        });
+    }
+</script>
+
 {% endblock %}

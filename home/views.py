@@ -160,19 +160,24 @@ def search_view(request):
 
 
 # Home view to show recent questions and news
+# Home view to show recent questions and news
 def home_view(request):
-    # Get the most recent questions
-    questions = Question.objects.all().order_by("-created_at")[:5]
+    # Get the most recent questions with their labels
+    questions = Question.objects.prefetch_related('labels').all().order_by("-created_at")[:5]
     # Get the most recent active news
     news_items = News.objects.filter(is_active=True).order_by("-published_at")[:5]
+
+    print(questions[0].labels.all())  # چاپ لیبل‌های سوال اول
+
 
     # Send data to the template
     return render(
         request, "index.html", {
             "questions": questions,
             "news_items": news_items
-            }
+        }
     )
+
 
 
 # View to list news
