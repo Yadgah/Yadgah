@@ -153,68 +153,13 @@
 
         <div class="form-group">
 		    <label for="id_labels">برچسب</label>
-		    <input type="text" id="search-input" placeholder="جستجوی برچسب..." style="width: 100%; padding: 10px; margin-bottom: 10px;">
+            <hr></hr>
 		    {{ form.labels|add_class:"custom-multi-select" }}
 		</div>
 
-        <div class="form-group selected-labels-container">
-            <ul id="selected-list" class="selected-labels">
-                <!-- برچسب‌های انتخاب‌شده در اینجا نمایش داده می‌شود -->
-            </ul>
-        </div>
 
         <button type="submit" class="btn-submit">ارسال</button>
     </form>
 </div>
-
-<script>
-    const labelSelect = document.getElementById('id_labels');
-    const selectedList = document.getElementById('selected-list');
-    const selectedOptions = new Set(); 
-
-    // افزودن یا حذف گزینه‌ها
-    labelSelect.addEventListener('change', function () {
-        const selectedValues = Array.from(labelSelect.selectedOptions).map(option => option.value);
-        selectedOptions.clear(); // پاک کردن مقادیر قبلی
-        selectedValues.forEach(value => selectedOptions.add(value)); 
-        updateSelectedLabels();
-    });
-
-    // جستجو در برچسب‌ها
-    document.getElementById('search-input').addEventListener('input', function () {
-        const searchTerm = this.value.toLowerCase();
-        const options = document.querySelectorAll('#id_labels option');
-        
-        options.forEach(option => {
-            if (option.textContent.toLowerCase().includes(searchTerm)) {
-                option.style.display = '';
-            } else {
-                option.style.display = 'none';
-            }
-        });
-    });
-
-    // به‌روزرسانی نمایش برچسب‌های انتخاب‌شده
-    function updateSelectedLabels() {
-        selectedList.innerHTML = ''; 
-        selectedOptions.forEach(value => {
-            const option = Array.from(labelSelect.options).find(opt => opt.value === value);
-            if (option) {
-                const li = document.createElement('li');
-                li.textContent = option.textContent; 
-                const removeIcon = document.createElement('span');
-                removeIcon.textContent = '×';
-                removeIcon.classList.add('remove');
-                removeIcon.addEventListener('click', function() {
-                    selectedOptions.delete(value);
-                    updateSelectedLabels();
-                });
-
-                li.appendChild(removeIcon);
-                selectedList.appendChild(li);
-            }
-        });
-    }
-</script>
 
 {% endblock %}
