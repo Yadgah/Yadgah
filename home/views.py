@@ -167,7 +167,7 @@ def home_view(request):
     # Get the most recent active news
     news_items = News.objects.filter(is_active=True).order_by("-published_at")[:5]
 
-    print(questions[0].labels.all())  # چاپ لیبل‌های سوال اول
+    # print(questions[0].labels.all())  # چاپ لیبل‌های سوال اول
 
 
     # Send data to the template
