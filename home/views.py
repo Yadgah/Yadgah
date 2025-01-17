@@ -160,24 +160,10 @@ def search_view(request):
 
 
 # Home view to show recent questions and news
-# Home view to show recent questions and news
 def home_view(request):
-    # Get the most recent questions with their labels
-    questions = Question.objects.prefetch_related('labels').all().order_by("-created_at")[:5]
-    # Get the most recent active news
+    questions = Question.objects.all().order_by('-created_at')[:5]
     news_items = News.objects.filter(is_active=True).order_by("-published_at")[:5]
-
-    # print(questions[0].labels.all())  # چاپ لیبل‌های سوال اول
-
-
-    # Send data to the template
-    return render(
-        request, "index.html", {
-            "questions": questions,
-            "news_items": news_items
-        }
-    )
-
+    return render(request, "index.html", {'questions': questions,'news_items': news_items})
 
 
 # View to list news
@@ -269,21 +255,50 @@ def user_profile(request, username):
     )
 
 
-# View to load questions for pagination
 def load_questions(request):
-    page = request.GET.get("page", 1)  # Get page number (default is 1)
-    page = int(page)  # Convert page number to integer
-
-    # Load questions and use Paginator for pagination
-    questions = Question.objects.all().order_by("-created_at")
-    paginator = Paginator(questions, 5)  # 5 questions per page
-
+    offset = request.GET.get('offset', 0)
     try:
-        questions_page = paginator.page(page)
-    except EmptyPage:
-        return HttpResponse("")  # Return empty response if page is out of range
+        offset = int(offset)
+    except ValueError:
+        return JsonResponse({'error': 'Invalid offset value'}, status=400)
 
-    return render(request, "partials/question_list.html", {"questions": questions_page})
+    limit = 5  # تعداد سوالاتی که می‌خواهید در هر بار بارگذاری بفرستید
+    questions = Question.objects.all().order_by('-created_at')[offset:offset + limit]
+    total = Question.objects.count()
+
+    # ساخت پاسخ JSON به همراه لیبل‌های هر سوال
+    data = {
+        'questions': [
+            {
+                'id': q.id,
+                'title': q.title,
+                'content': q.content,
+                'created_at': q.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+                'labels': list(q.labels.values_list('name', flat=True)),  # لیست نام لیبل‌ها
+            }
+            for q in questions
+        ],
+        'total': total
+    }
+    return JsonResponse(data)
+
+
+
+# View to load questions for pagination
+# def load_questions(request):
+#     page = request.GET.get("page", 1)  # Get page number (default is 1)
+#     page = int(page)  # Convert page number to integer
+
+#     # Load questions and use Paginator for pagination
+#     questions = Question.objects.all().order_by("-created_at")
+#     paginator = Paginator(questions, 5)  # 5 questions per page
+
+#     try:
+#         questions_page = paginator.page(page)
+#     except EmptyPage:
+#         return HttpResponse("")  # Return empty response if page is out of range
+
+#     return render(request, "partials/question_list.html", {"questions": questions_page})
 
 
 # View to delete user profile
