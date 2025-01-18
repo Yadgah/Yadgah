@@ -1,6 +1,0 @@
-{
-    "ignore": ["question_detail.html"],  // فایل‌هایی که نباید lint شوند
-    "preserve_line_breaks": true,
-    "tag_nesting_indentation": false
-}
-

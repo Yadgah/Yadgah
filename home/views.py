@@ -263,10 +263,11 @@ def question_detail(request, question_id):
 # View for user profiles displaying their questions
 def user_profile(request, username):
     user = get_object_or_404(User, username=username)
-    questions = user.questions.all()  # Get questions asked by the user
+    questions = Question.objects.filter(user=user)  # Fetch questions asked by the user
     return render(
         request, "user_profile.html", {"profile_user": user, "questions": questions}
     )
+
 
 
 def load_questions(request):

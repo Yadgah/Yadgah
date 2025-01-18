@@ -46,7 +46,7 @@
   }
 
   /* Style for circular date box */
-  .date-box {
+  /*.date-box {
     width: 45px;
     height: 130px;
     display: flex;
@@ -56,7 +56,7 @@
     color: #bbbbbb;
     text-align: center;
     margin-right: -25px;
-  }
+  }*/
 
   /* Style for labels */
   .label {
@@ -161,10 +161,9 @@
           <div class="d-flex mb-4 align-items-start">
             <!-- تاریخ در اینجا -->
             <div class="d-flex align-items-center me-3">
-              <div class="date-box">
+              <!-- <div class="date-box">
                 <span>{{ question.created_at|jalali_date|slice:":10" }}</span>
-                <!-- نمایش تاریخ کوتاه -->
-              </div>
+              </div> -->
             </div>
             <!-- سوالات در اینجا -->
             <div class="card flex-grow-1">
@@ -180,6 +179,8 @@
                 <p class="card-text">
                   {{ question.content|striptags|truncatewords:20 }}
                 </p>
+                <span>{{ question.created_at|jalali_date|slice:":10" }}</span>
+
                 <!-- نمایش لیبل‌های مربوط به سوال -->
                 <div class="mt-2">
                   {% for label in question.labels.all %}
@@ -261,9 +262,6 @@
           const newPost = `
                     <div class="d-flex mb-4 align-items-start">
                         <div class="d-flex align-items-center me-3">
-                            <div class="date-box">
-                                <span>${formattedDate}</span>
-                            </div>
                         </div>
                         <div class="card flex-grow-1">
                             <div class="card-body">
@@ -277,6 +275,7 @@
                                 <p class="card-text">${post.content
                                   .replace(/(<([^>]+)>)/gi, '')
                                   .substring(0, 100)}</p>
+                                <span>${formattedDate}</span>
                                 <div class="mt-2">
                                     ${post.labels
                                       .map(

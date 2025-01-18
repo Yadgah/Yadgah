@@ -29,6 +29,13 @@
       .form-control {
         border-radius: 23.3rem;
       }
+      body {
+        background-color: #121212;
+        color: #fff;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
     </style>
   </head>
   <body dir="rtl">
@@ -52,7 +59,7 @@
             <h1 class="ms-2">یادگاه</h1>
           </a>
           <!-- Navigation Menu -->
-          <ul
+          <!-- <ul
             class="nav col-12 col-lg-auto mb-2 mb-lg-0 justify-content-center"
           >
             <li>
@@ -70,16 +77,16 @@
             <li>
               <a href="#" class="nav-link px-2 text-white">درباره ما</a>
             </li>
-          </ul>
+          </ul> -->
           <!-- Search Form -->
-          <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+          <!-- <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
             <input
               type="search"
               class="form-control form-control-dark"
               placeholder="جست و جو..."
               aria-label="جست و جو"
             />
-          </form>
+          </form> -->
           <!-- User Authentication Section -->
           <div class="text-end">
             {% if user.is_authenticated %}
@@ -103,7 +110,7 @@
               {% else %}
               <!-- Display default avatar if no profile picture is set -->
               <img
-                src="{% static 'profile_picture.jpg' %}"
+                src="{% static 'default-avatar.png' %}"
                 alt="default avatar"
                 width="32"
                 height="32"
@@ -117,7 +124,11 @@
               aria-labelledby="dropdownUser1"
             >
               <li>
-                <a class="dropdown-item" href="{% url 'profile' %}">پروفایل</a>
+                <a class="dropdown-item" href="{% url 'user_profile' user.username %}">پروفایل</a>
+              </li>
+
+              <li>
+                <a class="dropdown-item" href="{% url 'profile' %}">تنظیمات</a>
               </li>
               <li>
                 <a class="dropdown-item" href="{% url 'logout' %}">خروج</a>
@@ -137,57 +148,65 @@
     <!-- Main Content Section -->
     <div class="container my-4">{% block content %}{% endblock %}</div>
     <!-- Remove the container if you want to extend the Footer to full width. -->
-    <footer style="background-color: #eee6d3">
+    <footer style="background-color: #212529; color: #fff; margin-top: 20px;">
       <div class="container p-4">
         <div class="row">
+          <!-- Footer Content -->
           <div class="col-lg-6 col-md-12 mb-4">
-            <h5 class="mb-3 text-dark">footer content</h5>
+            <h5 class="mb-3" style="color: #69b987;">درباره ما</h5>
             <p>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste
-              atque ea quis molestias. Fugiat pariatur maxime quis culpa
-              corporis vitae repudiandae aliquam voluptatem veniam, est atque
-              cumque eum delectus sint!
+              وبسایت یادگاه - بستری برای یادگیری، اشتراک تجربیات و دریافت اطلاعات مفید. از
+              پرسش و پاسخ تا مطالعه مقالات آموزنده.
             </p>
           </div>
+          <!-- Links Section -->
           <div class="col-lg-3 col-md-6 mb-4">
-            <h5 class="mb-3 text-dark">links</h5>
+            <h5 class="mb-3" style="color: #69b987;">لینک‌ها</h5>
             <ul class="list-unstyled mb-0">
-              <li class="mb-1">
-                <a href="#!" style="color: #4f4f4f">FAQ</a>
+              <li class="mb-2">
+                <a href="#!" style="color: #fff; text-decoration: none;">سوالات متداول</a>
               </li>
-              <li class="mb-1">
-                <a href="#!" style="color: #4f4f4f">Classes</a>
+              <li class="mb-2">
+                <a href="#!" style="color: #fff; text-decoration: none;">کلاس‌ها</a>
               </li>
-              <li class="mb-1">
-                <a href="#!" style="color: #4f4f4f">Pricing</a>
+              <li class="mb-2">
+                <a href="#!" style="color: #fff; text-decoration: none;">قیمت‌ها</a>
               </li>
               <li>
-                <a href="#!" style="color: #4f4f4f">Safety</a>
+                <a href="#!" style="color: #fff; text-decoration: none;">قوانین</a>
               </li>
             </ul>
           </div>
-          <div class="col-lg-3 col-md-6 mb-4">
-            <h5 class="mb-1 text-dark">opening hours</h5>
-            <table class="table" style="border-color: #666">
-              <tbody>
-                <tr>
-                  <td>Mon - Fri:</td>
-                  <td>8am - 9pm</td>
-                </tr>
-                <tr>
-                  <td>Sat - Sun:</td>
-                  <td>8am - 1am</td>
-                </tr>
-              </tbody>
-            </table>
+          <div class="col-lg-3 col-md-6 mb-4 text-center">
+            <h5 class="mb-3" style="color: #69b987;">من</h5>
+            <a href="https://github.com/BDadmehr0/" target="_blank" style="text-decoration: none;">
+              <div
+                style="
+                  width: 60px;
+                  height: 60px;
+                  border-radius: 50%;
+                  background-color: #69b987;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  margin: 0 auto;
+                "
+              >
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/25/25231.png"
+                  alt="GitHub Icon"
+                  style="width: 40px; height: 40px;"
+                />
+              </div>
+            </a>
           </div>
         </div>
       </div>
-      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
-        © 2020 Copyright:
-        <a class="text-dark" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.8);">
+        © 2025 تمام حقوق محفوظ است:
+        <a class="text-light" href="https://yadgah.com/" style="text-decoration: none;">Yadgah.com</a>
       </div>
-      <!-- Copyright -->
     </footer>
+
   </body>
 </html>
