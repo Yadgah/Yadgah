@@ -124,7 +124,11 @@
               aria-labelledby="dropdownUser1"
             >
               <li>
-                <a class="dropdown-item" href="{% url 'user_profile' user.username %}">پروفایل</a>
+                <a
+                  class="dropdown-item"
+                  href="{% url 'user_profile' user.username %}"
+                  >پروفایل</a
+                >
               </li>
 
               <li>
@@ -148,38 +152,50 @@
     <!-- Main Content Section -->
     <div class="container my-4">{% block content %}{% endblock %}</div>
     <!-- Remove the container if you want to extend the Footer to full width. -->
-    <footer style="background-color: #212529; color: #fff; margin-top: 20px;">
+    <footer style="background-color: #212529; color: #fff; margin-top: 20px">
       <div class="container p-4">
         <div class="row">
           <!-- Footer Content -->
           <div class="col-lg-6 col-md-12 mb-4">
-            <h5 class="mb-3" style="color: #69b987;">درباره ما</h5>
+            <h5 class="mb-3" style="color: #69b987">درباره ما</h5>
             <p>
-              وبسایت یادگاه - بستری برای یادگیری، اشتراک تجربیات و دریافت اطلاعات مفید. از
-              پرسش و پاسخ تا مطالعه مقالات آموزنده.
+              وبسایت یادگاه - بستری برای یادگیری، اشتراک تجربیات و دریافت
+              اطلاعات مفید. از پرسش و پاسخ تا مطالعه مقالات آموزنده.
             </p>
           </div>
           <!-- Links Section -->
           <div class="col-lg-3 col-md-6 mb-4">
-            <h5 class="mb-3" style="color: #69b987;">لینک‌ها</h5>
+            <h5 class="mb-3" style="color: #69b987">لینک‌ها</h5>
             <ul class="list-unstyled mb-0">
               <li class="mb-2">
-                <a href="#!" style="color: #fff; text-decoration: none;">سوالات متداول</a>
+                <a href="#!" style="color: #fff; text-decoration: none"
+                  >سوالات متداول</a
+                >
               </li>
               <li class="mb-2">
-                <a href="#!" style="color: #fff; text-decoration: none;">کلاس‌ها</a>
+                <a href="#!" style="color: #fff; text-decoration: none"
+                  >کلاس‌ها</a
+                >
               </li>
               <li class="mb-2">
-                <a href="#!" style="color: #fff; text-decoration: none;">قیمت‌ها</a>
+                <a href="#!" style="color: #fff; text-decoration: none"
+                  >قیمت‌ها</a
+                >
               </li>
               <li>
-                <a href="#!" style="color: #fff; text-decoration: none;">قوانین</a>
+                <a href="#!" style="color: #fff; text-decoration: none"
+                  >قوانین</a
+                >
               </li>
             </ul>
           </div>
           <div class="col-lg-3 col-md-6 mb-4 text-center">
-            <h5 class="mb-3" style="color: #69b987;">من</h5>
-            <a href="https://github.com/BDadmehr0/" target="_blank" style="text-decoration: none;">
+            <h5 class="mb-3" style="color: #69b987">من</h5>
+            <a
+              href="https://github.com/BDadmehr0/"
+              target="_blank"
+              style="text-decoration: none"
+            >
               <div
                 style="
                   width: 60px;
@@ -195,18 +211,22 @@
                 <img
                   src="https://cdn-icons-png.flaticon.com/512/25/25231.png"
                   alt="GitHub Icon"
-                  style="width: 40px; height: 40px;"
+                  style="width: 40px; height: 40px"
                 />
               </div>
             </a>
           </div>
         </div>
       </div>
-      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.8);">
+      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.8)">
         © 2025 تمام حقوق محفوظ است:
-        <a class="text-light" href="https://yadgah.com/" style="text-decoration: none;">Yadgah.com</a>
+        <a
+          class="text-light"
+          href="https://yadgah.com/"
+          style="text-decoration: none"
+          >Yadgah.com</a
+        >
       </div>
     </footer>
-
   </body>
 </html>

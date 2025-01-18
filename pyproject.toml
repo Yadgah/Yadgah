@@ -4,4 +4,3 @@ target-version = ['py39']
 
 [tool.isort]
 profile = "black"
-
