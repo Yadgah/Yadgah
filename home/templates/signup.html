@@ -1,5 +1,5 @@
-{% extends 'base.html' %} {% load custom_filters %} {% block content %} {% load
-static %}
+{% extends 'base.html' %} {% load custom_filters %} {% block content %}
+
 <div class="container mt-5">
   <h2 class="text-center mb-4">ثبت‌نام</h2>
   <form method="POST" class="w-50 mx-auto" enctype="multipart/form-data">
@@ -28,9 +28,6 @@ static %}
     </div>
     {% endif %}
     <!-- تصویر پروفایل پیش‌فرض -->
-    <!-- <div class="mb-3 text-center">
-            <img src="{% static 'profile_picture.png' %}" alt="عکس پروفایل پیش‌فرض" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover;">
-</div> -->
     <!-- فرم فیلدهای ثبت‌نام -->
     <div class="mb-3">
       <label for="{{ form.first_name.id_for_label }}" class="form-label"

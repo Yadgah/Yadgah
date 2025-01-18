@@ -1,65 +1,121 @@
-{% extends 'base.html' %} {% load custom_filters %} {% block content %}
+{% extends 'base.html' %} {% load static custom_filters %} {% block content %}
 <style>
-  .user-profile {
-    border: 1px solid #ddd;
+  body {
+    background-color: #121212;
+    color: #fff;
+  }
+  .profile-header {
+    display: flex;
+    align-items: center;
     padding: 20px;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #69b987;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   }
-  .user-profile h2 {
-    color: #007bff;
+  .profile-header h2 {
+    font-size: 24px;
+    margin: 0;
   }
-  .user-profile ul {
-    list-style-type: none;
+  .profile-header p {
+    margin: 5px 0 0;
+  }
+  .info-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  .info-box {
+    flex: 1;
+    min-width: 300px;
+    padding: 15px;
+    background-color: #1c1c1c;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  .info-box h3 {
+    margin-top: 0;
+    color: #69b987;
+  }
+  .info-box ul {
+    list-style: none;
     padding: 0;
   }
-  .user-profile li {
+  .info-box li {
     margin-bottom: 10px;
   }
-  .user-profile img {
+  .info-box a {
+    color: #69b987;
+    text-decoration: none;
+  }
+  .info-box a:hover {
+    text-decoration: underline;
+  }
+  .profile-header img {
     border-radius: 50%;
     width: 100px;
     height: 100px;
+    margin-right: 20px;
     object-fit: cover;
-  }
-  .user-profile .profile-info {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  .user-profile .profile-info .username {
-    font-size: 24px;
-    color: #007bff;
-    margin-left: 15px;
   }
 </style>
 
-<div class="user-profile">
-  <div class="profile-info">
-    <!-- Profile Picture (with fallback) -->
+<div class="container">
+  <!-- Profile Header -->
+  <div class="profile-header">
+    {% if profile_user.userprofile.avatar %}
+    <!-- Display the profile picture of the visited user -->
     <img
-      src="{{ profile_user.profile.picture.url|default:'/static/default-avatar.png' }}"
-      alt="{{ profile_user.username }}'s profile picture"
+      src="{{ profile_user.userprofile.avatar.url }}"
+      alt="{{ profile_user.username }}'s avatar"
+      width="32"
+      height="32"
+      class="rounded-circle"
     />
-    <h2 class="username">پروفایل کاربر: {{ profile_user.username }}</h2>
+    {% else %}
+    <!-- Display default avatar if no profile picture is set -->
+    <img
+      src="{% static 'default-avatar.png' %}"
+      alt="default avatar"
+      width="32"
+      height="32"
+      class="rounded-circle"
+    />
+    {% endif %}
+    <div>
+      <h2>{{ profile_user.username }}</h2>
+      <p>ایمیل: {{ profile_user.email }}</p>
+      <p>تاریخ عضویت: {{ profile_user.date_joined|date:"d F Y" }}</p>
+    </div>
   </div>
 
-  <p>ایمیل: {{ profile_user.email }}</p>
-  <p>تاریخ عضویت: {{ profile_user.date_joined|date:"d F Y" }}</p>
+  <!-- Information Sections -->
+  <div class="info-section">
+    <!-- User Questions -->
+    <div class="info-box">
+      <h3>سوالات پرسیده شده</h3>
+      {% if questions %}
+      <ul>
+        {% for question in questions %}
+        <li>
+          <a href="{% url 'question_detail' question.id %}"
+            >{{ question.title }}</a
+          >
+          <p>تاریخ: {{ question.created_at|jalali_date }}</p>
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p>این کاربر هنوز سوالی نپرسیده است.</p>
+      {% endif %}
+    </div>
 
-  <h3>سوالات پرسیده شده:</h3>
-  {% if questions %}
-  <ul>
-    {% for question in questions %}
-    <li>
-      <a href="{% url 'question_detail' question.id %}">{{ question.title }}</a>
-      <p>تاریخ: {{ question.created_at|jalali_date }}</p>
-    </li>
-    {% endfor %}
-  </ul>
-  {% else %}
-  <p>این کاربر هنوز سوالی نپرسیده است.</p>
-  {% endif %}
+    <!-- Placeholder for Other Info -->
+    <div class="info-box">
+      <h3>اطلاعات اضافی</h3>
+      <p>در این بخش می‌توانید اطلاعات دیگری نمایش دهید.</p>
+    </div>
+  </div>
 </div>
 {% endblock %}
