@@ -269,7 +269,6 @@ def user_profile(request, username):
     )
 
 
-
 def load_questions(request):
     offset = request.GET.get("offset", 0)
     try:
