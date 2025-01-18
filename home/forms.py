@@ -5,7 +5,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
-from .models import News, Question, Reply, UserProfile, Label
+from .models import Label, News, Question, Reply, UserProfile
 
 
 class NewsForm(forms.ModelForm):
@@ -157,17 +157,20 @@ class UserProfileForm(forms.ModelForm):
 #             "content": "Question Description",
 #         }
 
+
 class QuestionForm(forms.ModelForm):
     class Meta:
         model = Question
-        fields = ['title', 'content', 'labels']
+        fields = ["title", "content", "labels"]
 
     labels = forms.ModelMultipleChoiceField(
         queryset=Label.objects.all(),
         # widget=forms.widgets.CheckboxSelectMultiple,
-        widget=forms.CheckboxSelectMultiple(attrs={'class': 'custom-multi-select'}),
-        required=False
+        widget=forms.CheckboxSelectMultiple(attrs={"class": "custom-multi-select"}),
+        required=False,
     )
+
+
 class ReplyForm(forms.ModelForm):
     class Meta:
         model = Reply

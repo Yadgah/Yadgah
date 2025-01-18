@@ -1,65 +1,73 @@
-{% extends 'base.html' %}
-{% load custom_filters %}
-{% block content %}
-{% load static %}
-
+{% extends 'base.html' %} {% load custom_filters %} {% block content %} {% load
+static %}
 <div class="container mt-5">
-    <h2 class="text-center mb-4">ثبت‌نام</h2>
-
-    <form method="POST" class="w-50 mx-auto" enctype="multipart/form-data">
-        {% csrf_token %}
-
-        <!-- نمایش پیام‌ها -->
-        {% if messages %}
-            <div class="alert-container">
-                {% for message in messages %}
-                    <div class="alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %} alert-dismissible fade show" role="alert">
-                        <strong>{% if message.tags == "error" %}خطا!{% elif message.tags == "success" %}موفقیت!{% else %}توجه!{% endif %}</strong> {{ message }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                {% endfor %}
-            </div>
-        {% endif %}
-
-        <!-- تصویر پروفایل پیش‌فرض -->
-        <!-- <div class="mb-3 text-center">
+  <h2 class="text-center mb-4">ثبت‌نام</h2>
+  <form method="POST" class="w-50 mx-auto" enctype="multipart/form-data">
+    {% csrf_token %}
+    <!-- نمایش پیام‌ها -->
+    {% if messages %}
+    <div class="alert-container">
+      {% for message in messages %}
+      <div
+        class="alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %} alert-dismissible fade show"
+        role="alert"
+      >
+        <strong>
+          {% if message.tags == "error" %} خطا! {% elif message.tags ==
+          "success" %} موفقیت! {% else %} توجه! {% endif %}
+        </strong>
+        {{ message }}
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+    <!-- تصویر پروفایل پیش‌فرض -->
+    <!-- <div class="mb-3 text-center">
             <img src="{% static 'profile_picture.png' %}" alt="عکس پروفایل پیش‌فرض" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover;">
-        </div> -->
-
-        <!-- فرم فیلدهای ثبت‌نام -->
-        <div class="mb-3">
-            <label for="{{ form.first_name.id_for_label }}" class="form-label">نام</label>
-            {{ form.first_name|add_class:"form-control" }}
-        </div>
-
-        <div class="mb-3">
-            <label for="{{ form.last_name.id_for_label }}" class="form-label">نام خانوادگی</label>
-            {{ form.last_name|add_class:"form-control" }}
-        </div>
-
-        <div class="mb-3">
-            <label for="{{ form.password.id_for_label }}" class="form-label">رمز عبور</label>
-            {{ form.password|add_class:"form-control" }}
-        </div>
-
-        <div class="mb-3">
-            <label for="{{ form.confirm_password.id_for_label }}" class="form-label">تکرار رمز عبور</label>
-            {{ form.confirm_password|add_class:"form-control" }}
-        </div>
-
-        <div class="mb-3">
-            <label for="{{ form.email.id_for_label }}" class="form-label">ایمیل</label>
-            {{ form.email|add_class:"form-control" }}
-        </div>
-
-        <!-- فیلد انتخاب تصویر پروفایل (پنهان) -->
-        <input type="file" name="profile_picture" style="display: none;" />
-
-        <!-- دکمه ثبت‌نام -->
-        <div class="d-grid gap-2">
-            <button type="submit" class="btn btn-primary">ثبت‌نام</button>
-        </div>
-    </form>
+</div> -->
+    <!-- فرم فیلدهای ثبت‌نام -->
+    <div class="mb-3">
+      <label for="{{ form.first_name.id_for_label }}" class="form-label"
+        >نام</label
+      >
+      {{ form.first_name|add_class:"form-control" }}
+    </div>
+    <div class="mb-3">
+      <label for="{{ form.last_name.id_for_label }}" class="form-label"
+        >نام خانوادگی</label
+      >
+      {{ form.last_name|add_class:"form-control" }}
+    </div>
+    <div class="mb-3">
+      <label for="{{ form.password.id_for_label }}" class="form-label"
+        >رمز عبور</label
+      >
+      {{ form.password|add_class:"form-control" }}
+    </div>
+    <div class="mb-3">
+      <label for="{{ form.confirm_password.id_for_label }}" class="form-label"
+        >تکرار رمز عبور</label
+      >
+      {{ form.confirm_password|add_class:"form-control" }}
+    </div>
+    <div class="mb-3">
+      <label for="{{ form.email.id_for_label }}" class="form-label"
+        >ایمیل</label
+      >
+      {{ form.email|add_class:"form-control" }}
+    </div>
+    <!-- فیلد انتخاب تصویر پروفایل (پنهان) -->
+    <input type="file" name="profile_picture" style="display: none" />
+    <!-- دکمه ثبت‌نام -->
+    <div class="d-grid gap-2">
+      <button type="submit" class="btn btn-primary">ثبت‌نام</button>
+    </div>
+  </form>
 </div>
-
 {% endblock %}

@@ -60,20 +60,22 @@ def add_class(value, arg):
     """
     return value.as_widget(attrs={"class": arg})
 
+
 # home/signals.py
 from django.db.models.signals import post_migrate
 from django.dispatch import receiver
+
 from .models import Label
+
 
 @receiver(post_migrate)
 def create_default_labels(sender, **kwargs):
     labels = [
-        ('Linux', '#ff6347'),
-        ('Python', '#306998'),
-        ('PHP', '#4f5b93'),
-        ('JavaScript', '#f0db4f'),
-        ('Django', '#092e20'),
+        ("Linux", "#ff6347"),
+        ("Python", "#306998"),
+        ("PHP", "#4f5b93"),
+        ("JavaScript", "#f0db4f"),
+        ("Django", "#092e20"),
     ]
     for label_name, label_color in labels:
         Label.objects.get_or_create(name=label_name, color=label_color)
-

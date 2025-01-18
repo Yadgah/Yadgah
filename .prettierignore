@@ -1,0 +1,4 @@
+node_modules
+migrations
+*.pyc
+home/templates/question_detail.html

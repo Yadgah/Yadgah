@@ -1,165 +1,153 @@
-{% extends 'base.html' %}
-
-{% block title %}Create Question{% endblock %}
-{% load custom_filters %}
-
-{% block content %}
+{% extends 'base.html' %} {% block title %}Create Question{% endblock %} {% load
+custom_filters %} {% block content %}
 <style>
-    body {
-        background-color: #121212;
-        color: #fff;
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-    }
+  body {
+    background-color: #121212;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
 
-    h1 {
-        color: #198754;
-        text-align: center;
-    }
+  h1 {
+    color: #198754;
+    text-align: center;
+  }
 
-    .form-group {
-        margin-bottom: 15px;
-    }
+  .form-group {
+    margin-bottom: 15px;
+  }
 
-    label {
-        color: #fff;
-        font-weight: bold;
-        display: block;
-        font-size: 18px;
-    }
+  label {
+    color: #fff;
+    font-weight: bold;
+    display: block;
+    font-size: 18px;
+  }
 
-    input, textarea {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        background-color: #2b2b2b;
-        color: #fff;
-    }
+  input,
+  textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #2b2b2b;
+    color: #fff;
+  }
 
-    input[type="checkbox"] {
-        width: auto;
-    }
+  input[type='checkbox'] {
+    width: auto;
+  }
 
-    .btn-submit {
-        background-color: #198754;
-        color: #fff;
-        border: none;
-        padding: 12px 20px;
-        border-radius: 5px;
-        font-size: 16px;
-        cursor: pointer;
-        width: 100%;
-        margin-top: 20px;
-    }
+  .btn-submit {
+    background-color: #198754;
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 20px;
+  }
 
-    .btn-submit:hover {
-        background-color: #157347;
-    }
+  .btn-submit:hover {
+    background-color: #157347;
+  }
 
-    .form-error {
-        color: #e74c3c;
-        font-size: 14px;
-    }
+  .form-error {
+    color: #e74c3c;
+    font-size: 14px;
+  }
 
-    .errorlist {
-        list-style-type: none;
-        padding: 0;
-    }
+  .errorlist {
+    list-style-type: none;
+    padding: 0;
+  }
 
-    .errorlist li {
-        margin-bottom: 5px;
-    }
+  .errorlist li {
+    margin-bottom: 5px;
+  }
 
-    .custom-multi-select {
-        width: 100%;
-        height: auto;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        background-color: #2b2b2b;
-        color: #fff;
-        font-size: 16px;
-    }
+  .custom-multi-select {
+    width: 100%;
+    height: auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #2b2b2b;
+    color: #fff;
+    font-size: 16px;
+  }
 
-    .custom-multi-select option {
-        padding: 5px;
-        background-color: #2b2b2b;
-        color: #fff;
-    }
+  .custom-multi-select option {
+    padding: 5px;
+    background-color: #2b2b2b;
+    color: #fff;
+  }
 
-    .custom-multi-select option:hover {
-        background-color: #444;
-    }
+  .custom-multi-select option:hover {
+    background-color: #444;
+  }
 
-    .custom-multi-select option.selected {
-        background-color: #198754;
-        color: #fff;
-        font-weight: bold;
-    }
+  .custom-multi-select option.selected {
+    background-color: #198754;
+    color: #fff;
+    font-weight: bold;
+  }
 
-    .selected-labels-container {
-        margin-top: 15px;
-    }
+  .selected-labels-container {
+    margin-top: 15px;
+  }
 
-    .selected-labels {
-        display: flex;
-        flex-wrap: wrap;
-    }
+  .selected-labels {
+    display: flex;
+    flex-wrap: wrap;
+  }
 
-    .selected-labels li {
-        background-color: #198754;
-        color: white;
-        border-radius: 5px;
-        padding: 5px 10px;
-        margin: 5px;
-        font-size: 14px;
-        font-weight: bold;
-        display: inline-flex;
-        align-items: center;
-    }
+  .selected-labels li {
+    background-color: #198754;
+    color: white;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+  }
 
-    .selected-labels li .remove {
-        margin-left: 5px;
-        cursor: pointer;
-        font-size: 16px;
-        font-weight: normal;
-    }
+  .selected-labels li .remove {
+    margin-left: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: normal;
+  }
 
-    .selected-labels li:hover {
-        background-color: #157347;
-    }
-
+  .selected-labels li:hover {
+    background-color: #157347;
+  }
 </style>
-
 <div class="container">
-    <h1>یک سوال بپرسید</h1>
-    
-    <form method="post">
-        {% csrf_token %}
-        
-        <div class="form-group">
-            <label for="id_title">عنوان</label>
-            <hr></hr>
-            {{ form.title }}
-        </div>
-
-        <div class="form-group">
-            <label for="id_content">توضیحات</label>
-            <hr></hr>
-            {{ form.content }}
-        </div>
-
-        <div class="form-group">
-		    <label for="id_labels">برچسب</label>
-            <hr></hr>
-		    {{ form.labels|add_class:"custom-multi-select" }}
-		</div>
-
-
-        <button type="submit" class="btn-submit">ارسال</button>
-    </form>
+  <h1>یک سوال بپرسید</h1>
+  <form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="id_title">عنوان</label>
+      <hr />
+      {{ form.title }}
+    </div>
+    <div class="form-group">
+      <label for="id_content">توضیحات</label>
+      <hr />
+      {{ form.content }}
+    </div>
+    <div class="form-group">
+      <label for="id_labels">برچسب</label>
+      <hr />
+      {{ form.labels|add_class:"custom-multi-select" }}
+    </div>
+    <button type="submit" class="btn-submit">ارسال</button>
+  </form>
 </div>
-
 {% endblock %}

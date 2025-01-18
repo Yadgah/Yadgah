@@ -7,14 +7,15 @@
 </p>
 
 # Yadgah
+
 Yadgah A Platform for Experience Sharing &amp; Q&amp;A
 
 </div>
 
-
 Similar to platforms like Quora or StackOverflow, users can share their experiences or ask questions from others.
 
 ### Features:
+
 - **User Profiles:** Users can share their questions and experiences.
 - **Ask Questions & Receive Answers:** Users can post questions and get answers from the community.
 - **Likes, Comments, & Ratings:** Users can like, comment on, and rate the answers.

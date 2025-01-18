@@ -2,6 +2,7 @@ import jdatetime
 import markdown
 from django import template
 from django.forms import BoundField
+
 register = template.Library()
 
 
@@ -47,9 +48,12 @@ def jalali_date(value):
         # تبدیل تاریخ میلادی به شمسی
         jalali_date = jdatetime.date.fromgregorian(date=value)
         # فرمت تاریخ به صورت "روز ماه"
-        return jalali_date.strftime("%d") + " " + jalali_date.j_months_fa[jalali_date.month - 1]
+        return (
+            jalali_date.strftime("%d")
+            + " "
+            + jalali_date.j_months_fa[jalali_date.month - 1]
+        )
     return value
-
 
 
 # Filter to add a CSS class to a form field widget
