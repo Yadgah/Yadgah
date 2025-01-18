@@ -1,174 +1,199 @@
-<!-- question_detail.html -->
-{% extends 'base.html' %} {% load custom_filters %} {% block content %}
+{% extends 'base.html' %}
+{% load custom_filters %}
+
+{% block content %}
 <style>
-  .approved-reply {
-    background-color: #e6f7e6; /* پس‌زمینه سبز روشن */
-    border-left: 4px solid #28a745; /* حاشیه سبز */
-    /* font-weight: bold; */
-  }
+    body{
+        background-color: #121212;
+        color: #fff;
+    }
 
-  .approved-reply .reply-status {
-    /* font-size: 0.9rem; */
-    color: #28a745;
-    font-weight: bold;
-  }
+    .question-card {
+        background-color: #1c1c1c;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .question-card h2 {
+        color: #69b987;
+    }
+
+    .question-meta {
+        font-size: 0.9rem;
+        color: #bbb;
+    }
+
+    .reactions {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .reactions button {
+        flex: 1;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .reactions .btn-like {
+        background-color: #69b987;
+        color: #121212;
+    }
+
+    .reactions .btn-dislike {
+        background-color: #ff5252;
+        color: #fff;
+    }
+
+    .reply-section {
+        margin-top: 30px;
+    }
+
+    .reply-card {
+        background-color: #1c1c1c;
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .reply-card.approved {
+        border-left: 4px solid #69b987;
+    }
+
+    .reply-meta {
+        font-size: 0.9rem;
+        color: #bbb;
+        margin-top: 10px;
+    }
+
+    .reply-status {
+        font-size: 0.9rem;
+        color: #69b987;
+        font-weight: bold;
+    }
+
+    .reply-form {
+        background-color: #1c1c1c;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .reply-form h3 {
+        margin-top: 0;
+        color: #69b987;
+    }
+
+    .alert-info {
+        background-color: #69b987;
+        color: #121212;
+        border-radius: 5px;
+        padding: 10px;
+    }
+
+    .alert-info a {
+        color: #fff;
+        text-decoration: underline;
+    }
 </style>
-<div class="question-detail-container container my-4">
-  <!-- Header Section -->
-  <div class="question-header mb-3 border-bottom pb-2">
-    <h2 class="mb-2">{{ question.title }}</h2>
-    <p class="question-meta text-muted">
-      <span>تاریخ ایجاد: {{ question.created_at|jalali_date }}</span> |
-    {% if question.user and question.user.username %}
-        <a href="{% url 'user_profile' question.user.username %}" class="text-decoration-none">
-            {{ question.user.username }}
-        </a>
-    {% else %}
-        <span>کاربر ناشناس</span>
-    {% endif %}
 
-    </p>
-  </div>
-  <!-- Question Content -->
-  <div class="question-content mb-4">
-    <div class="p-3 bg-light rounded border">{{ content_as_html|safe }}</div>
-  </div>
-  <!-- Reactions Section -->
-  <div class="question-reactions mb-4">
-    <button
-      id="like-button"
-      class="btn btn-success me-2"
-      onclick="toggleReaction('like')"
-    >
-      لایک ({{ likes_count }})
-    </button>
-    <button
-      id="dislike-button"
-      class="btn btn-danger"
-      onclick="toggleReaction('dislike')"
-    >
-      دیس‌لایک ({{ dislikes_count }})
-    </button>
-  </div>
-  <!-- Replies Section -->
-  <div class="replies-section mb-4">
-    <h3 class="mb-3">پاسخ‌ها به این سوال</h3>
-    {% if question.replies.all %}
-    <!-- پاسخ‌های تایید شده -->
-    <div class="list-group">
-      {% for reply in question.replies.all %} {% if reply.is_approved %}
-      <div
-        class="reply-item list-group-item mb-3 border rounded approved-reply"
-      >
-        <!-- نمایش پاسخ تایید شده -->
-        <div class="mb-2">{{ reply.get_content_as_html|safe }}</div>
-        <p class="reply-meta text-muted mb-1">
-          پاسخ توسط: {% if reply.user %}
-          <a
-            href="{% url 'user_profile' reply.user.username %}"
-            class="text-decoration-none"
-            >{{ reply.user.username }}</a
-          >
-          {% else %} کاربر ناشناس {% endif %} - تاریخ پاسخ: {{
-          reply.created_at|jalali_date }}
+<div class="container">
+    <!-- سوال -->
+    <div class="question-card">
+        <h2>{{ question.title }}</h2>
+        <p class="question-meta">
+            تاریخ ایجاد: {{ question.created_at|jalali_date }} |
+            {% if question.user and question.user.username %}
+                <a href="{% url 'user_profile' question.user.username %}">{{ question.user.username }}</a>
+            {% else %}
+                کاربر ناشناس
+            {% endif %}
         </p>
-        <p class="reply-status mb-2">
-          <span class="text-success">این پاسخ تایید شده است.</span>
-        </p>
-      </div>
-      {% endif %} {% endfor %}
+        <div class="question-content">
+            {{ content_as_html|safe }}
+        </div>
+        <div class="reactions">
+            <button class="btn-like" onclick="toggleReaction('like')">لایک ({{ likes_count }})</button>
+            <button class="btn-dislike" onclick="toggleReaction('dislike')">دیس‌لایک ({{ dislikes_count }})</button>
+        </div>
     </div>
-    <!-- سایر پاسخ‌ها -->
-    <div class="list-group">
-      {% for reply in question.replies.all %} {% if not reply.is_approved %}
-      <div class="reply-item list-group-item mb-3 border rounded">
-        <!-- نمایش پاسخ غیر تایید شده -->
-        <div class="mb-2">{{ reply.get_content_as_html|safe }}</div>
-        <p class="reply-meta text-muted mb-1">
-          پاسخ توسط: {% if reply.user %}
-          <a
-            href="{% url 'user_profile' reply.user.username %}"
-            class="text-decoration-none"
-            >{{ reply.user.username }}</a
-          >
-          {% else %} کاربر ناشناس {% endif %} - تاریخ پاسخ: {{
-          reply.created_at|jalali_date }}
-        </p>
-        <p class="reply-status mb-2">
-          <span class="text-warning">منتظر تایید</span>
-        </p>
-        {% if user == question.user and not reply.is_approved %}
-        <form
-          action="{% url 'approve_reply' reply.id %}"
-          method="POST"
-          class="d-inline"
-        >
-          {% csrf_token %}
-          <button type="submit" class="btn btn-sm btn-success">
-            تایید پاسخ
-          </button>
-        </form>
+
+    <!-- پاسخ‌ها -->
+    <div class="reply-section">
+        <h3>پاسخ‌ها</h3>
+        {% if question.replies.all %}
+            {% for reply in question.replies.all %}
+                <div class="reply-card {% if reply.is_approved %}approved{% endif %}">
+                    <div class="reply-content">
+                        {{ reply.get_content_as_html|safe }}
+                    </div>
+                    <p class="reply-meta">
+                        پاسخ توسط:
+                        {% if reply.user %}
+                            <a href="{% url 'user_profile' reply.user.username %}">{{ reply.user.username }}</a>
+                        {% else %}
+                            کاربر ناشناس
+                        {% endif %}
+                        - تاریخ پاسخ: {{ reply.created_at|jalali_date }}
+                    </p>
+                    {% if reply.is_approved %}
+                        <p class="reply-status">این پاسخ تایید شده است.</p>
+                    {% else %}
+                        <p class="reply-status">منتظر تایید</p>
+                        {% if user == question.user %}
+                            <form action="{% url 'approve_reply' reply.id %}" method="POST" style="display:inline;">
+                                {% csrf_token %}
+                                <button class="btn btn-success btn-sm">تایید پاسخ</button>
+                            </form>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-muted">هیچ پاسخی برای این سوال ثبت نشده است.</p>
         {% endif %}
-      </div>
-      {% endif %} {% endfor %}
     </div>
+
+    <!-- فرم ارسال پاسخ -->
+    {% if user.is_authenticated %}
+        <div class="reply-form">
+            <h3>ارسال پاسخ</h3>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button class="btn btn-primary" type="submit">ارسال پاسخ</button>
+            </form>
+        </div>
     {% else %}
-    <p class="text-muted">هیچ پاسخی برای این سوال ثبت نشده است.</p>
+        <div class="alert alert-info">
+            برای ارسال پاسخ باید
+            <a href="{% url 'login' %}">وارد حساب کاربری</a> شوید.
+        </div>
     {% endif %}
-  </div>
-  <!-- Reply Form Section -->
-  {% if user.is_authenticated %}
-  <div class="reply-form mt-4">
-    <h3 class="mb-3">ارسال پاسخ</h3>
-    <form method="POST">
-      {% csrf_token %} {{ form.as_p }}
-      <!-- نمایش فرم -->
-      <button type="submit" class="btn btn-primary">ارسال پاسخ</button>
-    </form>
-  </div>
-  {% else %}
-  <div class="login-notice alert alert-info mt-4">
-    <p>
-      برای ارسال پاسخ باید
-      <a href="{% url 'login' %}" class="text-decoration-none"
-        >وارد حساب کاربری</a
-      >
-      شوید.
-    </p>
-  </div>
-  {% endif %}
 </div>
-<!-- Reaction Script -->
+
 <script>
-  function toggleReaction(type) {
-    const csrfToken = '{{ csrf_token }}';
-    fetch("{% url 'toggle_reaction' question.id %}", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRFToken': csrfToken,
-      },
-      body: JSON.stringify({ reaction_type: type }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Failed to update reaction');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        if (data.error) {
-          console.error(data.error);
-        } else {
-          document.getElementById(
-            'like-button'
-          ).innerText = `لایک (${data.likes})`;
-          document.getElementById(
-            'dislike-button'
-          ).innerText = `دیس‌لایک (${data.dislikes})`;
-        }
-      })
-      .catch((error) => console.error('Error:', error));
-  }
+    function toggleReaction(type) {
+        const csrfToken = '{{ csrf_token }}';
+        fetch("{% url 'toggle_reaction' question.id %}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken,
+            },
+            body: JSON.stringify({ reaction_type: type }),
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            document.querySelector('.btn-like').innerText = `لایک (${data.likes})`;
+            document.querySelector('.btn-dislike').innerText = `دیس‌لایک (${data.dislikes})`;
+        });
+    }
 </script>
 {% endblock %}
