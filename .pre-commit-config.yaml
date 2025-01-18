@@ -1,19 +1,46 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0  # Use the latest version
+    rev: v5.0.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
       - id: check-yaml
+      - id: debug-statements
+
   - repo: https://github.com/psf/black
     rev: 24.10.0
     hooks:
       - id: black
+        language_version: python3
+
   - repo: https://github.com/pre-commit/mirrors-isort
     rev: v5.10.1
     hooks:
       - id: isort
-  - repo: https://github.com/PyCQA/flake8
+        language_version: python3
+
+  - repo: https://github.com/prettier/pre-commit
+    rev: 57f39166b5a5a504d6808b87ab98d41ebf095b46
+    hooks:
+      - id: prettier
+        args:
+          - --config-precedence
+          - prefer-file
+        files: "\\.(js|jsx|ts|tsx|css|scss|html|json|md|yml|yaml)$"
+
+  - repo: https://github.com/pycqa/flake8
     rev: 7.1.1
     hooks:
       - id: flake8
+        args: [--max-line-length=88]
+  - repo: https://github.com/psf/black
+    rev: 24.10.0
+    hooks:
+      - id: black
+
+  # - repo: https://github.com/Riverside-Healthcare/djLint
+  #   rev: v1.36.4
+  #   hooks:
+  #     - id: djlint
+  #       args: [--reformat]
+  #       files: "\\.html$"

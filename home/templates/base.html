@@ -1,95 +1,193 @@
 <!DOCTYPE html>
 <html lang="fa">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     {% load static %}
     <title>{% block title %}یادگاه - Yadgah{% endblock %}</title>
-    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
-
-    {% load bootstrap5 %}
-    {% bootstrap_css %}
-    {% bootstrap_javascript %}
-
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
+    {% load bootstrap5 %} {% bootstrap_css %} {% bootstrap_javascript %}
     <!-- SEO Optimization -->
-    <meta name="description" content="وبسایت یادگاه - اخبار، سوالات و مطالب مفید برای یادگیری و اشتراک تجربیات.">
-    <meta name="keywords" content="یادگاه, اخبار, سوالات, تجربه, یادگیری">
+    <meta
+      name="description"
+      content="وبسایت یادگاه - اخبار، سوالات و مطالب مفید برای یادگیری و اشتراک تجربیات."
+    />
+    <meta name="keywords" content="یادگاه, اخبار, سوالات, تجربه, یادگیری" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-    crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-    integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
-    crossorigin="anonymous"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+      integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+      crossorigin="anonymous"
+    ></script>
     <script src="{% static 'js/jalaali.min.js' %}"></script>
-
     <style>
-        .form-control {
-            border-radius: 23.3rem;
-        }
+      .form-control {
+        border-radius: 23.3rem;
+      }
     </style>
-</head>
-
-<body dir="rtl">
+  </head>
+  <body dir="rtl">
     <!-- Header Section -->
     <header class="p-3 bg-dark text-white">
-        <div class="container">
-            <div class="d-flex flex-wrap align-items-center justify-content-between">
-                <!-- Logo and Title -->
-                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-                    <img src="{% static 'favicon.ico' %}" alt="یادگاه لوگو" width="40" height="40">
-                    <h1 class="ms-2">یادگاه</h1>
-                </a>
-
-                <!-- Navigation Menu -->
-                <ul class="nav col-12 col-lg-auto mb-2 mb-lg-0 justify-content-center">
-                    <li><a href="#" class="nav-link px-2 text-white">خانه</a></li>
-                    <li><a href="#" class="nav-link px-2 text-white">ویژگی‌ها</a></li>
-                    <li><a href="#" class="nav-link px-2 text-white">قیمت‌گذاری</a></li>
-                    <li><a href="#" class="nav-link px-2 text-white">سوالات متداول</a></li>
-                    <li><a href="#" class="nav-link px-2 text-white">درباره ما</a></li>
-                </ul>
-
-                <!-- Search Form -->
-                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-                    <input type="search" class="form-control form-control-dark" placeholder="جست و جو..." aria-label="جست و جو">
-                </form>
-
-                <!-- User Authentication Section -->
-                <div class="text-end">
-                    {% if user.is_authenticated %}
-                        <!-- User Profile Dropdown -->
-                        <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                            {% if user.userprofile.avatar %}
-                                <!-- Display user's profile picture if available -->
-                                <img src="{{ user.userprofile.avatar.url }}" alt="{{ user.username }}'s avatar" width="32" height="32" class="rounded-circle">
-                            {% else %}
-                                <!-- Display default avatar if no profile picture is set -->
-                                <img src="{% static 'profile_picture.jpg' %}" alt="default avatar" width="32" height="32" class="rounded-circle">
-                            {% endif %}
-                        </a>
-                        <!-- Dropdown Menu -->
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser1">
-                            <li><a class="dropdown-item" href="{% url 'profile' %}">پروفایل</a></li>
-                            <li><a class="dropdown-item" href="{% url 'logout' %}">خروج</a></li>
-                        </ul>
-                    {% else %}
-                        <!-- Login and Signup Buttons -->
-                        <a href="{% url 'login' %}" class="btn btn-outline-light me-2">ورود</a>
-                        <a href="{% url 'signup' %}" class="btn btn-warning">ثبت‌نام</a>
-                    {% endif %}
-                </div>
-            </div>
+      <div class="container">
+        <div
+          class="d-flex flex-wrap align-items-center justify-content-between"
+        >
+          <!-- Logo and Title -->
+          <a
+            href="/"
+            class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none"
+          >
+            <img
+              src="{% static 'favicon.ico' %}"
+              alt="یادگاه لوگو"
+              width="40"
+              height="40"
+            />
+            <h1 class="ms-2">یادگاه</h1>
+          </a>
+          <!-- Navigation Menu -->
+          <ul
+            class="nav col-12 col-lg-auto mb-2 mb-lg-0 justify-content-center"
+          >
+            <li>
+              <a href="#" class="nav-link px-2 text-white">خانه</a>
+            </li>
+            <li>
+              <a href="#" class="nav-link px-2 text-white">ویژگی‌ها</a>
+            </li>
+            <li>
+              <a href="#" class="nav-link px-2 text-white">قیمت‌گذاری</a>
+            </li>
+            <li>
+              <a href="#" class="nav-link px-2 text-white">سوالات متداول</a>
+            </li>
+            <li>
+              <a href="#" class="nav-link px-2 text-white">درباره ما</a>
+            </li>
+          </ul>
+          <!-- Search Form -->
+          <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+            <input
+              type="search"
+              class="form-control form-control-dark"
+              placeholder="جست و جو..."
+              aria-label="جست و جو"
+            />
+          </form>
+          <!-- User Authentication Section -->
+          <div class="text-end">
+            {% if user.is_authenticated %}
+            <!-- User Profile Dropdown -->
+            <a
+              href="#"
+              class="d-block link-dark text-decoration-none dropdown-toggle"
+              id="dropdownUser1"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              {% if user.userprofile.avatar %}
+              <!-- Display user's profile picture if available -->
+              <img
+                src="{{ user.userprofile.avatar.url }}"
+                alt="{{ user.username }}'s avatar"
+                width="32"
+                height="32"
+                class="rounded-circle"
+              />
+              {% else %}
+              <!-- Display default avatar if no profile picture is set -->
+              <img
+                src="{% static 'profile_picture.jpg' %}"
+                alt="default avatar"
+                width="32"
+                height="32"
+                class="rounded-circle"
+              />
+              {% endif %}
+            </a>
+            <!-- Dropdown Menu -->
+            <ul
+              class="dropdown-menu dropdown-menu-end"
+              aria-labelledby="dropdownUser1"
+            >
+              <li>
+                <a class="dropdown-item" href="{% url 'profile' %}">پروفایل</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="{% url 'logout' %}">خروج</a>
+              </li>
+            </ul>
+            {% else %}
+            <!-- Login and Signup Buttons -->
+            <a href="{% url 'login' %}" class="btn btn-outline-light me-2"
+              >ورود</a
+            >
+            <a href="{% url 'signup' %}" class="btn btn-warning">ثبت‌نام</a>
+            {% endif %}
+          </div>
         </div>
+      </div>
     </header>
-
     <!-- Main Content Section -->
-    <div class="container my-4">
-        {% block content %}
-        {% endblock %}
-    </div>
-
-</body>
-
+    <div class="container my-4">{% block content %}{% endblock %}</div>
+    <!-- Remove the container if you want to extend the Footer to full width. -->
+    <footer style="background-color: #eee6d3">
+      <div class="container p-4">
+        <div class="row">
+          <div class="col-lg-6 col-md-12 mb-4">
+            <h5 class="mb-3 text-dark">footer content</h5>
+            <p>
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste
+              atque ea quis molestias. Fugiat pariatur maxime quis culpa
+              corporis vitae repudiandae aliquam voluptatem veniam, est atque
+              cumque eum delectus sint!
+            </p>
+          </div>
+          <div class="col-lg-3 col-md-6 mb-4">
+            <h5 class="mb-3 text-dark">links</h5>
+            <ul class="list-unstyled mb-0">
+              <li class="mb-1">
+                <a href="#!" style="color: #4f4f4f">FAQ</a>
+              </li>
+              <li class="mb-1">
+                <a href="#!" style="color: #4f4f4f">Classes</a>
+              </li>
+              <li class="mb-1">
+                <a href="#!" style="color: #4f4f4f">Pricing</a>
+              </li>
+              <li>
+                <a href="#!" style="color: #4f4f4f">Safety</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-lg-3 col-md-6 mb-4">
+            <h5 class="mb-1 text-dark">opening hours</h5>
+            <table class="table" style="border-color: #666">
+              <tbody>
+                <tr>
+                  <td>Mon - Fri:</td>
+                  <td>8am - 9pm</td>
+                </tr>
+                <tr>
+                  <td>Sat - Sun:</td>
+                  <td>8am - 1am</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+        © 2020 Copyright:
+        <a class="text-dark" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+      </div>
+      <!-- Copyright -->
+    </footer>
+  </body>
 </html>

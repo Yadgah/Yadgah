@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 
-from .models import News, Question, Reply, UserProfile, Label
+from .models import Label, News, Question, Reply, UserProfile
 
 
 # Register the Question model for the admin

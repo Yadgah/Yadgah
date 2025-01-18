@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>ویرایش خبر</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>ویرایش خبر: {{ news.title }}</h1>
     <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">ذخیره تغییرات</button>
+      {% csrf_token %} {{ form.as_p }}
+      <button type="submit">ذخیره تغییرات</button>
     </form>
-</body>
+  </body>
 </html>

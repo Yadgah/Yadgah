@@ -1,65 +1,65 @@
-{% extends 'base.html' %}
-{% load custom_filters %}
+{% extends 'base.html' %} {% load custom_filters %} {% block content %}
+<style>
+  .user-profile {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  .user-profile h2 {
+    color: #007bff;
+  }
+  .user-profile ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  .user-profile li {
+    margin-bottom: 10px;
+  }
+  .user-profile img {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+  }
+  .user-profile .profile-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  .user-profile .profile-info .username {
+    font-size: 24px;
+    color: #007bff;
+    margin-left: 15px;
+  }
+</style>
 
-{% block content %}
-    <style>
-        .user-profile {
-            border: 1px solid #ddd;
-            padding: 20px;
-            border-radius: 8px;
-            background-color: #f9f9f9;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        .user-profile h2 {
-            color: #007bff;
-        }
-        .user-profile ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        .user-profile li {
-            margin-bottom: 10px;
-        }
-        .user-profile img {
-            border-radius: 50%;
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-        }
-        .user-profile .profile-info {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .user-profile .profile-info .username {
-            font-size: 24px;
-            color: #007bff;
-            margin-left: 15px;
-        }
-    </style>
+<div class="user-profile">
+  <div class="profile-info">
+    <!-- Profile Picture (with fallback) -->
+    <img
+      src="{{ profile_user.profile.picture.url|default:'/static/default-avatar.png' }}"
+      alt="{{ profile_user.username }}'s profile picture"
+    />
+    <h2 class="username">پروفایل کاربر: {{ profile_user.username }}</h2>
+  </div>
 
-    <div class="user-profile">
-        <div class="profile-info">
-            <!-- Profile Picture (with fallback) -->
-            <img src="{{ profile_user.profile.picture.url|default:'/static/default-avatar.png' }}" alt="{{ profile_user.username }}'s profile picture">
-            <h2 class="username">پروفایل کاربر: {{ profile_user.username }}</h2>
-        </div>
+  <p>ایمیل: {{ profile_user.email }}</p>
+  <p>تاریخ عضویت: {{ profile_user.date_joined|date:"d F Y" }}</p>
 
-        <p>ایمیل: {{ profile_user.email }}</p>
-        <p>تاریخ عضویت: {{ profile_user.date_joined|date:"d F Y" }}</p>
-
-        <h3>سوالات پرسیده شده:</h3>
-        {% if questions %}
-            <ul>
-                {% for question in questions %}
-                    <li>
-                        <a href="{% url 'question_detail' question.id %}">{{ question.title }}</a>
-                        <p>تاریخ: {{ question.created_at|jalali_date }}</p>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>این کاربر هنوز سوالی نپرسیده است.</p>
-        {% endif %}
-    </div>
+  <h3>سوالات پرسیده شده:</h3>
+  {% if questions %}
+  <ul>
+    {% for question in questions %}
+    <li>
+      <a href="{% url 'question_detail' question.id %}">{{ question.title }}</a>
+      <p>تاریخ: {{ question.created_at|jalali_date }}</p>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p>این کاربر هنوز سوالی نپرسیده است.</p>
+  {% endif %}
+</div>
 {% endblock %}
