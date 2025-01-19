@@ -1,4 +1,6 @@
-{% extends 'base.html' %} {% load custom_filters %} {% block content %}
+{% extends 'base.html' %}
+{% load custom_filters %}
+{% block content %}
 
 <div class="container mt-5">
   <h2 class="text-center mb-4">ثبت‌نام</h2>
@@ -9,13 +11,9 @@
     <div class="alert-container">
       {% for message in messages %}
       <div
-        class="alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %} alert-dismissible fade show"
+        class="alert alert-{{ message.tags|default:"info" }} alert-dismissible fade show"
         role="alert"
       >
-        <strong>
-          {% if message.tags == "error" %} خطا! {% elif message.tags ==
-          "success" %} موفقیت! {% else %} توجه! {% endif %}
-        </strong>
         {{ message }}
         <button
           type="button"
@@ -27,44 +25,38 @@
       {% endfor %}
     </div>
     {% endif %}
-    <!-- تصویر پروفایل پیش‌فرض -->
+
     <!-- فرم فیلدهای ثبت‌نام -->
     <div class="mb-3">
-      <label for="{{ form.first_name.id_for_label }}" class="form-label"
-        >نام</label
-      >
+      <label for="{{ form.first_name.id_for_label }}" class="form-label">نام</label>
       {{ form.first_name|add_class:"form-control" }}
     </div>
     <div class="mb-3">
-      <label for="{{ form.last_name.id_for_label }}" class="form-label"
-        >نام خانوادگی</label
-      >
+      <label for="{{ form.last_name.id_for_label }}" class="form-label">نام خانوادگی</label>
       {{ form.last_name|add_class:"form-control" }}
     </div>
     <div class="mb-3">
-      <label for="{{ form.password.id_for_label }}" class="form-label"
-        >رمز عبور</label
-      >
-      {{ form.password|add_class:"form-control" }}
+      <label for="{{ form.email.id_for_label }}" class="form-label">ایمیل</label>
+      {{ form.email|add_class:"form-control" }}
     </div>
     <div class="mb-3">
-      <label for="{{ form.confirm_password.id_for_label }}" class="form-label"
-        >تکرار رمز عبور</label
-      >
+      <label for="{{ form.password.id_for_label }}" class="form-label">رمز عبور</label>
+      {{ form.password|add_class:"form-control" }}
+      <small class="text-muted">رمز باید شامل حداقل ۸ کاراکتر، یک حرف و یک عدد باشد.</small>
+    </div>
+    <div class="mb-3">
+      <label for="{{ form.confirm_password.id_for_label }}" class="form-label">تکرار رمز عبور</label>
       {{ form.confirm_password|add_class:"form-control" }}
     </div>
     <div class="mb-3">
-      <label for="{{ form.email.id_for_label }}" class="form-label"
-        >ایمیل</label
-      >
-      {{ form.email|add_class:"form-control" }}
+      <label for="profile_picture" class="form-label">تصویر پروفایل (اختیاری)</label>
+      <input type="file" name="profile_picture" id="profile_picture" class="form-control">
     </div>
-    <!-- فیلد انتخاب تصویر پروفایل (پنهان) -->
-    <input type="file" name="profile_picture" style="display: none" />
     <!-- دکمه ثبت‌نام -->
     <div class="d-grid gap-2">
       <button type="submit" class="btn btn-primary">ثبت‌نام</button>
     </div>
   </form>
 </div>
+
 {% endblock %}

@@ -1,4 +1,6 @@
-{% extends 'base.html' %} {% block content %} {% load custom_filters %}
+{% extends 'base.html' %} {% block content %} {% load custom_filters %} 
+{% load static %}
+
 <div class="container mt-5">
   <h2 class="text-center mb-4">ویرایش پروفایل</h2>
   <form method="POST" enctype="multipart/form-data">
@@ -17,7 +19,7 @@
       {% else %}
       <img
         id="profile-avatar"
-        src="https://via.placeholder.com/150"
+        src="{% static 'default-avatar.png' %}"
         alt="Avatar"
         class="rounded-circle"
         style="width: 150px; height: 150px; object-fit: cover; cursor: pointer"
