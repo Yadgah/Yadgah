@@ -77,14 +77,12 @@ def signup_view(request):
             messages.error(request, "Passwords do not match.")
             return render(request, "signup.html", {"form": form})
 
-        # Password complexity check
-        password_complexity = (
-            r'^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};:"\\|,.<>\/?]).{8,}$'
-        )
+        # Password complexity check: At least one letter and one number
+        password_complexity = r"^(?=.*[a-zA-Z])(?=.*\d).{8,}$"
         if not re.fullmatch(password_complexity, password):
             messages.error(
                 request,
-                "Password must include an uppercase letter, a digit, and a special character.",
+                "Password must include at least one letter, one digit, and be at least 8 characters long.",
             )
             return render(request, "signup.html", {"form": form})
 
@@ -371,3 +369,15 @@ def approve_reply(request, reply_id):
         reply.is_approved = True
         reply.save()
     return redirect("question_detail", question_id=reply.question.id)
+
+
+def privacy_policy(request):
+    return render(request, "privacy_policy.html")
+
+
+def mit_license(request):
+    return render(request, "mit_license.html")
+
+
+def rules(request):
+    return render(request, "rules.html")

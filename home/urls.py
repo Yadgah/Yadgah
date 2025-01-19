@@ -10,9 +10,12 @@ from .views import (
     load_questions,
     login_view,
     logout_view,
+    mit_license,
     news_list,
+    privacy_policy,
     profile_view,
     question_detail,
+    rules,
     signup_view,
     toggle_reaction,
     user_profile,
@@ -48,6 +51,9 @@ urlpatterns = [
         "reply/<int:reply_id>/approve/", approve_reply, name="approve_reply"
     ),  # Approve a reply
     path("load/", load_questions, name="load"),
+    path("privacy-policy/", privacy_policy, name="privacy_policy"),
+    path("mit-license/", mit_license, name="mit_license"),
+    path("rules/", rules, name="rules"),
 ]
 
 # Serve media files during development
