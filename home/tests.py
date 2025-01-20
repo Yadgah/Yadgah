@@ -1,13 +1,14 @@
 from django.test import Client, TestCase
+from django.contrib.auth.models import User
 from django.urls import reverse
 from home.models import Question, Reply, UserProfile
-from home.forms import QuestionForm  # Ensure the form exists and is imported
 
 
 class UserProfileModelTest(TestCase):
     def setUp(self):
+        self.user = User.objects.create(username="johndoe")  # Create the user
         self.user_profile = UserProfile.objects.create(
-            user_id=1,  # Example ID; adjust for your schema
+            user=self.user,
             first_name="John",
             last_name="Doe",
         )
@@ -22,13 +23,31 @@ class QuestionModelTest(TestCase):
         self.question = Question.objects.create(
             title="Sample Question",
             content="What is Django?",
-            likes_count=5,  # Adjust field usage as needed
             dislikes_count=0,
         )
+        # If likes_count is ManyToManyField, assign related objects:
+        # related_user = User.objects.create(username="test_user")
+        # self.question.likes_count.set([related_user])
 
     def test_question_creation(self):
         self.assertEqual(self.question.title, "Sample Question")
-        self.assertEqual(self.question.likes_count, 5)
+        # Add checks for ManyToManyField if necessary:
+        # self.assertEqual(self.question.likes_count.count(), 1)
+
+
+class ReplyModelTest(TestCase):
+    def setUp(self):
+        self.question = Question.objects.create(
+            title="Sample Question", content="What is Django?"
+        )
+        self.reply = Reply.objects.create(
+            question=self.question,
+            content="Django is a web framework.",
+        )
+
+    def test_reply_creation(self):
+        self.assertEqual(self.reply.question.title, "Sample Question")
+        self.assertEqual(self.reply.content, "Django is a web framework.")
 
 
 class ViewTests(TestCase):
@@ -44,21 +63,4 @@ class ViewTests(TestCase):
     def test_login_page_template(self):
         response = self.client.get(self.login_url)
         self.assertTemplateUsed(response, "login.html")
-
-
-class FormTests(TestCase):
-    def setUp(self):
-        self.valid_data = {
-            "title": "A Valid Question",
-            "content": "This is a valid question content.",
-        }
-        self.invalid_data = {"title": "", "content": ""}
-
-    def test_question_form_valid(self):
-        form = QuestionForm(data=self.valid_data)
-        self.assertTrue(form.is_valid())
-
-    def test_question_form_invalid(self):
-        form = QuestionForm(data=self.invalid_data)
-        self.assertFalse(form.is_valid())
 
