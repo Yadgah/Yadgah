@@ -187,3 +187,7 @@ class ReplyForm(forms.ModelForm):
                 attrs={"placeholder": "Your reply (Markdown supported)", "rows": 5}
             ),
         }
+
+        labels = {
+            "content": ""
+        }
