@@ -82,7 +82,7 @@
 
   /* Spinner */
   .spinner-border {
-    color: #bb86fc;
+    color: #69b987;
   }
 
   #loading p {
@@ -198,15 +198,10 @@
           <p>هیچ سوالی ارسال نشده است.</p>
           {% endif %}
         </div>
-        <!-- Spinner and Load More Button -->
-        <div
-          class="spinner-border text-primary mt-2 not-visible"
-          role="status"
-          id="spinner"
-        >
-          <span class="sr-only">Loading...</span>
-        </div>
+        
         <div class="load-more__btn mt-3" id="btn">
+          <!-- Spinner and Load More Button -->
+          <div class="spinner-border mt-2 not-visible" role="status" id="spinner"></div>
           <button type="button" class="btn btn-success">سوالات بیشتر</button>
         </div>
       </div>
@@ -226,7 +221,7 @@
       data: { offset: _current_item },
       beforeSend: function () {
         loadBtn.classList.add('not-visible');
-        spinner.classList.remove('not-visible');
+        // spinner.classList.remove('not-visible');
       },
       success: function (response) {
         const data = response.questions;
