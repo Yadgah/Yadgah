@@ -71,11 +71,15 @@ from .models import Label
 @receiver(post_migrate)
 def create_default_labels(sender, **kwargs):
     labels = [
-        ("Linux", "#ff6347"),
-        ("Python", "#306998"),
-        ("PHP", "#4f5b93"),
-        ("JavaScript", "#f0db4f"),
-        ("Django", "#092e20"),
+        ("آموزش و یادگیری", "#4CAF50"),
+        ("سلامت و پزشکی", "#FF5722"),
+        ("فناوری و دیجیتال", "#2196F3"),
+        ("هنر و خلاقیت", "#9C27B0"),
+        ("کسب‌وکار و کارآفرینی", "#FFC107"),
+        ("سفر و گردشگری", "#FF9800"),
+        ("روانشناسی و توسعه فردی", "#673AB7"),
+        ("علوم و تحقیقات", "#3F51B5"),
+        ("سبک زندگی", "#E91E63"),
     ]
     for label_name, label_color in labels:
         Label.objects.get_or_create(name=label_name, color=label_color)

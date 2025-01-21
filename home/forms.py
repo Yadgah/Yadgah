@@ -162,10 +162,17 @@ class QuestionForm(forms.ModelForm):
     class Meta:
         model = Question
         fields = ["title", "content", "labels"]
+        widgets = {
+            "content": forms.Textarea(
+                attrs={
+                    "placeholder": "Your question (Markdown supported)",
+                    "rows": 5
+                }
+            ),
+        }
 
     labels = forms.ModelMultipleChoiceField(
         queryset=Label.objects.all(),
-        # widget=forms.widgets.CheckboxSelectMultiple,
         widget=forms.CheckboxSelectMultiple(attrs={"class": "custom-multi-select"}),
         required=False,
     )
@@ -179,4 +186,8 @@ class ReplyForm(forms.ModelForm):
             "content": forms.Textarea(
                 attrs={"placeholder": "Your reply (Markdown supported)", "rows": 5}
             ),
+        }
+
+        labels = {
+            "content": ""
         }
