@@ -286,9 +286,9 @@ def load_questions(request):
                 "title": q.title,
                 "content": q.content,
                 "created_at": q.created_at.strftime("%Y-%m-%d %H:%M:%S"),
-                "labels": list(
-                    q.labels.values_list("name", flat=True)
-                ),  # لیست نام لیبل‌ها
+                "labels": [
+                    {"name": label.name, "color": label.color} for label in q.labels.all()
+                ],  # ارسال نام و رنگ لیبل‌ها
             }
             for q in questions
         ],
