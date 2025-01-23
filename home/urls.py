@@ -7,7 +7,6 @@ from .views import (
     ask_question,
     delete_profile,
     home_view,
-    load_questions,
     login_view,
     logout_view,
     mit_license,
@@ -34,9 +33,6 @@ urlpatterns = [
         "question/<int:question_id>/", question_detail, name="question_detail"
     ),  # Question details
     path(
-        "load-questions/", load_questions, name="load_questions"
-    ),  # Load more questions with pagination
-    path(
         "profile/<str:username>/", user_profile, name="user_profile"
     ),  # User profile by username
     path(
@@ -50,7 +46,6 @@ urlpatterns = [
     path(
         "reply/<int:reply_id>/approve/", approve_reply, name="approve_reply"
     ),  # Approve a reply
-    path("load/", load_questions, name="load"),
     path("privacy-policy/", privacy_policy, name="privacy_policy"),
     path("mit-license/", mit_license, name="mit_license"),
     path("rules/", rules, name="rules"),
