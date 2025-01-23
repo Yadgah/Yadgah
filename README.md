@@ -27,11 +27,13 @@ Similar to platforms like Quora or StackOverflow, users can share their experien
 ```
                        Home Page
                            |
-         -------------------------------------------------------
-         |                 |                                   |
-    Categories Page    Search Page                     User Profile Page
-         |                                                     |
-   ------------------   		 ------------------------------------------
-  |                 |                    |                     |                  |
-Experiences     Questions       Search by Title/Tags   Profile Settings   Posted Questions
+         --------------------------------------------------------------------------------
+         |                 |                                   |                        |
+    Categories Page    Search Page                     User Profile Page          News Page
+         |                                                     |                        |
+   ------------------   		 ------------------------------------------        ---------------------
+  |                 |                    |                     |                  |                   |
+Experiences     Questions       Search by Title/Tags   Profile Settings   Posted Questions   News List
+                                                                             |                      |
+                                                                      Delete Profile        Create/Edit News
 ```
