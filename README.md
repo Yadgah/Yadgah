@@ -14,7 +14,7 @@ Yadgah A Platform for Experience Sharing &amp; Q&amp;A
 
 Similar to platforms like Quora or StackOverflow, users can share their experiences or ask questions from others.
 
-### Features:
+## Features:
 
 - **User Profiles:** Users can share their questions and experiences.
 - **Ask Questions & Receive Answers:** Users can post questions and get answers from the community.
@@ -22,18 +22,3 @@ Similar to platforms like Quora or StackOverflow, users can share their experien
 - **Categories for Questions & Experiences:** Examples include work experiences, education, technology, health, etc.
 - **User Ranking System:** Based on their contributions, such as identifying top contributors or best answer providers.
 
-# Structure
-
-```
-                       Home Page
-                           |
-         --------------------------------------------------------------------------------
-         |                 |                                   |                        |
-    Categories Page    Search Page                     User Profile Page          News Page
-         |                                                     |                        |
-   ------------------   		 ------------------------------------------        ---------------------
-  |                 |                    |                     |                  |                   |
-Experiences     Questions       Search by Title/Tags   Profile Settings   Posted Questions   News List
-                                                                             |                      |
-                                                                      Delete Profile        Create/Edit News
-```
