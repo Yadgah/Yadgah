@@ -19,6 +19,7 @@ from .views import (
     toggle_reaction,
     user_profile,
     delete_question,
+    leaderboard,
 )
 
 # URL patterns for the home app
@@ -51,6 +52,7 @@ urlpatterns = [
     path("mit-license/", mit_license, name="mit_license"),
     path("rules/", rules, name="rules"),
     path('question/<int:question_id>/delete/', delete_question, name='delete_question'),
+    path('leaderboard/', leaderboard, name='leaderboard'),
 ]
 
 # Serve media files during development
