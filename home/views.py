@@ -357,3 +357,8 @@ def mit_license(request):
 
 def rules(request):
     return render(request, "rules.html")
+
+def leaderboard(request):
+    # Get all users, order them by score (descending)
+    users = UserProfile.objects.all().order_by('-score')  # Order by score
+    return render(request, 'leaderboard.html', {'users': users})
