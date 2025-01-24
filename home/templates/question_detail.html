@@ -101,6 +101,23 @@
         color: #fff;
         text-decoration: underline;
     }
+
+    .delete-question {
+        margin-top: 20px;
+    }
+
+    .delete-question button {
+        background-color: #ff5252;
+        color: white;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .delete-question button:hover {
+        background-color: #e34a4a;
+    }
 </style>
 
 <div class="container">
@@ -123,6 +140,16 @@
             <button class="btn-dislike" onclick="toggleReaction('dislike')">دیس‌لایک ({{ dislikes_count }})</button>
         </div>
     </div>
+
+    {% if question.user == user %}
+        <!-- Delete Question Button -->
+        <div class="delete-question">
+            <form action="{% url 'delete_question' question.id %}" method="POST" style="display:inline;">
+                {% csrf_token %}
+                <button class="btn btn-danger" type="submit">حذف سوال</button>
+            </form>
+        </div>
+    {% endif %}
 
     <!-- پاسخ‌ها -->
     <div class="reply-section">
@@ -197,3 +224,4 @@
     }
 </script>
 {% endblock %}
+
