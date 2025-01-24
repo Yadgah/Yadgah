@@ -23,9 +23,10 @@ jobs:
         with:
           go-version: '1.18'
 
-      - name: Install git-chglog
+      - name: Download git-chglog release
         run: |
-          curl -sSL https://github.com/git-chglog/git-chglog/releases/download/v0.10.0/git-chglog_0.10.0_linux_x86_64.tar.gz | tar -xz
+          curl -L -o git-chglog.tar.gz https://github.com/git-chglog/git-chglog/releases/download/v0.10.0/git-chglog_0.10.0_linux_x86_64.tar.gz
+          tar -xzvf git-chglog.tar.gz
           sudo mv git-chglog /usr/local/bin/
 
       - name: Generate Changelog
