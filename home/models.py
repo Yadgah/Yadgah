@@ -42,6 +42,7 @@ class Question(models.Model):
     labels = models.ManyToManyField(
         Label, related_name="questions", blank=True
     )  # Many-to-many relationship with labels
+    view_count = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.title
