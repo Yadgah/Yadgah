@@ -1,0 +1,33 @@
+name: Generate Changelog
+
+on:
+  push:
+    tags:
+      - 'v1.0.0'
+
+jobs:
+  generate-changelog:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Ruby (for github-changelog-generator)
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.7  # You can use a different version if needed
+
+    - name: Install github-changelog-generator
+      run: gem install github_changelog_generator
+
+    - name: Generate changelog
+      run: github_changelog_generator --unreleased --output CHANGELOG.md
+
+    - name: Commit and push changelog
+      uses: EndBug/add-and-commit@v7
+      with:
+        author_name: 'GitHub Actions'
+        author_email: 'actions@github.com'
+        message: 'chore: update changelog'
+
