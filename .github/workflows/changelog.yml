@@ -2,32 +2,43 @@ name: Generate Changelog
 
 on:
   push:
-    tags:
-      - 'v1.0.0'
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  release:
+    types: [created, published]
 
 jobs:
-  generate-changelog:
+  changelog:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Set up Ruby (for github-changelog-generator)
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.7  # You can use a different version if needed
+      - name: Set up Go environment
+        uses: actions/setup-go@v2
+        with:
+          go-version: '1.18'
 
-    - name: Install github-changelog-generator
-      run: gem install github_changelog_generator
+      - name: Install git-chglog
+        run: |
+          curl -sSL https://github.com/git-chglog/git-chglog/releases/download/v0.10.0/git-chglog_0.10.0_linux_x86_64.tar.gz | tar -xz
+          sudo mv git-chglog /usr/local/bin/
 
-    - name: Generate changelog
-      run: github_changelog_generator --unreleased --output CHANGELOG.md
+      - name: Generate Changelog
+        run: |
+          git-chglog --next-tag v$(git describe --tags --abbrev=0) --output CHANGELOG.md
 
-    - name: Commit and push changelog
-      uses: EndBug/add-and-commit@v7
-      with:
-        author_name: 'GitHub Actions'
-        author_email: 'actions@github.com'
-        message: 'chore: update changelog'
+      - name: Commit and push the changelog
+        run: |
+          git config --global user.email "emamidadmehr@example.com"
+          git config --global user.name "Dadmehr"
+          git add CHANGELOG.md
+          git commit -m "Update Changelog"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
