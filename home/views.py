@@ -1,7 +1,7 @@
 from django.contrib.sessions.models import Session
 import json
 import re
-
+from django.db import models
 import markdown
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -362,3 +362,7 @@ def leaderboard(request):
     # Get all users, order them by score (descending)
     users = UserProfile.objects.all().order_by('-score')  # Order by score
     return render(request, 'leaderboard.html', {'users': users})
+
+def explore(request):
+    trending_questions = Question.objects.annotate(num_likes=models.Count('likes_count')).order_by('-num_likes')[:10]
+    return render(request, 'explore.html', {'trending_questions': trending_questions})
