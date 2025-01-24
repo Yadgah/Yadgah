@@ -18,6 +18,7 @@ from .views import (
     signup_view,
     toggle_reaction,
     user_profile,
+    delete_question,
 )
 
 # URL patterns for the home app
@@ -49,6 +50,7 @@ urlpatterns = [
     path("privacy-policy/", privacy_policy, name="privacy_policy"),
     path("mit-license/", mit_license, name="mit_license"),
     path("rules/", rules, name="rules"),
+    path('question/<int:question_id>/delete/', delete_question, name='delete_question'),
 ]
 
 # Serve media files during development

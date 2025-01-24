@@ -257,6 +257,19 @@ def question_detail(request, question_id):
         },
     )
 
+# View to delete a question
+@login_required
+def delete_question(request, question_id):
+    question = get_object_or_404(Question, id=question_id)
+
+    # Check if the current user is the author of the question
+    if question.user == request.user:
+        question.delete()
+        messages.success(request, "سوال با موفقیت حذف شد.")
+    else:
+        messages.error(request, "شما دسترسی پاک کردن ندارید.")
+
+    return redirect("index")  # Redirect to home or any o:ther page
 
 # View for user profiles displaying their questions
 def user_profile(request, username):
