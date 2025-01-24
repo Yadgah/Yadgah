@@ -45,6 +45,25 @@ class Question(models.Model):
     def __str__(self):
         return self.title
 
+    @property
+    def like_count(self):
+        """Returns the number of likes for the question."""
+        return self.likes_count.count()
+
+    @property
+    def trend_score(self):
+        """
+        A custom property to calculate a trend score based on likes and views.
+        Higher score indicates the question is more "trendy".
+        """
+        # For example, the trend score can be based on likes and views.
+        return self.like_count * 2 + self.view_count
+
+    @classmethod
+    def get_trending_questions(cls):
+        """Returns questions sorted by trend score."""
+        return cls.objects.all().order_by('-trend_score')[:10]  # Returns top 10 trending question
+
 class Reply(models.Model):
     """
     Represents a reply to a question, with Markdown content.

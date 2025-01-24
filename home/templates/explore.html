@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}صفحه ترند‌ها{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h2 class="my-4">سوالات ترند</h2>
+
+  <div class="list-group">
+    {% for question in trending_questions %}
+    <a
+      href="{% url 'question_detail' question.id %}"
+      class="list-group-item list-group-item-action"
+    >
+      <h5 class="mb-1">{{ question.title }}</h5>
+      <p class="mb-1">{{ question.content|slice:":100" }}...</p>
+      <small>{{ question.likes_count.count }} لایک</small>
+    </a>
+    {% empty %}
+    <p>هیچ سوال ترندی یافت نشد.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

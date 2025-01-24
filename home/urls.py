@@ -20,6 +20,7 @@ from .views import (
     user_profile,
     delete_question,
     leaderboard,
+    explore,
 )
 
 # URL patterns for the home app
@@ -53,6 +54,7 @@ urlpatterns = [
     path("rules/", rules, name="rules"),
     path('question/<int:question_id>/delete/', delete_question, name='delete_question'),
     path('leaderboard/', leaderboard, name='leaderboard'),
+    path('explore/', explore, name='explore'),
 ]
 
 # Serve media files during development
