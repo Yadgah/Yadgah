@@ -1,3 +1,4 @@
+from django.contrib.sessions.models import Session
 import json
 import re
 
@@ -207,9 +208,17 @@ def ask_question(request):
     return render(request, "ask_question.html", {"form": form})
 
 
-# View to display question details and handle likes/dislikes
 def question_detail(request, question_id):
     question = get_object_or_404(Question, id=question_id)
+
+    # Check if the user has already viewed the question in this session
+    if not request.session.get(f"viewed_question_{question.id}", False):
+        # Increment the view count
+        question.view_count += 1
+        question.save()
+
+        # Mark that the user has viewed the question in this session
+        request.session[f"viewed_question_{question.id}"] = True
 
     # Count likes and dislikes
     likes_count = question.likes_count.count()
@@ -254,6 +263,7 @@ def question_detail(request, question_id):
             "user_liked": user_liked,
             "user_disliked": user_disliked,
             "form": form,  # Pass the form to the template
+            "view_count": question.view_count,  # Pass view count to the template
         },
     )
 
