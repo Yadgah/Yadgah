@@ -1,31 +1,33 @@
 <!DOCTYPE html>
 <html lang="fa">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
     {% load static %}
-    <title>{% block title %}یادگاه - Yadgah{% endblock %}</title>
-    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
+    
+		<title>{% block title %}یادگاه - Yadgah{% endblock %}</title>
+		<link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
     {% load bootstrap5 %} {% bootstrap_css %} {% bootstrap_javascript %}
-    <!-- SEO Optimization -->
-    <meta
+    
+		<!-- SEO Optimization -->
+		<meta
       name="description"
       content="وبسایت یادگاه - اخبار، سوالات و مطالب مفید برای یادگیری و اشتراک تجربیات."
     />
-    <meta name="keywords" content="یادگاه, اخبار, سوالات, تجربه, یادگیری" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script
+		<meta name="keywords" content="یادگاه, اخبار, سوالات, تجربه, یادگیری" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script
       src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
       integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
       crossorigin="anonymous"
     ></script>
-    <script
+		<script
       src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
       integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
       crossorigin="anonymous"
     ></script>
-    <script src="{% static 'js/jalaali.min.js' %}"></script>
-    <style>
+		<script src="{% static 'js/jalaali.min.js' %}"></script>
+		<style>
       .form-control {
         border-radius: 23.3rem;
       }
@@ -46,55 +48,52 @@
         padding: 0;
       }
     </style>
-  </head>
-  <body dir="rtl">
-    <!-- Header Section -->
-    <header class="p-3 bg-dark text-white">
-      <div class="container">
-        <div
+	</head>
+	<body dir="rtl">
+		<!-- Header Section -->
+		<header class="p-3 bg-dark text-white">
+			<div class="container">
+				<div
           class="d-flex flex-wrap align-items-center justify-content-between"
         >
-          <!-- Logo and Title -->
-          <a
+					<!-- Logo and Title -->
+					<a
             href="/"
             class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none"
           >
-            <img
+						<img
               src="{% static 'favicon.ico' %}"
               alt="یادگاه لوگو"
               width="50"
               height="50"
             />
-            <h1 class="ms-2">یادگاه</h1>
-          </a>
-          <!-- Navigation Menu -->
-		  <ul
-            class="nav col-12 col-lg-auto mb-2 mb-lg-0 justify-content-center"
-          >
-            <li>
-              <a href="#" class="nav-link px-2 text-white">خانه</a>
-            </li>
-             <li>
-              <a href="leaderboard/" class="nav-link px-2 text-white">تابلوی امتیازات</a>
-            </li>
-            <li>
-              <a href="explore/" class="nav-link px-2 text-white">کاوش</a>
-            </li>
-          </ul>
-          <!-- Search Form -->
-          <!-- <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-            <input
+						<h1 class="ms-2">یادگاه</h1>
+					</a>
+					<!-- Navigation Menu -->
+					<ul class="nav col-12 col-lg-auto mb-2 mb-lg-0 justify-content-center">
+						<li>
+							<a href="{% url 'home' %}" class="nav-link px-2 text-white">خانه</a>
+						</li>
+						<li>
+							<a href="{% url 'leaderboard' %}" class="nav-link px-2 text-white">تابلوی امتیازات</a>
+						</li>
+						<li>
+							<a href="{% url 'explore' %}" class="nav-link px-2 text-white">کاوش</a>
+						</li>
+					</ul>
+					<!-- Search Form -->
+					<!-- <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3"><input
               type="search"
               class="form-control form-control-dark"
               placeholder="جست و جو..."
               aria-label="جست و جو"
-            />
-          </form> -->
-          <!-- User Authentication Section -->
-          <div class="text-end">
+            /></form> -->
+					<!-- User Authentication Section -->
+					<div class="text-end">
             {% if user.is_authenticated %}
-            <!-- User Profile Dropdown -->
-            <a
+            
+						<!-- User Profile Dropdown -->
+						<a
               href="#"
               class="d-block link-dark text-decoration-none dropdown-toggle"
               id="dropdownUser1"
@@ -102,8 +101,9 @@
               aria-expanded="false"
             >
               {% if user.userprofile.avatar %}
-              <!-- Display user's profile picture if available -->
-              <img
+              
+							<!-- Display user's profile picture if available -->
+							<img
                 src="{{ user.userprofile.avatar.url }}"
                 alt="{{ user.username }}'s avatar"
                 width="40"
@@ -111,8 +111,9 @@
                 class="rounded-circle"
               />
               {% else %}
-              <!-- Display default avatar if no profile picture is set -->
-              <img
+              
+							<!-- Display default avatar if no profile picture is set -->
+							<img
                 src="{% static 'default-avatar.png' %}"
                 alt="default avatar"
                 width="32"
@@ -120,85 +121,87 @@
                 class="rounded-circle"
               />
               {% endif %}
-            </a>
-            <!-- Dropdown Menu -->
-            <ul
+            
+						</a>
+						<!-- Dropdown Menu -->
+						<ul
               class="dropdown-menu dropdown-menu-end"
               aria-labelledby="dropdownUser1"
             >
-              <li>
-                <a
+							<li>
+								<a
                   class="dropdown-item"
                   href="{% url 'user_profile' user.username %}"
                   >پروفایل</a
                 >
-              </li>
-
-              <li>
-                <a class="dropdown-item" href="{% url 'profile' %}">تنظیمات</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="{% url 'logout' %}">خروج</a>
-              </li>
-            </ul>
+							</li>
+							<li>
+								<a class="dropdown-item" href="{% url 'profile' %}">تنظیمات</a>
+							</li>
+							<li>
+								<a class="dropdown-item" href="{% url 'logout' %}">خروج</a>
+							</li>
+						</ul>
             {% else %}
-            <!-- Login and Signup Buttons -->
-            <a href="{% url 'login' %}" class="btn btn-outline-light me-2"
+            
+						<!-- Login and Signup Buttons -->
+						<a href="{% url 'login' %}" class="btn btn-outline-light me-2"
               >ورود</a
             >
-            <a href="{% url 'signup' %}" class="btn btn-warning">ثبت‌نام</a>
+						<a href="{% url 'signup' %}" class="btn btn-warning">ثبت‌نام</a>
             {% endif %}
-          </div>
-        </div>
-      </div>
-    </header>
-    <!-- Main Content Section -->
-    <div class="container my-4">{% block content %}{% endblock %}</div>
-    <!-- Remove the container if you want to extend the Footer to full width. -->
-    <footer style="background-color: #212529; color: #fff; margin-top: 20px">
-      <div class="container p-4">
-        <div class="row">
-          <!-- Footer Content -->
-          <div class="col-lg-6 col-md-12 mb-4">
-            <h5 class="mb-3" style="color: #69b987">درباره ما</h5>
-            <p>
+          
+					</div>
+				</div>
+			</div>
+		</header>
+		<!-- Main Content Section -->
+		<div class="container my-4">{% block content %}{% endblock %}</div>
+		<!-- Remove the container if you want to extend the Footer to full width. -->
+		<footer style="background-color: #212529; color: #fff; margin-top: 20px">
+			<div class="container p-4">
+				<div class="row">
+					<!-- Footer Content -->
+					<div class="col-lg-6 col-md-12 mb-4">
+						<h5 class="mb-3" style="color: #69b987">درباره ما</h5>
+						<p>
               وبسایت یادگاه - بستری برای یادگیری، اشتراک تجربیات و دریافت
               اطلاعات مفید. از پرسش و پاسخ تا مطالعه مقالات آموزنده.
             </p>
-          </div>
-          <!-- Links Section -->
-          <div class="col-lg-3 col-md-6 mb-4">
-            <h5 class="mb-3" style="color: #69b987">لینک‌ها</h5>
-            <ul class="list-unstyled mb-0">
-              <li class="mb-2">
-                <a
+					</div>
+					<!-- Links Section -->
+					<div class="col-lg-3 col-md-6 mb-4">
+						<h5 class="mb-3" style="color: #69b987">لینک‌ها</h5>
+						<ul class="list-unstyled mb-0">
+							<li class="mb-2">
+								<a
                   href="/privacy-policy/"
                   style="color: #fff; text-decoration: none"
                   >سیاست حفظ حریم خصوصی</a
                 >
-              </li>
-              <li class="mb-2">
-                <a
+							</li>
+							<li class="mb-2">
+								<a
                   href="/mit-license/"
                   style="color: #fff; text-decoration: none"
                   >اطلاعات حق نشر</a
                 >
-              </li>
-              <li class="mb-2">
-                <a href="/rules/" style="color: #fff; text-decoration: none"
+							</li>
+							<li class="mb-2">
+								<a href="/rules/" style="color: #fff; text-decoration: none"
                   >قوانین</a
                 >
-              </li>
-            </ul>
-          </div>
-          <div class="col-lg-3 col-md-6 mb-4 text-center">
-            <h5 class="mb-3" style="color: #69b987">من</h5>
-            <a
+							</li>
+						</ul>
+					</div>
+					<div class="col-lg-3 col-md-6 mb-4 text-center">
+						<h5 class="mb-3" style="color: #69b987">من</h5>
+						<a
               href="https://github.com/BDadmehr0/"
               target="_blank"
               style="text-decoration: none"
             >
-              <div
+							<div
                 style="
                   width: 60px;
                   height: 60px;
@@ -210,20 +213,21 @@
                   margin: 0 auto;
                 "
               >
-                <img
+								<img
                   src="https://cdn-icons-png.flaticon.com/512/25/25231.png"
                   alt="GitHub Icon"
                   style="width: 40px; height: 40px"
                 />
-              </div>
-            </a>
+							</div>
+						</a>
             emamidadmehr@gmail.com
-          </div>
-        </div>
-      </div>
-      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.8)">
+          
+					</div>
+				</div>
+			</div>
+			<div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.8)">
         © 2025 Yadgah.ir - پروژه‌ای آزاد برای جهانی آزاد
       </div>
-    </footer>
-  </body>
+		</footer>
+	</body>
 </html>
