@@ -6,41 +6,94 @@
     body {
         background-color: #121212;
         color: #fff;
+        font-family: 'Inter', sans-serif;
     }
 
     .question-card {
         background-color: #1c1c1c;
-        border-radius: 10px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        padding: 20px;
-        margin-bottom: 20px;
+        border-radius: 12px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        padding: 25px;
+        margin-bottom: 25px;
     }
 
-    .question-card h2 {
-        color: #69b987;
-    }
-
-    .question-meta {
-        font-size: 0.9rem;
-        color: #bbb;
+    .question-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #2c2c2c;
+        padding-bottom: 15px;
+    }
+
+    .question-title {
+        color: #69b987;
+        margin: 0;
+        font-size: 1.5rem;
+        flex-grow: 1;
+    }
+
+    .question-metadata {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        font-size: 0.9rem;
+        color: #bbb;
+    }
+
+    .question-metadata > * {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .question-metadata .view-count,
+    .question-metadata .creation-date,
+    .question-metadata .author {
+        background-color: #2c2c2c;
+        padding: 5px 10px;
+        border-radius: 6px;
+    }
+
+    .question-actions {
+        display: flex;
+        gap: 10px;
+    }
+
+    .delete-question button {
+        background-color: #ff5252;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        padding: 8px 15px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .delete-question button:hover {
+        background-color: #e34a4a;
+    }
+
+    .question-content {
+        margin-bottom: 20px;
+        line-height: 1.6;
     }
 
     .reactions {
         display: flex;
-        gap: 10px;
+        gap: 15px;
         margin-top: 20px;
     }
 
     .reactions button {
         flex: 1;
-        padding: 10px;
+        padding: 12px;
         border: none;
-        border-radius: 5px;
+        border-radius: 8px;
         font-weight: bold;
         cursor: pointer;
+        transition: opacity 0.3s ease;
     }
 
     .reactions .btn-like {
@@ -51,6 +104,10 @@
     .reactions .btn-dislike {
         background-color: #ff5252;
         color: #fff;
+    }
+
+    .reactions button:hover {
+        opacity: 0.9;
     }
 
     .reply-section {
@@ -131,29 +188,40 @@
 </style>
 
 <div class="question-card">
-    <h2>{{ question.title }}</h2>
-    <p class="question-meta">
-        <div class="view-delete-container">
-            <span><strong>تعداد بازدید: </strong>{{ view_count }}</span> <!-- Display the view count -->
+    <div class="question-header">
+        <h2 class="question-title">{{ question.title }}</h2>
+        <div class="question-metadata">
+            <div class="view-count">
+                <i class="icon-eye"></i>
+                <span>{{ view_count }} بازدید</span>
+            </div>
+            <div class="creation-date">
+                <i class="icon-calendar"></i>
+                <span>{{ question.created_at|jalali_date }}</span>
+            </div>
+            <div class="author">
+                <i class="icon-user"></i>
+                {% if question.user and question.user.username %}
+                    <a href="{% url 'user_profile' question.user.username %}">{{ question.user.username }}</a>
+                {% else %}
+                    کاربر ناشناس
+                {% endif %}
+            </div>
             {% if question.user == user %}
-                <form action="{% url 'delete_question' question.id %}" method="POST" style="display:inline;">
-                    {% csrf_token %}
-                    <button class="btn btn-danger" type="submit">حذف سوال</button>
-                </form>
+                <div class="question-actions">
+                    <form action="{% url 'delete_question' question.id %}" method="POST" class="delete-question">
+                        {% csrf_token %}
+                        <button type="submit">حذف سوال</button>
+                    </form>
+                </div>
             {% endif %}
         </div>
-        <span>
-            تاریخ ایجاد: {{ question.created_at|jalali_date }} |
-            {% if question.user and question.user.username %}
-                <a href="{% url 'user_profile' question.user.username %}">{{ question.user.username }}</a>
-            {% else %}
-                کاربر ناشناس
-            {% endif %}
-        </span>
-    </p>
+    </div>
+
     <div class="question-content">
         {{ content_as_html|safe }}
     </div>
+
     <div class="reactions">
         <button class="btn-like" onclick="toggleReaction('like')">لایک ({{ likes_count }})</button>
         <button class="btn-dislike" onclick="toggleReaction('dislike')">دیس‌لایک ({{ dislikes_count }})</button>
