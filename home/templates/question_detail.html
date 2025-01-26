@@ -3,65 +3,92 @@
 
 {% block content %}
 <style>
+    :root {
+        --bg-dark: #121212;
+        --bg-card: #1c1c1c;
+        --text-primary: #fff;
+        --accent-green: #69b987;
+        --accent-red: #ff5252;
+        --text-muted: #bbb;
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
     body {
-        background-color: #121212;
-        color: #fff;
-        font-family: 'Inter', sans-serif;
+        background-color: var(--bg-dark);
+        color: var(--text-primary);
+        font-family: 'Inter', 'system-ui', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        line-height: 1.6;
+        padding: 15px;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        width: 100%;
     }
 
     .question-card {
-        background-color: #1c1c1c;
+        background-color: var(--bg-card);
         border-radius: 12px;
         box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-        padding: 25px;
-        margin-bottom: 25px;
+        padding: 20px;
+        margin-bottom: 20px;
     }
 
     .question-header {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
+        flex-direction: column;
+        gap: 15px;
         margin-bottom: 15px;
         border-bottom: 1px solid #2c2c2c;
         padding-bottom: 15px;
     }
 
     .question-title {
-        color: #69b987;
-        margin: 0;
-        font-size: 1.5rem;
-        flex-grow: 1;
+        color: var(--accent-green);
+        font-size: 1.4rem;
+        margin-bottom: 10px;
     }
 
     .question-metadata {
         display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: space-between;
         align-items: center;
-        gap: 15px;
-        font-size: 0.9rem;
-        color: #bbb;
     }
 
-    .question-metadata > * {
+    .metadata-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .metadata-item {
+        background-color: #2c2c2c;
+        padding: 5px 10px;
+        border-radius: 6px;
+        font-size: 0.85rem;
         display: flex;
         align-items: center;
         gap: 5px;
     }
 
-    .question-metadata .view-count,
-    .question-metadata .creation-date,
-    .question-metadata .author {
-        background-color: #2c2c2c;
-        padding: 5px 10px;
-        border-radius: 6px;
-    }
-
     .question-actions {
         display: flex;
+        flex-wrap: wrap;
         gap: 10px;
+        margin-top: 10px;
     }
 
     .delete-question button {
-        background-color: #ff5252;
+        background-color: var(--accent-red);
         color: white;
         border: none;
         border-radius: 6px;
@@ -77,13 +104,11 @@
 
     .question-content {
         margin-bottom: 20px;
-        line-height: 1.6;
     }
 
     .reactions {
         display: flex;
-        gap: 15px;
-        margin-top: 20px;
+        gap: 10px;
     }
 
     .reactions button {
@@ -97,13 +122,13 @@
     }
 
     .reactions .btn-like {
-        background-color: #69b987;
-        color: #121212;
+        background-color: var(--accent-green);
+        color: var(--bg-dark);
     }
 
     .reactions .btn-dislike {
-        background-color: #ff5252;
-        color: #fff;
+        background-color: var(--accent-red);
+        color: var(--text-primary);
     }
 
     .reactions button:hover {
@@ -111,102 +136,87 @@
     }
 
     .reply-section {
-        margin-top: 30px;
+        margin-top: 20px;
     }
 
     .reply-card {
-        background-color: #1c1c1c;
+        background-color: var(--bg-card);
         border-radius: 10px;
         padding: 15px;
         margin-bottom: 15px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    }
-
-    .reply-card.approved {
-        border-left: 4px solid #69b987;
-    }
-
-    .reply-meta {
-        font-size: 0.9rem;
-        color: #bbb;
-        margin-top: 10px;
-    }
-
-    .reply-status {
-        font-size: 0.9rem;
-        color: #69b987;
-        font-weight: bold;
     }
 
     .reply-form {
-        background-color: #1c1c1c;
+        background-color: var(--bg-card);
         border-radius: 10px;
         padding: 20px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     }
 
-    .reply-form h3 {
-        margin-top: 0;
-        color: #69b987;
-    }
+    /* Mobile Responsiveness */
+    @media screen and (max-width: 600px) {
+        body {
+            padding: 10px;
+        }
 
-    .alert-info {
-        background-color: #69b987;
-        color: #121212;
-        border-radius: 5px;
-        padding: 10px;
-    }
+        .question-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
 
-    .alert-info a {
-        color: #fff;
-        text-decoration: underline;
-    }
+        .question-metadata {
+            flex-direction: column;
+            align-items: flex-start;
+        }
 
-    .delete-question {
-        margin-left: 20px;
-    }
+        .metadata-group {
+            width: 100%;
+            justify-content: flex-start;
+        }
 
-    .delete-question button {
-        background-color: #ff5252;
-        color: white;
-        border-radius: 5px;
-        padding: 10px 20px;
-        font-weight: bold;
-        cursor: pointer;
-    }
+        .metadata-item {
+            flex-grow: 1;
+            justify-content: center;
+        }
 
-    .delete-question button:hover {
-        background-color: #e34a4a;
-    }
+        .reactions {
+            flex-direction: column;
+        }
 
-    /* Flexbox to align "view count" and "delete button" */
-    .question-meta .view-delete-container {
-        display: flex;
-        align-items: center;
-        gap: 20px;
+        .reactions button {
+            padding: 15px;
+        }
     }
 </style>
 
-<div class="question-card">
-    <div class="question-header">
-        <h2 class="question-title">{{ question.title }}</h2>
-        <div class="question-metadata">
-            <div class="view-count">
-                <i class="icon-eye"></i>
-                <span>{{ view_count }} بازدید</span>
+<div class="container">
+    <div class="question-card">
+        <div class="question-header">
+            <h2 class="question-title">{{ question.title }}</h2>
+            
+            <div class="question-metadata">
+                <div class="metadata-group">
+                    <div class="metadata-item view-count">
+                        <i class="icon-eye"></i>
+                        <span>{{ view_count }} بازدید</span>
+                    </div>
+                    <div class="metadata-item creation-date">
+                        <i class="icon-calendar"></i>
+                        <span>{{ question.created_at|jalali_date }}</span>
+                    </div>
+                </div>
+
+                <div class="metadata-group">
+                    <div class="metadata-item author">
+                        <i class="icon-user"></i>
+                        {% if question.user and question.user.username %}
+                            <a href="{% url 'user_profile' question.user.username %}">{{ question.user.username }}</a>
+                        {% else %}
+                            کاربر ناشناس
+                        {% endif %}
+                    </div>
+                </div>
             </div>
-            <div class="creation-date">
-                <i class="icon-calendar"></i>
-                <span>{{ question.created_at|jalali_date }}</span>
-            </div>
-            <div class="author">
-                <i class="icon-user"></i>
-                {% if question.user and question.user.username %}
-                    <a href="{% url 'user_profile' question.user.username %}">{{ question.user.username }}</a>
-                {% else %}
-                    کاربر ناشناس
-                {% endif %}
-            </div>
+
             {% if question.user == user %}
                 <div class="question-actions">
                     <form action="{% url 'delete_question' question.id %}" method="POST" class="delete-question">
@@ -216,17 +226,16 @@
                 </div>
             {% endif %}
         </div>
-    </div>
 
-    <div class="question-content">
-        {{ content_as_html|safe }}
-    </div>
+        <div class="question-content">
+            {{ content_as_html|safe }}
+        </div>
 
-    <div class="reactions">
-        <button class="btn-like" onclick="toggleReaction('like')">لایک ({{ likes_count }})</button>
-        <button class="btn-dislike" onclick="toggleReaction('dislike')">دیس‌لایک ({{ dislikes_count }})</button>
+        <div class="reactions">
+            <button class="btn-like" onclick="toggleReaction('like')">لایک ({{ likes_count }})</button>
+            <button class="btn-dislike" onclick="toggleReaction('dislike')">دیس‌لایک ({{ dislikes_count }})</button>
+        </div>
     </div>
-</div>
 
 <!-- پاسخ‌ها -->
 <div class="reply-section">
