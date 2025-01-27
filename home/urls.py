@@ -6,7 +6,10 @@ from .views import (
     approve_reply,
     ask_question,
     delete_profile,
+    delete_question,
+    explore,
     home_view,
+    leaderboard,
     login_view,
     logout_view,
     mit_license,
@@ -18,9 +21,6 @@ from .views import (
     signup_view,
     toggle_reaction,
     user_profile,
-    delete_question,
-    leaderboard,
-    explore,
 )
 
 # URL patterns for the home app
@@ -52,9 +52,9 @@ urlpatterns = [
     path("privacy-policy/", privacy_policy, name="privacy_policy"),
     path("mit-license/", mit_license, name="mit_license"),
     path("rules/", rules, name="rules"),
-    path('question/<int:question_id>/delete/', delete_question, name='delete_question'),
-    path('leaderboard/', leaderboard, name='leaderboard'),
-    path('explore/', explore, name='explore'),
+    path("question/<int:question_id>/delete/", delete_question, name="delete_question"),
+    path("leaderboard/", leaderboard, name="leaderboard"),
+    path("explore/", explore, name="explore"),
 ]
 
 # Serve media files during development

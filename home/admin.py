@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.models import User
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
+
 from .models import Label, News, Question, Reply, UserProfile
 
 
@@ -98,10 +99,11 @@ class NewsAdmin(admin.ModelAdmin):
 # Register the models in the admin panel
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(Reply, ReplyAdmin)
-admin.site.register(UserProfile)  # No need for UserProfileAdmin, as it's already handled in UserAdmin
+admin.site.register(
+    UserProfile
+)  # No need for UserProfileAdmin, as it's already handled in UserAdmin
 # Unregister the default User admin and register the customized one
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
 
 admin.site.register(Label)
-

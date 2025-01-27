@@ -21,4 +21,3 @@ Similar to platforms like Quora or StackOverflow, users can share their experien
 - **Likes, Comments, & Ratings:** Users can like, comment on, and rate the answers.
 - **Categories for Questions & Experiences:** Examples include work experiences, education, technology, health, etc.
 - **User Ranking System:** Based on their contributions, such as identifying top contributors or best answer providers.
-
