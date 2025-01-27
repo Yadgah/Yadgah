@@ -109,4 +109,3 @@ class NewsModelTest(TestCase):
         self.assertEqual(self.news.content, "The Django team has released version 4.0.")
         self.assertEqual(self.news.author.username, "janedoe")
         self.assertTrue(self.news.is_active)
-
