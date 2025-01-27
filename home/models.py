@@ -22,6 +22,32 @@ class UserProfile(models.Model):
         self.score += amount
         self.save()
 
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    """Create a UserProfile for new users if it does not exist."""
+    if created:
+        UserProfile.objects.get_or_create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    """Save the user profile when the user is saved."""
+    # Check if the user has a profile before trying to save it
+    if hasattr(instance, 'userprofile'):
+        instance.userprofile.save()
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    """Create a UserProfile for new users if it does not exist."""
+    if created:
+        UserProfile.objects.get_or_create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    """Save the user profile when the user is saved."""
+    # Check if the user has a profile before trying to save it
+    if hasattr(instance, 'userprofile'):
+        instance.userprofile.save()
+
 class Label(models.Model):
     name = models.CharField(max_length=100, unique=True)
     color = models.CharField(max_length=7, default="#000000")  # Hex color code
@@ -82,25 +108,6 @@ class Reply(models.Model):
         Converts the Markdown content into HTML for display in the question view.
         """
         return markdown.markdown(self.content, extensions=["fenced_code"])
-
-# سیگنال‌ها برای مدیریت امتیاز
-@receiver(post_save, sender=Reply)
-def update_score_on_approval(sender, instance, created, **kwargs):
-    """Update the user's score when a reply is approved."""
-    if instance.is_approved:
-        user_profile = instance.user.userprofile
-        user_profile.increase_score()
-
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    """Create a UserProfile for new users."""
-    if created:
-        UserProfile.objects.create(user=instance)
-
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    """Save the user profile when the user is saved."""
-    instance.userprofile.save()
 
 class QuestionReaction(models.Model):
     """
