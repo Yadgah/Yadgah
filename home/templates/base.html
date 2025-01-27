@@ -4,11 +4,11 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
     {% load static %}
-    
+
 		<title>{% block title %}یادگاه - Yadgah{% endblock %}</title>
 		<link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
     {% load bootstrap5 %} {% bootstrap_css %} {% bootstrap_javascript %}
-    
+
 		<!-- SEO Optimization -->
 		<meta
       name="description"
@@ -91,7 +91,7 @@
 					<!-- User Authentication Section -->
 					<div class="text-end">
             {% if user.is_authenticated %}
-            
+
 						<!-- User Profile Dropdown -->
 						<a
               href="#"
@@ -101,7 +101,7 @@
               aria-expanded="false"
             >
               {% if user.userprofile.avatar %}
-              
+
 							<!-- Display user's profile picture if available -->
 							<img
                 src="{{ user.userprofile.avatar.url }}"
@@ -111,7 +111,7 @@
                 class="rounded-circle"
               />
               {% else %}
-              
+
 							<!-- Display default avatar if no profile picture is set -->
 							<img
                 src="{% static 'default-avatar.png' %}"
@@ -121,7 +121,7 @@
                 class="rounded-circle"
               />
               {% endif %}
-            
+
 						</a>
 						<!-- Dropdown Menu -->
 						<ul
@@ -143,14 +143,14 @@
 							</li>
 						</ul>
             {% else %}
-            
+
 						<!-- Login and Signup Buttons -->
 						<a href="{% url 'login' %}" class="btn btn-outline-light me-2"
               >ورود</a
             >
 						<a href="{% url 'signup' %}" class="btn btn-warning">ثبت‌نام</a>
             {% endif %}
-          
+
 					</div>
 				</div>
 			</div>
@@ -221,7 +221,7 @@
 							</div>
 						</a>
             emamidadmehr@gmail.com
-          
+
 					</div>
 				</div>
 			</div>

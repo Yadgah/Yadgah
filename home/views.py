@@ -1,15 +1,16 @@
-from django.contrib.sessions.models import Session
 import json
 import re
-from django.db import models
+
 import markdown
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
+from django.contrib.sessions.models import Session
 from django.core.exceptions import ValidationError
 from django.core.paginator import EmptyPage, Paginator
+from django.db import models
 from django.http import (
     HttpResponse,
     HttpResponseForbidden,
@@ -267,6 +268,7 @@ def question_detail(request, question_id):
         },
     )
 
+
 # View to delete a question
 @login_required
 def delete_question(request, question_id):
@@ -280,6 +282,7 @@ def delete_question(request, question_id):
         messages.error(request, "شما دسترسی پاک کردن ندارید.")
 
     return redirect("index")  # Redirect to home or any o:ther page
+
 
 # View for user profiles displaying their questions
 def user_profile(request, username):
@@ -358,11 +361,15 @@ def mit_license(request):
 def rules(request):
     return render(request, "rules.html")
 
+
 def leaderboard(request):
     # Get all users, order them by score (descending)
-    users = UserProfile.objects.all().order_by('-score')  # Order by score
-    return render(request, 'leaderboard.html', {'users': users})
+    users = UserProfile.objects.all().order_by("-score")  # Order by score
+    return render(request, "leaderboard.html", {"users": users})
+
 
 def explore(request):
-    trending_questions = Question.objects.annotate(num_likes=models.Count('likes_count')).order_by('-num_likes')[:10]
-    return render(request, 'explore.html', {'trending_questions': trending_questions})
+    trending_questions = Question.objects.annotate(
+        num_likes=models.Count("likes_count")
+    ).order_by("-num_likes")[:10]
+    return render(request, "explore.html", {"trending_questions": trending_questions})
