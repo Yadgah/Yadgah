@@ -40,21 +40,6 @@ def save_user_profile(sender, instance, **kwargs):
         instance.userprofile.save()
 
 
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    """Create a UserProfile for new users if it does not exist."""
-    if created:
-        UserProfile.objects.get_or_create(user=instance)
-
-
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    """Save the user profile when the user is saved."""
-    # Check if the user has a profile before trying to save it
-    if hasattr(instance, "userprofile"):
-        instance.userprofile.save()
-
-
 class Label(models.Model):
     name = models.CharField(max_length=100, unique=True)
     color = models.CharField(max_length=7, default="#000000")  # Hex color code

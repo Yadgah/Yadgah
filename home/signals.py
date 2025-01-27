@@ -1,8 +1,11 @@
 import re
 
 import jdatetime
-import markdown
 from django import template
+from django.db.models.signals import post_migrate
+from django.dispatch import receiver
+
+from .models import Label
 
 register = template.Library()
 
@@ -36,12 +39,6 @@ def strip_markdown(value):
     return value.strip()
 
 
-# @register.filter(name='markdown')
-# def markdown_to_html(value):
-#     """Filter to convert Markdown to HTML."""
-#     return markdown.markdown(value)
-
-
 @register.filter
 def jalali_date(value):
     """
@@ -59,13 +56,6 @@ def add_class(value, arg):
     Adds a CSS class to a form field widget.
     """
     return value.as_widget(attrs={"class": arg})
-
-
-# home/signals.py
-from django.db.models.signals import post_migrate
-from django.dispatch import receiver
-
-from .models import Label
 
 
 @receiver(post_migrate)
