@@ -1,7 +1,7 @@
-import re
+# home/forms.py
 
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
@@ -138,24 +138,6 @@ class UserProfileForm(forms.ModelForm):
         # Add 'form-control' class to each field for consistent styling
         for field in self.fields.values():
             field.widget.attrs.update({"class": "form-control"})
-
-
-# class QuestionForm(forms.ModelForm):
-#     """
-#     Form for creating a question.
-#     """
-#     labels = forms.ModelMultipleChoiceField(
-#         queryset=Label.objects.all(),
-#         widget=forms.CheckboxSelectMultiple,
-#         required=False
-#     )
-#     class Meta:
-#         model = Question
-#         fields = ["title", "content", "labels"]
-#         labels = {
-#             "title": "Question Title",
-#             "content": "Question Description",
-#         }
 
 
 class QuestionForm(forms.ModelForm):

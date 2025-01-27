@@ -1,5 +1,6 @@
+import re  # Importing the 're' module for regex operations
+
 import jdatetime
-import markdown
 from django import template
 from django.forms import BoundField
 
@@ -9,12 +10,12 @@ register = template.Library()
 @register.filter
 def strip_markdown(value):
     """
-    حذف علائم Markdown از متن ورودی.
+    Removes Markdown syntax from the input text.
     """
     if not isinstance(value, str):
         return value
 
-    # الگوهای Markdown برای حذف
+    # Markdown patterns to remove
     markdown_patterns = [
         r"\*\*(.*?)\*\*",  # Bold (**text**)
         r"\*(.*?)\*",  # Italic (*text*)
@@ -28,30 +29,27 @@ def strip_markdown(value):
         r"\-\s|\*\s|\+\s",  # Lists (-, *, +)
     ]
 
-    # حذف تمام الگوها از متن
+    # Removing all Markdown patterns from the text
     for pattern in markdown_patterns:
         value = re.sub(pattern, r"\1", value)
 
     return value.strip()
 
 
-# @register.filter(name='markdown')
-# def markdown_to_html(value):
-#     """فیلتر برای تبدیل Markdown به HTML"""
-#     return markdown.markdown(value)
-
-
 # Filter to convert Gregorian date to Jalali (Persian) date
 @register.filter
 def jalali_date(value):
+    """
+    Converts a Gregorian date to a Jalali (Persian) date format.
+    """
     if value:
-        # تبدیل تاریخ میلادی به شمسی
+        # Convert the Gregorian date to Jalali
         jalali_date = jdatetime.date.fromgregorian(date=value)
-        # فرمت تاریخ به صورت "روز ماه"
+        # Format the date as "day month"
         return (
             jalali_date.strftime("%d")
-            + " "
-            + jalali_date.j_months_fa[jalali_date.month - 1]
+            + " "  # noqa: W503
+            + jalali_date.j_months_fa[jalali_date.month - 1]  # noqa: W503
         )
     return value
 
@@ -59,6 +57,9 @@ def jalali_date(value):
 # Filter to add a CSS class to a form field widget
 @register.filter
 def add_class(value, arg):
+    """
+    Adds a CSS class to the form field widget.
+    """
     if isinstance(value, BoundField):
         return value.as_widget(attrs={"class": arg})
     return value  # Return the value unchanged if it's not a BoundField
