@@ -7,9 +7,13 @@ from home.models import Label, News, Question, QuestionReaction, Reply, UserProf
 class UserProfileModelTest(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username="johndoe", password="password123")
-        self.user_profile = UserProfile.objects.create(
-            user=self.user, first_name="John", last_name="Doe"
+        self.user_profile, created = UserProfile.objects.get_or_create(
+            user=self.user, defaults={"first_name": "John", "last_name": "Doe"}
         )
+        # Ensure first_name and last_name are saved
+        self.user_profile.first_name = "John"
+        self.user_profile.last_name = "Doe"
+        self.user_profile.save()
 
     def test_user_profile_creation(self):
         """Test UserProfile creation and string representation."""
@@ -105,3 +109,4 @@ class NewsModelTest(TestCase):
         self.assertEqual(self.news.content, "The Django team has released version 4.0.")
         self.assertEqual(self.news.author.username, "janedoe")
         self.assertTrue(self.news.is_active)
+
