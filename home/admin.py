@@ -2,7 +2,6 @@ from django.contrib import admin
 from django.contrib.auth.models import User
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
-
 from .models import Label, News, Question, Reply, UserProfile
 
 
@@ -30,17 +29,12 @@ class ReplyAdmin(admin.ModelAdmin):
     ordering = ("-created_at",)  # Order by creation date in descending order
 
 
-# Register the UserProfile model for the admin
-class UserProfileAdmin(admin.ModelAdmin):
-    list_display = ("user", "avatar")  # Display user and avatar in the admin panel
-
-
 # Function to display profile picture in the admin
 def profile_picture_display(obj):
     try:
         if obj.userprofile.avatar:
             return format_html(
-                '<img src="{}" style="height:50px;width:50px;" />',
+                '<img src="{}" style="height:50px;width:50px;border-radius:50%;" />',
                 obj.userprofile.avatar.url,
             )
     except UserProfile.DoesNotExist:
@@ -104,9 +98,10 @@ class NewsAdmin(admin.ModelAdmin):
 # Register the models in the admin panel
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(Reply, ReplyAdmin)
-admin.site.register(UserProfile, UserProfileAdmin)
+admin.site.register(UserProfile)  # No need for UserProfileAdmin, as it's already handled in UserAdmin
 # Unregister the default User admin and register the customized one
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
 
 admin.site.register(Label)
+
