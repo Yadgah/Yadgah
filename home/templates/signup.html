@@ -2,6 +2,20 @@
 {% load custom_filters %}
 {% block content %}
 
+<style>
+  .btn-primary {
+    color: #fff;
+    background-color: #69b987;
+    border-color: #69b987;
+  }
+
+  .btn-primary:hover {
+    color: #fff;
+    background-color: #39843d;
+    border-color: #69b987;
+  }
+</style>
+
 <div class="container mt-5">
   <h2 class="text-center mb-4">ثبت‌نام</h2>
   <form method="POST" class="w-50 mx-auto" enctype="multipart/form-data">
@@ -28,12 +42,8 @@
 
     <!-- فرم فیلدهای ثبت‌نام -->
     <div class="mb-3">
-      <label for="{{ form.first_name.id_for_label }}" class="form-label">نام</label>
-      {{ form.first_name|add_class:"form-control" }}
-    </div>
-    <div class="mb-3">
-      <label for="{{ form.last_name.id_for_label }}" class="form-label">نام خانوادگی</label>
-      {{ form.last_name|add_class:"form-control" }}
+      <label for="{{ form.username.id_for_label }}" class="form-label">نام کاربری</label>
+      {{ form.username|add_class:"form-control" }}
     </div>
     <div class="mb-3">
       <label for="{{ form.email.id_for_label }}" class="form-label">ایمیل</label>
@@ -42,12 +52,14 @@
     <div class="mb-3">
       <label for="{{ form.password.id_for_label }}" class="form-label">رمز عبور</label>
       {{ form.password|add_class:"form-control" }}
-      <small class="text-muted">رمز باید شامل حداقل ۸ کاراکتر، یک حرف و یک عدد باشد.</small>
+      <small class="text-muted">رمز باید شامل حداقل ۸ کاراکتر و عدد باشد.</small>
     </div>
-    <div class="mb-3">
+    <!-- <div class="mb-3">
       <label for="{{ form.confirm_password.id_for_label }}" class="form-label">تکرار رمز عبور</label>
       {{ form.confirm_password|add_class:"form-control" }}
-    </div>
+    </div> -->
+
+
     <!-- دکمه ثبت‌نام -->
     <div class="d-grid gap-2">
       <button type="submit" class="btn btn-primary">ثبت‌نام</button>
