@@ -75,9 +75,9 @@ def signup_view(request):
         confirm_password = request.POST.get("confirm_password")
 
         # Validate password and confirm password
-        if password != confirm_password:
-            messages.error(request, "Passwords do not match.")
-            return render(request, "signup.html", {"form": form})
+        # if password != confirm_password:
+        #     messages.error(request, "Passwords do not match.")
+        #     return render(request, "signup.html", {"form": form})
 
         # Password complexity check: At least one letter and one number
         password_complexity = r"^(?=.*[a-zA-Z])(?=.*\d).{8,}$"
@@ -88,20 +88,12 @@ def signup_view(request):
             )
             return render(request, "signup.html", {"form": form})
 
-        # Ensure unique username
-        first_name = request.POST.get("first_name", "")
-        last_name = request.POST.get("last_name", "")
-        base_username = f"{''.join(filter(str.isalnum, first_name))}_{''.join(filter(str.isalnum, last_name))}"
-        username = base_username
-        counter = 1
-        while User.objects.filter(username=username).exists():
-            username = f"{base_username}{counter}"
-            counter += 1
-
         if form.is_valid():
             user = form.save(commit=False)
-            user.username = username
+            user.username = form.cleaned_data.get("username")
             user.set_password(password)
+            user.first_name = ""  # Leave first name empty
+            user.last_name = ""   # Leave last name empty
 
             # Use default profile picture if none is provided by the user
             if not request.FILES.get("profile_picture"):
@@ -117,6 +109,7 @@ def signup_view(request):
         form = SignUpForm()
 
     return render(request, "signup.html", {"form": form})
+
 
 
 # View for user login

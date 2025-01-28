@@ -7,6 +7,8 @@ from django.core.exceptions import ValidationError
 
 from .models import Label, News, Question, Reply, UserProfile
 
+import random
+import string
 
 class NewsForm(forms.ModelForm):
     """
@@ -18,81 +20,56 @@ class NewsForm(forms.ModelForm):
         fields = ["title", "content", "is_active"]
 
 
+
 class SignUpForm(forms.ModelForm):
     """
-    Form for user signup, including custom validations for email and password.
+    Form for user signup, generating a unique username if it already exists.
     """
-
+    username = forms.CharField(
+        widget=forms.TextInput(attrs={
+            "class": "form-control",
+            "placeholder": "helloworld"
+        }), label="Username"
+    )
+    email = forms.EmailField(
+        widget=forms.EmailInput(attrs={
+            "class": "form-control",
+            "placeholder": "example@domain.com"
+        }), label="Email"
+    )
     password = forms.CharField(
-        widget=forms.PasswordInput(attrs={"class": "form-control"}), label="Password"
+        widget=forms.PasswordInput(attrs={
+            "class": "form-control",
+            "placeholder": "helloworld123123"
+        }), label="Password"
     )
-    confirm_password = forms.CharField(
-        widget=forms.PasswordInput(attrs={"class": "form-control"}),
-        label="Confirm Password",
-    )
-    profile_picture = forms.ImageField(label="Profile Picture", required=False)
 
     class Meta:
         model = User
-        fields = ["first_name", "last_name", "email", "password"]
-        labels = {
-            "first_name": "First Name",
-            "last_name": "Last Name",
-            "email": "Email",
-            "password": "Password",
-        }
-        label_suffix = ""  # Remove default colon in field labels
+        fields = ["username", "email", "password"]
 
-    def clean_email(self):
+    def clean_username(self):
         """
-        Ensure the email is unique across all users.
+        Ensure the username is unique or generate a new one.
         """
-        email = self.cleaned_data.get("email")
-        if User.objects.filter(email=email).exists():
-            raise ValidationError("This email is already registered.")
-        return email
+        username = self.cleaned_data.get("username")
+        if User.objects.filter(username=username).exists():
+            # Generate a unique username
+            new_username = self.generate_unique_username(username)
+            return new_username
+        return username
 
-    def persian_to_latin(self, text):
+    def generate_unique_username(self, base_username):
         """
-        Convert Persian characters to Latin for use in usernames or slugs.
+        Generate a unique username by appending random numbers/letters.
         """
-        persian_to_english = {
-            "ا": "a",
-            "ب": "b",
-            "پ": "p",
-            "ت": "t",
-            "ث": "s",
-            "ج": "j",
-            "چ": "ch",
-            "ح": "h",
-            "خ": "kh",
-            "د": "d",
-            "ذ": "z",
-            "ر": "r",
-            "ز": "z",
-            "ژ": "zh",
-            "س": "s",
-            "ش": "sh",
-            "ص": "s",
-            "ض": "z",
-            "ط": "t",
-            "ظ": "z",
-            "ع": "a",
-            "غ": "gh",
-            "ف": "f",
-            "ق": "gh",
-            "ک": "k",
-            "گ": "g",
-            "ل": "l",
-            "م": "m",
-            "ن": "n",
-            "و": "v",
-            "ه": "h",
-            "ی": "y",
-            " ": "_",
-        }
-        stripped_text = text.strip()
-        return "".join(persian_to_english.get(char, char) for char in stripped_text)
+        while True:
+            suffix = ''.join(random.choices(string.digits, k=4))
+            new_username = f"{base_username}_{suffix}"
+            if not User.objects.filter(username=new_username).exists():
+                return new_username
+
+
 
 
 class LoginForm(AuthenticationForm):
