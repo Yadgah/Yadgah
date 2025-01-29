@@ -22,6 +22,7 @@ from .views import (
     toggle_reaction,
     user_profile,
 )
+from home import views
 
 # URL patterns for the home app
 urlpatterns = [
@@ -55,6 +56,7 @@ urlpatterns = [
     path("question/<int:question_id>/delete/", delete_question, name="delete_question"),
     path("leaderboard/", leaderboard, name="leaderboard"),
     path("explore/", explore, name="explore"),
+    path("create-label/", views.create_label, name="create_label"), # Create a label
 ]
 
 # Serve media files during development
