@@ -57,6 +57,22 @@
     background-color: #157347;
   }
 
+  .btn-feature {
+    background-color: #9ee37d;
+    color: #121212;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 5px;
+    display: inline-block;
+  }
+
+  .btn-feature:hover {
+    background-color: #9ee37d;
+  }
+
   .form-error {
     color: #e74c3c;
     font-size: 14px;
@@ -129,7 +145,16 @@
   .selected-labels li:hover {
     background-color: #157347;
   }
+
+  #color-preview {
+    margin-top: 10px;
+    width: 100%;
+    height: 30px;
+    border-radius: 4px;
+    display: none;
+  }
 </style>
+
 <div class="container">
   <h1>یک سوال بپرسید</h1>
   <form method="post">
@@ -149,7 +174,68 @@
       <hr />
       {{ form.labels|add_class:"custom-multi-select" }}
     </div>
+
+    <!-- New Section for Custom Labels -->
+    <div class="form-group">
+      <label for="custom-label-name">ایجاد برچسب شخصی</label>
+      <input type="text" id="custom-label-name" placeholder="نام برچسب" />
+      <button type="button" id="generate-color" class="btn-feature">تولید رنگ</button>
+      <input type="text" id="custom-label-color" placeholder="کد رنگ هگز" readonly />
+      <div id="color-preview"></div>
+      <button type="button" id="add-label" class="btn-feature">برچسب جدید را ذخیره کنید</button>
+    </div>
+
     <button type="submit" class="btn-submit">ارسال</button>
   </form>
 </div>
+
+<script>
+  // Handle custom label creation
+  document.getElementById('generate-color').addEventListener('click', () => {
+    const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
+    const colorInput = document.getElementById('custom-label-color');
+    colorInput.value = randomColor;
+
+    const colorPreview = document.getElementById('color-preview');
+    colorPreview.style.backgroundColor = randomColor;
+    colorPreview.style.display = 'block';
+  });
+
+  // Handle custom label submission
+  document.getElementById('add-label').addEventListener('click', async () => {
+    const labelName = document.getElementById('custom-label-name').value.trim();
+    const labelColor = document.getElementById('custom-label-color').value.trim();
+
+    if (!labelName) {
+      alert('لطفاً یک نام برای برچسب وارد کنید.');
+      return;
+    }
+
+    try {
+      const response = await fetch('/create-label/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': '{{ csrf_token }}',
+        },
+        body: JSON.stringify({ name: labelName, color: labelColor }),
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        alert('برچسب با موفقیت اضافه شد! یک صفحه را مجدداً ذخیره کنید تا از یک برچسب نوا استفاده کنید.');
+
+        // Clean up the inputs
+        document.getElementById('custom-label-name').value = '';
+        document.getElementById('custom-label-color').value = '';
+        document.getElementById('color-preview').style.display = 'none';
+      } else {
+        alert(result.error || 'خطایی رخ داده است.');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('ایجاد برچسب با مشکل مواجه شد.');
+    }
+  });
+</script>
 {% endblock %}
