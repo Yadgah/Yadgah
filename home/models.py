@@ -43,6 +43,7 @@ def save_user_profile(sender, instance, **kwargs):
 class Label(models.Model):
     name = models.CharField(max_length=100, unique=True)
     color = models.CharField(max_length=7, default="#000000")  # Hex color code
+    is_custom = models.BooleanField(default=False)  # Identifies custom labels
 
     def __str__(self):
         return self.name
