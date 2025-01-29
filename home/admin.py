@@ -95,6 +95,22 @@ class NewsAdmin(admin.ModelAdmin):
     search_fields = ("title", "content")
     ordering = ("-published_at",)
 
+# Admin configuration for the Label model
+class LabelAdmin(admin.ModelAdmin):
+    list_display = ("name", "color_preview")  # Shows the name and color preview
+    search_fields = ("name",)  # Allows searching by name
+    ordering = ("name",)  # Orders by name
+
+    def color_preview(self, obj):
+        """
+        Exibe uma pré-visualização da cor no painel admin.
+        """
+        return format_html(
+            '<div style="width:30px; height:30px; background-color:{}; border-radius:50%;"></div>',
+            obj.color,
+        )
+
+    color_preview.short_description = "Cor"
 
 # Register the models in the admin panel
 admin.site.register(Question, QuestionAdmin)
@@ -107,3 +123,5 @@ admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
 
 admin.site.register(Label)
+admin.site.unregister(Label)
+admin.site.register(Label, LabelAdmin)
