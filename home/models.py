@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-
+from django.db.models import Q
 
 class UserProfile(models.Model):
     """
@@ -84,6 +84,12 @@ class Question(models.Model):
         return self.like_count * 2 + self.view_count
 
     @classmethod
+    def search(cls, query):
+        return cls.objects.filter(
+            Q(title__icontains=query) | Q(content__icontains=query)
+        )
+
+    @classmethod    
     def get_trending_questions(cls):
         """Returns questions sorted by trend score."""
         return cls.objects.all().order_by("-trend_score")[
@@ -153,6 +159,12 @@ class News(models.Model):
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="news", verbose_name="Author"
     )
+
+    @classmethod
+    def search(cls, query):
+        return cls.objects.filter(
+            Q(title__icontains=query) | Q(content__icontains=query)
+        )
 
     def __str__(self):
         return self.title
