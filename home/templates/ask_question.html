@@ -223,13 +223,10 @@
 
       const result = await response.json();
       if (response.ok) {
-        alert('برچسب با موفقیت اضافه شد! یک صفحه را مجدداً ذخیره کنید تا از یک برچسب نوا استفاده کنید.');
-
-        // Clean up the inputs
-        document.getElementById('custom-label-name').value = '';
-        document.getElementById('custom-label-color').value = '';
-        document.getElementById('color-preview').style.display = 'none';
+        alert('برچسب با موفقیت اضافه شد! صفحه به‌روز خواهد شد.');
+        window.location.reload();
       } else {
+        const result = await response.json();
         alert(result.error || 'خطایی رخ داده است.');
       }
     } catch (err) {
