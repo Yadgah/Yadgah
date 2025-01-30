@@ -47,6 +47,25 @@
         margin: 0;
         padding: 0;
       }
+      
+      .q_btn {
+ 				margin-left: -1px;
+  			border-top-right-radius: 0;
+  			border-bottom-right-radius: 0;
+
+
+  			border-top-left-radius: 25;
+  			border-bottom-left-radius: 25;
+			}
+			.q_box_btn {
+ 				margin-left: -1px;
+  			border-top-right-radius: 25;
+  			border-bottom-right-radius: 25;
+
+
+  			border-top-left-radius: 0;
+  			border-bottom-left-radius: 0;
+			}
     </style>
 	</head>
 	<body dir="rtl">
@@ -82,12 +101,15 @@
 						</li>
 					</ul>
 					<!-- Search Form -->
-					<!-- <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3"><input
-              type="search"
-              class="form-control form-control-dark"
-              placeholder="جست و جو..."
-              aria-label="جست و جو"
-            /></form> -->
+					<form action="{% url 'search' %}" method="get" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+				    <div class="d-flex">
+				        <input name="q" type="search" class="form-control form-control-dark q_box_btn" placeholder="جست و جو..." aria-label="جست و جو" value="{{ request.GET.q }}">
+				        <button class="btn btn-success q_btn" type="submit">جستجو</button>
+				    </div>
+				</form>
+
+
+
 					<!-- User Authentication Section -->
 					<div class="text-end">
             {% if user.is_authenticated %}

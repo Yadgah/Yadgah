@@ -11,6 +11,7 @@ from django.contrib.sessions.models import Session
 from django.core.exceptions import ValidationError
 from django.core.paginator import EmptyPage, Paginator
 from django.db import models
+from django.db.models import Q
 from django.http import (
     HttpResponse,
     HttpResponseForbidden,
@@ -366,3 +367,15 @@ def explore(request):
         num_likes=models.Count("likes_count")
     ).order_by("-num_likes")[:10]
     return render(request, "explore.html", {"trending_questions": trending_questions})
+
+
+def search_view(request):
+    query = request.GET.get("q", "")
+    questions = Question.search(query) if query else Question.objects.none()
+    news = News.search(query) if query else News.objects.none()
+    
+    return render(
+        request, 
+        "search_results.html", 
+        {"query": query, "questions": questions, "news": news}
+    )

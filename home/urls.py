@@ -21,6 +21,7 @@ from .views import (
     signup_view,
     toggle_reaction,
     user_profile,
+    search_view,
 )
 
 # URL patterns for the home app
@@ -55,6 +56,7 @@ urlpatterns = [
     path("question/<int:question_id>/delete/", delete_question, name="delete_question"),
     path("leaderboard/", leaderboard, name="leaderboard"),
     path("explore/", explore, name="explore"),
+    path("search/", search_view, name="search"),
 ]
 
 # Serve media files during development
