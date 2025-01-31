@@ -335,11 +335,20 @@ def toggle_reaction(request, question_id):
 @login_required
 def approve_reply(request, reply_id):
     reply = get_object_or_404(Reply, id=reply_id)
+
     # Ensure only the owner of the question can approve
     if reply.question.user == request.user:
+        # تایید پاسخ
         reply.is_approved = True
         reply.save()
+
+        # به روزرسانی امتیاز کاربر (صاحب سوال)
+        user_profile = reply.question.user.userprofile
+        user_profile.score += 10  # فرض بر اینکه 10 امتیاز داده می‌شود
+        user_profile.save()
+
     return redirect("question_detail", question_id=reply.question.id)
+
 
 
 def privacy_policy(request):
