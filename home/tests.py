@@ -10,7 +10,6 @@ class UserProfileModelTest(TestCase):
         self.user_profile, created = UserProfile.objects.get_or_create(
             user=self.user, defaults={"first_name": "John", "last_name": "Doe"}
         )
-        # Ensure first_name and last_name are saved
         self.user_profile.first_name = "John"
         self.user_profile.last_name = "Doe"
         self.user_profile.save()
@@ -21,11 +20,15 @@ class UserProfileModelTest(TestCase):
         self.assertEqual(self.user_profile.last_name, "Doe")
         self.assertEqual(str(self.user_profile), "johndoe Profile")
 
+    def test_user_profile_association(self):
+        """Test UserProfile is linked to the correct user."""
+        self.assertEqual(self.user_profile.user.username, "johndoe")
+        self.assertTrue(isinstance(self.user_profile, UserProfile))
+
 
 class QuestionModelTest(TestCase):
     @classmethod
     def setUpTestData(cls):
-        # Ensure uniqueness of the Label object
         cls.label, _ = Label.objects.get_or_create(
             name="Python", defaults={"color": "#3776AB"}
         )
@@ -39,16 +42,17 @@ class QuestionModelTest(TestCase):
         cls.question.labels.add(cls.label)
 
     def test_question_labels(self):
-        # Test that the question is associated with the correct label
         self.assertIn(self.label, self.question.labels.all())
 
     def test_question_user(self):
-        # Test that the question is associated with the correct user
         self.assertEqual(self.question.user, self.user)
 
     def test_label_name(self):
-        # Test that the label name is correct
         self.assertEqual(self.label.name, "Python")
+
+    def test_question_instance(self):
+        """Test the Question instance."""
+        self.assertIsInstance(self.question, Question)
 
 
 class ReplyModelTest(TestCase):
@@ -66,12 +70,13 @@ class ReplyModelTest(TestCase):
         )
 
     def test_reply_creation(self):
-        """Test Reply creation."""
-        self.assertEqual(
-            self.reply.content, "Django is a web framework for rapid development."
-        )
+        self.assertEqual(self.reply.content, "Django is a web framework for rapid development.")
         self.assertEqual(self.reply.question, self.question)
         self.assertEqual(self.reply.user.username, "janedoe")
+
+    def test_reply_instance(self):
+        """Test the Reply instance."""
+        self.assertIsInstance(self.reply, Reply)
 
 
 class QuestionReactionModelTest(TestCase):
@@ -87,10 +92,13 @@ class QuestionReactionModelTest(TestCase):
         )
 
     def test_question_reaction(self):
-        """Test QuestionReaction creation."""
         self.assertEqual(self.reaction.reaction_type, QuestionReaction.LIKE)
         self.assertEqual(self.reaction.user.username, "janedoe")
         self.assertEqual(self.reaction.question.title, "What is Django?")
+
+    def test_question_reaction_instance(self):
+        """Test the QuestionReaction instance."""
+        self.assertIsInstance(self.reaction, QuestionReaction)
 
 
 class NewsModelTest(TestCase):
@@ -104,8 +112,11 @@ class NewsModelTest(TestCase):
         )
 
     def test_news_creation(self):
-        """Test News creation."""
         self.assertEqual(self.news.title, "Django 4.0 Released")
         self.assertEqual(self.news.content, "The Django team has released version 4.0.")
         self.assertEqual(self.news.author.username, "janedoe")
         self.assertTrue(self.news.is_active)
+
+    def test_news_instance(self):
+        """Test the News instance."""
+        self.assertIsInstance(self.news, News)

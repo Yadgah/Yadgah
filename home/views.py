@@ -1,6 +1,5 @@
 import json
 import re
-
 import markdown
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -37,6 +36,15 @@ from .models import Label, News, Question, QuestionReaction, Reply, UserProfile
 # Decorator to restrict access to staff members only
 def staff_member_required(view_func):
     return user_passes_test(lambda u: u.is_staff)(view_func)
+
+
+# Home view to show recent questions and news
+def home_view(request):
+    questions = Question.objects.all().order_by("-created_at")  # [:5]
+    news_items = News.objects.filter(is_active=True).order_by("-published_at")  # [:5]
+    return render(
+        request, "index.html", {"questions": questions, "news_items": news_items}
+    )
 
 
 # View to create news (accessible by staff only)
@@ -94,7 +102,7 @@ def signup_view(request):
             user.username = form.cleaned_data.get("username")
             user.set_password(password)
             user.first_name = ""  # Leave first name empty
-            user.last_name = ""   # Leave last name empty
+            user.last_name = ""  # Leave last name empty
 
             # Use default profile picture if none is provided by the user
             if not request.FILES.get("profile_picture"):
@@ -110,7 +118,6 @@ def signup_view(request):
         form = SignUpForm()
 
     return render(request, "signup.html", {"form": form})
-
 
 
 # View for user login
@@ -163,15 +170,6 @@ def profile_view(request):
 def search_view(request):
     query = request.GET.get("q", "")
     return render(request, "search_results.html", {"query": query})
-
-
-# Home view to show recent questions and news
-def home_view(request):
-    questions = Question.objects.all().order_by("-created_at")  # [:5]
-    news_items = News.objects.filter(is_active=True).order_by("-published_at")  # [:5]
-    return render(
-        request, "index.html", {"questions": questions, "news_items": news_items}
-    )
 
 
 # View to list news
@@ -373,9 +371,9 @@ def search_view(request):
     query = request.GET.get("q", "")
     questions = Question.search(query) if query else Question.objects.none()
     news = News.search(query) if query else News.objects.none()
-    
+
     return render(
-        request, 
-        "search_results.html", 
-        {"query": query, "questions": questions, "news": news}
+        request,
+        "search_results.html",
+        {"query": query, "questions": questions, "news": news},
     )

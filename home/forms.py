@@ -1,5 +1,5 @@
-# home/forms.py
-
+import random
+import string
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
@@ -7,8 +7,6 @@ from django.core.exceptions import ValidationError
 
 from .models import Label, News, Question, Reply, UserProfile
 
-import random
-import string
 
 class NewsForm(forms.ModelForm):
     """
@@ -20,28 +18,28 @@ class NewsForm(forms.ModelForm):
         fields = ["title", "content", "is_active"]
 
 
-
 class SignUpForm(forms.ModelForm):
     """
     Form for user signup, generating a unique username if it already exists.
     """
+
     username = forms.CharField(
-        widget=forms.TextInput(attrs={
-            "class": "form-control",
-            "placeholder": "helloworld"
-        }), label="Username"
+        widget=forms.TextInput(
+            attrs={"class": "form-control", "placeholder": "helloworld"}
+        ),
+        label="Username",
     )
     email = forms.EmailField(
-        widget=forms.EmailInput(attrs={
-            "class": "form-control",
-            "placeholder": "example@domain.com"
-        }), label="Email"
+        widget=forms.EmailInput(
+            attrs={"class": "form-control", "placeholder": "example@domain.com"}
+        ),
+        label="Email",
     )
     password = forms.CharField(
-        widget=forms.PasswordInput(attrs={
-            "class": "form-control",
-            "placeholder": "helloworld123123"
-        }), label="Password"
+        widget=forms.PasswordInput(
+            attrs={"class": "form-control", "placeholder": "helloworld123123"}
+        ),
+        label="Password",
     )
 
     class Meta:
@@ -50,26 +48,23 @@ class SignUpForm(forms.ModelForm):
 
     def clean_username(self):
         """
-        Ensure the username is unique or generate a new one.
+        Ensure the username is unique or generate a new one if it already exists.
         """
         username = self.cleaned_data.get("username")
         if User.objects.filter(username=username).exists():
-            # Generate a unique username
             new_username = self.generate_unique_username(username)
             return new_username
         return username
 
     def generate_unique_username(self, base_username):
         """
-        Generate a unique username by appending random numbers/letters.
+        Generate a unique username by appending random numbers/letters if needed.
         """
         while True:
-            suffix = ''.join(random.choices(string.digits, k=4))
+            suffix = "".join(random.choices(string.digits, k=4))
             new_username = f"{base_username}_{suffix}"
             if not User.objects.filter(username=new_username).exists():
                 return new_username
-
-
 
 
 class LoginForm(AuthenticationForm):
@@ -118,6 +113,10 @@ class UserProfileForm(forms.ModelForm):
 
 
 class QuestionForm(forms.ModelForm):
+    """
+    Form for creating and editing a question, including label selection.
+    """
+
     class Meta:
         model = Question
         fields = ["title", "content", "labels"]
@@ -135,6 +134,10 @@ class QuestionForm(forms.ModelForm):
 
 
 class ReplyForm(forms.ModelForm):
+    """
+    Form for creating a reply to a question.
+    """
+
     class Meta:
         model = Reply
         fields = ["content"]
@@ -143,5 +146,4 @@ class ReplyForm(forms.ModelForm):
                 attrs={"placeholder": "Your reply (Markdown supported)", "rows": 5}
             ),
         }
-
         labels = {"content": ""}
