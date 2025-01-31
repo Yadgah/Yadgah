@@ -71,112 +71,58 @@
 	<body dir="rtl">
 		<!-- Header Section -->
 		<header class="p-3 bg-dark text-white">
-			<div class="container">
-				<div
-          class="d-flex flex-wrap align-items-center justify-content-between"
-        >
-					<!-- Logo and Title -->
-					<a
-            href="/"
-            class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none"
-          >
-						<img
-              src="{% static 'favicon.ico' %}"
-              alt="یادگاه لوگو"
-              width="50"
-              height="50"
-            />
-						<h1 class="ms-2">یادگاه</h1>
-					</a>
-					<!-- Navigation Menu -->
-					<ul class="nav col-12 col-lg-auto mb-2 mb-lg-0 justify-content-center">
-						<li>
-							<a href="{% url 'index' %}" class="nav-link px-2 text-white">خانه</a>
-						</li>
-						<li>
-							<a href="{% url 'leaderboard' %}" class="nav-link px-2 text-white">تابلوی امتیازات</a>
-						</li>
-						<li>
-							<a href="{% url 'explore' %}" class="nav-link px-2 text-white">کاوش</a>
-						</li>
-					</ul>
-					<!-- Search Form -->
-					<form action="{% url 'search' %}" method="get" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-				    <div class="d-flex">
-				        <input name="q" type="search" class="form-control form-control-dark q_box_btn" placeholder="جست و جو..." aria-label="جست و جو" value="{{ request.GET.q }}">
-				        <button class="btn btn-success q_btn" type="submit">جستجو</button>
-				    </div>
-				</form>
+	    <div class="container">
+	        <div class="d-flex flex-column flex-lg-row align-items-center justify-content-between">
+	            <!-- Logo and Title -->
+	            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+	                <img src="{% static 'favicon.ico' %}" alt="یادگاه لوگو" width="50" height="50" />
+	                <h1 class="ms-2">یادگاه</h1>
+	            </a>
 
+	            <!-- Navigation Menu -->
+	            <ul class="nav col-12 col-lg-auto mb-2 mb-lg-0 justify-content-center">
+	                <li><a href="{% url 'index' %}" class="nav-link px-2 text-white">خانه</a></li>
+	                <li><a href="{% url 'leaderboard' %}" class="nav-link px-2 text-white">تابلوی امتیازات</a></li>
+	                <li><a href="{% url 'explore' %}" class="nav-link px-2 text-white">کاوش</a></li>
+	            </ul>
 
+	            <!-- Search Form -->
+	            <form action="{% url 'search' %}" method="get" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+	                <div class="d-flex">
+	                    <input name="q" type="search" class="form-control form-control-dark q_box_btn" placeholder="جست و جو..." aria-label="جست و جو" value="{{ request.GET.q }}">
+	                    <button class="btn btn-success q_btn" type="submit">جستجو</button>
+	                </div>
+	            </form>
 
-					<!-- User Authentication Section -->
-					<div class="text-end">
-            {% if user.is_authenticated %}
+	            <!-- User Authentication Section -->
+	            <div class="text-end mt-3 mt-lg-0">
+	                {% if user.is_authenticated %}
+	                    <!-- User Profile Dropdown -->
+	                    <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+	                        {% if user.userprofile.avatar %}
+	                            <!-- Display user's profile picture if available -->
+	                            <img src="{{ user.userprofile.avatar.url }}" alt="{{ user.username }}'s avatar" width="40" height="40" class="rounded-circle" />
+	                        {% else %}
+	                            <!-- Display default avatar if no profile picture is set -->
+	                            <img src="{% static 'default-avatar.png' %}" alt="default avatar" width="32" height="32" class="rounded-circle" />
+	                        {% endif %}
+	                    </a>
+	                    <!-- Dropdown Menu -->
+	                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser1">
+	                        <li><a class="dropdown-item" href="{% url 'user_profile' user.username %}">پروفایل</a></li>
+	                        <li><a class="dropdown-item" href="{% url 'profile' %}">تنظیمات</a></li>
+	                        <li><a class="dropdown-item" href="{% url 'logout' %}">خروج</a></li>
+	                    </ul>
+	                {% else %}
+	                    <!-- Login and Signup Buttons -->
+	                    <a href="{% url 'login' %}" class="btn btn-outline-light me-2">ورود</a>
+	                    <a href="{% url 'signup' %}" class="btn btn-warning">ثبت‌نام</a>
+	                {% endif %}
+	            </div>
+	        </div>
+	    </div>
+	</header>
 
-						<!-- User Profile Dropdown -->
-						<a
-              href="#"
-              class="d-block link-dark text-decoration-none dropdown-toggle"
-              id="dropdownUser1"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              {% if user.userprofile.avatar %}
-
-							<!-- Display user's profile picture if available -->
-							<img
-                src="{{ user.userprofile.avatar.url }}"
-                alt="{{ user.username }}'s avatar"
-                width="40"
-                height="40"
-                class="rounded-circle"
-              />
-              {% else %}
-
-							<!-- Display default avatar if no profile picture is set -->
-							<img
-                src="{% static 'default-avatar.png' %}"
-                alt="default avatar"
-                width="32"
-                height="32"
-                class="rounded-circle"
-              />
-              {% endif %}
-
-						</a>
-						<!-- Dropdown Menu -->
-						<ul
-              class="dropdown-menu dropdown-menu-end"
-              aria-labelledby="dropdownUser1"
-            >
-							<li>
-								<a
-                  class="dropdown-item"
-                  href="{% url 'user_profile' user.username %}"
-                  >پروفایل</a
-                >
-							</li>
-							<li>
-								<a class="dropdown-item" href="{% url 'profile' %}">تنظیمات</a>
-							</li>
-							<li>
-								<a class="dropdown-item" href="{% url 'logout' %}">خروج</a>
-							</li>
-						</ul>
-            {% else %}
-
-						<!-- Login and Signup Buttons -->
-						<a href="{% url 'login' %}" class="btn btn-outline-light me-2"
-              >ورود</a
-            >
-						<a href="{% url 'signup' %}" class="btn btn-warning">ثبت‌نام</a>
-            {% endif %}
-
-					</div>
-				</div>
-			</div>
-		</header>
 		<!-- Main Content Section -->
 		<div class="container my-4">{% block content %}{% endblock %}</div>
 		<!-- Remove the container if you want to extend the Footer to full width. -->
