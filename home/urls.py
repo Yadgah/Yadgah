@@ -22,8 +22,8 @@ from .views import (
     signup_view,
     toggle_reaction,
     user_profile,
-    edit_reply,
-    delete_reply,
+    create_label
+
 )
 
 # Define URL patterns for user-related actions
@@ -63,6 +63,7 @@ general_urlpatterns = [
     path("news/", news_list, name="news_list"),
     path("leaderboard/", leaderboard, name="leaderboard"),
     path("explore/", explore, name="explore"),
+    path("create-label/", create_label, name="create_label"), # Create a label
     path("search/", search_view, name="search"),
     path("profile/<str:username>/", user_profile, name="user_profile"),
 ]
