@@ -22,6 +22,8 @@ from .views import (
     signup_view,
     toggle_reaction,
     user_profile,
+    edit_reply,
+    delete_reply,
 )
 
 # Define URL patterns for user-related actions
@@ -44,6 +46,8 @@ question_urlpatterns = [
         name="toggle_reaction",
     ),
     path("reply/<int:reply_id>/approve/", approve_reply, name="approve_reply"),
+    path("reply/<int:reply_id>/edit/", edit_reply, name="edit_reply"),
+    path("reply/<int:reply_id>/delete/", delete_reply, name="delete_reply"),
 ]
 
 # Define URL patterns for information and static content

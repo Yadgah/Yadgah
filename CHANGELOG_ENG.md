@@ -18,3 +18,9 @@ All significant changes to this project will be documented here.
 ## [2025-01-29]
 ### Added
 - **remove auto-setup**: remove auto-setup [Dadmehr Emami]
+
+---
+
+## [2025-01-31]
+### Added
+- **user score bug fix**: user score bug fix [Dadmehr Emami]

@@ -18,3 +18,9 @@
 ## [2025-01-29]
 ### اضافه شد
 - **remove auto-setup**: remove auto-setup [Dadmehr Emami]
+
+---
+
+## [2025-01-31]
+### اضافه شد
+- **user score bug fix**: user score bug fix [Dadmehr Emami]

@@ -246,6 +246,17 @@
                         </form>
                     {% endif %}
                 {% endif %}
+                
+                <!-- Edit and Delete reply buttons -->
+                {% if reply.user == user or user.is_staff %}
+                    <div class="reply-actions">
+                        <a href="{% url 'edit_reply' reply.id %}" class="btn btn-warning btn-sm">ویرایش</a>
+                        <form action="{% url 'delete_reply' reply.id %}" method="POST" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('آیا مطمئن هستید که می‌خواهید این پاسخ را حذف کنید؟')">حذف</button>
+                        </form>
+                    </div>
+                {% endif %}
             </div>
         {% endfor %}
     {% else %}
