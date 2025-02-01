@@ -1,6 +1,5 @@
 import json
 import re
-
 import markdown
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -11,6 +10,7 @@ from django.contrib.sessions.models import Session
 from django.core.exceptions import ValidationError
 from django.core.paginator import EmptyPage, Paginator
 from django.db import models
+from django.db.models import Q
 from django.http import (
     HttpResponse,
     HttpResponseForbidden,
@@ -36,6 +36,15 @@ from .models import Label, News, Question, QuestionReaction, Reply, UserProfile
 # Decorator to restrict access to staff members only
 def staff_member_required(view_func):
     return user_passes_test(lambda u: u.is_staff)(view_func)
+
+
+# Home view to show recent questions and news
+def home_view(request):
+    questions = Question.objects.all().order_by("-created_at")  # [:5]
+    news_items = News.objects.filter(is_active=True).order_by("-published_at")  # [:5]
+    return render(
+        request, "index.html", {"questions": questions, "news_items": news_items}
+    )
 
 
 # View to create news (accessible by staff only)
@@ -75,9 +84,9 @@ def signup_view(request):
         confirm_password = request.POST.get("confirm_password")
 
         # Validate password and confirm password
-        if password != confirm_password:
-            messages.error(request, "Passwords do not match.")
-            return render(request, "signup.html", {"form": form})
+        # if password != confirm_password:
+        #     messages.error(request, "Passwords do not match.")
+        #     return render(request, "signup.html", {"form": form})
 
         # Password complexity check: At least one letter and one number
         password_complexity = r"^(?=.*[a-zA-Z])(?=.*\d).{8,}$"
@@ -88,20 +97,12 @@ def signup_view(request):
             )
             return render(request, "signup.html", {"form": form})
 
-        # Ensure unique username
-        first_name = request.POST.get("first_name", "")
-        last_name = request.POST.get("last_name", "")
-        base_username = f"{''.join(filter(str.isalnum, first_name))}_{''.join(filter(str.isalnum, last_name))}"
-        username = base_username
-        counter = 1
-        while User.objects.filter(username=username).exists():
-            username = f"{base_username}{counter}"
-            counter += 1
-
         if form.is_valid():
             user = form.save(commit=False)
-            user.username = username
+            user.username = form.cleaned_data.get("username")
             user.set_password(password)
+            user.first_name = ""  # Leave first name empty
+            user.last_name = ""  # Leave last name empty
 
             # Use default profile picture if none is provided by the user
             if not request.FILES.get("profile_picture"):
@@ -169,15 +170,6 @@ def profile_view(request):
 def search_view(request):
     query = request.GET.get("q", "")
     return render(request, "search_results.html", {"query": query})
-
-
-# Home view to show recent questions and news
-def home_view(request):
-    questions = Question.objects.all().order_by("-created_at")  # [:5]
-    news_items = News.objects.filter(is_active=True).order_by("-published_at")  # [:5]
-    return render(
-        request, "index.html", {"questions": questions, "news_items": news_items}
-    )
 
 
 # View to list news
@@ -294,6 +286,42 @@ def question_detail(request, question_id):
         },
     )
 
+@login_required
+def edit_reply(request, reply_id):
+    reply = get_object_or_404(Reply, id=reply_id)
+
+    # Check if the user is the owner or admin
+    if reply.user != request.user and not request.user.is_staff:
+        return redirect('question_detail', question_id=reply.question.id)
+
+    if request.method == 'POST':
+        form = ReplyForm(request.POST, instance=reply)
+        if form.is_valid():
+            form.save()
+            if request.is_ajax():
+                return JsonResponse({'success': True})
+            return redirect('question_detail', question_id=reply.question.id)
+        else:
+            return JsonResponse({'success': False}, status=400)
+
+    else:
+        form = ReplyForm(instance=reply)
+
+    return render(request, 'edit_reply.html', {'form': form, 'reply': reply, 'question': reply.question})
+
+
+@login_required
+def delete_reply(request, reply_id):
+    reply = get_object_or_404(Reply, id=reply_id)
+
+    # Ensure only the reply owner or admin can delete it
+    if reply.user != request.user and not request.user.is_staff:
+        return HttpResponseForbidden()
+
+    # Deleting the reply
+    question_id = reply.question.id
+    reply.delete()
+    return redirect("question_detail", question_id=question_id)
 
 # View to delete a question
 @login_required
@@ -369,11 +397,20 @@ def toggle_reaction(request, question_id):
 @login_required
 def approve_reply(request, reply_id):
     reply = get_object_or_404(Reply, id=reply_id)
+
     # Ensure only the owner of the question can approve
     if reply.question.user == request.user:
+        # تایید پاسخ
         reply.is_approved = True
         reply.save()
+
+        # به روزرسانی امتیاز کاربر (صاحب سوال)
+        user_profile = reply.question.user.userprofile
+        user_profile.score += 10  # فرض بر اینکه 10 امتیاز داده می‌شود
+        user_profile.save()
+
     return redirect("question_detail", question_id=reply.question.id)
+
 
 
 def privacy_policy(request):
@@ -399,3 +436,15 @@ def explore(request):
         num_likes=models.Count("likes_count")
     ).order_by("-num_likes")[:10]
     return render(request, "explore.html", {"trending_questions": trending_questions})
+
+
+def search_view(request):
+    query = request.GET.get("q", "")
+    questions = Question.search(query) if query else Question.objects.none()
+    news = News.search(query) if query else News.objects.none()
+
+    return render(
+        request,
+        "search_results.html",
+        {"query": query, "questions": questions, "news": news},
+    )

@@ -1,5 +1,4 @@
 import re
-
 import jdatetime
 from django import template
 from django.db.models.signals import post_migrate
@@ -13,7 +12,13 @@ register = template.Library()
 @register.filter
 def strip_markdown(value):
     """
-    Removes Markdown syntax from the input text.
+    Strips Markdown syntax (like **bold**, *italic*, etc.) from the input text.
+
+    Args:
+        value (str): The input string potentially containing Markdown syntax.
+
+    Returns:
+        str: The text without Markdown syntax.
     """
     if not isinstance(value, str):
         return value
@@ -43,9 +48,15 @@ def strip_markdown(value):
 def jalali_date(value):
     """
     Converts a Gregorian date to a Jalali (Persian) date.
+
+    Args:
+        value (datetime.date): The input Gregorian date.
+
+    Returns:
+        str: The corresponding Jalali date as a string, e.g., "14 Farvardin".
     """
     if value:
-        # Convert Gregorian date to Jalali
+        # Convert Gregorian date to Jalali and format it
         return jdatetime.date.fromgregorian(date=value).strftime("%d %B")
     return value
 
@@ -53,13 +64,25 @@ def jalali_date(value):
 @register.filter
 def add_class(value, arg):
     """
-    Adds a CSS class to a form field widget.
+    Adds a CSS class to a form field widget for custom styling.
+
+    Args:
+        value (form field widget): The form field to which the class should be added.
+        arg (str): The CSS class to be added.
+
+    Returns:
+        form field widget: The form field widget with the added class.
     """
     return value.as_widget(attrs={"class": arg})
 
 
 @receiver(post_migrate)
 def create_default_labels(sender, **kwargs):
+    """
+    Creates default labels after migrations if they don't already exist.
+
+    Default labels are related to various topics such as education, health, etc.
+    """
     labels = [
         ("آموزش و یادگیری", "#4CAF50"),
         ("سلامت و پزشکی", "#FF5722"),
@@ -71,5 +94,6 @@ def create_default_labels(sender, **kwargs):
         ("علوم و تحقیقات", "#3F51B5"),
         ("سبک زندگی", "#E91E63"),
     ]
+    # Create labels if they don't exist
     for label_name, label_color in labels:
         Label.objects.get_or_create(name=label_name, color=label_color)
