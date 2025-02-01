@@ -120,3 +120,36 @@ class NewsModelTest(TestCase):
     def test_news_instance(self):
         """Test the News instance."""
         self.assertIsInstance(self.news, News)
+
+
+class ReplyEditDeleteTest(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(username="user1", password="password")
+        self.admin_user = User.objects.create_user(username="admin", password="password", is_staff=True)
+        self.question = Question.objects.create(title="Test Question", content="Test Content", user=self.user)
+        self.reply = Reply.objects.create(content="Test Reply", question=self.question, user=self.user)
+
+    def test_edit_reply(self):
+        self.client.login(username="user1", password="password")
+        response = self.client.get(f"/reply/{self.reply.id}/edit/")
+        self.assertEqual(response.status_code, 200)
+
+    def test_delete_reply(self):
+        self.client.login(username="user1", password="password")
+        response = self.client.post(f"/reply/{self.reply.id}/delete/")
+        self.assertEqual(response.status_code, 302)  # Redirect after successful delete
+
+    def test_delete_reply_permission(self):
+        self.client.login(username="user1", password="password")
+        response = self.client.post(f"/reply/{self.reply.id}/delete/")
+        self.assertEqual(response.status_code, 302)  # User should be able to delete their own reply
+
+        self.client.login(username="admin", password="password")
+        response = self.client.post(f"/reply/{self.reply.id}/delete/")
+        self.assertEqual(response.status_code, 302)  # Admin should also be able to delete
+
+        # Test forbidden for non-owner non-admin
+        other_user = User.objects.create_user(username="user2", password="password")
+        self.client.login(username="user2", password="password")
+        response = self.client.post(f"/reply/{self.reply.id}/delete/")
+        self.assertEqual(response.status_code, 403)  # Forbidden for non-owner non-admin

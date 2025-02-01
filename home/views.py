@@ -260,6 +260,42 @@ def question_detail(request, question_id):
         },
     )
 
+@login_required
+def edit_reply(request, reply_id):
+    reply = get_object_or_404(Reply, id=reply_id)
+
+    # Check if the user is the owner or admin
+    if reply.user != request.user and not request.user.is_staff:
+        return redirect('question_detail', question_id=reply.question.id)
+
+    if request.method == 'POST':
+        form = ReplyForm(request.POST, instance=reply)
+        if form.is_valid():
+            form.save()
+            if request.is_ajax():
+                return JsonResponse({'success': True})
+            return redirect('question_detail', question_id=reply.question.id)
+        else:
+            return JsonResponse({'success': False}, status=400)
+
+    else:
+        form = ReplyForm(instance=reply)
+
+    return render(request, 'edit_reply.html', {'form': form, 'reply': reply, 'question': reply.question})
+
+
+@login_required
+def delete_reply(request, reply_id):
+    reply = get_object_or_404(Reply, id=reply_id)
+
+    # Ensure only the reply owner or admin can delete it
+    if reply.user != request.user and not request.user.is_staff:
+        return HttpResponseForbidden()
+
+    # Deleting the reply
+    question_id = reply.question.id
+    reply.delete()
+    return redirect("question_detail", question_id=question_id)
 
 # View to delete a question
 @login_required

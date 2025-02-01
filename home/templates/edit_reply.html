@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+
+{% block content %}
+    <div class="container">
+        <h2>ویرایش پاسخ</h2>
+        
+        <!-- Button to trigger the modal -->
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editReplyModal">ویرایش پاسخ</button>
+
+        <!-- Modal Structure -->
+        <div class="modal fade" id="editReplyModal" tabindex="-1" aria-labelledby="editReplyModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editReplyModalLabel">ویرایش پاسخ</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST" id="editReplyForm">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button type="submit" class="btn btn-primary">ویرایش</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br>
+        <p><a href="{% url 'question_detail' question.id %}">بازگشت به سوال</a></p>
+
+        <!-- Show replies here -->
+        <div class="reply-section">
+            <h3>پاسخ‌ها</h3>
+            {% for reply in question.replies.all %}
+                <div class="reply-card {% if reply.is_approved %}approved{% endif %}">
+                    <div class="reply-content">
+                        {{ reply.get_content_as_html|safe }}
+                    </div>
+                    <p class="reply-meta">
+                        پاسخ توسط:
+                        {% if reply.user %}
+                            <a href="{% url 'user_profile' reply.user.username %}">{{ reply.user.username }}</a>
+                        {% else %}
+                            کاربر ناشناس
+                        {% endif %}
+                        - تاریخ پاسخ: {{ reply.created_at|jalali_date }}
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
+
+    </div>
+
+    <script>
+        // Handle form submission via AJAX
+        const form = document.getElementById('editReplyForm');
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(form);
+            
+            fetch("{% url 'edit_reply' reply.id %}", {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Close the modal and update the page
+                    $('#editReplyModal').modal('hide');
+                    // Optionally, update the reply content on the page dynamically
+                    const replyContent = document.querySelector('.reply-content');
+                    replyContent.innerHTML = data.updated_reply;  // Replace with updated content
+                } else {
+                    alert('ویرایش پاسخ ناموفق بود.');
+                }
+            })
+            .catch(error => console.log(error));
+        });
+    </script>
+{% endblock %}
