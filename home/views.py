@@ -260,29 +260,14 @@ def question_detail(request, question_id):
         },
     )
 
-@login_required
+@csrf_exempt
 def edit_reply(request, reply_id):
-    reply = get_object_or_404(Reply, id=reply_id)
-
-    # Check if the user is the owner or admin
-    if reply.user != request.user and not request.user.is_staff:
-        return redirect('question_detail', question_id=reply.question.id)
-
     if request.method == 'POST':
-        form = ReplyForm(request.POST, instance=reply)
-        if form.is_valid():
-            form.save()
-            if request.is_ajax():
-                return JsonResponse({'success': True})
-            return redirect('question_detail', question_id=reply.question.id)
-        else:
-            return JsonResponse({'success': False}, status=400)
-
-    else:
-        form = ReplyForm(instance=reply)
-
-    return render(request, 'edit_reply.html', {'form': form, 'reply': reply, 'question': reply.question})
-
+        reply = get_object_or_404(Reply, id=reply_id)
+        reply.content = request.POST.get('content')
+        reply.save()
+        return JsonResponse({'success': True})
+    return JsonResponse({'success': False}, status=400)
 
 @login_required
 def delete_reply(request, reply_id):
