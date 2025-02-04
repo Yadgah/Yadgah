@@ -234,6 +234,32 @@ def ask_question(request):
 
     return render(request, "ask_question.html", {"form": form})
 
+# View to create a label
+def create_label(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            name = data.get("name", "").strip()
+            color = data.get("color", "#000000").strip()
+
+            if not name:
+                return JsonResponse({"error": "Label name is required."}, status=400)
+
+            # Check if the label already exists
+            label, created = Label.objects.get_or_create(
+                name=name,
+                defaults={"color": color, "is_custom": True}
+            )
+            if not created:
+                return JsonResponse({"error": "Label already exists."}, status=400)
+
+            return JsonResponse({
+                "message": "Label created successfully.",
+                "label": {"name": label.name, "color": label.color}
+            }, status=201)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+    return JsonResponse({"error": "Invalid request method."}, status=405)
 
 def question_detail(request, question_id):
     question = get_object_or_404(Question, id=question_id)
