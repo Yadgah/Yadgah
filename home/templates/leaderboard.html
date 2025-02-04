@@ -1,21 +1,26 @@
-{% extends 'base.html' %} {% block content %}
-<h1>Leaderboard</h1>
-<table>
-  <thead>
-    <tr>
-      <th>Rank</th>
-      <th>User</th>
-      <th>Score</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for user in users %}
-    <tr>
-      <td>{{ forloop.counter }}</td>
-      <td>{{ user.user.username }}</td>
-      <td>{{ user.score }}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+{% extends 'base.html' %} 
+{% block content %}
+<div class="container mt-4">
+  <h1 class="text-center mb-4 text-white">🏆 Leaderboard</h1>
+  <div class="table-responsive">
+    <table class="table text-center align-middle" style="background-color: #212529; color: #ffffff;">
+      <thead style="background-color: #198754; color: #ffffff;">
+        <tr>
+          <th scope="col">Rank</th>
+          <th scope="col">User</th>
+          <th scope="col">Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in users %}
+        <tr>
+          <td class="fw-bold">{{ forloop.counter }}</td>
+          <td>{{ user.user.username }}</td>
+          <td class="fw-semibold">{{ user.score }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
 {% endblock %}
