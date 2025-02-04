@@ -119,6 +119,9 @@
   integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
   crossorigin="anonymous"
 ></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
 <div class="container my-4">
   <div class="row">
     <!-- News Section (Sidebar on the right) -->
@@ -159,13 +162,11 @@
         <div id="recent-questions">
           {% if questions %} {% for question in questions %}
           <div class="d-flex mb-4 align-items-start">
-            <!-- تاریخ در اینجا -->
             <div class="d-flex align-items-center">
               <!-- <div class="date-box">
                 <span>{{ question.created_at|jalali_date|slice:":10" }}</span>
               </div> -->
             </div>
-            <!-- سوالات در اینجا -->
             <div class="card flex-grow-1">
               <div class="card-body">
                 <h5 class="card-title">
@@ -175,13 +176,10 @@
                     >{{ question.title }}</a
                   >
                 </h5>
-                <!-- استفاده از فیلتر striptags برای محتوای سوال -->
                 <p class="card-text">
                   {{ question.content|striptags|truncatewords:20 }}
                 </p>
                 <span>{{ question.created_at|jalali_date|slice:":10" }}</span>
-
-                <!-- نمایش لیبل‌های مربوط به سوال -->
                 <div class="mt-2">
                   {% for label in question.labels.all %}
                   <span
@@ -198,8 +196,57 @@
           <p>هیچ سوالی ارسال نشده است.</p>
           {% endif %}
         </div>
+        <div class="load-more__btn">
+          {% if show_load_more %}
+              <button id="load-more" class="btn btn-primary">بارگذاری بیشتر</button>
+          {% endif %}
+        </div>
       </div>
     </div>
   </div>
 </div>
+<script>
+  $(document).ready(function() {
+      let page = 2;
+      $('#load-more').click(function() {
+          $.ajax({
+              url: `/?page=${page}`,
+              dataType: 'json',
+              headers: {
+                  'X-Requested-With': 'XMLHttpRequest'
+              },
+              success: function(response) {
+                  if (response.questions.length > 0) {
+                      response.questions.forEach(function(question) {
+                          let questionHtml = `
+                              <div class="d-flex mb-4 align-items-start">
+                                  <div class="d-flex align-items-center"></div>
+                                  <div class="card flex-grow-1">
+                                      <div class="card-body">
+                                          <h5 class="card-title">
+                                              <a href="${question.url}" class="text-decoration-none text-primary">${question.title}</a>
+                                          </h5>
+                                          <p class="card-text">${question.content}</p>
+                                          <span>${question.created_at}</span> <!-- تاریخ شمسی -->
+                                          <div class="mt-2">
+                                              ${question.labels.map(label => `<span class="label" style="background-color: ${label.color}">${label.name}</span>`).join('')}
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          `;
+                          $('#recent-questions').append(questionHtml);
+                      });
+                      page++;
+                  }
+
+                  if (!response.has_next) {
+                      $('#load-more').hide();
+                  }
+              }
+          });
+      });
+  });
+
+</script>
 {% endblock %}

@@ -4,6 +4,7 @@ from django.db import models
 from django.db.models import Q
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.urls import reverse
 
 
 class UserProfile(models.Model):
@@ -115,6 +116,9 @@ class Question(models.Model):
             QuerySet: A list of the top 10 trending questions.
         """
         return cls.objects.all().order_by("-trend_score")[:10]
+    
+    def get_absolute_url(self):
+        return reverse("question_detail", args=[str(self.id)])
 
 
 class Reply(models.Model):

@@ -1,3 +1,4 @@
+import jdatetime
 import json
 import re
 import markdown
@@ -40,11 +41,43 @@ def staff_member_required(view_func):
 
 # Home view to show recent questions and news
 def home_view(request):
-    questions = Question.objects.all().order_by("-created_at")  # [:5]
-    news_items = News.objects.filter(is_active=True).order_by("-published_at")  # [:5]
-    return render(
-        request, "index.html", {"questions": questions, "news_items": news_items}
-    )
+    questions = Question.objects.all().order_by("-created_at")
+    paginator = Paginator(questions, 5)  
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    def convert_to_jalali(date):
+        if date:
+            jalali_date = jdatetime.date.fromgregorian(date=date)
+            return f"{jalali_date.day} {jalali_date.j_months_fa[jalali_date.month - 1]}"
+        return ""
+
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        questions_data = [
+            {
+                'id': question.id,
+                'title': question.title,
+                'content': question.content,
+                'created_at': convert_to_jalali(question.created_at),  # تبدیل به تاریخ شمسی
+                'labels': [{'name': label.name, 'color': label.color} for label in question.labels.all()],
+                'url': question.get_absolute_url(),
+            }
+            for question in page_obj
+        ]
+        return JsonResponse({
+            'questions': questions_data,
+            'has_next': page_obj.has_next(),
+        })
+
+    news_items = News.objects.filter(is_active=True).order_by("-published_at")[:5]
+    return render(request, "index.html", {
+        "questions": page_obj,
+        "news_items": news_items,
+        "show_load_more": questions.count() > 5,
+    })
+
+
 
 
 # View to create news (accessible by staff only)
