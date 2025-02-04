@@ -3,21 +3,42 @@
 
 {% block content %}
 <div class="container">
-  <h2 class="my-4">سوالات ترند</h2>
+  <h2 class="my-4 text-center fw-bold text-white">سوالات محبوب</h2>
 
-  <div class="list-group">
+  <div class="row">
     {% for question in trending_questions %}
-    <a
-      href="{% url 'question_detail' question.id %}"
-      class="list-group-item list-group-item-action"
-    >
-      <h5 class="mb-1">{{ question.title }}</h5>
-      <p class="mb-1">{{ question.content|slice:":100" }}...</p>
-      <small>{{ question.likes_count.count }} لایک</small>
-    </a>
+    <div class="col-md-6 col-lg-4 mb-4">
+      <div class="card shadow-sm border-0 h-100" style="background: #ffffff;">
+        <div class="card-body">
+          <h5 class="card-title text-truncate text-dark">{{ question.title }}</h5>
+          <p class="card-text text-muted small">
+            {{ question.content|slice:":100" }}...
+          </p>
+          <div class="d-flex justify-content-between align-items-center mt-3">
+            <a
+              href="{% url 'question_detail' question.id %}"
+              class="btn btn-sm"
+              style="background: #198754; color: #ffffff;"
+            >
+              مشاهده جزئیات
+            </a>
+            <small class="text-muted">
+              <i class="bi bi-hand-thumbs-up"></i> {{ question.likes_count.count }} لایک
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
     {% empty %}
-    <p>هیچ سوال ترندی یافت نشد.</p>
+    <p class="text-center text-muted">هیچ سوال ترندی یافت نشد.</p>
     {% endfor %}
   </div>
 </div>
+
+<!-- <style>
+  body {
+    background-color: #212529 !important;
+  }
+</style> -->
+
 {% endblock %}

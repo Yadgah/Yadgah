@@ -11,7 +11,8 @@ from django.contrib.sessions.models import Session
 from django.core.exceptions import ValidationError
 from django.core.paginator import EmptyPage, Paginator
 from django.db import models
-from django.db.models import Q
+from django.db.models import Q, Count, F, FloatField
+from django.db.models.expressions import ExpressionWrapper
 from django.http import (
     HttpResponse,
     HttpResponseForbidden,
@@ -425,9 +426,16 @@ def leaderboard(request):
 
 def explore(request):
     trending_questions = Question.objects.annotate(
-        num_likes=models.Count("likes_count")
-    ).order_by("-num_likes")[:10]
+        num_likes=Count("likes_count"),
+        num_replies=Count("replies"),
+        calculated_trend_score=ExpressionWrapper(
+            (F("num_likes") * 2) + (F("num_replies") * 1) + (F("view_count") * 0.5),
+            output_field=FloatField(),
+        ),
+    ).order_by("-calculated_trend_score")[:10]
+
     return render(request, "explore.html", {"trending_questions": trending_questions})
+
 
 
 def search_view(request):
