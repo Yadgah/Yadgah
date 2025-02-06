@@ -1,54 +1,39 @@
 from django.contrib.sitemaps import Sitemap
-from django.urls import reverse_lazy
+from django.urls import reverse
 from .models import Question, News
-
 
 class QuestionSitemap(Sitemap):
     changefreq = "weekly"
     priority = 0.8
 
     def items(self):
-        return Question.objects.all()
+        return Question.objects.all().order_by("-created_at")  # Ensure ordering
 
     def lastmod(self, obj):
-        return obj.updated_at if hasattr(obj, "updated_at") else obj.created_at
+        return obj.created_at
 
     def location(self, obj):
-        return reverse_lazy("question_detail", args=[obj.id])
-
+        return reverse('question_detail', args=[str(obj.id)])
 
 class NewsSitemap(Sitemap):
     changefreq = "daily"
     priority = 0.9
 
-    def get_queryset(self):
-        return News.objects.filter(is_active=True)
-
     def items(self):
-        return self.get_queryset()
+        return News.objects.filter(is_active=True).order_by("-published_at")  # Ensure ordering
 
     def lastmod(self, obj):
-        return obj.updated_at if hasattr(obj, "updated_at") else obj.published_at
+        return obj.published_at
 
     def location(self, obj):
-        return reverse_lazy("news_list")
-
+        return reverse('news_list')
 
 class StaticViewSitemap(Sitemap):
     changefreq = "monthly"
     priority = 0.5
 
-    static_pages = [
-        "index",
-        "privacy_policy",
-        "mit_license",
-        "rules",
-        "leaderboard",
-        "explore",
-    ]
-
     def items(self):
-        return self.static_pages
+        return ['index', 'privacy_policy', 'mit_license', 'rules', 'leaderboard', 'explore']
 
     def location(self, item):
-        return reverse_lazy(item)
+        return reverse(item)
