@@ -2,6 +2,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
 
+from django.contrib.sitemaps.views import sitemap
+from .sitemaps import QuestionSitemap, NewsSitemap, StaticViewSitemap
+
 from .views import (
     approve_reply,
     ask_question,
@@ -25,6 +28,13 @@ from .views import (
     edit_reply,
     delete_reply,
 )
+
+
+sitemaps = {
+    'questions': QuestionSitemap,
+    'news': NewsSitemap,
+    'static': StaticViewSitemap,
+}
 
 # Define URL patterns for user-related actions
 user_urlpatterns = [
@@ -59,21 +69,19 @@ info_urlpatterns = [
 
 # Define URL patterns for general navigation
 general_urlpatterns = [
+    # path('admin/', admin.site.urls),
     path("", home_view, name="index"),
     path("news/", news_list, name="news_list"),
     path("leaderboard/", leaderboard, name="leaderboard"),
     path("explore/", explore, name="explore"),
     path("search/", search_view, name="search"),
     path("profile/<str:username>/", user_profile, name="user_profile"),
+
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap')
 ]
 
 # Combine all URL patterns into one list
-urlpatterns = (
-    user_urlpatterns
-    + question_urlpatterns
-    + info_urlpatterns
-    + general_urlpatterns
-)
+urlpatterns = (user_urlpatterns + question_urlpatterns + info_urlpatterns + general_urlpatterns)
 
 # Serve media files during development
 if settings.DEBUG:
