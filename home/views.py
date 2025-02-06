@@ -448,3 +448,17 @@ def search_view(request):
         "search_results.html",
         {"query": query, "questions": questions, "news": news},
     )
+
+def robots_txt(request):
+    domain = request.get_host()  # Automatically get the domain name
+    content = f"""User-agent: *
+Disallow: /admin/
+Disallow: /login/
+Disallow: /signup/
+Disallow: /profile/
+Disallow: /delete_profile/
+Allow: /
+Sitemap: https://{domain}/sitemap.xml
+# dadmehr contorl google robots :>
+"""
+    return HttpResponse(content, content_type="text/plain")
