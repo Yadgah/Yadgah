@@ -800,3 +800,51 @@ All significant changes to this project will be documented here.
 ## [2025-01-07]
 ### Added
 - **Initial commit**: Initial commit [Dadmehr]
+
+---
+
+## [2025-02-06]
+### Added
+- **templates and django setting optimaize seo**: templates and django setting optimaize seo [Dadmehr Emami]
+
+---
+
+## [2025-02-06]
+### Added
+- **Solution: Explicitly Order the QuerySets**: Solution: Explicitly Order the QuerySets [Dadmehr Emami]
+
+---
+
+## [2025-02-06]
+### Added
+- **Created robots.txt**: Created robots.txt [Dadmehr Emami]
+
+---
+
+## [2025-02-06]
+### Added
+- **added sitemap.xml**: added sitemap.xml [Dadmehr Emami]
+
+---
+
+## [2025-02-06]
+### Added
+- **google-site-verification added**: google-site-verification added [Dadmehr Emami]
+
+---
+
+## [2025-02-06]
+### Added
+- **remove link js/css**: remove link js/css [Dadmehr Emami]
+
+---
+
+## [2025-02-06]
+### Added
+- **edit footer**: edit footer [Dadmehr Emami]
+
+---
+
+## [2025-02-05]
+### Added
+- **remove Fa changelog update eng Changelog (all commit)**: remove Fa changelog update eng Changelog (all commit) [Dadmehr Emami]
