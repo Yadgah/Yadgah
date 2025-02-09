@@ -1,7 +1,4 @@
 db.sqlite3
-main.sh
-main.py
 media/
 __pycache__/
 *.pyc
-
