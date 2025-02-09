@@ -166,6 +166,42 @@
             padding: 15px;
         }
     }
+    /* استایل‌های پاپ‌آپ */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content {
+        background-color: var(--bg-card);
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 600px;
+        border-radius: 10px;
+    }
+
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: var(--text-primary);
+        text-decoration: none;
+    }
 </style>
 
 <div class="container">
@@ -217,6 +253,19 @@
         </div>
     </div>
 
+<!-- پاپ‌آپ برای ویرایش پاسخ -->
+<div id="editReplyModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3>ویرایش پاسخ</h3>
+        <form id="editReplyForm" method="POST">
+            {% csrf_token %}
+            <textarea id="editReplyContent" name="content"></textarea>
+            <button type="submit" class="btn btn-primary">ذخیره تغییرات</button>
+        </form>
+    </div>
+</div>
+
 <!-- پاسخ‌ها -->
 <div class="reply-section">
     <h3>پاسخ‌ها</h3>
@@ -250,7 +299,7 @@
                 <!-- Edit and Delete reply buttons -->
                 {% if reply.user == user or user.is_staff %}
                     <div class="reply-actions">
-                        <a href="{% url 'edit_reply' reply.id %}" class="btn btn-warning btn-sm">ویرایش</a>
+                        <a href="#" onclick="openEditModal({{ reply.id }}, '{{ reply.content|escapejs }}')" class="btn btn-warning btn-sm">ویرایش</a>
                         <form action="{% url 'delete_reply' reply.id %}" method="POST" style="display:inline;">
                             {% csrf_token %}
                             <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('آیا مطمئن هستید که می‌خواهید این پاسخ را حذف کنید؟')">حذف</button>
@@ -297,6 +346,49 @@
         .then((data) => {
             document.querySelector('.btn-like').innerText = `لایک (${data.likes})`;
             document.querySelector('.btn-dislike').innerText = `دیس‌لایک (${data.dislikes})`;
+        });
+    }
+    
+    // باز کردن پاپ‌آپ
+    function openEditModal(replyId, content) {
+        document.getElementById('editReplyContent').value = content;
+        document.getElementById('editReplyForm').action = `/edit_reply/${replyId}/`;
+        document.getElementById('editReplyModal').style.display = 'block';
+    }
+
+    // بستن پاپ‌آپ
+    document.querySelector('.close').onclick = function() {
+        document.getElementById('editReplyModal').style.display = 'none';
+    }
+
+    // بستن پاپ‌آپ وقتی کاربر خارج از آن کلیک می‌کند
+    window.onclick = function(event) {
+        const modal = document.getElementById('editReplyModal');
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    }
+
+    // ارسال فرم به صورت AJAX
+    document.getElementById('editReplyForm').onsubmit = function(event) {
+        event.preventDefault();
+        const form = event.target;
+        const formData = new FormData(form);
+
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': formData.get('csrfmiddlewaretoken'),
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload(); // یا به‌روزرسانی بخشی از صفحه
+            } else {
+                alert('خطا در ویرایش پاسخ');
+            }
         });
     }
 </script>
