@@ -2,3 +2,10 @@ db.sqlite3
 main.sh
 main.py
 media/
+scripts/
+
+
+
+Yadgah/__pycache__/
+home/__pycache__/
+home/migrations/
