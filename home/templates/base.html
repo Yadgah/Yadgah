@@ -9,24 +9,43 @@
 		<link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
     {% load bootstrap5 %} {% bootstrap_css %} {% bootstrap_javascript %}
 
-		<!-- SEO Optimization -->
-		<meta
-      name="description"
-      content="وبسایت یادگاه - اخبار، سوالات و مطالب مفید برای یادگیری و اشتراک تجربیات."
-    />
-		<meta name="keywords" content="یادگاه, اخبار, سوالات, تجربه, یادگیری" />
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-		<script
-      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-      integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-      crossorigin="anonymous"
-    ></script>
-		<script
-      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
-      crossorigin="anonymous"
-    ></script>
-		<script src="{% static 'js/jalaali.min.js' %}"></script>
+		<meta name="google-site-verification" content="CEQQGa3JbQoZo0eSW6LuPGrJbBavgRogjUF-Rsuig_E" />
+
+		<!-- SEO Meta Tags -->
+		<meta name="description" content="یادگاه - بستری برای یادگیری، اشتراک تجربیات و دریافت اطلاعات مفید.">
+		<meta name="keywords" content="یادگاه, یادگیری, اشتراک تجربیات, مقالات, پرسش و پاسخ">
+		<meta name="author" content="یادگاه">
+		<meta name="robots" content="index, follow">
+
+		<!-- Open Graph Meta Tags -->
+		<meta property="og:title" content="یادگاه - بستری برای یادگیری و اشتراک تجربیات">
+		<meta property="og:description" content="با یادگاه سوال بپرسید، تجربه به اشتراک بگذارید و یاد بگیرید.">
+		<meta property="og:image" content="{% static 'images/yadgah-preview.jpg' %}">
+		<meta property="og:url" content="https://yadgah.com">
+		<meta property="og:type" content="website">
+
+		<!-- Twitter Card -->
+		<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:title" content="یادگاه - بستری برای یادگیری و اشتراک تجربیات">
+		<meta name="twitter:description" content="با یادگاه سوال بپرسید، تجربه به اشتراک بگذارید و یاد بگیرید.">
+		<meta name="twitter:image" content="{% static 'images/yadgah-preview.jpg' %}">
+
+		<!-- Structured Data (Schema.org) -->
+		<script type="application/ld+json">
+		{
+		  "@context": "https://schema.org",
+		  "@type": "Organization",
+		  "name": "یادگاه",
+		  "url": "https://yadgah.pythonanywhere.com",
+		  "logo": "https://yadgah.pythonanywhere.com/static/favicon.ico",
+		  "sameAs": [
+				// "https://twitter.com/yadgah",
+				"https://github.com/Yadgah",
+				"https://t.me/yadgah_org"
+		  ]
+		}
+		</script>
+
 		<style>
       .form-control {
         border-radius: 23.3rem;
@@ -196,7 +215,7 @@
 				</div>
 			</div>
 			<div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.8)">
-        © 2025 Yadgah.ir - پروژه‌ای آزاد برای جهانی آزاد
+				<a href="https://github.com/Yadgah/Yadgah">پروژه‌ای آزاد برای جهانی آزاد</a>
       </div>
 		</footer>
 	</body>

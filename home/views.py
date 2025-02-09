@@ -1,3 +1,4 @@
+import jdatetime
 import json
 import re
 import markdown
@@ -10,7 +11,8 @@ from django.contrib.sessions.models import Session
 from django.core.exceptions import ValidationError
 from django.core.paginator import EmptyPage, Paginator
 from django.db import models
-from django.db.models import Q
+from django.db.models import Q, Count, F, FloatField
+from django.db.models.expressions import ExpressionWrapper
 from django.http import (
     HttpResponse,
     HttpResponseForbidden,
@@ -40,11 +42,43 @@ def staff_member_required(view_func):
 
 # Home view to show recent questions and news
 def home_view(request):
-    questions = Question.objects.all().order_by("-created_at")  # [:5]
-    news_items = News.objects.filter(is_active=True).order_by("-published_at")  # [:5]
-    return render(
-        request, "index.html", {"questions": questions, "news_items": news_items}
-    )
+    questions = Question.objects.all().order_by("-created_at")
+    paginator = Paginator(questions, 5)  
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    def convert_to_jalali(date):
+        if date:
+            jalali_date = jdatetime.date.fromgregorian(date=date)
+            return f"{jalali_date.day} {jalali_date.j_months_fa[jalali_date.month - 1]}"
+        return ""
+
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        questions_data = [
+            {
+                'id': question.id,
+                'title': question.title,
+                'content': question.content,
+                'created_at': convert_to_jalali(question.created_at),  # تبدیل به تاریخ شمسی
+                'labels': [{'name': label.name, 'color': label.color} for label in question.labels.all()],
+                'url': question.get_absolute_url(),
+            }
+            for question in page_obj
+        ]
+        return JsonResponse({
+            'questions': questions_data,
+            'has_next': page_obj.has_next(),
+        })
+
+    news_items = News.objects.filter(is_active=True).order_by("-published_at")[:5]
+    return render(request, "index.html", {
+        "questions": page_obj,
+        "news_items": news_items,
+        "show_load_more": questions.count() > 5,
+    })
+
+
 
 
 # View to create news (accessible by staff only)
@@ -286,29 +320,14 @@ def question_detail(request, question_id):
         },
     )
 
-@login_required
+@csrf_exempt
 def edit_reply(request, reply_id):
-    reply = get_object_or_404(Reply, id=reply_id)
-
-    # Check if the user is the owner or admin
-    if reply.user != request.user and not request.user.is_staff:
-        return redirect('question_detail', question_id=reply.question.id)
-
     if request.method == 'POST':
-        form = ReplyForm(request.POST, instance=reply)
-        if form.is_valid():
-            form.save()
-            if request.is_ajax():
-                return JsonResponse({'success': True})
-            return redirect('question_detail', question_id=reply.question.id)
-        else:
-            return JsonResponse({'success': False}, status=400)
-
-    else:
-        form = ReplyForm(instance=reply)
-
-    return render(request, 'edit_reply.html', {'form': form, 'reply': reply, 'question': reply.question})
-
+        reply = get_object_or_404(Reply, id=reply_id)
+        reply.content = request.POST.get('content')
+        reply.save()
+        return JsonResponse({'success': True})
+    return JsonResponse({'success': False}, status=400)
 
 @login_required
 def delete_reply(request, reply_id):
@@ -433,9 +452,16 @@ def leaderboard(request):
 
 def explore(request):
     trending_questions = Question.objects.annotate(
-        num_likes=models.Count("likes_count")
-    ).order_by("-num_likes")[:10]
+        num_likes=Count("likes_count"),
+        num_replies=Count("replies"),
+        calculated_trend_score=ExpressionWrapper(
+            (F("num_likes") * 2) + (F("num_replies") * 1) + (F("view_count") * 0.5),
+            output_field=FloatField(),
+        ),
+    ).order_by("-calculated_trend_score")[:10]
+
     return render(request, "explore.html", {"trending_questions": trending_questions})
+
 
 
 def search_view(request):
@@ -448,3 +474,17 @@ def search_view(request):
         "search_results.html",
         {"query": query, "questions": questions, "news": news},
     )
+
+def robots_txt(request):
+    domain = request.get_host()  # Automatically get the domain name
+    content = f"""User-agent: *
+Disallow: /admin/
+Disallow: /login/
+Disallow: /signup/
+Disallow: /profile/
+Disallow: /delete_profile/
+Allow: /
+Sitemap: https://{domain}/sitemap.xml
+# dadmehr contorl google robots :>
+"""
+    return HttpResponse(content, content_type="text/plain")
