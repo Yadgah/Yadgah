@@ -8,7 +8,7 @@ from .views import (
     approve_reply, ask_question, delete_profile, delete_question, explore,
     home_view, leaderboard, login_view, logout_view, mit_license, news_list,
     privacy_policy, profile_view, question_detail, rules, search_view,
-    signup_view, toggle_reaction, user_profile, edit_reply, delete_reply, robots_txt,
+    signup_view, toggle_reaction, user_profile, edit_reply, delete_reply, robots_txt, create_label,
 )
 
 # Sitemap configuration
@@ -48,6 +48,7 @@ general_urlpatterns = [
     path("news/", news_list, name="news_list"),
     path("leaderboard/", leaderboard, name="leaderboard"),
     path("explore/", explore, name="explore"),
+    path("create-label/", create_label, name="create_label"),
     path("search/", search_view, name="search"),
     path("profile/<str:username>/", user_profile, name="user_profile"),
 
