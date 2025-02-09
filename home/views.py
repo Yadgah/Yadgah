@@ -78,38 +78,6 @@ def home_view(request):
         "show_load_more": questions.count() > 5,
     })
 
-
-
-
-# View to create news (accessible by staff only)
-@staff_member_required
-def create_news(request):
-    if request.method == "POST":
-        form = NewsForm(request.POST)
-        if form.is_valid():
-            news = form.save(commit=False)
-            news.author = request.user  # Set the current user as the author
-            news.save()
-            return redirect("news_list")  # Redirect to the news list after creation
-    else:
-        form = NewsForm()
-    return render(request, "news/create_news.html", {"form": form})
-
-
-# View to edit news (accessible by staff only)
-@staff_member_required
-def edit_news(request, news_id):
-    news = get_object_or_404(News, id=news_id)
-    if request.method == "POST":
-        form = NewsForm(request.POST, instance=news)
-        if form.is_valid():
-            form.save()
-            return redirect("news_list")  # Redirect to the news list after editing
-    else:
-        form = NewsForm(instance=news)
-    return render(request, "news/edit_news.html", {"form": form, "news": news})
-
-
 # User signup view
 def signup_view(request):
     if request.method == "POST":
