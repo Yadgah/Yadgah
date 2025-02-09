@@ -33,8 +33,8 @@ Similar to platforms like Quora or StackOverflow, users can share their experien
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/BDadmehr0/Yadgah.git
-cd yadgah-yadgah
+git clone https://github.com/Yadgah/Yadgah.git
+cd Yadgah
 ```
 
 2. Install dependencies:
