@@ -1,7 +1,4 @@
-{% extends 'base.html' %}
-{% load custom_filters %}
-
-{% block content %}
+{% extends 'base.html' %} {% load custom_filters %} {% block content %}
 <style>
     :root {
         --bg-dark: #121212;
@@ -134,10 +131,6 @@
 
     /* Mobile Responsiveness */
     @media screen and (max-width: 600px) {
-        body {
-            padding: 10px;
-        }
-
         .question-header {
             flex-direction: column;
             align-items: flex-start;
@@ -228,21 +221,19 @@
                     <div class="metadata-item author">
                         <i class="icon-user"></i>
                         {% if question.user and question.user.username %}
-                            <a href="{% url 'user_profile' question.user.username %}">{{ question.user.username }}</a>
-                        {% else %}
-                            کاربر ناشناس
-                        {% endif %}
+                        <a href="{% url 'user_profile' question.user.username %}">{{ question.user.username }}</a>
+                        {% else %} کاربر ناشناس {% endif %}
                     </div>
                 </div>
             </div>
 
             {% if question.user == user %}
-                <div class="question-actions">
-                    <form action="{% url 'delete_question' question.id %}" method="POST" class="delete-question">
-                        {% csrf_token %}
-                        <button type="submit">حذف سوال</button>
-                    </form>
-                </div>
+            <div class="question-actions">
+                <form action="{% url 'delete_question' question.id %}" method="POST" class="delete-question">
+                    {% csrf_token %}
+                    <button type="submit">حذف سوال</button>
+                </form>
+            </div>
             {% endif %}
         </div>
 
@@ -256,126 +247,115 @@
         </div>
     </div>
 
-<!-- پاپ‌آپ برای ویرایش پاسخ -->
-<div id="editReplyModal" class="modal fade" tabindex="-1" aria-labelledby="editReplyModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editReplyModalLabel">ویرایش پاسخ</h5>
-                <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="بستن"></button> -->
-            </div>
-            <div class="modal-body">
-                <form id="editReplyForm" method="POST">
-                    {% csrf_token %}
-                    <div class="mb-3">
-                        <!-- <label for="editReplyContent" class="form-label">متن پاسخ:</label> -->
-                        <textarea id="editReplyContent" name="content" class="form-control" rows="4"></textarea>
-                    </div>
-                    <div class="d-flex justify-content-end">
-                        <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">لغو</button>
-                        <button type="submit" class="btn btn-primary">ذخیره تغییرات</button>
-                    </div>
-
-                </form>
+    <!-- پاپ‌آپ برای ویرایش پاسخ -->
+    <div id="editReplyModal" class="modal fade" tabindex="-1" aria-labelledby="editReplyModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editReplyModalLabel">ویرایش پاسخ</h5>
+                    <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="بستن"></button> -->
+                </div>
+                <div class="modal-body">
+                    <form id="editReplyForm" method="POST">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <!-- <label for="editReplyContent" class="form-label">متن پاسخ:</label> -->
+                            <textarea id="editReplyContent" name="content" class="form-control" rows="4"></textarea>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">لغو</button>
+                            <button type="submit" class="btn btn-primary">ذخیره تغییرات</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-
-<!-- پاسخ‌ها -->
-<div class="reply-section">
-    <h3>پاسخ‌ها</h3>
-    {% if question.replies.all %}
-        {% for reply in question.replies.all %}
-            <div class="reply-card {% if reply.is_approved %}approved{% endif %}">
-                <div class="reply-content">
-                    {{ reply.get_content_as_html|safe }}
-                </div>
-                <p class="reply-meta">
-                    پاسخ توسط:
-                    {% if reply.user %}
-                        <a href="{% url 'user_profile' reply.user.username %}">{{ reply.user.username }}</a>
-                    {% else %}
-                        کاربر ناشناس
-                    {% endif %}
-                    - تاریخ پاسخ: {{ reply.created_at|jalali_date }}
-                </p>
-                {% if reply.is_approved %}
-                    <p class="reply-status">این پاسخ تایید شده است.</p>
-                {% else %}
-                    <p class="reply-status">منتظر تایید</p>
-                    {% if user == question.user %}
-                        <form action="{% url 'approve_reply' reply.id %}" method="POST" style="display:inline;">
-                            {% csrf_token %}
-                            <button class="btn btn-success btn-sm">تایید پاسخ</button>
-                        </form>
-                    {% endif %}
-                {% endif %}
-                
-                <!-- Edit and Delete reply buttons -->
-                {% if reply.user == user or user.is_staff %}
-                    <div class="reply-actions">
-                        <a href="#" onclick="openEditModal({{ reply.id }}, '{{ reply.content|escapejs }}')" class="btn btn-warning btn-sm">ویرایش</a>
-                        <form action="{% url 'delete_reply' reply.id %}" method="POST" style="display:inline;">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('آیا مطمئن هستید که می‌خواهید این پاسخ را حذف کنید؟')">حذف</button>
-                        </form>
-                    </div>
-                {% endif %}
+    <!-- پاسخ‌ها -->
+    <div class="reply-section">
+        <h3>پاسخ‌ها</h3>
+        {% if question.replies.all %} {% for reply in question.replies.all %}
+        <div class="reply-card {% if reply.is_approved %}approved{% endif %}">
+            <div class="reply-content">
+                {{ reply.get_content_as_html|safe }}
             </div>
-        {% endfor %}
-    {% else %}
-        <p class="text-muted">هیچ پاسخی برای این سوال ثبت نشده است.</p>
-    {% endif %}
-</div>
+            <p class="reply-meta">
+                پاسخ توسط: {% if reply.user %}
+                <a href="{% url 'user_profile' reply.user.username %}">{{ reply.user.username }}</a>
+                {% else %} کاربر ناشناس {% endif %} - تاریخ پاسخ: {{ reply.created_at|jalali_date }}
+            </p>
+            {% if reply.is_approved %}
+            <p class="reply-status">این پاسخ تایید شده است.</p>
+            {% else %}
+            <p class="reply-status">منتظر تایید</p>
+            {% if user == question.user %}
+            <form action="{% url 'approve_reply' reply.id %}" method="POST" style="display: inline;">
+                {% csrf_token %}
+                <button class="btn btn-success btn-sm">تایید پاسخ</button>
+            </form>
+            {% endif %} {% endif %}
 
-<!-- فرم ارسال پاسخ -->
-{% if user.is_authenticated %}
+            <!-- Edit and Delete reply buttons -->
+            {% if reply.user == user or user.is_staff %}
+            <div class="reply-actions">
+                <a href="#" onclick="openEditModal({{ reply.id }}, '{{ reply.content|escapejs }}')" class="btn btn-warning btn-sm">ویرایش</a>
+                <form action="{% url 'delete_reply' reply.id %}" method="POST" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('آیا مطمئن هستید که می‌خواهید این پاسخ را حذف کنید؟')">حذف</button>
+                </form>
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %} {% else %}
+        <p class="text-muted">هیچ پاسخی برای این سوال ثبت نشده است.</p>
+        {% endif %}
+    </div>
+
+    <!-- فرم ارسال پاسخ -->
+    {% if user.is_authenticated %}
     <div class="reply-form">
         <h3>ارسال پاسخ</h3>
         <form method="POST">
-            {% csrf_token %}
-            {{ form.as_p }}
+            {% csrf_token %} {{ form.as_p }}
             <button class="btn btn-primary" type="submit">ارسال پاسخ</button>
         </form>
     </div>
-{% else %}
+    {% else %}
     <div class="alert alert-info">
         برای ارسال پاسخ باید
         <a href="{% url 'login' %}">وارد حساب کاربری</a> شوید.
     </div>
-{% endif %}
+    {% endif %}
 </div>
 
 <script>
     function toggleReaction(type) {
-        const csrfToken = '{{ csrf_token }}';
+        const csrfToken = "{{ csrf_token }}";
         fetch("{% url 'toggle_reaction' question.id %}", {
-            method: 'POST',
+            method: "POST",
             headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': csrfToken,
+                "Content-Type": "application/json",
+                "X-CSRFToken": csrfToken,
             },
             body: JSON.stringify({ reaction_type: type }),
         })
-        .then((response) => response.json())
-        .then((data) => {
-            document.querySelector('.btn-like').innerText = `لایک (${data.likes})`;
-            document.querySelector('.btn-dislike').innerText = `دیس‌لایک (${data.dislikes})`;
-        });
-    }
-    
-    // باز کردن پاپ‌آپ
-    function openEditModal(replyId, content) {
-        document.getElementById('editReplyContent').value = content;
-        document.getElementById('editReplyForm').action = `/edit_reply/${replyId}/`;
-        
-        // استفاده از Bootstrap 5 برای باز کردن مدال
-        let modal = new bootstrap.Modal(document.getElementById('editReplyModal'));
-        modal.show();
+            .then((response) => response.json())
+            .then((data) => {
+                document.querySelector(".btn-like").innerText = `لایک (${data.likes})`;
+                document.querySelector(".btn-dislike").innerText = `دیس‌لایک (${data.dislikes})`;
+            });
     }
 
+    // باز کردن پاپ‌آپ
+    function openEditModal(replyId, content) {
+        document.getElementById("editReplyContent").value = content;
+        document.getElementById("editReplyForm").action = `/edit_reply/${replyId}/`;
+
+        // استفاده از Bootstrap 5 برای باز کردن مدال
+        let modal = new bootstrap.Modal(document.getElementById("editReplyModal"));
+        modal.show();
+    }
 
     // بستن پاپ‌آپ
     // document.querySelector('.close').onclick = function() {
@@ -383,34 +363,34 @@
     // }
 
     // بستن پاپ‌آپ وقتی کاربر خارج از آن کلیک می‌کند
-    window.onclick = function(event) {
-        const modal = document.getElementById('editReplyModal');
+    window.onclick = function (event) {
+        const modal = document.getElementById("editReplyModal");
         if (event.target === modal) {
-            modal.style.display = 'none';
+            modal.style.display = "none";
         }
-    }
+    };
 
     // ارسال فرم به صورت AJAX
-    document.getElementById('editReplyForm').onsubmit = function(event) {
+    document.getElementById("editReplyForm").onsubmit = function (event) {
         event.preventDefault();
         const form = event.target;
         const formData = new FormData(form);
 
         fetch(form.action, {
-            method: 'POST',
+            method: "POST",
             body: formData,
             headers: {
-                'X-CSRFToken': formData.get('csrfmiddlewaretoken'),
+                "X-CSRFToken": formData.get("csrfmiddlewaretoken"),
             },
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                location.reload(); // یا به‌روزرسانی بخشی از صفحه
-            } else {
-                alert('خطا در ویرایش پاسخ');
-            }
-        });
-    }
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.success) {
+                    location.reload(); // یا به‌روزرسانی بخشی از صفحه
+                } else {
+                    alert("خطا در ویرایش پاسخ");
+                }
+            });
+    };
 </script>
 {% endblock %}
