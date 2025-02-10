@@ -166,11 +166,14 @@
             padding: 15px;
         }
     }
+    .modal-backdrop {
+        z-index: 1040 !important; /* پس‌زمینه مدال */
+    }
+
     /* استایل‌های پاپ‌آپ */
     .modal {
-        display: none;
         position: fixed;
-        z-index: 1000;
+        z-index: 1050 !important; /* اطمینان از قرارگیری در بالاترین سطح */
         left: 0;
         top: 0;
         width: 100%;
@@ -254,17 +257,31 @@
     </div>
 
 <!-- پاپ‌آپ برای ویرایش پاسخ -->
-<div id="editReplyModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h3>ویرایش پاسخ</h3>
-        <form id="editReplyForm" method="POST">
-            {% csrf_token %}
-            <textarea id="editReplyContent" name="content"></textarea>
-            <button type="submit" class="btn btn-primary">ذخیره تغییرات</button>
-        </form>
+<div id="editReplyModal" class="modal fade" tabindex="-1" aria-labelledby="editReplyModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editReplyModalLabel">ویرایش پاسخ</h5>
+                <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="بستن"></button> -->
+            </div>
+            <div class="modal-body">
+                <form id="editReplyForm" method="POST">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <!-- <label for="editReplyContent" class="form-label">متن پاسخ:</label> -->
+                        <textarea id="editReplyContent" name="content" class="form-control" rows="4"></textarea>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">لغو</button>
+                        <button type="submit" class="btn btn-primary">ذخیره تغییرات</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
     </div>
 </div>
+
 
 <!-- پاسخ‌ها -->
 <div class="reply-section">
@@ -353,13 +370,17 @@
     function openEditModal(replyId, content) {
         document.getElementById('editReplyContent').value = content;
         document.getElementById('editReplyForm').action = `/edit_reply/${replyId}/`;
-        document.getElementById('editReplyModal').style.display = 'block';
+        
+        // استفاده از Bootstrap 5 برای باز کردن مدال
+        let modal = new bootstrap.Modal(document.getElementById('editReplyModal'));
+        modal.show();
     }
 
+
     // بستن پاپ‌آپ
-    document.querySelector('.close').onclick = function() {
-        document.getElementById('editReplyModal').style.display = 'none';
-    }
+    // document.querySelector('.close').onclick = function() {
+    //     document.getElementById('editReplyModal').style.display = 'none';
+    // }
 
     // بستن پاپ‌آپ وقتی کاربر خارج از آن کلیک می‌کند
     window.onclick = function(event) {
