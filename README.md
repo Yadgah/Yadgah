@@ -12,22 +12,22 @@
 
 </div>
 
-Yadgah is a community-driven platform where users can share experiences, ask questions, and engage with others. Inspired by platforms like Quora and StackOverflow, Yadgah empowers users to connect, learn, and grow through knowledge sharing.
+Yadgah is a community-driven platform designed for sharing experiences, asking questions, and engaging in discussions. Inspired by Quora and Stack Overflow, Yadgah fosters a collaborative environment where users can learn, contribute, and grow.
 
 ---
 
 ## ✨ Features
 
-- **User Profiles:** Create and customize your profile to share your questions and experiences.
-- **Ask Questions & Get Answers:** Post questions and receive answers from the community.
-- **Engage with Content:** Like, comment on, and rate answers to contribute to the discussion.
-- **Categorized Content:** Organize questions and experiences into categories such as:
-  - Work Experiences
+- **User Profiles:** Create and customize your profile to share insights and engage with the community.
+- **Q&A System:** Ask questions and receive answers from knowledgeable users.
+- **Interactive Engagement:** Like, comment on, and rate answers to enhance discussions.
+- **Organized Content:** Browse topics in various categories:
+  - Work & Career
   - Education
   - Technology
   - Health
   - And more!
-- **User Ranking System:** Earn recognition based on your contributions, such as being a top contributor or providing the best answers.
+- **User Ranking System:** Gain recognition based on contributions and community feedback.
 
 ---
 
@@ -50,7 +50,7 @@ Yadgah is a community-driven platform where users can share experiences, ask que
    pip install -r requirements.txt
    ```
 
-3. **Run migrations:**
+3. **Apply database migrations:**
    ```bash
    python manage.py migrate
    ```
@@ -69,53 +69,103 @@ Yadgah is a community-driven platform where users can share experiences, ask que
 
 ## 🛠 Development
 
-Yadgah follows best practices for code quality and maintainability. Here's what we use:
+Yadgah follows best coding practices to ensure maintainability and quality.
 
-- **Code Linting:** `flake8` for Python code linting.
-- **Pre-commit Hooks:** Automatically check code quality before commits.
-- **Frontend Formatting:** `prettier` for consistent frontend code formatting.
+- **Code Linting:** `flake8` for Python.
+- **Pre-commit Hooks:** Automates code checks before commits.
+- **Frontend Formatting:** `prettier` for consistent styling.
 
 ### GitHub Actions Workflows
-We have automated workflows for:
-- **Django CI:** Continuous integration for Django.
-- **Linting:** Ensures code adheres to style guidelines.
-- **Pre-commit Checks:** Automates pre-commit validations.
-- **Security Checks:** Identifies potential security vulnerabilities.
+Automated workflows include:
+- **Django CI:** Ensures smooth integration.
+- **Code Linting:** Maintains style and quality.
+- **Pre-commit Checks:** Verifies code before merging.
+- **Security Scans:** Detects vulnerabilities early.
 
 ---
 
 ## 📂 Project Structure
 
-The project is organized as follows:
-
 ```
-Yadgah/
-├── app/                  # Django apps (e.g., users, questions, answers)
-├── static/               # Static files (CSS, JS, images)
-├── templates/            # HTML templates
-├── manage.py             # Django management script
-├── requirements.txt      # Python dependencies
-├── LICENSE               # MIT License
-└── README.md             # Project documentation
+.
+├── CHANGELOG.md
+├── db.sqlite3
+├── doc/
+│   ├── Screenshot 2025-02-07 at 19-26-06 yadgah.pythonanywhere.com Website SEO Review Seobility.net.png
+│   ├── Screenshot 2025-02-07 at 19-26-56 SEO Audit for yadgah.pythonanywhere.com - SEOptimer.png
+│   └── Screenshot 2025-02-07 at 19-27-18 yadgah.pythonanywhere.com SEO Report SEO Site Checkup.png
+├── favicon.ico
+├── home/
+│   ├── admin.py
+│   ├── apps.py
+│   ├── forms.py
+│   ├── __init__.py
+│   ├── migrations/
+│   │   ├── 0001_initial.py
+│   │   ├── __init__.py
+│   │   └── __pycache__/
+│   ├── models.py
+│   ├── __pycache__/
+│   ├── signals.py
+│   ├── sitemaps.py
+│   ├── static/
+│   ├── templates/
+│   │   ├── ask_question.html
+│   │   ├── base.html
+│   │   ├── edit_reply.html
+│   │   ├── explore.html
+│   │   ├── index.html
+│   │   ├── leaderboard.html
+│   │   ├── login.html
+│   │   ├── mit_license.html
+│   │   ├── news/
+│   │   │   ├── create_news.html
+│   │   │   └── edit_news.html
+│   │   ├── privacy_policy.html
+│   │   ├── profile.html
+│   │   ├── question_detail.html
+│   │   ├── rules.html
+│   │   ├── search_results.html
+│   │   ├── signup.html
+│   │   └── user_profile.html
+│   ├── templatetags/
+│   ├── tests.py
+│   ├── urls.py
+│   └── views.py
+├── LICENSE
+├── manage.py
+├── media/
+│   └── avatars/
+├── pyproject.toml
+├── README.md
+├── requirements.txt
+└── Yadgah/
+    ├── asgi.py
+    ├── __init__.py
+    ├── __pycache__/
+    ├── settings.py
+    ├── urls.py
+    └── wsgi.py
 ```
 
 ---
 
 ## 📜 License
 
-This project is licensed under the **MIT License**. For more details, see the [LICENSE](LICENSE) file.
+Yadgah is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.
 
 ---
 
 ## 💬 Contributing
 
-We welcome contributions! If you'd like to contribute, please follow these steps:
+We welcome contributions! To contribute:
 1. Fork the repository.
-2. Create a new branch for your feature or bugfix.
-3. Submit a pull request with a detailed description of your changes.
+2. Create a new branch for your feature or fix.
+3. Submit a pull request with a clear description of changes.
 
 ---
 
 ## 🌐 Connect with Us
 
-Have questions or feedback? Reach out to us via [GitHub Issues](https://github.com/Yadgah/Yadgah/issues) or join our community discussions.
+Have questions or feedback? Reach out via [GitHub Issues](https://github.com/Yadgah/Yadgah/issues) or join our discussions.
+
