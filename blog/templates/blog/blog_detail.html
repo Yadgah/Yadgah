@@ -1,8 +1,0 @@
-{% extends 'base.html' %} {% block content %}
-<h1>{{ post.title }}</h1>
-<p>نوشته شده توسط {{ post.author }} در {{ post.created_at }}</p>
-{% if post.image %}
-<img src="{{ post.image.url }}" alt="{{ post.title }}" />
-{% endif %}
-<p>{{ post.content }}</p>
-{% endblock %}

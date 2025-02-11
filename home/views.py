@@ -456,3 +456,6 @@ Sitemap: https://{domain}/sitemap.xml
 # dadmehr contorl google robots :>
 """
     return HttpResponse(content, content_type="text/plain")
+
+def blog(request):
+    return render(request, 'blog/blog_list.html')

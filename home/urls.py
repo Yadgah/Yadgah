@@ -8,7 +8,7 @@ from .views import (
     approve_reply, ask_question, delete_profile, delete_question, explore,
     home_view, leaderboard, login_view, logout_view, mit_license, news_list,
     privacy_policy, profile_view, question_detail, rules, search_view,
-    signup_view, toggle_reaction, user_profile, edit_reply, delete_reply, robots_txt, create_label,
+    signup_view, toggle_reaction, user_profile, edit_reply, delete_reply, robots_txt, create_label, blog,
 )
 
 # Sitemap configuration
@@ -51,6 +51,7 @@ general_urlpatterns = [
     path("create-label/", create_label, name="create_label"),
     path("search/", search_view, name="search"),
     path("profile/<str:username>/", user_profile, name="user_profile"),
+    path('blog/', blog, name='blog'),
 
     path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="django.contrib.sitemaps.views.sitemap"),
     path("robots.txt", robots_txt, name="robots_txt"),
