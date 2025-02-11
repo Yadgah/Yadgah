@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>وبلاگ</h2>
+    
+    {% if user.is_authenticated %}
+        <a href="{% url 'create_blog_post' %}" class="btn btn-success">+ نوشتن مقاله جدید</a>
+    {% endif %}
+
+    {% for post in posts %}
+        <div>
+            <h2><a href="{% url 'blog_detail' post.slug %}">{{ post.title }}</a></h2>
+            <p>نوشته شده توسط {{ post.author }} در {{ post.created_at }}</p>
+        </div>
+    {% endfor %}
+{% endblock %}
+

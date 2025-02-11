@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "home",
     "bootstrap5",
-    'django.contrib.sitemaps',
+    "django.contrib.sitemaps",
+    "blog",
 ]
 
 MIDDLEWARE = [
@@ -135,3 +136,7 @@ CACHES = {
         "LOCATION": "/var/tmp/django_cache",
     }
 }
+
+
+LOGIN_URL = "/login/"
+
