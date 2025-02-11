@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseForbidden
 from .models import BlogPost
 from .forms import BlogPostForm
 
@@ -25,8 +26,6 @@ def create_blog_post(request):
     return render(request, "blog/create_blog_post.html", {"form": form})
 
 
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseForbidden
 
 @login_required
 def edit_blog_post(request, slug):
