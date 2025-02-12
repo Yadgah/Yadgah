@@ -5,10 +5,13 @@ from django.contrib import messages
 from django.urls import reverse
 from .models import BlogPost
 from .forms import BlogPostForm
+from django.http import HttpResponse
 
 def blog_list(request):
-    posts = BlogPost.objects.all().order_by("-created_at")
+    posts = BlogPost.objects.filter(is_published=True)  # فقط مقالات منتشرشده
+    print(f"تعداد مقالات: {posts.count()}")  # بررسی لاگ
     return render(request, "blog/blog_list.html", {"posts": posts})
+
 
 def blog_detail(request, slug):
     post = get_object_or_404(BlogPost, slug=slug)
@@ -21,6 +24,11 @@ def create_blog_post(request):
         if form.is_valid():
             blog_post = form.save(commit=False)
             blog_post.author = request.user
+
+            # اگر مقدار is_published تنظیم نشده بود، آن را True کن
+            if "is_published" not in request.POST:
+                blog_post.is_published = True
+
             blog_post.save()
             messages.success(request, "مقاله با موفقیت ایجاد شد.")
             return redirect(reverse("blog_detail", kwargs={"slug": blog_post.slug}))
@@ -29,6 +37,7 @@ def create_blog_post(request):
     else:
         form = BlogPostForm()
     return render(request, "blog/create_blog_post.html", {"form": form})
+
 
 @login_required
 def edit_blog_post(request, slug):
