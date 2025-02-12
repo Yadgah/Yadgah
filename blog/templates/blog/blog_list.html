@@ -1,16 +1,51 @@
 {% extends 'base.html' %}
+{% load static %}
+
+<style>
+    .card {
+        overflow: hidden; /* مخفی کردن هر محتوای اضافی */
+    }
+
+    .card-img-top {
+        width: 100%; /* عرض تصویر به اندازه عرض کارت محدود می‌شود */
+        height: 100%; /* ارتفاع تصویر به اندازه ارتفاع کارت تنظیم می‌شود */
+        object-fit: cover; /* تصویر مطابق با ابعاد کارت برش می‌خورد */
+        position: relative;
+        top: 50%; /* زوم کردن از مرکز */
+        left: 50%; /* زوم کردن از مرکز */
+        transform: translate(-50%, -50%); /* تصویر به مرکز جابجا می‌شود */
+    }
+</style>
+
 {% block content %}
     <h2>وبلاگ</h2>
     
     {% if user.is_authenticated %}
-        <a href="{% url 'create_blog_post' %}" class="btn btn-success">+ نوشتن مقاله جدید</a>
+        <a href="{% url 'create_blog_post' %}" class="btn btn-success mb-4">+ نوشتن مقاله جدید</a>
     {% endif %}
 
-    {% for post in posts %}
-        <div>
-            <h2><a href="{% url 'blog_detail' post.slug %}">{{ post.title }}</a></h2>
-            <p>نوشته شده توسط {{ post.author }} در {{ post.created_at }}</p>
-        </div>
-    {% endfor %}
+    <div class="row">
+        {% for post in posts %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    {% if post.image %}
+                        <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}">
+                    {% else %}
+                        <img src="{% static 'images/default-image.jpg' %}" class="card-img-top" alt="Default Image">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="{% url 'blog_detail' post.slug %}" class="text-decoration-none">{{ post.title }}</a>
+                        </h5>
+                        <p class="card-text">
+                            نوشته شده توسط <strong>{{ post.author }}</strong> در {{ post.created_at|date:"Y-m-d H:i" }}
+                        </p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{% url 'blog_detail' post.slug %}" class="btn btn-primary btn-sm">خواندن بیشتر</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}
-

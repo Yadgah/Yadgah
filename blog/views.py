@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
+from django.contrib import messages
+from django.urls import reverse
 from .models import BlogPost
 from .forms import BlogPostForm
 
@@ -20,12 +22,13 @@ def create_blog_post(request):
             blog_post = form.save(commit=False)
             blog_post.author = request.user
             blog_post.save()
-            return redirect("blog_list")
+            messages.success(request, "مقاله با موفقیت ایجاد شد.")
+            return redirect(reverse("blog_detail", kwargs={"slug": blog_post.slug}))
+        else:
+            messages.error(request, "خطا در ارسال فرم. لطفاً فیلدها را بررسی کنید.")
     else:
         form = BlogPostForm()
     return render(request, "blog/create_blog_post.html", {"form": form})
-
-
 
 @login_required
 def edit_blog_post(request, slug):
@@ -37,7 +40,10 @@ def edit_blog_post(request, slug):
         form = BlogPostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
             form.save()
-            return redirect("blog_detail", slug=post.slug)
+            messages.success(request, "مقاله با موفقیت ویرایش شد.")
+            return redirect(reverse("blog_detail", kwargs={"slug": post.slug}))
+        else:
+            messages.error(request, "خطا در ارسال فرم. لطفاً فیلدها را بررسی کنید.")
     else:
         form = BlogPostForm(instance=post)
 
@@ -51,7 +57,7 @@ def delete_blog_post(request, slug):
 
     if request.method == "POST":
         post.delete()
+        messages.success(request, "مقاله با موفقیت حذف شد.")
         return redirect("blog_list")
 
     return render(request, "blog/confirm_delete.html", {"post": post})
-
