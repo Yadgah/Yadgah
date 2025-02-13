@@ -12,7 +12,7 @@
 
 </div>
 
-Yadgah is a community-driven platform designed for sharing experiences, asking questions, and engaging in discussions. Inspired by Quora and Stack Overflow, Yadgah fosters a collaborative environment where users can learn, contribute, and grow.
+Yadgah is a community-driven platform designed for sharing experiences, asking questions, and engaging in discussions. Inspired by Quera and Stack Overflow, Yadgah fosters a collaborative environment where users can learn, contribute, and grow.
 
 ---
 
