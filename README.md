@@ -100,10 +100,6 @@ Automated workflows include:
 │   ├── apps.py
 │   ├── forms.py
 │   ├── __init__.py
-│   ├── migrations/
-│   │   ├── 0001_initial.py
-│   │   ├── __init__.py
-│   │   └── __pycache__/
 │   ├── models.py
 │   ├── __pycache__/
 │   ├── signals.py
