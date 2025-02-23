@@ -4,7 +4,7 @@
 {% block content %}
     <div class="container">
         <h2>ویرایش پاسخ</h2>
-        
+
         <!-- Button to trigger the modal -->
         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editReplyModal">ویرایش پاسخ</button>
 
@@ -59,7 +59,7 @@
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             const formData = new FormData(form);
-            
+
             fetch("{% url 'edit_reply' reply.id %}", {
                 method: 'POST',
                 body: formData,

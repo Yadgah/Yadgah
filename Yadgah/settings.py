@@ -138,4 +138,3 @@ CACHES = {
 
 
 LOGIN_URL = "/login/"
-

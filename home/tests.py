@@ -70,7 +70,9 @@ class ReplyModelTest(TestCase):
         )
 
     def test_reply_creation(self):
-        self.assertEqual(self.reply.content, "Django is a web framework for rapid development.")
+        self.assertEqual(
+            self.reply.content, "Django is a web framework for rapid development."
+        )
         self.assertEqual(self.reply.question, self.question)
         self.assertEqual(self.reply.user.username, "janedoe")
 
@@ -125,9 +127,15 @@ class NewsModelTest(TestCase):
 class ReplyEditDeleteTest(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username="user1", password="password")
-        self.admin_user = User.objects.create_user(username="admin", password="password", is_staff=True)
-        self.question = Question.objects.create(title="Test Question", content="Test Content", user=self.user)
-        self.reply = Reply.objects.create(content="Test Reply", question=self.question, user=self.user)
+        self.admin_user = User.objects.create_user(
+            username="admin", password="password", is_staff=True
+        )
+        self.question = Question.objects.create(
+            title="Test Question", content="Test Content", user=self.user
+        )
+        self.reply = Reply.objects.create(
+            content="Test Reply", question=self.question, user=self.user
+        )
 
     def test_edit_reply(self):
         self.client.login(username="user1", password="password")
@@ -142,11 +150,15 @@ class ReplyEditDeleteTest(TestCase):
     def test_delete_reply_permission(self):
         self.client.login(username="user1", password="password")
         response = self.client.post(f"/reply/{self.reply.id}/delete/")
-        self.assertEqual(response.status_code, 302)  # User should be able to delete their own reply
+        self.assertEqual(
+            response.status_code, 302
+        )  # User should be able to delete their own reply
 
         self.client.login(username="admin", password="password")
         response = self.client.post(f"/reply/{self.reply.id}/delete/")
-        self.assertEqual(response.status_code, 302)  # Admin should also be able to delete
+        self.assertEqual(
+            response.status_code, 302
+        )  # Admin should also be able to delete
 
         # Test forbidden for non-owner non-admin
         other_user = User.objects.create_user(username="user2", password="password")
