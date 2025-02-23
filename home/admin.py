@@ -69,6 +69,7 @@ class NewsAdmin(admin.ModelAdmin):
     search_fields = ("title", "content")
     ordering = ("-published_at",)
 
+
 # Admin configuration for the Label model
 class LabelAdmin(admin.ModelAdmin):
     list_display = ("name", "color_preview")  # Shows the name and color preview
@@ -85,6 +86,7 @@ class LabelAdmin(admin.ModelAdmin):
         )
 
     color_preview.short_description = "Cor"
+
 
 # Register models in the admin panel
 admin.site.register(Question, QuestionAdmin)

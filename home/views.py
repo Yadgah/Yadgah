@@ -1,6 +1,7 @@
-import jdatetime
 import json
 import re
+
+import jdatetime
 import markdown
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -11,7 +12,7 @@ from django.contrib.sessions.models import Session
 from django.core.exceptions import ValidationError
 from django.core.paginator import EmptyPage, Paginator
 from django.db import models
-from django.db.models import Q, Count, F, FloatField
+from django.db.models import Count, F, FloatField, Q
 from django.db.models.expressions import ExpressionWrapper
 from django.http import (
     HttpResponse,
@@ -43,9 +44,9 @@ def staff_member_required(view_func):
 # Home view to show recent questions and news
 def home_view(request):
     questions = Question.objects.all().order_by("-created_at")
-    paginator = Paginator(questions, 5)  
+    paginator = Paginator(questions, 5)
 
-    page_number = request.GET.get('page')
+    page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
     def convert_to_jalali(date):
@@ -54,29 +55,41 @@ def home_view(request):
             return f"{jalali_date.day} {jalali_date.j_months_fa[jalali_date.month - 1]}"
         return ""
 
-    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+    if request.headers.get("X-Requested-With") == "XMLHttpRequest":
         questions_data = [
             {
-                'id': question.id,
-                'title': question.title,
-                'content': question.content,
-                'created_at': convert_to_jalali(question.created_at),  # تبدیل به تاریخ شمسی
-                'labels': [{'name': label.name, 'color': label.color} for label in question.labels.all()],
-                'url': question.get_absolute_url(),
+                "id": question.id,
+                "title": question.title,
+                "content": question.content,
+                "created_at": convert_to_jalali(
+                    question.created_at
+                ),  # تبدیل به تاریخ شمسی
+                "labels": [
+                    {"name": label.name, "color": label.color}
+                    for label in question.labels.all()
+                ],
+                "url": question.get_absolute_url(),
             }
             for question in page_obj
         ]
-        return JsonResponse({
-            'questions': questions_data,
-            'has_next': page_obj.has_next(),
-        })
+        return JsonResponse(
+            {
+                "questions": questions_data,
+                "has_next": page_obj.has_next(),
+            }
+        )
 
     news_items = News.objects.filter(is_active=True).order_by("-published_at")[:5]
-    return render(request, "index.html", {
-        "questions": page_obj,
-        "news_items": news_items,
-        "show_load_more": questions.count() > 5,
-    })
+    return render(
+        request,
+        "index.html",
+        {
+            "questions": page_obj,
+            "news_items": news_items,
+            "show_load_more": questions.count() > 5,
+        },
+    )
+
 
 # User signup view
 def signup_view(request):
@@ -202,6 +215,7 @@ def ask_question(request):
 
     return render(request, "ask_question.html", {"form": form})
 
+
 # View to create a label
 def create_label(request):
     if request.method == "POST":
@@ -215,19 +229,22 @@ def create_label(request):
 
             # Check if the label already exists
             label, created = Label.objects.get_or_create(
-                name=name,
-                defaults={"color": color, "is_custom": True}
+                name=name, defaults={"color": color, "is_custom": True}
             )
             if not created:
                 return JsonResponse({"error": "Label already exists."}, status=400)
 
-            return JsonResponse({
-                "message": "Label created successfully.",
-                "label": {"name": label.name, "color": label.color}
-            }, status=201)
+            return JsonResponse(
+                {
+                    "message": "Label created successfully.",
+                    "label": {"name": label.name, "color": label.color},
+                },
+                status=201,
+            )
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=500)
     return JsonResponse({"error": "Invalid request method."}, status=405)
+
 
 def question_detail(request, question_id):
     question = get_object_or_404(Question, id=question_id)
@@ -288,14 +305,16 @@ def question_detail(request, question_id):
         },
     )
 
+
 @csrf_exempt
 def edit_reply(request, reply_id):
-    if request.method == 'POST':
+    if request.method == "POST":
         reply = get_object_or_404(Reply, id=reply_id)
-        reply.content = request.POST.get('content')
+        reply.content = request.POST.get("content")
         reply.save()
-        return JsonResponse({'success': True})
-    return JsonResponse({'success': False}, status=400)
+        return JsonResponse({"success": True})
+    return JsonResponse({"success": False}, status=400)
+
 
 @login_required
 def delete_reply(request, reply_id):
@@ -309,6 +328,7 @@ def delete_reply(request, reply_id):
     question_id = reply.question.id
     reply.delete()
     return redirect("question_detail", question_id=question_id)
+
 
 # View to delete a question
 @login_required
@@ -399,7 +419,6 @@ def approve_reply(request, reply_id):
     return redirect("question_detail", question_id=reply.question.id)
 
 
-
 def privacy_policy(request):
     return render(request, "privacy_policy.html")
 
@@ -431,7 +450,6 @@ def explore(request):
     return render(request, "explore.html", {"trending_questions": trending_questions})
 
 
-
 def search_view(request):
     query = request.GET.get("q", "")
     questions = Question.search(query) if query else Question.objects.none()
@@ -442,6 +460,7 @@ def search_view(request):
         "search_results.html",
         {"query": query, "questions": questions, "news": news},
     )
+
 
 def robots_txt(request):
     domain = request.get_host()  # Automatically get the domain name
@@ -457,5 +476,6 @@ Sitemap: https://{domain}/sitemap.xml
 """
     return HttpResponse(content, content_type="text/plain")
 
+
 def blog(request):
-    return render(request, 'blog/blog_list.html')
+    return render(request, "blog/blog_list.html")

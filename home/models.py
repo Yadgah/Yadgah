@@ -24,7 +24,7 @@ class UserProfile(models.Model):
     def increase_score(self, amount=1):
         """
         Increases the user's score by the specified amount.
-        
+
         Args:
             amount (int): The amount by which to increase the score. Defaults to 1.
         """
@@ -58,7 +58,7 @@ class Label(models.Model):
     name = models.CharField(max_length=100, unique=True)
     color = models.CharField(max_length=7, default="#000000")  # Hex color code
     is_custom = models.BooleanField(default=False)  # Identifies custom labels
-        
+
     def __str__(self):
         return self.name
 
@@ -72,8 +72,12 @@ class Question(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
-    likes_count = models.ManyToManyField(User, related_name="liked_questions", blank=True)
-    dislikes_count = models.ManyToManyField(User, related_name="disliked_questions", blank=True)
+    likes_count = models.ManyToManyField(
+        User, related_name="liked_questions", blank=True
+    )
+    dislikes_count = models.ManyToManyField(
+        User, related_name="disliked_questions", blank=True
+    )
     labels = models.ManyToManyField(Label, related_name="questions", blank=True)
     view_count = models.PositiveIntegerField(default=0)
 
@@ -117,7 +121,7 @@ class Question(models.Model):
             QuerySet: A list of the top 10 trending questions.
         """
         return cls.objects.all().order_by("-trend_score")[:10]
-    
+
     def get_absolute_url(self):
         return reverse("question_detail", args=[str(self.id)])
 
@@ -128,7 +132,9 @@ class Reply(models.Model):
     """
 
     content = models.TextField()  # Stores the reply content in Markdown format
-    question = models.ForeignKey(Question, related_name="replies", on_delete=models.CASCADE)
+    question = models.ForeignKey(
+        Question, related_name="replies", on_delete=models.CASCADE
+    )
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     is_approved = models.BooleanField(default=False)
@@ -140,7 +146,7 @@ class Reply(models.Model):
     def get_content_as_html(self):
         """
         Converts the Markdown content into HTML for display.
-        
+
         Returns:
             str: The content rendered as HTML.
         """
@@ -159,7 +165,9 @@ class QuestionReaction(models.Model):
         (DISLIKE, "Dislike"),
     ]
 
-    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name="reactions")
+    question = models.ForeignKey(
+        Question, on_delete=models.CASCADE, related_name="reactions"
+    )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     reaction_type = models.IntegerField(choices=REACTION_CHOICES)
 
@@ -177,9 +185,13 @@ class News(models.Model):
 
     title = models.CharField(max_length=200, verbose_name="News Title")
     content = models.TextField(verbose_name="Content")
-    published_at = models.DateTimeField(auto_now_add=True, verbose_name="Published Date")
+    published_at = models.DateTimeField(
+        auto_now_add=True, verbose_name="Published Date"
+    )
     is_active = models.BooleanField(default=True, verbose_name="Is Active")
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="news", verbose_name="Author")
+    author = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="news", verbose_name="Author"
+    )
 
     @classmethod
     def search(cls, query):

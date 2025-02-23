@@ -1,850 +1,194 @@
-# Changelog
-
-All significant changes to this project will be documented here.
-
-
----
-
-## [2025-02-04]
-### Added
-- **solved issuse #43**: solved issuse #43 [Dadmehr Emami]
-
----
-
-## [2025-02-04]
-### Added
-- **solved issuse #42 & rewrite trend algorithm**: solved issuse #42 & rewrite trend algorithm [Dadmehr Emami]
-
----
-
-## [2025-02-04]
-### Added
-- **solved issues #39**: solved issues #39 [Dadmehr Emami]
-
----
-
-## [2025-02-04]
-### Added
-- **solved issuse #59**: solved issuse #59 [Dadmehr Emami]
-
----
-
-## [2025-02-01]
-### Added
-- **add edit & delete replay by user's**: add edit & delete replay by user's [Dadmehr Emami]
-
----
-
-## [2025-01-31]
-### Added
-- **user score bug fix**: user score bug fix [Dadmehr Emami]
-
----
-
-## [2025-01-31]
-### Added
-- **refactor**: refactor [Dadmehr Emami]
-
----
-
-## [2025-01-31]
-### Added
-- **clean**: clean [Dadmehr Emami]
-
----
-
-## [2025-01-31]
-### Added
-- **clean project**: clean project [Dadmehr Emami]
-
----
-
-## [2025-01-31]
-### Added
-- **git ignore .pyc __pycache__**: git ignore .pyc __pycache__ [Dadmehr Emami]
-
----
-
-## [2025-01-31]
-### Added
-- **ui fix bugs**: ui fix bugs [Dadmehr Emami]
-
----
-
-## [2025-01-30]
-### Added
-- **add Search Feature**: add Search Feature [Dadmehr Emami]
-
----
-
-## [2025-01-29]
-### Added
-- **requirements.txt format fix remove # for comment's**: requirements.txt format fix remove # for comment's [Dadmehr Emami]
-
----
-
-## [2025-01-29]
-### Added
-- **update changelog**: update changelog [Dadmehr Emami]
-
----
-
-## [2025-01-29]
-### Added
-- **remove auto-setup**: remove auto-setup [Dadmehr Emami]
-
----
-
-## [2025-01-28]
-### Added
-- **Update .gitignore**: Update .gitignore [Dadmehr]
-
----
-
-## [2025-01-28]
-### Added
-- **Delete media/avatars/CHANGELOG_ENG.md**: Delete media/avatars/CHANGELOG_ENG.md [Dadmehr]
-
----
-
-## [2025-01-28]
-### Added
-- **.gitignore config for ignore media**: .gitignore config for ignore media [Dadmehr Emami]
-
----
-
-## [2025-01-28]
-### Added
-- **fix username, random username, placeholder for signup inputs**: fix username, random username, placeholder for signup inputs [Dadmehr Emami]
-
----
-
-## [2025-01-27]
-### Added
-- **update CHANGELOG**: update CHANGELOG [Dadmehr Emami]
-
----
-
-## [2025-01-27]
-### Added
-- **FIX Django CLI**: FIX Django CLI [Dadmehr Emami]
-
----
-
-## [2025-01-27]
-### Added
-- **flake8 fix**: flake8 fix [Dadmehr Emami]
-
----
-
-## [2025-01-27]
-### Added
-- **pre-commit**: pre-commit [Dadmehr Emami]
-
----
-
-## [2025-01-27]
-### Added
-- **Update admin interface: Improve profile picture display and optimize user profile integration**: Update admin interface: Improve profile picture display and optimize user profile integration [Dadmehr Emami]
-
----
-
-## [2025-01-27]
-### Added
-- **Delete subprocess**: Delete subprocess [Dadmehr]
-
----
-
-## [2025-01-27]
-### Added
-- **Remove os**: Remove os [Dadmehr Emami]
-
----
-
-## [2025-01-27]
-### Added
-- **get widely used script for development**: get widely used script for development [Dadmehr Emami]
-
----
-
-## [2025-01-27]
-### Added
-- **configure gitignore for ignore scripts**: configure gitignore for ignore scripts [Dadmehr Emami]
-
----
-
-## [2025-01-27]
-### Added
-- **Refactor CHANGELOG & Created auto CHANGELOG creator**: Refactor CHANGELOG & Created auto CHANGELOG creator [Dadmehr Emami]
-
----
-
-## [2025-01-27]
-### Added
-- **Added CHANGELOG.md**: Added CHANGELOG.md [Dadmehr Emami]
-
----
-
-## [2025-01-26]
-### Added
-- **setting.py Allowd Host modify**: setting.py Allowd Host modify [Dadmehr Emami]
-
----
-
-## [2025-01-26]
-### Added
-- **.link_dark change color to #69b987**: .link_dark change color to #69b987 [Dadmehr Emami]
-
----
-
-## [2025-01-26]
-### Added
-- **remove body & container css code for fix header width**: remove body & container css code for fix header width [Dadmehr Emami]
-
----
-
-## [2025-01-26]
-### Added
-- **question detail body padding remove**: question detail body padding remove [Dadmehr Emami]
-
----
-
-## [2025-01-26]
-### Added
-- **nav link fix**: nav link fix [Dadmehr Emami]
-
----
-
-## [2025-01-26]
-### Added
-- **Merge pull request #47 from mdimado/main**: Merge pull request #47 from mdimado/main [Dadmehr]
-
----
-
-## [2025-01-26]
-### Added
-- **Improve Question Detail Page UI and mobile responsive**: Improve Question Detail Page UI and mobile responsive [Mohammed Imaduddin]
-
----
-
-## [2025-01-25]
-### Added
-- **nav menu fix & HTML Formatted**: nav menu fix & HTML Formatted [Dadmehr]
-
----
-
-## [2025-01-24]
-### Added
-- **restore**: restore [Dadmehr Emami]
-
----
-
-## [2025-01-24]
-### Added
-- **test chagelog**: test chagelog [Dadmehr Emami]
-
----
-
-## [2025-01-24]
-### Added
-- **changelog.yml update**: changelog.yml update [Dadmehr Emami]
-
----
-
-## [2025-01-24]
-### Added
-- **CHANGELOG.md**: CHANGELOG.md [Dadmehr Emami]
-
----
-
-## [2025-01-24]
-### Added
-- **test**: test [Dadmehr Emami]
-
----
-
-## [2025-01-24]
-### Added
-- **Merge pull request #44 from BDadmehr0/patch1**: Merge pull request #44 from BDadmehr0/patch1 [Dadmehr]
-
----
-
-## [2025-01-24]
-### Added
-- **auto changelog**: auto changelog [Dadmehr Emami]
-
----
-
-## [2025-01-24]
-### Added
-- **Merge pull request #41 from BDadmehr0/patch1**: Merge pull request #41 from BDadmehr0/patch1 [Dadmehr]
-
----
-
-## [2025-01-24]
-### Added
-- **Created Trend Question & explore page**: Created Trend Question & explore page [Dadmehr Emami]
-
----
-
-## [2025-01-24]
-### Added
-- **Merge pull request #40 from BDadmehr0/patch1**: Merge pull request #40 from BDadmehr0/patch1 [Dadmehr]
-
----
-
-## [2025-01-24]
-### Added
-- **Created Ranking System & LeaderBoard**: Created Ranking System & LeaderBoard [Dadmehr Emami]
-
----
-
-## [2025-01-24]
-### Added
-- **Merge pull request #36 from BDadmehr0/patch1**: Merge pull request #36 from BDadmehr0/patch1 [Dadmehr]
-
----
-
-## [2025-01-24]
-### Added
-- **question view add by sessionid cookies**: question view add by sessionid cookies [Dadmehr Emami]
-
----
-
-## [2025-01-24]
-### Added
-- **Merge pull request #35 from BDadmehr0/patch1**: Merge pull request #35 from BDadmehr0/patch1 [Dadmehr]
-
----
-
-## [2025-01-24]
-### Added
-- **users can delete questions**: users can delete questions [Dadmehr Emami]
-
----
-
-## [2025-01-23]
-### Added
-- **Update README.md**: Update README.md [Dadmehr]
-
----
-
-## [2025-01-23]
-### Added
-- **Temporarily removing the read more button until a way is found**: Temporarily removing the read more button until a way is found [Dadmehr Emami]
-
----
-
-## [2025-01-22]
-### Added
-- **Django local project setup auto script**: Django local project setup auto script [Dadmehr Emami]
-
----
-
-## [2025-01-21]
-### Added
-- **Update base.html**: Update base.html [Dadmehr]
-
----
-
-## [2025-01-21]
-### Added
-- **Merge pull request #31 from BDadmehr0/better-ui-ux**: Merge pull request #31 from BDadmehr0/better-ui-ux [Dadmehr]
-
----
-
-## [2025-01-21]
-### Added
-- **Merge pull request #30 from BDadmehr0/main**: Merge pull request #30 from BDadmehr0/main [Dadmehr]
-
----
-
-## [2025-01-21]
-### Added
-- **Create CONTRIBUTING.md**: Create CONTRIBUTING.md [Dadmehr]
-
----
-
-## [2025-01-21]
-### Added
-- **laebl's fix**: laebl's fix [Dadmehr Emami]
-
----
-
-## [2025-01-21]
-### Added
-- **fix label rendreing API fix - loading spiner fix**: fix label rendreing API fix - loading spiner fix [Dadmehr Emami]
-
----
-
-## [2025-01-20]
-### Added
-- **remove Replay content laebl**: remove Replay content laebl [Dadmehr Emami]
-
----
-
-## [2025-01-20]
-### Added
-- **profile picture in signup form remove**: profile picture in signup form remove [Dadmehr Emami]
-
----
-
-## [2025-01-20]
-### Added
-- **ask question content placeholder text: markdown support**: ask question content placeholder text: markdown support [Dadmehr Emami]
-
----
-
-## [2025-01-20]
-### Added
-- **Merge pull request #21 from BDadmehr0/test**: Merge pull request #21 from BDadmehr0/test [Dadmehr]
-
----
-
-## [2025-01-20]
-### Added
-- **fix test.py**: fix test.py [Dadmehr Emami]
-
----
-
-## [2025-01-20]
-### Added
-- **fix Django CLI errors**: fix Django CLI errors [Dadmehr Emami]
-
----
-
-## [2025-01-19]
-### Added
-- **configure test.py for test full & better - clean up**: configure test.py for test full & better - clean up [Dadmehr Emami]
-
----
-
-## [2025-01-19]
-### Added
-- **Merge pull request #19 from BDadmehr0/better-ui-ux**: Merge pull request #19 from BDadmehr0/better-ui-ux [Dadmehr]
-
----
-
-## [2025-01-19]
-### Added
-- **remove waste images**: remove waste images [Dadmehr Emami]
-
----
-
-## [2025-01-19]
-### Added
-- **commit**: commit [Dadmehr Emami]
-
----
-
-## [2025-01-18]
-### Added
-- **Merge pull request #18 from BDadmehr0/better-ui-ux**: Merge pull request #18 from BDadmehr0/better-ui-ux [Dadmehr]
-
----
-
-## [2025-01-18]
-### Added
-- **delete note**: delete note [Dadmehr Emami]
-
----
-
-## [2025-01-18]
-### Added
-- **configure pre-commit for better hook for front code and use bootstrap defualt footer**: configure pre-commit for better hook for front code and use bootstrap defualt footer [Dadmehr Emami]
-
----
-
-## [2025-01-17]
-### Added
-- **Merge pull request #12 from BDadmehr0/load-more**: Merge pull request #12 from BDadmehr0/load-more [Dadmehr]
-
----
-
-## [2025-01-17]
-### Added
-- **https://anshu-dev.medium.com/how-to-load-more-data-on-a-button-click-in-django-e1bab3a08e2b - add javascript tree to static use npm-module**: https://anshu-dev.medium.com/how-to-load-more-data-on-a-button-click-in-django-e1bab3a08e2b - add javascript tree to static use npm-module [Dadmehr Emami]
-
----
-
-## [2025-01-16]
-### Added
-- **Update ask_question.html**: Update ask_question.html [Dadmehr]
-
----
-
-## [2025-01-16]
-### Added
-- **Update forms.py**: Update forms.py [Dadmehr]
-
----
-
-## [2025-01-16]
-### Added
-- **Update views.py**: Update views.py [Dadmehr]
-
----
-
-## [2025-01-16]
-### Added
-- **Delete db.sqlite3**: Delete db.sqlite3 [Dadmehr]
-
----
-
-## [2025-01-16]
-### Added
-- **gitignore add and config**: gitignore add and config [Dadmehr Emami]
-
----
-
-## [2025-01-15]
-### Added
-- **select multi label in ask question**: select multi label in ask question [Dadmehr]
-
----
-
-## [2025-01-14]
-### Added
-- **icon fix**: icon fix [Dadmehr]
-
----
-
-## [2025-01-14]
-### Added
-- **icon bg remove**: icon bg remove [Dadmehr]
-
----
-
-## [2025-01-14]
-### Added
-- **favicon change**: favicon change [Dadmehr]
-
----
-
-## [2025-01-14]
-### Added
-- **better front & add more labels**: better front & add more labels [Dadmehr]
-
----
-
-## [2025-01-12]
-### Added
-- **label question fature added**: label question fature added [Dadmehr]
-
----
-
-## [2025-01-12]
-### Added
-- **pyc file**: pyc file [Dadmehr]
-
----
-
-## [2025-01-11]
-### Added
-- **fix front - refactor**: fix front - refactor [Dadmehr]
-
----
-
-## [2025-01-11]
-### Added
-- **flex cloum date & profile image**: flex cloum date & profile image [Dadmehr]
-
----
-
-## [2025-01-10]
-### Added
-- **pre-commit**: pre-commit [Dadmehr]
-
----
-
-## [2025-01-10]
-### Added
-- **clean up image**: clean up image [Dadmehr]
-
----
-
-## [2025-01-10]
-### Added
-- **add fature approved replays and fix like & dislike view**: add fature approved replays and fix like & dislike view [Dadmehr]
-
----
-
-## [2025-01-10]
-### Added
-- **like and dislike qestion**: like and dislike qestion [Dadmehr]
-
----
-
-## [2025-01-10]
-### Added
-- **a**: a [Dadmehr]
-
----
-
-## [2025-01-10]
-### Added
-- **clean**: clean [Dadmehr]
-
----
-
-## [2025-01-10]
-### Added
-- **refactor code**: refactor code [Dadmehr]
-
----
-
-## [2025-01-10]
-### Added
-- **readme**: readme [Dadmehr]
-
----
-
-## [2025-01-10]
-### Added
-- **fix logo**: fix logo [Dadmehr]
-
----
-
-## [2025-01-10]
-### Added
-- **logo in readme.md**: logo in readme.md [Dadmehr]
-
----
-
-## [2025-01-10]
-### Added
-- **Merge pull request #6 from BDadmehr0/work-formmat**: Merge pull request #6 from BDadmehr0/work-formmat [Dadmehr]
-
----
-
-## [2025-01-10]
-### Added
-- **Create .pre-commit-config.yaml**: Create .pre-commit-config.yaml [Dadmehr]
-
----
-
-## [2025-01-10]
-### Added
-- **Create pre-commit.yml**: Create pre-commit.yml [Dadmehr]
-
----
-
-## [2025-01-10]
-### Added
-- **Create security-check.yml**: Create security-check.yml [Dadmehr]
-
----
-
-## [2025-01-10]
-### Added
-- **Update lint.yml**: Update lint.yml [Dadmehr]
-
----
-
-## [2025-01-10]
-### Added
-- **Create lint.yml**: Create lint.yml [Dadmehr]
-
----
-
-## [2025-01-10]
-### Added
-- **Update django.yml**: Update django.yml [Dadmehr]
-
----
-
-## [2025-01-10]
-### Added
-- **user profiles & admin panel access contorls & setup bootstrap & better front**: user profiles & admin panel access contorls & setup bootstrap & better front [Dadmehr]
-
----
-
-## [2025-01-09]
-### Added
-- **ask questions and can reply**: ask questions and can reply [Dadmehr]
-
----
-
-## [2025-01-08]
-### Added
-- **Merge pull request #4 from BDadmehr0/big-update**: Merge pull request #4 from BDadmehr0/big-update [Dadmehr]
-
----
-
-## [2025-01-08]
-### Added
-- **big**: big [Dadmehr]
-
----
-
-## [2025-01-08]
-### Added
-- **clean & user login and singup create and try for create user profile image**: clean & user login and singup create and try for create user profile image [Dadmehr]
-
----
-
-## [2025-01-08]
-### Added
-- **fix html and responsive des**: fix html and responsive des [Dadmehr]
-
----
-
-## [2025-01-08]
-### Added
-- **html better**: html better [Dadmehr]
-
----
-
-## [2025-01-08]
-### Added
-- **Add a Fallback Message for Empty News List**: Add a Fallback Message for Empty News List [Dadmehr]
-
----
-
-## [2025-01-08]
-### Added
-- **Change <ap> to <p>.**: Change <ap> to <p>. [Dadmehr]
-
----
-
-## [2025-01-08]
-### Added
-- **fix django.yaml python version**: fix django.yaml python version [Dadmehr]
-
----
-
-## [2025-01-08]
-### Added
-- **optimze icon**: optimze icon [Dadmehr]
-
----
-
-## [2025-01-08]
-### Added
-- **Update styles.css**: Update styles.css [Dadmehr]
-
----
-
-## [2025-01-08]
-### Added
-- **Create django.yml**: Create django.yml [Dadmehr]
-
----
-
-## [2025-01-07]
-### Added
-- **clean - add icon**: clean - add icon [Dadmehr]
-
----
-
-## [2025-01-07]
-### Added
-- **news better front - content better content - add dividar**: news better front - content better content - add dividar [Dadmehr]
-
----
-
-## [2025-01-07]
-### Added
-- **install jdatetime and add to req.txt**: install jdatetime and add to req.txt [Dadmehr]
-
----
-
-## [2025-01-07]
-### Added
-- **better newss front end**: better newss front end [Dadmehr]
-
----
-
-## [2025-01-07]
-### Added
-- **create news option for admin & rtl pages for persian lang**: create news option for admin & rtl pages for persian lang [Dadmehr]
-
----
-
-## [2025-01-07]
-### Added
-- **fix readme strc**: fix readme strc [Dadmehr]
-
----
-
-## [2025-01-07]
-### Added
-- **better header**: better header [Dadmehr]
-
----
-
-## [2025-01-07]
-### Added
-- **simple header and setting up logout option**: simple header and setting up logout option [Dadmehr]
-
----
-
-## [2025-01-07]
-### Added
-- **init django project - customize home page - and note ...**: init django project - customize home page - and note ... [Dadmehr]
-
----
-
-## [2025-01-07]
-### Added
-- **better doc**: better doc [Dadmehr]
-
----
-
-## [2025-01-07]
-### Added
-- **Add files via upload**: Add files via upload [Dadmehr]
-
----
-
-## [2025-01-07]
-### Added
-- **Initial commit**: Initial commit [Dadmehr]
-
----
-
-## [2025-02-06]
-### Added
-- **templates and django setting optimaize seo**: templates and django setting optimaize seo [Dadmehr Emami]
-
----
-
-## [2025-02-06]
-### Added
-- **Solution: Explicitly Order the QuerySets**: Solution: Explicitly Order the QuerySets [Dadmehr Emami]
-
----
-
-## [2025-02-06]
-### Added
-- **Created robots.txt**: Created robots.txt [Dadmehr Emami]
-
----
-
-## [2025-02-06]
-### Added
-- **added sitemap.xml**: added sitemap.xml [Dadmehr Emami]
-
----
-
-## [2025-02-06]
-### Added
-- **google-site-verification added**: google-site-verification added [Dadmehr Emami]
-
----
-
-## [2025-02-06]
-### Added
-- **remove link js/css**: remove link js/css [Dadmehr Emami]
-
----
-
-## [2025-02-06]
-### Added
-- **edit footer**: edit footer [Dadmehr Emami]
-
----
-
-## [2025-02-05]
-### Added
-- **remove Fa changelog update eng Changelog (all commit)**: remove Fa changelog update eng Changelog (all commit) [Dadmehr Emami]
+9382882 2025-02-23 | remove django & linter workflows (HEAD -> main, origin/main, origin/HEAD) [Dadmehr Emami]
+5f348f2 2025-02-23 | remove blog [Dadmehr Emami]
+ac9f901 2025-02-23 | create thumbnail and configure og:images [Dadmehr Emami]
+6a7d06c 2025-02-14 | Merge pull request #89 from BDadmehr0/solved-issuse-100 [Dadmehr]
+0ee1ce0 2025-02-14 | Update README.md [Dadmehr]
+df1c399 2025-02-13 | Update README.md [Dadmehr]
+408d0cd 2025-02-12 | fix and create blog [Dadmehr Emami]
+7c5bca9 2025-02-12 | fix and create blog [Dadmehr Emami]
+e3e8f37 2025-02-11 | blog better and solved #79 [Dadmehr Emami]
+cf426d6 2025-02-11 | fix blog url [Dadmehr Emami]
+d67cbc1 2025-02-11 | btn priamy to soucsss [Dadmehr Emami]
+266b3f1 2025-02-10 | remove unused css,js [Dadmehr Emami]
+5914840 2025-02-10 | fix ui bugs - add vazir font [Dadmehr Emami]
+89232f3 2025-02-10 | add icons-svg responsive header - better ui [Dadmehr Emami]
+d7b2264 2025-02-10 | Improving pop-up UI/UX #60 [Dadmehr Emami]
+659ad3d 2025-02-10 | Update README.md [Dadmehr]
+349821e 2025-02-10 | Update README.md [Dadmehr]
+bcd2738 2025-02-09 | Merge pull request #74 from novinnovin/fix [Dadmehr]
+d9fb854 2025-02-09 | Update README.md [novinnovin]
+c6ffeb0 2025-02-09 | clean [Dadmehr Emami]
+083983a 2025-02-09 | Delete Yadgah/__pycache__ directory [Dadmehr]
+a853b5a 2025-02-09 | Delete home/migrations directory [Dadmehr]
+7b30d9e 2025-02-09 | Delete home/__pycache__ directory [Dadmehr]
+1d5f4b2 2025-02-09 | Merge pull request #54 from Marih935/solved_issue_49 [Dadmehr]
+d7bf82e 2025-02-09 | Merge branch 'main' into solved_issue_49 [Dadmehr]
+6bb5df6 2025-02-09 | Merge pull request #70 from mdimado/patch-1 [Dadmehr]
+76f0a1b 2025-02-09 | Update README.md [Mohammed Imaduddin]
+68366b5 2025-02-07 | footer text link project github [Dadmehr Emami]
+a2282f3 2025-02-07 | update CHANGELOG.md & upload seo report [Dadmehr Emami]
+2c7c5b3 2025-02-06 | templates and django setting optimaize seo [Dadmehr Emami]
+9afc397 2025-02-06 | Solution: Explicitly Order the QuerySets [Dadmehr Emami]
+024f9b6 2025-02-06 | Created robots.txt [Dadmehr Emami]
+fdbd3ff 2025-02-06 | added sitemap.xml [Dadmehr Emami]
+84eec9b 2025-02-06 | google-site-verification added [Dadmehr Emami]
+ac9db57 2025-02-06 | remove link js/css [Dadmehr Emami]
+c2cd9e6 2025-02-06 | edit footer [Dadmehr Emami]
+530a6b7 2025-02-05 | remove Fa changelog update eng Changelog (all commit) [Dadmehr Emami]
+d9cf74b 2025-02-04 | solved issuse #43 [Dadmehr Emami]
+f47e3b0 2025-02-04 | solved issuse #42 & rewrite trend algorithm [Dadmehr Emami]
+5357cb6 2025-02-04 | solved issues #39 [Dadmehr Emami]
+2771c90 2025-02-04 | solved issuse #59 [Dadmehr Emami]
+97d533c 2025-02-01 | Merge branch 'main' into solved_issue_49 [Dadmehr]
+f6ac827 2025-02-01 | add edit & delete replay by user's [Dadmehr Emami]
+611246e 2025-01-31 | user score bug fix [Dadmehr Emami]
+38bbcc6 2025-01-31 | refactor [Dadmehr Emami]
+dd98a94 2025-01-31 | clean [Dadmehr Emami]
+8a486e0 2025-01-31 | clean project [Dadmehr Emami]
+fdaba9c 2025-01-31 | git ignore .pyc __pycache__ [Dadmehr Emami]
+5aece40 2025-01-31 | ui fix bugs [Dadmehr Emami]
+b54224b 2025-01-30 | add Search Feature [Dadmehr Emami]
+90727ef 2025-01-30 | fix: simplify success message and reload page after adding label [Mariana Cavalcanti Machado Anselmo]
+c490b26 2025-01-29 | fix: update create-label URL pattern to use direct import from views [Mariana Cavalcanti Machado Anselmo]
+87b8680 2025-01-29 | requirements.txt format fix remove # for comment's [Dadmehr Emami]
+397c5c6 2025-01-29 | update changelog [Dadmehr Emami]
+9fd482f 2025-01-29 | remove auto-setup [Dadmehr Emami]
+705f87e 2025-01-28 | feat: add custom label creation feature with color generation and preview [Mariana Cavalcanti Machado Anselmo]
+c8226b3 2025-01-28 | feat: enhance Label model admin with custom color preview and improved configuration [Mariana Cavalcanti Machado Anselmo]
+4cb0f00 2025-01-28 | feat: add is_custom field to Label model for custom label identification [Mariana Cavalcanti Machado Anselmo]
+9e81fb7 2025-01-28 | feat: add create-label URL pattern to home app [Mariana Cavalcanti Machado Anselmo]
+cbc3794 2025-01-28 | feat create_label at views.py [Mariana Cavalcanti Machado Anselmo]
+d60c54a 2025-01-28 | Update .gitignore [Dadmehr]
+1c43907 2025-01-28 | Delete media/avatars/CHANGELOG_ENG.md [Dadmehr]
+bbc331f 2025-01-28 | .gitignore config for ignore media [Dadmehr Emami]
+0dd1a3c 2025-01-28 | fix username, random username, placeholder for signup inputs [Dadmehr Emami]
+8ccf83f 2025-01-27 | clean [Dadmehr Emami]
+65ded49 2025-01-27 | update CHANGELOG [Dadmehr Emami]
+68ccf5c 2025-01-27 | FIX Django CLI [Dadmehr Emami]
+9a37f3f 2025-01-27 | flake8 fix [Dadmehr Emami]
+75649a0 2025-01-27 | pre-commit [Dadmehr Emami]
+d73d165 2025-01-27 | Update admin interface: Improve profile picture display and optimize user profile integration [Dadmehr Emami]
+297f99a 2025-01-27 | Delete subprocess [Dadmehr]
+b26821e 2025-01-27 | Remove os [Dadmehr Emami]
+9185be7 2025-01-27 | get widely used script for development [Dadmehr Emami]
+4c2c6c5 2025-01-27 | configure gitignore for ignore scripts [Dadmehr Emami]
+dbfbc1a 2025-01-27 | Refactor CHANGELOG & Created auto CHANGELOG creator [Dadmehr Emami]
+28415fa 2025-01-27 | Added CHANGELOG.md [Dadmehr Emami]
+0e57ccb 2025-01-26 | setting.py Allowd Host modify [Dadmehr Emami]
+623411a 2025-01-26 | .link_dark change color to #69b987 [Dadmehr Emami]
+ea9208c 2025-01-26 | remove body & container css code for fix header width [Dadmehr Emami]
+ac80d96 2025-01-26 | question detail body padding remove [Dadmehr Emami]
+0a1228a 2025-01-26 | nav link fix [Dadmehr Emami]
+863a977 2025-01-26 | Merge pull request #47 from mdimado/main [Dadmehr]
+0c52a37 2025-01-26 | Improve Question Detail Page UI and mobile responsive [Mohammed Imaduddin]
+99e0405 2025-01-25 | nav menu fix & HTML Formatted [Dadmehr]
+bc9687a 2025-01-24 | restore [Dadmehr Emami]
+e2acce2 2025-01-24 | test chagelog [Dadmehr Emami]
+c33ff31 2025-01-24 | changelog.yml update [Dadmehr Emami]
+73cd262 2025-01-24 | CHANGELOG.md [Dadmehr Emami]
+36cc359 2025-01-24 | test [Dadmehr Emami]
+f3fa2ba 2025-01-24 | Merge pull request #44 from BDadmehr0/patch1 [Dadmehr]
+3cb429e 2025-01-24 | auto changelog [Dadmehr Emami]
+52f2d22 2025-01-24 | Merge pull request #41 from BDadmehr0/patch1 [Dadmehr]
+852c5d4 2025-01-24 | Created Trend Question & explore page [Dadmehr Emami]
+ebb3ee7 2025-01-24 | Merge pull request #40 from BDadmehr0/patch1 [Dadmehr]
+6ad05af 2025-01-24 | Created Ranking System & LeaderBoard [Dadmehr Emami]
+2c8b69a 2025-01-24 | Merge pull request #36 from BDadmehr0/patch1 [Dadmehr]
+93c3c65 2025-01-24 | question view add by sessionid cookies [Dadmehr Emami]
+84e9a57 2025-01-24 | Merge pull request #35 from BDadmehr0/patch1 [Dadmehr]
+5504096 2025-01-24 | users can delete questions [Dadmehr Emami]
+a94efa6 2025-01-23 | Update README.md [Dadmehr]
+56483e2 2025-01-23 | Update README.md [Dadmehr]
+7f7ba1e 2025-01-23 | Temporarily removing the read more button until a way is found [Dadmehr Emami]
+6168f37 2025-01-22 | Django local project setup auto script [Dadmehr Emami]
+3152afc 2025-01-21 | Update base.html [Dadmehr]
+d044b51 2025-01-21 | Merge pull request #31 from BDadmehr0/better-ui-ux [Dadmehr]
+774a4a4 2025-01-21 | Merge pull request #30 from BDadmehr0/main [Dadmehr]
+ff5f437 2025-01-21 | Create CONTRIBUTING.md [Dadmehr]
+29dc16d 2025-01-21 | laebl's fix [Dadmehr Emami]
+6d0f80c 2025-01-21 | fix label rendreing API fix - loading spiner fix [Dadmehr Emami]
+f9f4fa9 2025-01-20 | remove Replay content laebl [Dadmehr Emami]
+0d5140b 2025-01-20 | profile picture in signup form remove [Dadmehr Emami]
+edd51b2 2025-01-20 | ask question content placeholder text: markdown support [Dadmehr Emami]
+c16bc0d 2025-01-20 | Merge pull request #21 from BDadmehr0/test [Dadmehr]
+cfff89a 2025-01-20 | fix test.py [Dadmehr Emami]
+1d2bab1 2025-01-20 | fix Django CLI errors [Dadmehr Emami]
+6122f8b 2025-01-20 | fix Django CLI errors [Dadmehr Emami]
+38fb53f 2025-01-19 | configure test.py for test full & better - clean up [Dadmehr Emami]
+493ef8e 2025-01-19 | Merge pull request #19 from BDadmehr0/better-ui-ux [Dadmehr]
+2f2e0d9 2025-01-19 | remove waste images [Dadmehr Emami]
+cb7aadd 2025-01-19 | commit [Dadmehr Emami]
+f770850 2025-01-18 | Merge pull request #18 from BDadmehr0/better-ui-ux [Dadmehr]
+de11fe0 2025-01-18 | delete note [Dadmehr Emami]
+f21e701 2025-01-18 | clean [Dadmehr Emami]
+06d11d5 2025-01-18 | commit [Dadmehr Emami]
+c141cab 2025-01-18 | configure pre-commit for better hook for front code and use bootstrap defualt footer [Dadmehr Emami]
+16eaba7 2025-01-17 | Merge pull request #12 from BDadmehr0/load-more [Dadmehr]
+0687f96 2025-01-17 | https://anshu-dev.medium.com/how-to-load-more-data-on-a-button-click-in-django-e1bab3a08e2b - add javascript tree to static use npm-module [Dadmehr Emami]
+6af351d 2025-01-16 | clean [Dadmehr Emami]
+abe2aaa 2025-01-16 | Update ask_question.html [Dadmehr]
+d39f94d 2025-01-16 | Update forms.py [Dadmehr]
+de32459 2025-01-16 | Update views.py [Dadmehr]
+156c78a 2025-01-16 | Delete db.sqlite3 [Dadmehr]
+5491880 2025-01-16 | gitignore add and config [Dadmehr Emami]
+afe3938 2025-01-15 | select multi label in ask question [Dadmehr]
+d488413 2025-01-14 | icon fix [Dadmehr]
+f6d211a 2025-01-14 | icon bg remove [Dadmehr]
+c4824dc 2025-01-14 | favicon change [Dadmehr]
+98b4ff7 2025-01-14 | better front & add more labels [Dadmehr]
+451d227 2025-01-12 | label question fature added [Dadmehr]
+823cf99 2025-01-12 | pyc file [Dadmehr]
+503aa17 2025-01-11 | fix front - refactor [Dadmehr]
+31075bf 2025-01-11 | flex cloum date & profile image [Dadmehr]
+a434b60 2025-01-10 | pre-commit [Dadmehr]
+702644c 2025-01-10 | clean up image [Dadmehr]
+19bbecb 2025-01-10 | add fature approved replays and fix like & dislike view [Dadmehr]
+303171f 2025-01-10 | like and dislike qestion [Dadmehr]
+3672140 2025-01-10 | a [Dadmehr]
+cfe81f8 2025-01-10 | clean [Dadmehr]
+70ed695 2025-01-10 | refactor code [Dadmehr]
+b253573 2025-01-10 | readme [Dadmehr]
+fcc4866 2025-01-10 | readme [Dadmehr]
+4855714 2025-01-10 | readme [Dadmehr]
+30b66b1 2025-01-10 | fix logo [Dadmehr]
+c572e94 2025-01-10 | fix logo [Dadmehr]
+b7fbeee 2025-01-10 | logo in readme.md [Dadmehr]
+4959fa3 2025-01-10 | Merge pull request #6 from BDadmehr0/work-formmat [Dadmehr]
+a3ac5fd 2025-01-10 | Create .pre-commit-config.yaml [Dadmehr]
+4483c03 2025-01-10 | Create pre-commit.yml [Dadmehr]
+d5ddfa1 2025-01-10 | Create security-check.yml [Dadmehr]
+df055c2 2025-01-10 | Update lint.yml [Dadmehr]
+be96011 2025-01-10 | Create lint.yml [Dadmehr]
+3db5d9b 2025-01-10 | Update django.yml [Dadmehr]
+55ca80f 2025-01-10 | user profiles & admin panel access contorls & setup bootstrap & better front [Dadmehr]
+4a62f99 2025-01-09 | ask questions and can reply [Dadmehr]
+fba0166 2025-01-09 | refactor code [Dadmehr]
+7a88034 2025-01-08 | Merge pull request #4 from BDadmehr0/big-update [Dadmehr]
+49d4ac4 2025-01-08 | big [Dadmehr]
+92083d5 2025-01-08 | clean & user login and singup create and try for create user profile image [Dadmehr]
+7b36a82 2025-01-08 | fix html and responsive des [Dadmehr]
+3d0ad34 2025-01-08 | html better [Dadmehr]
+b500329 2025-01-08 | Add a Fallback Message for Empty News List [Dadmehr]
+251cabe 2025-01-08 | Change <ap> to <p>. [Dadmehr]
+30048c2 2025-01-08 | fix django.yaml python version [Dadmehr]
+4e1ec7b 2025-01-08 | fix django.yaml python version [Dadmehr]
+d8f3d6a 2025-01-08 | optimze icon [Dadmehr]
+f57d218 2025-01-08 | Update styles.css [Dadmehr]
+a00560e 2025-01-08 | Create django.yml [Dadmehr]
+13d50e4 2025-01-08 | Update README.md [Dadmehr]
+7d1cc3d 2025-01-07 | clean - add icon [Dadmehr]
+3d0a9da 2025-01-07 | news better front - content better content - add dividar [Dadmehr]
+74e27de 2025-01-07 | install jdatetime and add to req.txt [Dadmehr]
+06df817 2025-01-07 | better newss front end [Dadmehr]
+d9887c3 2025-01-07 | create news option for admin & rtl pages for persian lang [Dadmehr]
+f95bc0d 2025-01-07 | Update README.md [Dadmehr]
+9cb9223 2025-01-07 | fix readme strc [Dadmehr]
+379a6c9 2025-01-07 | better header [Dadmehr]
+90c805c 2025-01-07 | simple header and setting up logout option [Dadmehr]
+9068785 2025-01-07 | init django project - customize home page - and note ... [Dadmehr]
+d66a2a8 2025-01-07 | better doc [Dadmehr]
+a958299 2025-01-07 | Update README.md [Dadmehr]
+b5a24b8 2025-01-07 | Update README.md [Dadmehr]
+429ecb3 2025-01-07 | Update README.md [Dadmehr]
+ce769f0 2025-01-07 | Add files via upload [Dadmehr]
+f4b594c 2025-01-07 | Initial commit [Dadmehr]
