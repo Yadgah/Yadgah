@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     "home",
     "bootstrap5",
     "django.contrib.sitemaps",
-    "blog",
 ]
 
 MIDDLEWARE = [
