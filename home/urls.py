@@ -2,12 +2,13 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
 from django.urls import path
+from django.conf.urls import handler404, handler500
+
 
 from .sitemaps import NewsSitemap, QuestionSitemap, StaticViewSitemap
 from .views import (
     approve_reply,
     ask_question,
-    blog,
     create_label,
     delete_profile,
     delete_question,
@@ -75,7 +76,6 @@ general_urlpatterns = [
     path("create-label/", create_label, name="create_label"),
     path("search/", search_view, name="search"),
     path("profile/<str:username>/", user_profile, name="user_profile"),
-    path("blog/", blog, name="blog"),
     path(
         "sitemap.xml",
         sitemap,
@@ -84,6 +84,9 @@ general_urlpatterns = [
     ),
     path("robots.txt", robots_txt, name="robots_txt"),
 ]
+
+handler404 = 'home.views.custom_page_not_found'
+handler500 = 'home.views.custom_error'
 
 # Combine all URL patterns
 urlpatterns = (

@@ -468,14 +468,17 @@ def robots_txt(request):
 Disallow: /admin/
 Disallow: /login/
 Disallow: /signup/
-Disallow: /profile/
+# Disallow: /profile/
 Disallow: /delete_profile/
 Allow: /
 Sitemap: https://{domain}/sitemap.xml
-# dadmehr contorl google robots :>
+# dadmehr control google robots :>
 """
     return HttpResponse(content, content_type="text/plain")
 
 
-def blog(request):
-    return render(request, "blog/blog_list.html")
+def custom_page_not_found(request, exception):
+    return render(request, '404.html', status=404)
+
+def custom_error(request):
+    return render(request, '500.html', status=500)
