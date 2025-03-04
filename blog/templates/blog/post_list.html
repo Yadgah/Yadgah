@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Blog</title>
+</head>
+<body>
+    <h1>Blog Posts</h1>
+    {% for post in posts %}
+        <h2><a href="{% url 'post_detail' slug=post.slug %}">{{ post.title }}</a></h2>
+        <p>by {{ post.author }} on {{ post.created_at }}</p>
+        <p>{{ post.body|truncatewords:30 }}</p>
+    {% endfor %}
+</body>
+</html>

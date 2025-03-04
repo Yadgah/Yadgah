@@ -20,6 +20,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
+from blog.views import post_detail, post_list
 from home import views
 
 # # Adds site header, site title, index title to the admin side.
@@ -30,6 +31,7 @@ from home import views
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("home.urls")),
+    path("blog/", include("blog.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 handler404 = "home.views.custom_page_not_found"

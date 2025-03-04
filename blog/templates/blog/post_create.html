@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>پست جدید</title>
+</head>
+<body>
+    <h1>ایجاد پست جدید</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">ارسال</button>
+    </form>
+</body>
+</html>
