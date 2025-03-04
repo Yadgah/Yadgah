@@ -17,7 +17,6 @@ Including another URLconf
 
 from django.conf import settings
 from django.conf.urls.static import static
-from django.conf.urls import handler404, handler500
 from django.contrib import admin
 from django.urls import include, path
 
@@ -33,8 +32,8 @@ urlpatterns = [
     path("", include("home.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-handler404 = 'home.views.custom_page_not_found'
-handler500 = 'home.views.custom_error'
+handler404 = "home.views.custom_page_not_found"
+handler500 = "home.views.custom_error"
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

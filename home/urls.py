@@ -2,8 +2,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
 from django.urls import path
-from django.conf.urls import handler404, handler500
-
 
 from .sitemaps import NewsSitemap, QuestionSitemap, StaticViewSitemap
 from .views import (
@@ -85,8 +83,8 @@ general_urlpatterns = [
     path("robots.txt", robots_txt, name="robots_txt"),
 ]
 
-handler404 = 'home.views.custom_page_not_found'
-handler500 = 'home.views.custom_error'
+handler404 = "home.views.custom_page_not_found"
+handler500 = "home.views.custom_error"
 
 # Combine all URL patterns
 urlpatterns = (
