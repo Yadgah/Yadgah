@@ -1,120 +1,302 @@
-{% extends 'base.html' %} {% load static custom_filters %} {% block content %}
+{% extends 'base.html' %}
+{% load static custom_filters %}
+
+{% block content %}
 <style>
-  body {
-    background-color: #121212;
-    color: #fff;
-  }
   .profile-header {
-    display: flex;
-    align-items: center;
-    padding: 20px;
-    background-color: #69b987;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, #1a3b2d 0%, #69b987 100%);
+    border-radius: 16px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
   }
-  .profile-header h2 {
-    font-size: 24px;
-    margin: 0;
+
+  .profile-header::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(105,185,135,0.15) 0%, transparent 70%);
+    pointer-events: none;
   }
-  .profile-header p {
-    margin: 5px 0 0;
+
+  .avatar-wrapper {
+    position: relative;
+    margin-right: 2rem;
+    margin-left: 2rem;
+
+    transition: transform 0.3s ease;
   }
-  .info-section {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    margin-bottom: 20px;
+
+/*  .avatar-wrapper:hover {
+    transform: scale(1.05);
+  }*/
+
+  .avatar {
+    width: 120px;
+    height: 120px;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   }
-  .info-box {
-    flex: 1;
-    min-width: 300px;
-    padding: 15px;
-    background-color: #1c1c1c;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+
+  .profile-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
   }
-  .info-box h3 {
-    margin-top: 0;
+
+  .stat-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+    backdrop-filter: blur(10px);
+  }
+
+  .stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
     color: #69b987;
   }
-  .info-box ul {
-    list-style: none;
-    padding: 0;
+
+  .nav-tabs {
+    border-bottom: 2px solid rgba(105, 185, 135, 0.2);
   }
-  .info-box li {
-    margin-bottom: 10px;
+
+  .nav-link.active {
+    color: #69b987 !important;
+    background: none !important;
   }
-  .info-box a {
+
+  .nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: #69b987;
+    border-radius: 2px;
+  }
+
+  .post-card {
+    background: rgba(28, 28, 28, 0.7);
+    border: 1px solid rgba(105, 185, 135, 0.1);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    transition: transform 0.2s ease;
+  }
+
+  .post-card:hover {
+    transform: translateY(-3px);
+    background: rgba(28, 28, 28, 0.9);
+  }
+
+  .badge-custom {
+    background: rgba(105, 185, 135, 0.15);
     color: #69b987;
-    text-decoration: none;
-  }
-  .info-box a:hover {
-    text-decoration: underline;
-  }
-  .profile-header img {
-    border-radius: 50%;
-    width: 100px;
-    height: 100px;
-    margin-right: 20px;
-    object-fit: cover;
+    font-weight: 500;
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
   }
 </style>
 
-<div class="container">
-  <!-- Profile Header -->
+<div class="container-lg py-4">
+  <!-- هدر پروفایل -->
   <div class="profile-header">
-    {% if profile_user.userprofile.avatar %}
-    <!-- Display the profile picture of the visited user -->
-    <img
-      src="{{ profile_user.userprofile.avatar.url }}"
-      alt="{{ profile_user.username }}'s avatar"
-      width="32"
-      height="32"
-      class="rounded-circle"
-    />
-    {% else %}
-    <!-- Display default avatar if no profile picture is set -->
-    <img
-      src="{% static 'default-avatar.png' %}"
-      alt="default avatar"
-      width="32"
-      height="32"
-      class="rounded-circle"
-    />
-    {% endif %}
-    <div>
-      <h2>{{ profile_user.username }}</h2>
-      <p>ایمیل: {{ profile_user.email }}</p>
-      <p>تاریخ عضویت: {{ profile_user.date_joined|date:"d F Y" }}</p>
+    <div class="d-flex align-items-center position-relative z-2">
+      <div class="avatar-wrapper">
+        {% if profile_user.userprofile.avatar %}
+          <img class="avatar" src="{{ profile_user.userprofile.avatar.url }}" alt="آواتار">
+        {% else %}
+          <img class="avatar" src="{% static 'default-avatar.png' %}" alt="آواتار پیش‌فرض">
+        {% endif %}
+      </div>
+      
+      <div class="text-white">
+        <h1 class="h2 mb-2 fw-bold">{{ profile_user.username }}</h1>
+        <div class="d-flex gap-3">
+          <div>
+            <i class="fas fa-envelope me-2"></i>
+            {{ profile_user.email }}
+          </div>
+          <div>
+            <i class="fas fa-calendar-alt me-2"></i>
+            عضو شده در {{ profile_user.date_joined|date:"Y/m/d" }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- آمارکاردها -->
+    <div class="profile-stats position-relative z-2">
+      <div class="stat-card">
+        <div class="stat-value">{{ questions.count }}</div>
+        <div class="">سوالات</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">{{ published_posts.count }}</div>
+        <div class="">پست‌ها</div>
+      </div>
+      <div class="stat-card">
+        <!-- <div class="stat-value">{{ profile_user. }}</div> -->
+        <div class="">امتیاز</div>
+      </div>
     </div>
   </div>
 
-  <!-- Information Sections -->
-  <div class="info-section">
-    <!-- User Questions -->
-    <div class="info-box">
-      <h3>سوالات پرسیده شده</h3>
+  <!-- تب‌ها -->
+  <ul class="nav nav-tabs mb-4">
+    <li class="nav-item">
+      <a class="nav-link active" data-bs-toggle="tab" href="#questions">
+        <i class="fas fa-question-circle me-2"></i>
+        سوالات
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="tab" href="#posts">
+        <i class="fas fa-pen-alt me-2"></i>
+        نوشته‌ها
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="tab" href="#activity">
+        <i class="fas fa-chart-line me-2"></i>
+        فعالیت‌ها
+      </a>
+    </li>
+  </ul>
+
+  <!-- محتوای تب‌ها -->
+  <div class="tab-content">
+    <!-- تب سوالات -->
+    <div class="tab-pane fade show active" id="questions">
       {% if questions %}
-      <ul>
         {% for question in questions %}
-        <li>
-          <a href="{% url 'question_detail' question.id %}"
-            >{{ question.title }}</a
-          >
-          <p>تاریخ: {{ question.created_at|jalali_date }}</p>
-        </li>
+          <div class="post-card">
+            <div class="d-flex justify-content-between align-items-center">
+              <a href="{% url 'question_detail' question.id %}" class="h5 mb-2 text-decoration-none text-white">
+                {{ question.title }}
+              </a>
+              <!-- <span class="badge-custom">
+                {{ question.votes.count }} رأی
+              </span> -->
+            </div>
+            <div class="small">
+              <span class="me-3">
+                <i class="fas fa-clock me-1"></i>
+                {{ question.created_at|jalali_date }}
+              </span>
+             <!--  <span>
+                <i class="fas fa-comment me-1"></i>
+                {{ question.answers.count }} پاسخ
+              </span> -->
+            </div>
+          </div>
         {% endfor %}
-      </ul>
       {% else %}
-      <p>این کاربر هنوز سوالی نپرسیده است.</p>
+        <div class="alert alert-dark text-center py-4">
+          <i class="fas fa-question-circle fa-2x mb-3"></i>
+          <p class="mb-0">هنوز سوالی ثبت نشده است</p>
+        </div>
       {% endif %}
     </div>
 
-    <!-- Placeholder for Other Info -->
-    <div class="info-box">
-      <h3>اطلاعات اضافی</h3>
-      <p>در این بخش می‌توانید اطلاعات دیگری نمایش دهید.</p>
+    <!-- تب نوشته‌ها -->
+    <div class="tab-pane fade" id="posts">
+      <div class="row g-4">
+        <!-- پست‌های منتشر شده -->
+        <div class="col-md-6">
+          <h4 class="text-white mb-3">
+            <i class="fas fa-check-circle text-success me-2"></i>
+            منتشر شده
+          </h4>
+          {% if published_posts %}
+            {% for post in published_posts %}
+              <div class="post-card">
+                <div class="d-flex align-items-center justify-content-between">
+                  <a href="{% url 'post_detail' post.slug %}" class="text-decoration-none text-white">
+                    {{ post.title }}
+                  </a>
+                  <!-- <span class="badge-custom">
+                    <i class="fas fa-eye me-1"></i>
+                    {{ post.views }}
+                  </span> -->
+                </div>
+                <div class="small mt-2">
+                  {{ post.created_at|jalali_date }}
+                </div>
+              </div>
+            {% endfor %}
+          {% else %}
+            <div class="alert alert-dark py-3">
+              موردی یافت نشد
+            </div>
+          {% endif %}
+        </div>
+
+        <!-- پیش‌نویس‌ها -->
+        <div class="col-md-6">
+          <h4 class="text-white mb-3">
+            <i class="fas fa-pen text-warning me-2"></i>
+            پیش‌نویس‌ها
+          </h4>
+          {% if unpublished_posts %}
+            {% for post in unpublished_posts %}
+              <div class="post-card">
+                <div class="d-flex align-items-center justify-content-between">
+                  <span>{{ post.title }}</span>
+                  <div class="d-flex gap-2">
+                    <a href="#" class="btn btn-sm btn-outline-warning">
+                      ویرایش
+                    </a>
+                  </div>
+                </div>
+                <div class="small mt-2">
+                  آخرین تغییر: {{ post.updated_at|jalali_date }}
+                </div>
+              </div>
+            {% endfor %}
+          {% else %}
+            <div class="alert alert-dark py-3">
+              پیش‌نویسی وجود ندارد
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- تب فعالیت‌ها -->
+    <div class="tab-pane fade" id="activity">
+      <div class="post-card">
+        <h5 class="text-white mb-3">آمار فعالیت (test)</h5>
+        <div class="row text-center">
+          <div class="col-md-4 mb-3">
+            <div class="stat-card">
+              <div class="stat-value">۱۵۶</div>
+              <div>روز فعال</div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <div class="stat-card">
+              <div class="stat-value">۹۸%</div>
+              <div>مشارکت</div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <div class="stat-card">
+              <div class="stat-value">۳۲</div>
+              <div>نشان‌ها</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

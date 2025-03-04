@@ -34,7 +34,7 @@ from .forms import (
     UserProfileForm,
 )
 from .models import Label, News, Question, QuestionReaction, Reply, UserProfile
-
+from blog.models import Post  # برای دسترسی به پست‌ها
 
 # Decorator to restrict access to staff members only
 def staff_member_required(view_func):
@@ -341,12 +341,24 @@ def delete_question(request, question_id):
 
 # View for user profiles displaying their questions
 def user_profile(request, username):
+    # 1. واکشی کاربر با توجه به username
     user = get_object_or_404(User, username=username)
-    questions = Question.objects.filter(user=user)  # Fetch questions asked by the user
-    return render(
-        request, "user_profile.html", {"profile_user": user, "questions": questions}
-    )
 
+    # 2. واکشی سؤالات پرسیده‌شده توسط این کاربر
+    questions = Question.objects.filter(user=user)
+
+    # 3. واکشی پست‌های منتشرشده و منتشرنشده کاربر
+    published_posts = Post.objects.filter(author=user, published=True)
+    unpublished_posts = Post.objects.filter(author=user, published=False)
+
+    # 4. رندر تمپلیت به همراه کانتکست مورد نیاز
+    context = {
+        "profile_user": user,
+        "questions": questions,
+        "published_posts": published_posts,
+        "unpublished_posts": unpublished_posts,
+    }
+    return render(request, "user_profile.html", context)
 
 # View to delete user profile
 @login_required
