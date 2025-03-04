@@ -96,7 +96,7 @@ def signup_view(request):
     if request.method == "POST":
         form = SignUpForm(request.POST, request.FILES)
         password = request.POST.get("password")
-        confirm_password = request.POST.get("confirm_password")
+        request.POST.get("confirm_password")
 
         # Validate password and confirm password
         # if password != confirm_password:
@@ -179,12 +179,6 @@ def profile_view(request):
     return render(
         request, "profile.html", {"user_form": user_form, "profile_form": profile_form}
     )
-
-
-# View for searching (example, logic needs implementation)
-def search_view(request):
-    query = request.GET.get("q", "")
-    return render(request, "search_results.html", {"query": query})
 
 
 # View to list news

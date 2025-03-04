@@ -2,6 +2,7 @@ import subprocess
 import os
 from datetime import datetime
 
+
 def get_last_commit():
     # Get the information of the last commit
     result = subprocess.run(
@@ -14,6 +15,7 @@ def get_last_commit():
         return None
     return result.stdout.strip().split("\n")
 
+
 def update_changelog(commit_info, lang):
     if not commit_info or len(commit_info) < 4:
         print("Invalid commit information.")
@@ -21,7 +23,7 @@ def update_changelog(commit_info, lang):
 
     commit_hash, author, date, message = commit_info
     today = datetime.now().strftime("%Y-%m-%d")
-    
+
     # Choose the filename based on the language
     changelog_file = f"CHANGELOG_{lang.upper()}.md"
 
@@ -30,13 +32,11 @@ def update_changelog(commit_info, lang):
         changelog_title = "تغییرات پروژه"
         intro = "تمام تغییرات مهم این پروژه در اینجا مستند می‌شود."
         added_title = "اضافه شد"
-        fixed_title = "رفع شد"
     else:
         changelog_title = "Changelog"
         intro = "All significant changes to this project will be documented here."
         added_title = "Added"
-        fixed_title = "Fixed"
-    
+
     # Template for the new entry
     new_entry = f"- **{message}**: {message} [{author}]\n"
 
@@ -68,10 +68,10 @@ def update_changelog(commit_info, lang):
 
     print(f"{changelog_file} has been updated.")
 
+
 if __name__ == "__main__":
     commit_info = get_last_commit()
-    
+
     # Update both Persian and English files
     update_changelog(commit_info, 'fa')
     update_changelog(commit_info, 'eng')
-
