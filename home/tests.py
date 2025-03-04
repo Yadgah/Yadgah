@@ -161,7 +161,7 @@ class ReplyEditDeleteTest(TestCase):
         )  # Admin should also be able to delete
 
         # Test forbidden for non-owner non-admin
-        other_user = User.objects.create_user(username="user2", password="password")
+        User.objects.create_user(username="user2", password="password")
         self.client.login(username="user2", password="password")
         response = self.client.post(f"/reply/{self.reply.id}/delete/")
         self.assertEqual(response.status_code, 403)  # Forbidden for non-owner non-admin
