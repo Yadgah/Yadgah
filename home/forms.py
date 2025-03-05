@@ -154,7 +154,7 @@ class ReplyForm(forms.ModelForm):
         fields = ["content"]
         widgets = {
             "content": forms.Textarea(
-                attrs={"placeholder": "Your reply (Markdown supported)", "rows": 5}
+                attrs={"placeholder": "Your reply (Markdown supported)", "size": 2}
             ),
         }
         labels = {"content": ""}

@@ -1,4 +1,4 @@
-{% extends 'base.html' %} {% load custom_filters %} {% block content %}
+{% extends 'base.html' %} {% load custom_filters %} {% block content %} {% load static %}
 <style>
     :root {
         --bg-dark: #121212;
@@ -8,6 +8,16 @@
         --accent-red: #ff5252;
         --text-muted: #bbb;
     }
+
+      input,
+      textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #555;
+        border-radius: 4px;
+        background-color: #2b2b2b;
+        color: #fff;
+      }
 
     .question-card {
         background-color: var(--bg-card);
@@ -198,6 +208,9 @@
         color: var(--text-primary);
         text-decoration: none;
     }
+
+
+
 </style>
 
 <div class="container">
