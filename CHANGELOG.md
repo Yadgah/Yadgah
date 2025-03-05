@@ -1,194 +1,1401 @@
-9382882 2025-02-23 | remove django & linter workflows (HEAD -> main, origin/main, origin/HEAD) [Dadmehr Emami]
-5f348f2 2025-02-23 | remove blog [Dadmehr Emami]
-ac9f901 2025-02-23 | create thumbnail and configure og:images [Dadmehr Emami]
-6a7d06c 2025-02-14 | Merge pull request #89 from BDadmehr0/solved-issuse-100 [Dadmehr]
-0ee1ce0 2025-02-14 | Update README.md [Dadmehr]
-df1c399 2025-02-13 | Update README.md [Dadmehr]
-408d0cd 2025-02-12 | fix and create blog [Dadmehr Emami]
-7c5bca9 2025-02-12 | fix and create blog [Dadmehr Emami]
-e3e8f37 2025-02-11 | blog better and solved #79 [Dadmehr Emami]
-cf426d6 2025-02-11 | fix blog url [Dadmehr Emami]
-d67cbc1 2025-02-11 | btn priamy to soucsss [Dadmehr Emami]
-266b3f1 2025-02-10 | remove unused css,js [Dadmehr Emami]
-5914840 2025-02-10 | fix ui bugs - add vazir font [Dadmehr Emami]
-89232f3 2025-02-10 | add icons-svg responsive header - better ui [Dadmehr Emami]
-d7b2264 2025-02-10 | Improving pop-up UI/UX #60 [Dadmehr Emami]
-659ad3d 2025-02-10 | Update README.md [Dadmehr]
-349821e 2025-02-10 | Update README.md [Dadmehr]
-bcd2738 2025-02-09 | Merge pull request #74 from novinnovin/fix [Dadmehr]
-d9fb854 2025-02-09 | Update README.md [novinnovin]
-c6ffeb0 2025-02-09 | clean [Dadmehr Emami]
-083983a 2025-02-09 | Delete Yadgah/__pycache__ directory [Dadmehr]
-a853b5a 2025-02-09 | Delete home/migrations directory [Dadmehr]
-7b30d9e 2025-02-09 | Delete home/__pycache__ directory [Dadmehr]
-1d5f4b2 2025-02-09 | Merge pull request #54 from Marih935/solved_issue_49 [Dadmehr]
-d7bf82e 2025-02-09 | Merge branch 'main' into solved_issue_49 [Dadmehr]
-6bb5df6 2025-02-09 | Merge pull request #70 from mdimado/patch-1 [Dadmehr]
-76f0a1b 2025-02-09 | Update README.md [Mohammed Imaduddin]
-68366b5 2025-02-07 | footer text link project github [Dadmehr Emami]
-a2282f3 2025-02-07 | update CHANGELOG.md & upload seo report [Dadmehr Emami]
-2c7c5b3 2025-02-06 | templates and django setting optimaize seo [Dadmehr Emami]
-9afc397 2025-02-06 | Solution: Explicitly Order the QuerySets [Dadmehr Emami]
-024f9b6 2025-02-06 | Created robots.txt [Dadmehr Emami]
-fdbd3ff 2025-02-06 | added sitemap.xml [Dadmehr Emami]
-84eec9b 2025-02-06 | google-site-verification added [Dadmehr Emami]
-ac9db57 2025-02-06 | remove link js/css [Dadmehr Emami]
-c2cd9e6 2025-02-06 | edit footer [Dadmehr Emami]
-530a6b7 2025-02-05 | remove Fa changelog update eng Changelog (all commit) [Dadmehr Emami]
-d9cf74b 2025-02-04 | solved issuse #43 [Dadmehr Emami]
-f47e3b0 2025-02-04 | solved issuse #42 & rewrite trend algorithm [Dadmehr Emami]
-5357cb6 2025-02-04 | solved issues #39 [Dadmehr Emami]
-2771c90 2025-02-04 | solved issuse #59 [Dadmehr Emami]
-97d533c 2025-02-01 | Merge branch 'main' into solved_issue_49 [Dadmehr]
-f6ac827 2025-02-01 | add edit & delete replay by user's [Dadmehr Emami]
-611246e 2025-01-31 | user score bug fix [Dadmehr Emami]
-38bbcc6 2025-01-31 | refactor [Dadmehr Emami]
-dd98a94 2025-01-31 | clean [Dadmehr Emami]
-8a486e0 2025-01-31 | clean project [Dadmehr Emami]
-fdaba9c 2025-01-31 | git ignore .pyc __pycache__ [Dadmehr Emami]
-5aece40 2025-01-31 | ui fix bugs [Dadmehr Emami]
-b54224b 2025-01-30 | add Search Feature [Dadmehr Emami]
-90727ef 2025-01-30 | fix: simplify success message and reload page after adding label [Mariana Cavalcanti Machado Anselmo]
-c490b26 2025-01-29 | fix: update create-label URL pattern to use direct import from views [Mariana Cavalcanti Machado Anselmo]
-87b8680 2025-01-29 | requirements.txt format fix remove # for comment's [Dadmehr Emami]
-397c5c6 2025-01-29 | update changelog [Dadmehr Emami]
-9fd482f 2025-01-29 | remove auto-setup [Dadmehr Emami]
-705f87e 2025-01-28 | feat: add custom label creation feature with color generation and preview [Mariana Cavalcanti Machado Anselmo]
-c8226b3 2025-01-28 | feat: enhance Label model admin with custom color preview and improved configuration [Mariana Cavalcanti Machado Anselmo]
-4cb0f00 2025-01-28 | feat: add is_custom field to Label model for custom label identification [Mariana Cavalcanti Machado Anselmo]
-9e81fb7 2025-01-28 | feat: add create-label URL pattern to home app [Mariana Cavalcanti Machado Anselmo]
-cbc3794 2025-01-28 | feat create_label at views.py [Mariana Cavalcanti Machado Anselmo]
-d60c54a 2025-01-28 | Update .gitignore [Dadmehr]
-1c43907 2025-01-28 | Delete media/avatars/CHANGELOG_ENG.md [Dadmehr]
-bbc331f 2025-01-28 | .gitignore config for ignore media [Dadmehr Emami]
-0dd1a3c 2025-01-28 | fix username, random username, placeholder for signup inputs [Dadmehr Emami]
-8ccf83f 2025-01-27 | clean [Dadmehr Emami]
-65ded49 2025-01-27 | update CHANGELOG [Dadmehr Emami]
-68ccf5c 2025-01-27 | FIX Django CLI [Dadmehr Emami]
-9a37f3f 2025-01-27 | flake8 fix [Dadmehr Emami]
-75649a0 2025-01-27 | pre-commit [Dadmehr Emami]
-d73d165 2025-01-27 | Update admin interface: Improve profile picture display and optimize user profile integration [Dadmehr Emami]
-297f99a 2025-01-27 | Delete subprocess [Dadmehr]
-b26821e 2025-01-27 | Remove os [Dadmehr Emami]
-9185be7 2025-01-27 | get widely used script for development [Dadmehr Emami]
-4c2c6c5 2025-01-27 | configure gitignore for ignore scripts [Dadmehr Emami]
-dbfbc1a 2025-01-27 | Refactor CHANGELOG & Created auto CHANGELOG creator [Dadmehr Emami]
-28415fa 2025-01-27 | Added CHANGELOG.md [Dadmehr Emami]
-0e57ccb 2025-01-26 | setting.py Allowd Host modify [Dadmehr Emami]
-623411a 2025-01-26 | .link_dark change color to #69b987 [Dadmehr Emami]
-ea9208c 2025-01-26 | remove body & container css code for fix header width [Dadmehr Emami]
-ac80d96 2025-01-26 | question detail body padding remove [Dadmehr Emami]
-0a1228a 2025-01-26 | nav link fix [Dadmehr Emami]
-863a977 2025-01-26 | Merge pull request #47 from mdimado/main [Dadmehr]
-0c52a37 2025-01-26 | Improve Question Detail Page UI and mobile responsive [Mohammed Imaduddin]
-99e0405 2025-01-25 | nav menu fix & HTML Formatted [Dadmehr]
-bc9687a 2025-01-24 | restore [Dadmehr Emami]
-e2acce2 2025-01-24 | test chagelog [Dadmehr Emami]
-c33ff31 2025-01-24 | changelog.yml update [Dadmehr Emami]
-73cd262 2025-01-24 | CHANGELOG.md [Dadmehr Emami]
-36cc359 2025-01-24 | test [Dadmehr Emami]
-f3fa2ba 2025-01-24 | Merge pull request #44 from BDadmehr0/patch1 [Dadmehr]
-3cb429e 2025-01-24 | auto changelog [Dadmehr Emami]
-52f2d22 2025-01-24 | Merge pull request #41 from BDadmehr0/patch1 [Dadmehr]
-852c5d4 2025-01-24 | Created Trend Question & explore page [Dadmehr Emami]
-ebb3ee7 2025-01-24 | Merge pull request #40 from BDadmehr0/patch1 [Dadmehr]
-6ad05af 2025-01-24 | Created Ranking System & LeaderBoard [Dadmehr Emami]
-2c8b69a 2025-01-24 | Merge pull request #36 from BDadmehr0/patch1 [Dadmehr]
-93c3c65 2025-01-24 | question view add by sessionid cookies [Dadmehr Emami]
-84e9a57 2025-01-24 | Merge pull request #35 from BDadmehr0/patch1 [Dadmehr]
-5504096 2025-01-24 | users can delete questions [Dadmehr Emami]
-a94efa6 2025-01-23 | Update README.md [Dadmehr]
-56483e2 2025-01-23 | Update README.md [Dadmehr]
-7f7ba1e 2025-01-23 | Temporarily removing the read more button until a way is found [Dadmehr Emami]
-6168f37 2025-01-22 | Django local project setup auto script [Dadmehr Emami]
-3152afc 2025-01-21 | Update base.html [Dadmehr]
-d044b51 2025-01-21 | Merge pull request #31 from BDadmehr0/better-ui-ux [Dadmehr]
-774a4a4 2025-01-21 | Merge pull request #30 from BDadmehr0/main [Dadmehr]
-ff5f437 2025-01-21 | Create CONTRIBUTING.md [Dadmehr]
-29dc16d 2025-01-21 | laebl's fix [Dadmehr Emami]
-6d0f80c 2025-01-21 | fix label rendreing API fix - loading spiner fix [Dadmehr Emami]
-f9f4fa9 2025-01-20 | remove Replay content laebl [Dadmehr Emami]
-0d5140b 2025-01-20 | profile picture in signup form remove [Dadmehr Emami]
-edd51b2 2025-01-20 | ask question content placeholder text: markdown support [Dadmehr Emami]
-c16bc0d 2025-01-20 | Merge pull request #21 from BDadmehr0/test [Dadmehr]
-cfff89a 2025-01-20 | fix test.py [Dadmehr Emami]
-1d2bab1 2025-01-20 | fix Django CLI errors [Dadmehr Emami]
-6122f8b 2025-01-20 | fix Django CLI errors [Dadmehr Emami]
-38fb53f 2025-01-19 | configure test.py for test full & better - clean up [Dadmehr Emami]
-493ef8e 2025-01-19 | Merge pull request #19 from BDadmehr0/better-ui-ux [Dadmehr]
-2f2e0d9 2025-01-19 | remove waste images [Dadmehr Emami]
-cb7aadd 2025-01-19 | commit [Dadmehr Emami]
-f770850 2025-01-18 | Merge pull request #18 from BDadmehr0/better-ui-ux [Dadmehr]
-de11fe0 2025-01-18 | delete note [Dadmehr Emami]
-f21e701 2025-01-18 | clean [Dadmehr Emami]
-06d11d5 2025-01-18 | commit [Dadmehr Emami]
-c141cab 2025-01-18 | configure pre-commit for better hook for front code and use bootstrap defualt footer [Dadmehr Emami]
-16eaba7 2025-01-17 | Merge pull request #12 from BDadmehr0/load-more [Dadmehr]
-0687f96 2025-01-17 | https://anshu-dev.medium.com/how-to-load-more-data-on-a-button-click-in-django-e1bab3a08e2b - add javascript tree to static use npm-module [Dadmehr Emami]
-6af351d 2025-01-16 | clean [Dadmehr Emami]
-abe2aaa 2025-01-16 | Update ask_question.html [Dadmehr]
-d39f94d 2025-01-16 | Update forms.py [Dadmehr]
-de32459 2025-01-16 | Update views.py [Dadmehr]
-156c78a 2025-01-16 | Delete db.sqlite3 [Dadmehr]
-5491880 2025-01-16 | gitignore add and config [Dadmehr Emami]
-afe3938 2025-01-15 | select multi label in ask question [Dadmehr]
-d488413 2025-01-14 | icon fix [Dadmehr]
-f6d211a 2025-01-14 | icon bg remove [Dadmehr]
-c4824dc 2025-01-14 | favicon change [Dadmehr]
-98b4ff7 2025-01-14 | better front & add more labels [Dadmehr]
-451d227 2025-01-12 | label question fature added [Dadmehr]
-823cf99 2025-01-12 | pyc file [Dadmehr]
-503aa17 2025-01-11 | fix front - refactor [Dadmehr]
-31075bf 2025-01-11 | flex cloum date & profile image [Dadmehr]
-a434b60 2025-01-10 | pre-commit [Dadmehr]
-702644c 2025-01-10 | clean up image [Dadmehr]
-19bbecb 2025-01-10 | add fature approved replays and fix like & dislike view [Dadmehr]
-303171f 2025-01-10 | like and dislike qestion [Dadmehr]
-3672140 2025-01-10 | a [Dadmehr]
-cfe81f8 2025-01-10 | clean [Dadmehr]
-70ed695 2025-01-10 | refactor code [Dadmehr]
-b253573 2025-01-10 | readme [Dadmehr]
-fcc4866 2025-01-10 | readme [Dadmehr]
-4855714 2025-01-10 | readme [Dadmehr]
-30b66b1 2025-01-10 | fix logo [Dadmehr]
-c572e94 2025-01-10 | fix logo [Dadmehr]
-b7fbeee 2025-01-10 | logo in readme.md [Dadmehr]
-4959fa3 2025-01-10 | Merge pull request #6 from BDadmehr0/work-formmat [Dadmehr]
-a3ac5fd 2025-01-10 | Create .pre-commit-config.yaml [Dadmehr]
-4483c03 2025-01-10 | Create pre-commit.yml [Dadmehr]
-d5ddfa1 2025-01-10 | Create security-check.yml [Dadmehr]
-df055c2 2025-01-10 | Update lint.yml [Dadmehr]
-be96011 2025-01-10 | Create lint.yml [Dadmehr]
-3db5d9b 2025-01-10 | Update django.yml [Dadmehr]
-55ca80f 2025-01-10 | user profiles & admin panel access contorls & setup bootstrap & better front [Dadmehr]
-4a62f99 2025-01-09 | ask questions and can reply [Dadmehr]
-fba0166 2025-01-09 | refactor code [Dadmehr]
-7a88034 2025-01-08 | Merge pull request #4 from BDadmehr0/big-update [Dadmehr]
-49d4ac4 2025-01-08 | big [Dadmehr]
-92083d5 2025-01-08 | clean & user login and singup create and try for create user profile image [Dadmehr]
-7b36a82 2025-01-08 | fix html and responsive des [Dadmehr]
-3d0ad34 2025-01-08 | html better [Dadmehr]
-b500329 2025-01-08 | Add a Fallback Message for Empty News List [Dadmehr]
-251cabe 2025-01-08 | Change <ap> to <p>. [Dadmehr]
-30048c2 2025-01-08 | fix django.yaml python version [Dadmehr]
-4e1ec7b 2025-01-08 | fix django.yaml python version [Dadmehr]
-d8f3d6a 2025-01-08 | optimze icon [Dadmehr]
-f57d218 2025-01-08 | Update styles.css [Dadmehr]
-a00560e 2025-01-08 | Create django.yml [Dadmehr]
-13d50e4 2025-01-08 | Update README.md [Dadmehr]
-7d1cc3d 2025-01-07 | clean - add icon [Dadmehr]
-3d0a9da 2025-01-07 | news better front - content better content - add dividar [Dadmehr]
-74e27de 2025-01-07 | install jdatetime and add to req.txt [Dadmehr]
-06df817 2025-01-07 | better newss front end [Dadmehr]
-d9887c3 2025-01-07 | create news option for admin & rtl pages for persian lang [Dadmehr]
-f95bc0d 2025-01-07 | Update README.md [Dadmehr]
-9cb9223 2025-01-07 | fix readme strc [Dadmehr]
-379a6c9 2025-01-07 | better header [Dadmehr]
-90c805c 2025-01-07 | simple header and setting up logout option [Dadmehr]
-9068785 2025-01-07 | init django project - customize home page - and note ... [Dadmehr]
-d66a2a8 2025-01-07 | better doc [Dadmehr]
-a958299 2025-01-07 | Update README.md [Dadmehr]
-b5a24b8 2025-01-07 | Update README.md [Dadmehr]
-429ecb3 2025-01-07 | Update README.md [Dadmehr]
-ce769f0 2025-01-07 | Add files via upload [Dadmehr]
-f4b594c 2025-01-07 | Initial commit [Dadmehr]
+commit 9f3b74d0113ec6aadd824433788942dbb7f0b60a
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Wed Mar 5 21:17:59 2025 +0000
+
+    clean user profile
+
+commit 972709c185435ccf704552a4ed33b34ebc84edb4
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Wed Mar 5 21:04:48 2025 +0000
+
+    Users profile show score
+
+commit f8dafc31d919eda090f973d574900f0a8af49b35
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Wed Mar 5 20:57:14 2025 +0000
+
+    Reply box size fix
+
+commit e887fa76a44dca19ddfa43a3bb34d42f862cff7f
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Wed Mar 5 20:45:50 2025 +0000
+
+    labels that users create
+
+commit 9c50d50fd15608e92915fa0f6a1fce299c897737
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Wed Mar 5 20:25:56 2025 +0000
+
+    update blog base.html
+
+commit d8c2afd54b392f1f100e5b5977d6a268c5b38d71
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Wed Mar 5 20:21:16 2025 +0000
+
+    modern desgin UI/UX ask question page
+
+commit f34508fd5f2a7c94bf723e7d3ce3a0e44bed39d3
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Wed Mar 5 20:13:32 2025 +0000
+
+    ask question a link request text len down
+
+commit 730d7a29b338a8eaaae3cf372c7eff7daf9f77f1
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Wed Mar 5 20:06:29 2025 +0000
+
+    Moved signup-login btn in mobile view to mega menu
+
+commit 4da2b376d8b42a641bdf3de07d9b7f27e1782e6f
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Wed Mar 5 20:00:46 2025 +0000
+
+    added schema to question detail's
+
+commit 89dd7f5a5a844b276e8baa29585db732293e15f4
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Wed Mar 5 19:43:10 2025 +0000
+
+    linked blog to header & base.html in blog, translated to persian
+
+commit 0bc5447985f9ec4de9983bb973c67915696f0fcf
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Wed Mar 5 19:25:16 2025 +0000
+
+    update user profile front
+
+commit d2092c1bcdc0b9ae7db4c3f594ab1d034f734594
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Tue Mar 4 21:29:42 2025 +0000
+
+    upgrade user profile for blog - show unpublish, published blog to profile and can controle in profile
+
+commit 63ed121ccc00eb79c2a2c6f5d2c326814f2bdf80
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Tue Mar 4 20:48:43 2025 +0000
+
+    Created Basic Blog system
+
+commit 0e90f7ffed4808f11ca4f5a4ad71b7aeea715601
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Tue Mar 4 20:48:31 2025 +0000
+
+    Created Basic Blog system
+
+commit 228f72839dfb70a3e3d004c6eeb1dbf87618e259
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Tue Mar 4 20:12:46 2025 +0000
+
+    doc moved to doc repo
+
+commit bdcd2428bf4ce2932444ca1d703f534c41b9e85a
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Tue Mar 4 20:09:50 2025 +0000
+
+    remove media
+
+commit 863c2e9ff6bf6de62e33d9dcd68655801a86571a
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Tue Mar 4 19:47:22 2025 +0000
+
+    DEBUG true, remove staticfiles
+
+commit 4e1f888d91e6b447fd6f61c55337b61e5777d70d
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Tue Mar 4 19:45:18 2025 +0000
+
+    refactor setting.py & fix notfound static file
+
+commit d843d7ef121ed50448a82d0607d2dcfe73c75efd
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Tue Mar 4 19:39:31 2025 +0000
+
+    fix flake and ...
+
+commit 1b7a4954ecd01ee602bb08170a3350e8f3c5cfbd
+Merge: 85a49e1 14f93a6
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Tue Mar 4 19:23:07 2025 +0000
+
+    Merge pull request #98 from obriewil/fix_flake8
+    
+    Fix flake8
+
+commit 14f93a6490501dc2c4e56fe6f80af628ab88a584
+Author: William O'Brien <obriewil@oregonstate.edu>
+Date:   Mon Mar 3 21:27:49 2025 -1000
+
+    fixed remaining Flake 8 errors
+
+commit 3574a4da0adcaf5128acb2e86895858289f280eb
+Author: William O'Brien <obriewil@oregonstate.edu>
+Date:   Mon Mar 3 21:19:06 2025 -1000
+
+    fix test flake 8 error
+
+commit 85a49e138df5300f91a0250c763daf2e2d8ac192
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Fri Feb 28 18:47:12 2025 +0000
+
+    Update base.html
+    
+    signup btn yellow color changed to green (btn-success)
+
+commit 4b59ecd22f332e4ad148dd8134b0718d43b97afe
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Wed Feb 26 21:04:31 2025 +0000
+
+    remove other funding link
+
+commit 55f39394b47a08018d932fca258f46d53f724a1e
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Wed Feb 26 21:02:30 2025 +0000
+
+    Create FUNDING.yml
+
+commit f12bace5012a795864ea0d60b918e6c12baa9f4b
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Wed Feb 26 20:32:48 2025 +0000
+
+    404,500 page created and setting imported os
+
+commit 0fe122a073a14eb467db46b17005455f4b1a1618
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Wed Feb 26 20:22:32 2025 +0000
+
+    Remove hardcoded SECRET_KEY and use env variable
+
+commit 6ec436236c99d871e127ccf66edcfd3344722b24
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Wed Feb 26 07:50:54 2025 +0000
+
+    CHANGELOG.md updated & blog link remove in header
+
+commit 1ee42afc9a4b3ffada954e6d0ea68db21485681c
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Sun Feb 23 21:21:33 2025 +0000
+
+    update CHANGELOG.md & pre-commit
+
+commit 57899de388cfdb31d61b8b84be77f685706e3255
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Sun Feb 23 21:15:44 2025 +0000
+
+    remove django & linter workflows
+
+commit d04b05ab469feb8de1d7cf78c4232da215c8da8d
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Sun Feb 23 21:14:46 2025 +0000
+
+    remove blog
+
+commit 4d4748b50d910d043dbf4a59aada37b03e7a7ca0
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Sun Feb 23 20:33:35 2025 +0000
+
+    create thumbnail and configure og:images
+
+commit 541ff3c6418532d3f7ca74ce33243f78c909b80e
+Merge: 518684f b242a84
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Fri Feb 14 16:12:37 2025 +0330
+
+    Merge pull request #89 from BDadmehr0/solved-issuse-100
+    
+    Update README.md
+
+commit b242a84e5a81bc3998f12168eca4a0e781c4e275
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Fri Feb 14 12:38:04 2025 +0000
+
+    Update README.md
+    
+    remove migration dir tree in readme
+
+commit 518684f8d2e16c6f31e812e18bb15b8de0272243
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Thu Feb 13 19:04:31 2025 +0000
+
+    Update README.md
+
+commit a96cc49bef547b7733b0d23faca11c6a18b2a880
+Merge: ae34e7b 9602660
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Wed Feb 12 18:38:26 2025 +0000
+
+    fix and create blog
+
+commit ae34e7ba1ec5138d96b1330868c2983358d0359c
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Wed Feb 12 18:35:10 2025 +0000
+
+    fix and create blog
+
+commit 9602660bd99f9d05b77549c36d8dc200c8f1c06e
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Tue Feb 11 20:45:32 2025 +0000
+
+    blog better and solved #79
+
+commit ca8850e8acb41ec5ff53af1eac3a41ad8f2bcea3
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Tue Feb 11 19:46:50 2025 +0000
+
+    fix blog url
+
+commit d207a952049e5632fb6f85e92b1d89806a82f2ae
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Tue Feb 11 19:19:57 2025 +0000
+
+    btn priamy to soucsss
+
+commit e55e326a9582b64b4f203fc994b7a69cd8dbee1f
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Mon Feb 10 22:34:02 2025 +0000
+
+    remove unused css,js
+
+commit 0ea486b76a7572ca3940cba1296012bdf41a9ed5
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Mon Feb 10 22:23:43 2025 +0000
+
+    fix ui bugs - add vazir font
+
+commit fce920bd4e9fccf0feb27685413c6fff51c66e7c
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Mon Feb 10 22:08:29 2025 +0000
+
+    add icons-svg responsive header - better ui
+
+commit decdff5092de9cf7bbea9a5ddcc78ca9bdef699a
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Mon Feb 10 20:57:27 2025 +0000
+
+    Improving pop-up UI/UX #60
+
+commit 7d23f7bc86cc2e40e3b68dc778b6d6ccc32df79a
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Mon Feb 10 18:57:14 2025 +0000
+
+    Update README.md
+
+commit ea8e5147fd50d7f6fcf2663dc72dcbd64f58c786
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Mon Feb 10 18:21:28 2025 +0000
+
+    Update README.md
+
+commit fb4ec684ed749a8cc517a51a62868ab3758a4c03
+Merge: feeff58 e02b76a
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Sun Feb 9 19:56:26 2025 +0330
+
+    Merge pull request #74 from novinnovin/fix
+    
+    Update README.md
+
+commit e02b76af1e8bca4a437e15b6cd6fd177687c1780
+Author: novinnovin <yaphetsgotir@gmail.com>
+Date:   Sun Feb 9 14:03:19 2025 +0000
+
+    Update README.md
+
+commit feeff58008d84dd410b85898c5eb6bdeecb7adbe
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Sun Feb 9 11:14:52 2025 +0000
+
+    clean
+
+commit f4f262d9486d05ca92437d2ad9913c68c0117694
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Sun Feb 9 10:46:08 2025 +0000
+
+    Delete Yadgah/__pycache__ directory
+
+commit a046046a86f282a106990c63970577294e2c4cff
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Sun Feb 9 10:45:47 2025 +0000
+
+    Delete home/migrations directory
+
+commit cc33c86c7b104d19dd25459402d445fc0b73f987
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Sun Feb 9 10:45:38 2025 +0000
+
+    Delete home/__pycache__ directory
+
+commit c2e85aee910d3e0b863c0fa056653465cc9d763c
+Merge: 20e771c 63c58cb
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Sun Feb 9 13:33:08 2025 +0330
+
+    Merge pull request #54 from Marih935/solved_issue_49
+    
+    Solved issue 49
+
+commit 63c58cb7679078217427d6e0476a4b29341a4ca7
+Merge: c8e0b3c 20e771c
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Sun Feb 9 13:32:59 2025 +0330
+
+    Merge branch 'main' into solved_issue_49
+
+commit 20e771c462baf1702a61d26186eb4bff5dfb27de
+Merge: 5035742 e7fd78d
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Sun Feb 9 13:30:07 2025 +0330
+
+    Merge pull request #70 from mdimado/patch-1
+    
+    Update README.md
+
+commit e7fd78d5031163953a20efe35ce3100688c9c307
+Author: Mohammed Imaduddin <mdimad005@gmail.com>
+Date:   Sun Feb 9 12:54:33 2025 +0530
+
+    Update README.md
+
+commit 5035742506f208c9bba340fafc2eeb7564c1745b
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Fri Feb 7 19:52:52 2025 +0000
+
+    footer text link project github
+
+commit 6e0f544de66d31d8e88c31d02ab5dde9b5a42678
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Fri Feb 7 19:35:41 2025 +0000
+
+    update CHANGELOG.md & upload seo report
+
+commit d7dc46db89fc14352470905cdcb0f599476e2dae
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Thu Feb 6 20:01:16 2025 +0000
+
+    templates and django setting optimaize seo
+
+commit 2cf61f0ebe83d9c2d53007b503cf8893e3551c44
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Thu Feb 6 19:39:50 2025 +0000
+
+    Solution: Explicitly Order the QuerySets
+
+commit 29b963691d865b47eca80cf90454ef57e4ae5f87
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Thu Feb 6 19:39:13 2025 +0000
+
+    Created robots.txt
+
+commit 5b235e2490bec726d435cefe38b9709ffde7a268
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Thu Feb 6 19:30:16 2025 +0000
+
+    added sitemap.xml
+
+commit 404864173ec68da3c17f906efc7a2fe4be35a1ae
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Thu Feb 6 19:05:43 2025 +0000
+
+    google-site-verification added
+
+commit 3e5143130d4fffb0b888f9eb41c24ad6ca704a58
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Thu Feb 6 18:36:58 2025 +0000
+
+    remove link js/css
+
+commit 2ae73b6f9e42ffab1e716868c8ac7bfd0a552e9f
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Thu Feb 6 18:32:38 2025 +0000
+
+    edit footer
+
+commit 74ca5acf5830439cd2aeb3a0520e721c94fb3c4d
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Wed Feb 5 20:19:45 2025 +0000
+
+    remove Fa changelog update eng Changelog (all commit)
+
+commit 66782ba093c1b24cf6073b79be3b94bdc8f52cfc
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Tue Feb 4 06:59:34 2025 +0000
+
+    solved issuse #43
+
+commit c0ddd20470031498edbfcb3c61d088158500ea25
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Tue Feb 4 06:50:19 2025 +0000
+
+    solved issuse #42 & rewrite trend algorithm
+
+commit 40466661c8e465386e94c559c6f57f281a364f5f
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Tue Feb 4 05:14:34 2025 +0000
+
+    solved issues #39
+
+commit 0631cd2205ed72ae830b41ba0a69d10386c5c38e
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Tue Feb 4 04:25:15 2025 +0000
+
+    solved issuse #59
+
+commit c8e0b3c251617003ef0a582f879e805073ce1787
+Merge: 4874330 c2b9983
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Sat Feb 1 22:56:23 2025 +0330
+
+    Merge branch 'main' into solved_issue_49
+
+commit c2b99830dd567cd6af99fd4396f1d61f7e6878e0
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Sat Feb 1 19:14:17 2025 +0000
+
+    add edit & delete replay by user's
+
+commit 71e2d6d48989b99e97a825c3af2c2746f0aef21c
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Fri Jan 31 13:54:21 2025 +0000
+
+    user score bug fix
+
+commit d3e1ee4dd63bcbf06fcd861f95d73bb23419c9d9
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Fri Jan 31 13:51:15 2025 +0000
+
+    refactor
+
+commit 0c6bd6cf3e802f9b3edb46a40683bdf27533293b
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Fri Jan 31 13:32:18 2025 +0000
+
+    clean
+
+commit e32266785fc7f740b5f97482bf816b2999b8a44a
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Fri Jan 31 13:30:59 2025 +0000
+
+    clean project
+
+commit f8d0b02b876461c3010e4291d4f06529f2d217c8
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Fri Jan 31 13:27:58 2025 +0000
+
+    git ignore .pyc __pycache__
+
+commit 07b937bc8a3897894ffdff33f466bb1086c2b898
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Fri Jan 31 13:27:20 2025 +0000
+
+    ui fix bugs
+
+commit 02b3c68fd0f10c0396edc1efa426edb88f0b0356
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Thu Jan 30 21:23:24 2025 +0000
+
+    add Search Feature
+
+commit 4874330bca232fffdc319181deaee564318a1253
+Author: Mariana Cavalcanti Machado Anselmo <cmariana935@gmail.com>
+Date:   Thu Jan 30 00:02:05 2025 -0300
+
+    fix: simplify success message and reload page after adding label
+
+commit 1a448c9a0b4b693f5b5102ca145edb783bdd9075
+Author: Mariana Cavalcanti Machado Anselmo <cmariana935@gmail.com>
+Date:   Wed Jan 29 23:47:50 2025 -0300
+
+    fix: update create-label URL pattern to use direct import from views
+
+commit 2c5f521b22d45c43e06b45a64de431a92e874e15
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Wed Jan 29 20:02:18 2025 +0000
+
+    requirements.txt format fix remove # for comment's
+
+commit 2dff763acca2a7623fa82f1db17b6e9b0908435e
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Wed Jan 29 19:53:44 2025 +0000
+
+    update changelog
+
+commit 6bacb922a3561feb40aa96f7a0e1096ab1cd9e70
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Wed Jan 29 19:50:56 2025 +0000
+
+    remove auto-setup
+
+commit 4694774c642cce57c0bcdbabb99ba9d9fd6f6724
+Author: Mariana Cavalcanti Machado Anselmo <cmariana935@gmail.com>
+Date:   Tue Jan 28 23:21:15 2025 -0300
+
+    feat: add custom label creation feature with color generation and preview
+
+commit 43b834fa615996261ec0f4ea46917db6b7d19346
+Author: Mariana Cavalcanti Machado Anselmo <cmariana935@gmail.com>
+Date:   Tue Jan 28 23:20:55 2025 -0300
+
+    feat: enhance Label model admin with custom color preview and improved configuration
+
+commit 35b9ce2c67cdba773d1607be8817db65feb6dda5
+Author: Mariana Cavalcanti Machado Anselmo <cmariana935@gmail.com>
+Date:   Tue Jan 28 23:20:35 2025 -0300
+
+    feat: add is_custom field to Label model for custom label identification
+
+commit 2a17499c5a1d70c73a64cf7778a079849fe4f4de
+Author: Mariana Cavalcanti Machado Anselmo <cmariana935@gmail.com>
+Date:   Tue Jan 28 23:20:21 2025 -0300
+
+    feat: add create-label URL pattern to home app
+
+commit 2259c69f8a8cb42a346fd074a7148de392969354
+Author: Mariana Cavalcanti Machado Anselmo <cmariana935@gmail.com>
+Date:   Tue Jan 28 23:19:44 2025 -0300
+
+    feat create_label at views.py
+
+commit ad6d0440066f0522d28519fef9cfd328580454f4
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Tue Jan 28 12:40:13 2025 +0000
+
+    Update .gitignore
+
+commit 6f6e53fd19e75f08f3741508b7c78adfbebebb0e
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Tue Jan 28 12:37:56 2025 +0000
+
+    Delete media/avatars/CHANGELOG_ENG.md
+
+commit 695a9515e43343d21f361b23c4094ca658ca7ffc
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Tue Jan 28 12:37:01 2025 +0000
+
+    .gitignore config for ignore media
+
+commit b162bee3e2bbd4fccfec6f2a439cd6159c50bf0b
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Tue Jan 28 12:35:14 2025 +0000
+
+    fix username, random username, placeholder for signup inputs
+
+commit bff5a94762fba0b741b87b447ad8bb09a8d2a3a3
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Mon Jan 27 22:22:09 2025 +0000
+
+    clean
+
+commit c084f1ccdf9f4f670cf1652f5a13abe56475f738
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Mon Jan 27 22:20:08 2025 +0000
+
+    update CHANGELOG
+
+commit 92aac98cff8a237d3b043b07c3f0871efce9c094
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Mon Jan 27 22:19:21 2025 +0000
+
+    FIX Django CLI
+
+commit dc961e750ef0b7b2c4a328f79c4511da284d3b51
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Mon Jan 27 22:13:26 2025 +0000
+
+    flake8 fix
+
+commit 6afbbc6fe49c8dbbfafc835f92e3675c359b5129
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Mon Jan 27 21:13:52 2025 +0000
+
+    pre-commit
+
+commit 786ea0622014be32c3e427691d76ea74a5164803
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Mon Jan 27 21:11:00 2025 +0000
+
+    Update admin interface: Improve profile picture display and optimize user profile integration
+
+commit 30266c02b60c4b422690d9df8449d1dbd620a8b6
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Mon Jan 27 20:51:28 2025 +0000
+
+    Delete subprocess
+
+commit 5170c9d448a3977834c8abaea419bcf8f00753ab
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Mon Jan 27 20:41:53 2025 +0000
+
+    Remove os
+
+commit b3d04d866c542400dfb0ee0f30039b06d0f4e7f7
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Mon Jan 27 20:40:46 2025 +0000
+
+    get widely used script for development
+
+commit 2b942410a734a63068d44a093320141727099814
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Mon Jan 27 20:38:30 2025 +0000
+
+    configure gitignore for ignore scripts
+
+commit 88e8e876ea14a37bec740784f115da6dfcb2b1e2
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Mon Jan 27 20:24:33 2025 +0000
+
+    Refactor CHANGELOG & Created auto CHANGELOG creator
+
+commit d1c7971e4c8dd79f5e497569475676f018276aba
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Mon Jan 27 19:28:30 2025 +0000
+
+    Added CHANGELOG.md
+
+commit a45cb49b10eb1a461bbe532606c47bcec11bdcf9
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Sun Jan 26 20:03:58 2025 +0000
+
+    setting.py Allowd Host modify
+
+commit 7a3dcfb835a11c14071f61fb06d8699e45f3778b
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Sun Jan 26 12:00:02 2025 +0000
+
+    .link_dark change color to #69b987
+
+commit 3af1add8151d54cfb4bca28668939b10b5f776e7
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Sun Jan 26 11:57:39 2025 +0000
+
+    remove body & container css code for fix header width
+
+commit 787f6ea6b1fc7348a120cd1b0d03d6fabbe756d9
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Sun Jan 26 11:48:55 2025 +0000
+
+    question detail body padding remove
+
+commit 772dab7014a9a3158b5fb74229532466b89e549d
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Sun Jan 26 11:43:38 2025 +0000
+
+    nav link fix
+
+commit d0007f1afff2635e01471eaff2c09bc37e62e159
+Merge: edc8488 e83748c
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Sun Jan 26 14:49:02 2025 +0330
+
+    Merge pull request #47 from mdimado/main
+    
+    Improve Question Detail Page UI and mobile responsive
+
+commit e83748c98ad5fa3c0610447004b55b068c8bd4e3
+Author: Mohammed Imaduddin <123477562+mdimado@users.noreply.github.com>
+Date:   Sun Jan 26 07:17:16 2025 +0530
+
+    Improve Question Detail Page UI and mobile responsive
+
+commit edc848811f4e6dfeadefe2aec88bb3c3c2f6b1ae
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Sat Jan 25 21:02:58 2025 +0000
+
+    nav menu fix & HTML Formatted
+
+commit fe503530d838d31797729a476e84bba5943d082c
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Fri Jan 24 16:16:02 2025 +0000
+
+    restore
+
+commit 467ca92782786b6395513ceb4ae3887e4f45a6d7
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Fri Jan 24 16:12:08 2025 +0000
+
+    test chagelog
+
+commit 7d6057548bfc67a789fcbb1ac0849b60428db10f
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Fri Jan 24 16:09:21 2025 +0000
+
+    changelog.yml update
+
+commit 9b30d7ba80e7e7196aa4e0ea7c91cbffcbcc4232
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Fri Jan 24 16:08:20 2025 +0000
+
+    CHANGELOG.md
+
+commit 9c0f2509223086f3ec032b95427982b7e21de1fe
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Fri Jan 24 15:46:34 2025 +0000
+
+    test
+
+commit 73191ceea81eae24643c332fd851b650864bb728
+Merge: 451860a c92b1ee
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Fri Jan 24 15:40:04 2025 +0000
+
+    Merge pull request #44 from BDadmehr0/patch1
+    
+    auto changelog
+
+commit c92b1ee904d19b380d36700f17d928f03acf1f0f
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Fri Jan 24 15:38:11 2025 +0000
+
+    auto changelog
+
+commit 451860af4969b4df103092ec701e765033517769
+Merge: 80dee06 fa8553a
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Fri Jan 24 13:06:09 2025 +0000
+
+    Merge pull request #41 from BDadmehr0/patch1
+    
+    Created Trend Question & explore page
+
+commit fa8553a6d4d1db3bb016208d1ee5b028b850988b
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Fri Jan 24 13:05:15 2025 +0000
+
+    Created Trend Question & explore page
+
+commit 80dee06b5d9060e35bfffe17bcfe2c39e75e03c0
+Merge: cad3b42 7d94178
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Fri Jan 24 12:45:22 2025 +0000
+
+    Merge pull request #40 from BDadmehr0/patch1
+    
+    Created Ranking System & LeaderBoard
+
+commit 7d94178b2f0acaffbdf8b977000aa0cbd680e39c
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Fri Jan 24 12:44:29 2025 +0000
+
+    Created Ranking System & LeaderBoard
+
+commit cad3b425f144ffa96a7dd3ba105f082c27ed9de4
+Merge: bc54c71 3365a36
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Fri Jan 24 00:22:34 2025 +0000
+
+    Merge pull request #36 from BDadmehr0/patch1
+    
+    question view add by sessionid cookies
+
+commit 3365a3634cabb315a5892d34828d99112f736cbc
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Fri Jan 24 00:20:35 2025 +0000
+
+    question view add by sessionid cookies
+
+commit bc54c71f86f962aae24197283bc5be0ee8787f52
+Merge: 11919d0 b2b3ea2
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Fri Jan 24 00:04:10 2025 +0000
+
+    Merge pull request #35 from BDadmehr0/patch1
+    
+    users can delete questions
+
+commit b2b3ea252b2b0dc4d116c1f482fb1724da0ca39d
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Fri Jan 24 00:03:23 2025 +0000
+
+    users can delete questions
+
+commit 11919d05a3ed631d2867695d186cbce72c02adb0
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Thu Jan 23 23:49:54 2025 +0000
+
+    Update README.md
+
+commit 9bdc144f03568a6415e1c191e376702d88a6c5f7
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Thu Jan 23 23:49:12 2025 +0000
+
+    Update README.md
+
+commit 52bdf902b13ca2b141c828d054f21d9dcd6e1303
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Thu Jan 23 11:25:56 2025 +0000
+
+    Temporarily removing the read more button until a way is found
+
+commit 667df9fcf78b5aec3f4194dc55b15fcd678bb697
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Wed Jan 22 19:44:56 2025 +0000
+
+    Django local project setup auto script
+
+commit 1d56b3fdd1ec8ffd61a998ee0454efd9642ff2f9
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Tue Jan 21 23:07:26 2025 +0000
+
+    Update base.html
+
+commit 358e466360c2e570d181a1611490f3e53a6870d9
+Merge: fbae81f d46c6d5
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Tue Jan 21 23:03:04 2025 +0000
+
+    Merge pull request #31 from BDadmehr0/better-ui-ux
+    
+    Merge pull request #30 from BDadmehr0/main
+
+commit d46c6d511b99d5aa3a5006be222fd7b075ba7945
+Merge: cd3b333 fbae81f
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Tue Jan 21 22:59:50 2025 +0000
+
+    Merge pull request #30 from BDadmehr0/main
+    
+    0
+
+commit fbae81f2d08be4db4f5a810f974be83673a26dc5
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Tue Jan 21 20:11:25 2025 +0000
+
+    Create CONTRIBUTING.md
+
+commit 82e0f8aab3e43e013517b61516b607edf9a7531e
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Tue Jan 21 19:50:16 2025 +0000
+
+    laebl's fix
+
+commit ba2c128c035420542a8d9e465a0c5cf0356420d2
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Tue Jan 21 13:25:33 2025 +0000
+
+    fix label rendreing API fix - loading spiner fix
+
+commit 93001314c3287538bf00bb856d691ebd3b0ef7a9
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Mon Jan 20 22:18:19 2025 +0000
+
+    remove Replay content laebl
+
+commit 8ad4367375cb6a8779967ed483e088e018896b6c
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Mon Jan 20 22:14:46 2025 +0000
+
+    profile picture in signup form remove
+
+commit 88f5c3ca31359c033be8add651de9417950e84ec
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Mon Jan 20 22:12:34 2025 +0000
+
+    ask question content placeholder text: markdown support
+
+commit 2107c1afa52c206d114120b31aa173592145f372
+Merge: 6441b8b 927cb75
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Mon Jan 20 19:31:44 2025 +0000
+
+    Merge pull request #21 from BDadmehr0/test
+    
+    configure test.py for test full & better - clean up
+
+commit 927cb7543df5b047f77cf6fb673d891f19e25be3
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Mon Jan 20 19:29:22 2025 +0000
+
+    fix test.py
+
+commit 8aee1cf8634bca99855be75cc18d8ab997aad0c9
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Mon Jan 20 11:17:27 2025 +0000
+
+    fix Django CLI errors
+
+commit d5249a064a6f62e7fca0c116434bb848ea99bcc9
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Mon Jan 20 11:15:00 2025 +0000
+
+    fix Django CLI errors
+
+commit 433679d859cfbb8110e13d13c990835e9f600325
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Sun Jan 19 18:37:26 2025 +0000
+
+    configure test.py for test full & better - clean up
+
+commit 6441b8b1b049f06333c0a5db0b951cd019950523
+Merge: d737faa cd3b333
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Sun Jan 19 18:33:27 2025 +0000
+
+    Merge pull request #19 from BDadmehr0/better-ui-ux
+    
+    Better UI/UX ...
+
+commit cd3b3330a6ab06f92c8d65ac4311f679ae30c434
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Sun Jan 19 18:32:35 2025 +0000
+
+    remove waste images
+
+commit 987f848c9e7698600a781edc2d34a6c187b23555
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Sun Jan 19 18:32:02 2025 +0000
+
+    commit
+
+commit d737faa278725eeb10df363a384e8b468d4df36c
+Merge: 41a6d07 75f0858
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Sat Jan 18 20:35:27 2025 +0000
+
+    Merge pull request #18 from BDadmehr0/better-ui-ux
+    
+    Better UI/UX
+
+commit 75f08581f008717e85c95aebee3fe0f44d46b975
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Sat Jan 18 20:34:28 2025 +0000
+
+    delete note
+
+commit 203cbb5c4eab2443d6b080e6d4823d069d9605ed
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Sat Jan 18 20:33:33 2025 +0000
+
+    clean
+
+commit d8eb01e989819e7a29d5afe34297f759595f274f
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Sat Jan 18 20:31:24 2025 +0000
+
+    commit
+
+commit 41a6d072fb13e83c16e409dc28e6c95ed5ff014a
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Sat Jan 18 18:09:57 2025 +0000
+
+    configure pre-commit for better hook for front code and use bootstrap defualt footer
+
+commit 7c824e1552c9f3c7bc279d079765123aa42cad0f
+Merge: 3aea7b8 ae8001e
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Fri Jan 17 15:21:00 2025 +0000
+
+    Merge pull request #12 from BDadmehr0/load-more
+    
+    load more button - javascript tree to static use npm-module
+
+commit ae8001ea2d9fd75f49352b414eec10ada9e96689
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Fri Jan 17 15:18:51 2025 +0000
+
+    https://anshu-dev.medium.com/how-to-load-more-data-on-a-button-click-in-django-e1bab3a08e2b - add javascript tree to static use npm-module
+
+commit 3aea7b81679d5513b270de6a3f0a04a81a8caadf
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Thu Jan 16 19:35:46 2025 +0000
+
+    clean
+
+commit bfd5d65ec5de7058df98d2728265d4129fcbd0c7
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Thu Jan 16 12:58:14 2025 +0000
+
+    Update ask_question.html
+
+commit 442205b01bb912717bdb32829c9aec2270d2fab5
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Thu Jan 16 12:57:50 2025 +0000
+
+    Update forms.py
+
+commit fc89fad735568e22fb7584892fe890e33852c65c
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Thu Jan 16 12:57:29 2025 +0000
+
+    Update views.py
+
+commit 48831a1d9788b0818689897ee7a589a8a1938351
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Thu Jan 16 11:53:50 2025 +0000
+
+    Delete db.sqlite3
+
+commit a3e1455c5a8a86188087a55587c1a79936c3c610
+Author: Dadmehr Emami <garfoxteam@gmail.com>
+Date:   Thu Jan 16 10:29:00 2025 +0000
+
+    gitignore add and config
+
+commit c0eacd37e00e45d5920f1bd500c4fb625c7d2be0
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Wed Jan 15 00:24:08 2025 +0000
+
+    select multi label in ask question
+
+commit 539c196cc6663700493aff950f74df6c8eb4a454
+Author: Dadmehr <garfoxteam@gmail.com>
+Date:   Tue Jan 14 18:27:41 2025 +0330
+
+    icon fix
+
+commit f29d17904021c4e1dc2b366b9640f27c9e47ae7f
+Author: Dadmehr <garfoxteam@gmail.com>
+Date:   Tue Jan 14 18:17:48 2025 +0330
+
+    icon bg remove
+
+commit 96fb56ef492612df18cbecd58c8979f01d88d727
+Author: Dadmehr <garfoxteam@gmail.com>
+Date:   Tue Jan 14 18:07:11 2025 +0330
+
+    favicon change
+
+commit d290efbe8d0360249b316a45be2afe8c3c749ca9
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Tue Jan 14 00:39:31 2025 +0000
+
+    better front & add more labels
+
+commit 071f234b75c8c9a21fb43b4af817ef2946f97011
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Sun Jan 12 12:07:46 2025 +0000
+
+    label question fature added
+
+commit 90131e9c084b8f4fc50bfc5bdd85a03e9b71af14
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Sun Jan 12 07:34:12 2025 +0000
+
+    pyc file
+
+commit 84398279019d96f4ff238bc44d8b2b36059f95de
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Sat Jan 11 11:59:17 2025 +0000
+
+    fix front - refactor
+
+commit 390511f30747efe69c1f20d0ae0bf4f11eb88f9f
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Sat Jan 11 07:12:53 2025 +0000
+
+    flex cloum date & profile image
+
+commit f4d33a3792ddbb9b511b7803913423903b359b92
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Fri Jan 10 23:04:40 2025 +0000
+
+    pre-commit
+
+commit cc3d6eed304bb702ce566f1b69d3bb1227e742aa
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Fri Jan 10 22:54:15 2025 +0000
+
+    clean up image
+
+commit c3b3136e4cf62c3b7f1785791640b13a860f1158
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Fri Jan 10 22:52:29 2025 +0000
+
+    add fature approved replays and fix like & dislike view
+
+commit 6d457c60bbeb13649f815c340c7bf6e995e9ad4b
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Fri Jan 10 21:57:10 2025 +0000
+
+    like and dislike qestion
+
+commit 290f05f7752b70698e6e374bff209cec15c12e65
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Fri Jan 10 16:37:28 2025 +0000
+
+    a
+
+commit ec0e13d5bd4ac9b3c677a53b509dbca2a6276b98
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Fri Jan 10 12:50:04 2025 +0000
+
+    clean
+
+commit 4c9e8fd14192725b37216e9ad83a8eac0203c565
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Fri Jan 10 12:49:20 2025 +0000
+
+    refactor code
+
+commit 100fc12cb822fc6d8ae6d937f9a409a7c6ff9e06
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Fri Jan 10 11:05:00 2025 +0000
+
+    readme
+
+commit ffccb907fc0b045860e424e9b5f72c35794190f7
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Fri Jan 10 11:04:12 2025 +0000
+
+    readme
+
+commit 833deddf12037612e2e83a38781e9b52c333f32b
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Fri Jan 10 11:03:40 2025 +0000
+
+    readme
+
+commit 8d04301b0f977d32f0e6d64ee689552b8407fc2e
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Fri Jan 10 11:01:55 2025 +0000
+
+    fix logo
+
+commit e08663b3081ebc923d2a8b62b981fb632514d81e
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Fri Jan 10 11:01:04 2025 +0000
+
+    fix logo
+
+commit d3dfe47db29dcf6b454e42459635456ecbed8d6f
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Fri Jan 10 10:57:56 2025 +0000
+
+    logo in readme.md
+
+commit 20489287e3b69fc23571bbe539677e435cb8447d
+Merge: 944cdf2 5d4dc60
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Fri Jan 10 10:37:42 2025 +0000
+
+    Merge pull request #6 from BDadmehr0/work-formmat
+    
+    Work formmat
+
+commit 5d4dc603eaa40dde67f4478379572c450f0704a1
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Fri Jan 10 10:35:16 2025 +0000
+
+    Create .pre-commit-config.yaml
+
+commit 99f051c9b394df47670aecfffc59ecc90feacaf9
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Fri Jan 10 10:34:34 2025 +0000
+
+    Create pre-commit.yml
+
+commit 1bc22b647bd8352ae064f8b65717dbaf6bff17eb
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Fri Jan 10 10:33:06 2025 +0000
+
+    Create security-check.yml
+
+commit b28ed3a3b8c0dc9269c299facc375c86fb1bc272
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Fri Jan 10 10:32:14 2025 +0000
+
+    Update lint.yml
+
+commit 3c9ac529345948f49a3f28ff5382245442f4ec51
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Fri Jan 10 10:31:57 2025 +0000
+
+    Create lint.yml
+
+commit d428fdef46f595154a8d0b1ed86e8fa8058808f0
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Fri Jan 10 10:30:38 2025 +0000
+
+    Update django.yml
+
+commit 944cdf23a83862cb311fdc7b1916145c7418396d
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Fri Jan 10 10:00:20 2025 +0000
+
+    user profiles & admin panel access contorls & setup bootstrap & better front
+
+commit 9a33cf444dd35d465324a565a33dbad2834d3b51
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Thu Jan 9 20:32:59 2025 +0000
+
+    ask questions and can reply
+
+commit eeac4edf9d6ea8251e8a40995909de4f83d2277b
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Thu Jan 9 11:49:48 2025 +0000
+
+    refactor code
+
+commit eaf62e61e5ec8225c18747c40d6d8ebae67f24b5
+Merge: b20da4c c51ac63
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Wed Jan 8 23:19:40 2025 +0000
+
+    Merge pull request #4 from BDadmehr0/big-update
+    
+    big
+
+commit c51ac636d9f4ea65e0ccf46787df33903785194f
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Wed Jan 8 23:18:46 2025 +0000
+
+    big
+
+commit b20da4c1e9954c7d4f50b711044b142a5bd2c17d
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Wed Jan 8 20:43:52 2025 +0000
+
+    clean & user login and singup create and try for create user profile image
+
+commit 93950777fe07ce8de8bd651e75b69e3f89d0c2ca
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Wed Jan 8 19:56:17 2025 +0000
+
+    fix html and responsive des
+
+commit c07abaf392a1ea5233e1917d61fb6ab7f45a825e
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Wed Jan 8 19:10:39 2025 +0000
+
+    html better
+
+commit bed71f13dd27d664c3be07fba96f5985e04f81e0
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Wed Jan 8 19:07:13 2025 +0000
+
+    Add a Fallback Message for Empty News List
+
+commit ff67675572b000d742fff61ed1ba259d8b0f59d2
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Wed Jan 8 19:05:58 2025 +0000
+
+    Change <ap> to <p>.
+
+commit 52b320e4b242cf72d889a43c7edc8bbeddc2209f
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Wed Jan 8 18:41:18 2025 +0000
+
+    fix django.yaml python version
+
+commit ee63b1253568dcbce7371310286fd29ce3ef5843
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Wed Jan 8 18:40:04 2025 +0000
+
+    fix django.yaml python version
+
+commit 631602ab459c6849fea632978e19632f1e172c42
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Wed Jan 8 14:32:10 2025 +0330
+
+    optimze icon
+
+commit 9f1606941fa249e5cc1987c05639e34b2aef351a
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Wed Jan 8 14:31:38 2025 +0330
+
+    Update styles.css
+
+commit fb59d638c275246af2ffd7f63f65fbb8badbc4f3
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Wed Jan 8 13:42:52 2025 +0330
+
+    Create django.yml
+
+commit 9da944edd6653ab464af9cb6c2e6d63fba362afa
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Wed Jan 8 13:40:33 2025 +0330
+
+    Update README.md
+
+commit ab5ae57715621e3dffb1ba3f0d7c418663b5bf02
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Tue Jan 7 23:05:34 2025 +0000
+
+    clean - add icon
+
+commit 9502447d931a991ee3e934d432261d04e7236713
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Tue Jan 7 22:30:53 2025 +0000
+
+    news better front - content better content - add dividar
+
+commit debae0a21cddbcd616296cf7d405059aa526e102
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Tue Jan 7 22:02:13 2025 +0000
+
+    install jdatetime and add to req.txt
+
+commit cdb993ade590d6742fb592a1e05d13d608eb729a
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Tue Jan 7 22:00:25 2025 +0000
+
+    better newss front end
+
+commit ebdde8c7f2c6ac882f984b9eb8d52be65f1e3e94
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Tue Jan 7 21:44:53 2025 +0000
+
+    create news option for admin & rtl pages for persian lang
+
+commit 743d1b1d8559dae4b5bd5beb3f4e227f872324ed
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Tue Jan 7 21:12:44 2025 +0000
+
+    Update README.md
+
+commit f59b8bc77660470418cefd3df1efc75ae9905f19
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Tue Jan 7 21:09:43 2025 +0000
+
+    fix readme strc
+
+commit 8a5b51fb211678396877ef36c0649c9d4e8c7963
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Tue Jan 7 21:07:25 2025 +0000
+
+    better header
+
+commit 22ada13c5eeef9a28a3df44507b47ea8937b3b57
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Tue Jan 7 20:08:54 2025 +0000
+
+    simple header and setting up logout option
+
+commit 8a101ab0b78852e50866e98a9b67a293c0161809
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Tue Jan 7 19:19:56 2025 +0000
+
+    init django project - customize home page - and note ...
+
+commit 9e6ba31f2d33d1155dabb00fe508f061dd00ff89
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Tue Jan 7 18:45:27 2025 +0000
+
+    better doc
+
+commit d500fcf68cc4301bec9ada6faa67c5860d73eae4
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Tue Jan 7 19:54:06 2025 +0330
+
+    Update README.md
+
+commit c887d0b1546139758360f40a86d0a47107169380
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Tue Jan 7 19:53:43 2025 +0330
+
+    Update README.md
+
+commit 36e56816bae1e5703e790211b682342893a636bb
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Tue Jan 7 19:52:57 2025 +0330
+
+    Update README.md
+
+commit cdac1a7f8acef7b43246acd3b4fbc0876ca1d245
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Tue Jan 7 19:46:26 2025 +0330
+
+    Add files via upload
+
+commit c8b737b80e97cda788b1ff2a60b28f3fa33e40f8
+Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
+Date:   Tue Jan 7 19:44:35 2025 +0330
+
+    Initial commit
