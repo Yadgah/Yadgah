@@ -126,25 +126,26 @@
                     </button>
 
                     <!-- User Authentication Section -->
-                    <div class="text-end">
+                    <div class="text-end d-none d-lg-block">
                         {% if user.is_authenticated %}
-                        <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                            {% if user.userprofile.avatar %}
-                            <img src="{{ user.userprofile.avatar.url }}" alt="{{ user.username }}'s avatar" width="40" height="40" class="rounded-circle" />
-                            {% else %}
-                            <img src="{% static 'default-avatar.png' %}" alt="default avatar" width="32" height="32" class="rounded-circle" />
-                            {% endif %}
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser1">
-                            <li><a class="dropdown-item" href="{% url 'user_profile' user.username %}">پروفایل</a></li>
-                            <li><a class="dropdown-item" href="{% url 'profile' %}">تنظیمات</a></li>
-                            <li><a class="dropdown-item" href="{% url 'logout' %}">خروج</a></li>
-                        </ul>
+                            <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                                {% if user.userprofile.avatar %}
+                                <img src="{{ user.userprofile.avatar.url }}" alt="{{ user.username }}'s avatar" width="40" height="40" class="rounded-circle" />
+                                {% else %}
+                                <img src="{% static 'default-avatar.png' %}" alt="default avatar" width="32" height="32" class="rounded-circle" />
+                                {% endif %}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser1">
+                                <li><a class="dropdown-item" href="{% url 'user_profile' user.username %}">پروفایل</a></li>
+                                <li><a class="dropdown-item" href="{% url 'profile' %}">تنظیمات</a></li>
+                                <li><a class="dropdown-item" href="{% url 'logout' %}">خروج</a></li>
+                            </ul>
                         {% else %}
-                        <a href="{% url 'login' %}" class="btn btn-outline-light me-2">ورود</a>
-                        <a href="{% url 'signup' %}" class="btn btn-success">ثبت‌نام</a>
+                            <a href="{% url 'login' %}" class="btn btn-outline-light me-2">ورود</a>
+                            <a href="{% url 'signup' %}" class="btn btn-success">ثبت‌نام</a>
                         {% endif %}
                     </div>
+
                 </div>
             </div>
         </header>
@@ -156,14 +157,39 @@
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="بستن"></button>
             </div>
             <div class="offcanvas-body">
-                <ul class="nav flex-column">
+                <ul class="nav flex-column mb-3">
                     <li><a href="{% url 'index' %}" class="nav-link px-2 text-white">خانه</a></li>
                     <li><a href="{% url 'leaderboard' %}" class="nav-link px-2 text-white">تابلوی امتیازات</a></li>
                     <li><a href="{% url 'blog' %}" class="nav-link px-2 text-white">مقالات</a></li>
                     <li><a href="{% url 'explore' %}" class="nav-link px-2 text-white">کاوش</a></li>
                 </ul>
+
+                <!-- بخش کاربری؛ فقط مخصوص موبایل -->
+                <div class="d-block d-lg-none">
+                    {% if user.is_authenticated %}
+                        <div class="mb-3">
+                            <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" id="dropdownUserMobile" data-bs-toggle="dropdown" aria-expanded="false">
+                                {% if user.userprofile.avatar %}
+                                <img src="{{ user.userprofile.avatar.url }}" alt="{{ user.username }}'s avatar" width="40" height="40" class="rounded-circle" />
+                                {% else %}
+                                <img src="{% static 'default-avatar.png' %}" alt="default avatar" width="32" height="32" class="rounded-circle" />
+                                {% endif %}
+                                <span class="ms-2">{{ user.username }}</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUserMobile">
+                                <li><a class="dropdown-item" href="{% url 'user_profile' user.username %}">پروفایل</a></li>
+                                <li><a class="dropdown-item" href="{% url 'profile' %}">تنظیمات</a></li>
+                                <li><a class="dropdown-item" href="{% url 'logout' %}">خروج</a></li>
+                            </ul>
+                        </div>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="btn btn-outline-light w-100 mb-2">ورود</a>
+                        <a href="{% url 'signup' %}" class="btn btn-success w-100">ثبت‌نام</a>
+                    {% endif %}
+                </div>
             </div>
         </div>
+
 
         <!-- Offcanvas Search (Mobile) -->
         <div class="offcanvas offcanvas-top bg-dark text-white" tabindex="-1" id="searchModal" aria-labelledby="searchModalLabel" style="height: 50vh; min-height: 250px;">
@@ -180,7 +206,7 @@
 
         <!-- Main Content Section -->
         <div class="container my-4">{% block content %}{% endblock %}</div>
-        
+
         <!-- Remove the container if you want to extend the Footer to full width. -->
         <footer style="background-color: #212529; color: #fff; margin-top: 20px;">
             <div class="container p-4">

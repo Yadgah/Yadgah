@@ -3,8 +3,9 @@ from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
 from django.urls import path
 
-from .sitemaps import NewsSitemap, QuestionSitemap, StaticViewSitemap
 from blog.views import post_list
+
+from .sitemaps import NewsSitemap, QuestionSitemap, StaticViewSitemap
 from .views import (
     approve_reply,
     ask_question,

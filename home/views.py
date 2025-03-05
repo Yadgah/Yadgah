@@ -24,6 +24,8 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.safestring import mark_safe
 from django.views.decorators.csrf import csrf_exempt
 
+from blog.models import Post  # برای دسترسی به پست‌ها
+
 from .forms import (
     LoginForm,
     NewsForm,
@@ -34,7 +36,7 @@ from .forms import (
     UserProfileForm,
 )
 from .models import Label, News, Question, QuestionReaction, Reply, UserProfile
-from blog.models import Post  # برای دسترسی به پست‌ها
+
 
 # Decorator to restrict access to staff members only
 def staff_member_required(view_func):
@@ -359,6 +361,7 @@ def user_profile(request, username):
         "unpublished_posts": unpublished_posts,
     }
     return render(request, "user_profile.html", context)
+
 
 # View to delete user profile
 @login_required
