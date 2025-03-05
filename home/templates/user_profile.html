@@ -95,10 +95,10 @@
     transition: transform 0.2s ease;
   }
 
-  .post-card:hover {
+/*  .post-card:hover {
     transform: translateY(-3px);
     background: rgba(28, 28, 28, 0.9);
-  }
+  }*/
 
   .badge-custom {
     background: rgba(105, 185, 135, 0.15);
@@ -122,7 +122,7 @@
       </div>
 
       <div class="text-white">
-        <h1 class="h2 mb-2 fw-bold">{{ profile_user.username }}</h1>
+        <h2 class="h2 mb-2 fw-bold">{{ profile_user.username }}</h1>
         <div class="d-flex gap-3">
           <div>
             <i class="fas fa-envelope me-2"></i>
@@ -147,7 +147,7 @@
         <div class="">پست‌ها</div>
       </div>
       <div class="stat-card">
-        <!-- <div class="stat-value">{{ profile_user. }}</div> -->
+        <div class="stat-value">{{ user_profile.score }}</div>
         <div class="">امتیاز</div>
       </div>
     </div>

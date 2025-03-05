@@ -347,16 +347,20 @@ def user_profile(request, username):
     # 1. واکشی کاربر با توجه به username
     user = get_object_or_404(User, username=username)
 
-    # 2. واکشی سؤالات پرسیده‌شده توسط این کاربر
+    # 2. واکشی پروفایل کاربر
+    user_profile = get_object_or_404(UserProfile, user=user)
+
+    # 3. واکشی سؤالات پرسیده‌شده توسط این کاربر
     questions = Question.objects.filter(user=user)
 
-    # 3. واکشی پست‌های منتشرشده و منتشرنشده کاربر
+    # 4. واکشی پست‌های منتشرشده و منتشرنشده کاربر
     published_posts = Post.objects.filter(author=user, published=True)
     unpublished_posts = Post.objects.filter(author=user, published=False)
 
-    # 4. رندر تمپلیت به همراه کانتکست مورد نیاز
+    # 5. رندر تمپلیت به همراه کانتکست مورد نیاز
     context = {
         "profile_user": user,
+        "user_profile": user_profile,  # اضافه کردن پروفایل کاربر به کانتکست
         "questions": questions,
         "published_posts": published_posts,
         "unpublished_posts": unpublished_posts,
