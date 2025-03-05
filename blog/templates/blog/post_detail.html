@@ -1,12 +1,12 @@
-<!DOCTYPE html>
-<html>
+{% extends 'base.html' %}
 <head>
     <title>{{ post.title }}</title>
 </head>
-<body>
-    <h1>{{ post.title }}</h1>
-    <p>by {{ post.author }} on {{ post.created_at }}</p>
-    <p>{{ post.body }}</p>
-    <a href="{% url 'post_list' %}">Back to all posts</a>
-</body>
-</html>
+
+
+{% block content %}
+<h1>{{ post.title }}</h1>
+<p>by {{ post.author }} on {{ post.created_at }}</p>
+<p>{{ post.body }}</p>
+<a href="{% url 'post_list' %}">Back to all posts</a>
+{% endblock %}

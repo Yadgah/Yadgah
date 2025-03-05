@@ -4,6 +4,7 @@ from django.contrib.sitemaps.views import sitemap
 from django.urls import path
 
 from .sitemaps import NewsSitemap, QuestionSitemap, StaticViewSitemap
+from blog.views import post_list
 from .views import (
     approve_reply,
     ask_question,
@@ -81,6 +82,7 @@ general_urlpatterns = [
         name="django.contrib.sitemaps.views.sitemap",
     ),
     path("robots.txt", robots_txt, name="robots_txt"),
+    path("blog/", post_list, name="blog"),
 ]
 
 handler404 = "home.views.custom_page_not_found"
