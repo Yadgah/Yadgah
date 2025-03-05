@@ -141,10 +141,8 @@
             >پرسیدن سوال</a
           >
           {% else %}
-          <p>
-            برای پرسیدن سوال، لطفاً
-            <a href="{% url 'login' %}">وارد حساب کاربری خود شوید</a>.
-          </p>
+          <br>
+          <a href="{% url 'login' %}">پرسیدن سوال</a>
           {% endif %}
         </div>
         <div id="recent-questions">
