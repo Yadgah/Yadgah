@@ -247,6 +247,67 @@
         </div>
     </div>
 
+    <!-- Schema markup for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "QAPage",
+      "mainEntity": {
+        "@type": "Question",
+        "name": "{{ question.title|escapejs }}",
+        "text": "{{ question.content|striptags|escapejs }}",
+        "author": {
+          "@type": "Person",
+          "name": "{% if question.user and question.user.username %}{{ question.user.username|escapejs }}{% else %}کاربر ناشناس{% endif %}"
+        },
+        "dateCreated": "{{ question.created_at|date:'c' }}",
+        "answerCount": {{ question.replies.count }},
+        "upvoteCount": {{ likes_count }},
+        "downvoteCount": {{ dislikes_count }},
+        {% for reply in question.replies.all %}
+          {% if reply.is_approved %}
+            {% if forloop.first %}"acceptedAnswer": [{% endif %}
+              {
+                "@type": "Answer",
+                "text": "{{ reply.content|striptags|escapejs }}",
+                "author": {
+                  "@type": "Person",
+                  "name": "{% if reply.user and reply.user.username %}{{ reply.user.username|escapejs }}{% else %}کاربر ناشناس{% endif %}"
+                },
+                "dateCreated": "{{ reply.created_at|date:'c' }}"
+              }{% if not forloop.last %},{% endif %}
+            {% if forloop.last %}],{% endif %}
+          {% endif %}
+        {% endfor %}
+        "suggestedAnswer": [
+          {% for reply in question.replies.all %}
+            {% if not reply.is_approved %}
+              {
+                "@type": "Answer",
+                "text": "{{ reply.content|striptags|escapejs }}",
+                "author": {
+                  "@type": "Person",
+                  "name": "{% if reply.user and reply.user.username %}{{ reply.user.username|escapejs }}{% else %}کاربر ناشناس{% endif %}"
+                },
+                "dateCreated": "{{ reply.created_at|date:'c' }}"
+              }{% if not forloop.last %},{% endif %}
+            {% endif %}
+          {% endfor %}
+        ],
+        "publisher": {
+          "@type": "Organization",
+          "name": "یادگاه - Yadgah",
+          "url": "https://yadgah.pythonanywhere.com",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "{% static 'favicon.ico' %}"
+          }
+        }
+      }
+    }
+    </script>
+
+
     <!-- پاپ‌آپ برای ویرایش پاسخ -->
     <div id="editReplyModal" class="modal fade" tabindex="-1" aria-labelledby="editReplyModalLabel" aria-hidden="true">
         <div class="modal-dialog">
