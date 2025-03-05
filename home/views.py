@@ -195,24 +195,20 @@ def news_list(request):
 @login_required
 def ask_question(request):
     if request.method == "POST":
-        form = QuestionForm(request.POST)
+        form = QuestionForm(request.POST, user=request.user)  # اینجا user را پاس می‌دهیم
         if form.is_valid():
             question = form.save(commit=False)
-            question.user = (
-                request.user
-            )  # Set the logged-in user as the question author
+            question.user = request.user
             question.save()
+            form.save_m2m()  # ذخیره رابطه‌ی many-to-many برچسب‌ها
             messages.success(request, "Your question has been submitted successfully.")
-            # Add labels (if any) after saving the question
-            form.save_m2m()  # Save many-to-many relationships (labels)
             return redirect("question_detail", question_id=question.id)
     else:
-        form = QuestionForm()
+        form = QuestionForm(user=request.user)  # اینجا هم user را پاس می‌دهیم
 
     return render(request, "ask_question.html", {"form": form})
 
 
-# View to create a label
 def create_label(request):
     if request.method == "POST":
         try:
@@ -223,12 +219,17 @@ def create_label(request):
             if not name:
                 return JsonResponse({"error": "Label name is required."}, status=400)
 
-            # Check if the label already exists
+            # بررسی اینکه آیا برای همین کاربر، برچسبی با این نام وجود دارد یا خیر
             label, created = Label.objects.get_or_create(
-                name=name, defaults={"color": color, "is_custom": True}
+                name=name,
+                created_by=request.user,  # مهم!
+                defaults={"color": color, "is_custom": True},
             )
+
             if not created:
-                return JsonResponse({"error": "Label already exists."}, status=400)
+                return JsonResponse(
+                    {"error": "Label already exists for this user."}, status=400
+                )
 
             return JsonResponse(
                 {

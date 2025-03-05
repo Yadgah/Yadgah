@@ -55,12 +55,19 @@ class Label(models.Model):
     Represents a label associated with a question (e.g., category or topic).
     """
 
-    name = models.CharField(max_length=100, unique=True)
-    color = models.CharField(max_length=7, default="#000000")  # Hex color code
-    is_custom = models.BooleanField(default=False)  # Identifies custom labels
+    name = models.CharField(max_length=100)  # دیگر unique=True نباشد
+    color = models.CharField(max_length=7, default="#000000")
+    is_custom = models.BooleanField(default=False)
+    created_by = models.ForeignKey(
+        User, on_delete=models.CASCADE, null=True, blank=True, related_name="labels"
+    )
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        # جلو گیری از تعریف چند برچسب همنام توسط یک کاربر
+        unique_together = ("name", "created_by")
 
 
 class Question(models.Model):

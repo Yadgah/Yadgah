@@ -5,6 +5,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from django.db.models import Q
 
 from .models import Label, News, Question, Reply, UserProfile
 
@@ -132,6 +133,15 @@ class QuestionForm(forms.ModelForm):
         widget=forms.CheckboxSelectMultiple(attrs={"class": "custom-multi-select"}),
         required=False,
     )
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop("user", None)
+        super().__init__(*args, **kwargs)
+        if user:
+            # فقط برچسب‌های عمومی یا برچسب‌هایی که همین کاربر ساخته است.
+            self.fields["labels"].queryset = Label.objects.filter(
+                Q(is_custom=False) | Q(created_by=user)
+            )
 
 
 class ReplyForm(forms.ModelForm):
