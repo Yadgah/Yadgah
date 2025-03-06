@@ -3,10 +3,15 @@
     <title>{{ post.title }}</title>
 </head>
 
-
 {% block content %}
 <h1>{{ post.title }}</h1>
 <p>by {{ post.author }} on {{ post.created_at }}</p>
+
+{% if post.image %}
+    <img src="{{ post.image.url }}" alt="{{ post.title }}">
+{% endif %}
+
 <p>{{ post.body }}</p>
+
 <a href="{% url 'post_list' %}">Back to all posts</a>
 {% endblock %}

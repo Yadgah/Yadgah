@@ -13,10 +13,12 @@ class Post(models.Model):
     published = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    image = models.ImageField(upload_to="posts/", null=True, blank=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.title)
+            # استفاده از allow_unicode=True
+            self.slug = slugify(self.title, allow_unicode=True)
         super().save(*args, **kwargs)
 
     class Meta:

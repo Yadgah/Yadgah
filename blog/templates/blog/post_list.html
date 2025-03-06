@@ -2,9 +2,21 @@
 
 {% block content %}
 <h1>فهرست مقالات</h1>
+
+<a href="/blog/create/">ایجاد مقاله جدید</a>
+
 {% for post in posts %}
-    <h2><a href="{% url 'post_detail' slug=post.slug %}">{{ post.title }}</a></h2>
+    <h2>
+        <a href="{% url 'post_detail' slug=post.slug %}">
+            {{ post.title }}
+        </a>
+    </h2>
     <p>از {{ post.author }} در {{ post.created_at }}</p>
+
+    {% if post.image %}
+        <img src="{{ post.image.url }}" alt="{{ post.title }}">
+    {% endif %}
+
     <p>{{ post.body|truncatewords:30 }}</p>
 {% endfor %}
 {% endblock %}
