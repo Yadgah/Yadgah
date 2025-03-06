@@ -31,6 +31,9 @@ class UserProfile(models.Model):
         self.score += amount
         self.save()
 
+    def ready(self):
+        import myapp.signals
+
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):

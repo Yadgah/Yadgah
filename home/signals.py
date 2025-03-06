@@ -8,6 +8,26 @@ from django.dispatch import receiver
 from .models import Label
 
 register = template.Library()
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
+
+from .models import UserProfile
+
+
+@receiver(pre_save, sender=UserProfile)
+def delete_old_avatar_on_update(sender, instance, **kwargs):
+    # اگر نمونه جدید است (مثلاً هنوز ذخیره نشده)، کاری انجام نده
+    if not instance.pk:
+        return
+
+    try:
+        old_instance = UserProfile.objects.get(pk=instance.pk)
+    except UserProfile.DoesNotExist:
+        return
+
+    # اگر آواتار تغییر کرده باشد، فایل قبلی را حذف کن
+    if old_instance.avatar and old_instance.avatar != instance.avatar:
+        old_instance.avatar.delete(save=False)
 
 
 @register.filter
