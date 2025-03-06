@@ -1,8 +1,9 @@
 import json
-import os
 import re
+from PIL import Image
 from io import BytesIO
-
+import os
+from django.core.files.base import ContentFile
 import jdatetime
 import markdown
 from django.contrib import messages
@@ -12,7 +13,6 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.sessions.models import Session
 from django.core.exceptions import ValidationError
-from django.core.files.base import ContentFile
 from django.core.paginator import EmptyPage, Paginator
 from django.db import models
 from django.db.models import Count, F, FloatField, Q
@@ -26,7 +26,6 @@ from django.http import (
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.safestring import mark_safe
 from django.views.decorators.csrf import csrf_exempt
-from PIL import Image
 
 from blog.models import Post  # برای دسترسی به پست‌ها
 
@@ -165,16 +164,13 @@ def logout_view(request):
 
 # View for user profile
 
-
 @login_required
 def profile_view(request):
     user_profile, _ = UserProfile.objects.get_or_create(user=request.user)
 
     if request.method == "POST":
         user_form = UserForm(request.POST, instance=request.user)
-        profile_form = UserProfileForm(
-            request.POST, request.FILES, instance=user_profile
-        )
+        profile_form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
 
@@ -184,22 +180,18 @@ def profile_view(request):
                 try:
                     img = Image.open(profile_instance.avatar)
 
-                    if img.mode != "RGB":
-                        img = img.convert("RGB")
+                    if img.mode != 'RGB':
+                        img = img.convert('RGB')
 
                     webp_io = BytesIO()
-                    img.save(webp_io, format="WEBP")  # quality=80
+                    img.save(webp_io, format='WEBP')  # quality=80
 
                     webp_content = ContentFile(webp_io.getvalue())
 
-                    filename_without_ext, _ = os.path.splitext(
-                        profile_instance.avatar.name
-                    )
+                    filename_without_ext, _ = os.path.splitext(profile_instance.avatar.name)
                     webp_filename = f"{filename_without_ext}.webp"
 
-                    profile_instance.avatar.save(
-                        webp_filename, webp_content, save=False
-                    )
+                    profile_instance.avatar.save(webp_filename, webp_content, save=False)
                 except Exception as e:
                     print(f"Error converting image to WebP: {e}")
 
@@ -219,6 +211,7 @@ def profile_view(request):
             "profile_form": profile_form,
         },
     )
+
 
 
 # View to list news
