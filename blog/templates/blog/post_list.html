@@ -1,22 +1,38 @@
 {% extends 'base.html' %}
+{% load static custom_filters %}
 
 {% block content %}
-<h1>فهرست مقالات</h1>
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="mb-0">فهرست مقالات</h1>
+        <a href="/blog/create/" class="btn btn-primary">ایجاد مقاله جدید</a>
+    </div>
 
-<a href="/blog/create/">ایجاد مقاله جدید</a>
-
-{% for post in posts %}
-    <h2>
-        <a href="{% url 'post_detail' slug=post.slug %}">
-            {{ post.title }}
-        </a>
-    </h2>
-    <p>از {{ post.author }} در {{ post.created_at }}</p>
-
-    {% if post.image %}
-        <img src="{{ post.image.url }}" alt="{{ post.title }}">
-    {% endif %}
-
-    <p>{{ post.body|truncatewords:30 }}</p>
-{% endfor %}
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for post in posts %}
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div style="overflow:hidden; height:200px;">
+                        {% if post.image %}
+                            <img src="{{ post.image.url }}" class="card-img-top h-100 w-100 object-fit-cover" alt="{{ post.title }}">
+                        {% else %}
+                            <img src="{% static 'images/default-post-image.jpg' %}" class="card-img-top h-100 w-100 object-fit-cover" alt="Default Image">
+                        {% endif %}
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">
+                            <a href="{% url 'post_detail' slug=post.slug %}" class="stretched-link text-decoration-none text-dark">
+                                {{ post.title }}
+                            </a>
+                        </h5>
+                        <p class="card-text text-muted small">از {{ post.author }} در {{ post.created_at|jalali_date }}</p>
+                        <p class="card-text mt-auto">{{ post.body|truncatewords:20 }}</p>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p>هنوز هیچ مقاله‌ای وجود ندارد.</p>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}
