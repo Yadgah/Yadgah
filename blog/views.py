@@ -23,41 +23,32 @@ def post_detail(request, slug):
 @login_required
 def post_create(request):
     if request.method == "POST":
-        # توجه داشته باشید که request.FILES را نیز پاس می‌دهیم
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
 
-            # اگر فایلی آپلود شده باشد (مثلاً تصویر):
-            if post.image:
-                # تصویر آپلودی را با Pillow باز می‌کنیم
-                img = Image.open(post.image)
+            # اگر کاربر فایل تصویر آپلود کرده باشد
+            if "image" in request.FILES:
+                uploaded_file = request.FILES["image"]
+                try:
+                    img = Image.open(uploaded_file)
+                    if img.mode != "RGB":
+                        img = img.convert("RGB")
+                    webp_io = BytesIO()
+                    img.save(webp_io, format="WEBP")
+                    webp_content = ContentFile(webp_io.getvalue())
 
-                # اطمینان پیدا می‌کنیم که حالت رنگی تصویر RGB باشد
-                # (فرمت‌هایی مانند PNG ممکن است RGBA باشند و باید به RGB تبدیل شوند)
-                if img.mode != "RGB":
-                    img = img.convert("RGB")
+                    # تغییر پسوند فایل به .webp
+                    filename_without_ext, _ = os.path.splitext(uploaded_file.name)
+                    webp_filename = f"{filename_without_ext}.webp"
 
-                # یک بافر موقتی در حافظه برای نگهداری داده‌های وب‌پی
-                webp_io = BytesIO()
+                    # ذخیره فایل WebP به جای فایل اصلی
+                    post.image.save(webp_filename, webp_content, save=False)
+                except Exception as e:
+                    print(f"Error converting image to WebP: {e}")
 
-                # ذخیره تصویر در فرمت WebP در بافر
-                img.save(webp_io, format="WEBP")
-
-                # ساخت یک ContentFile از بافر
-                webp_content = ContentFile(webp_io.getvalue())
-
-                # تغییر پسوند فایل به .webp
-                filename_without_ext, _ = os.path.splitext(post.image.name)
-                webp_filename = f"{filename_without_ext}.webp"
-
-                # جایگزینی فایل اصلی با فایل وب‌پی
-                post.image.save(webp_filename, webp_content, save=False)
-
-            # در نهایت پست را ذخیره می‌کنیم
             post.save()
-
             return redirect("post_list")
     else:
         form = PostForm()

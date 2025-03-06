@@ -8,3 +8,4 @@ urlpatterns = [
     # path("<slug:slug>/", post_detail, name="post_detail"),
     re_path(r"^(?P<slug>[\w-]+)/$", post_detail, name="post_detail"),
 ]
+
