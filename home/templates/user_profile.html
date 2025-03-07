@@ -112,8 +112,8 @@
 <div class="container-lg py-4">
   <!-- هدر پروفایل -->
   <div class="profile-header">
-    <div class="d-flex align-items-center position-relative z-2">
-      <div class="avatar-wrapper">
+    <div class="d-flex flex-column flex-md-row align-items-center position-relative z-2">
+      <div class="avatar-wrapper mb-3 mb-md-0">
         {% if profile_user.userprofile.avatar %}
           <img class="avatar" src="{{ profile_user.userprofile.avatar.url }}" alt="آواتار">
         {% else %}
@@ -121,9 +121,9 @@
         {% endif %}
       </div>
 
-      <div class="text-white">
-        <h2 class="h2 mb-2 fw-bold">{{ profile_user.username }}</h1>
-        <div class="d-flex gap-3">
+      <div class="text-white text-center text-md-start">
+        <h2 class="h2 mb-2 fw-bold">{{ profile_user.username }}</h2>
+        <div class="d-flex flex-column flex-md-row gap-3">
           <div>
             <i class="fas fa-envelope me-2"></i>
             {{ profile_user.email }}
@@ -137,7 +137,7 @@
     </div>
 
     <!-- آمارکاردها -->
-    <div class="profile-stats position-relative z-2">
+    <div class="profile-stats position-relative z-2 mt-3">
       <div class="stat-card">
         <div class="stat-value">{{ questions.count }}</div>
         <div class="">سوالات</div>
