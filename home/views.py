@@ -42,8 +42,8 @@ from .models import Label, News, Question, QuestionReaction, Reply, UserProfile
 
 
 # Decorator to restrict access to staff members only
-def staff_member_required(view_func):
-    return user_passes_test(lambda u: u.is_staff)(view_func)
+# def staff_member_required(view_func):
+#     return user_passes_test(lambda u: u.is_staff)(view_func)
 
 
 # Home view to show recent questions and news
@@ -130,10 +130,11 @@ def signup_view(request):
 
             user.save()
             login(request, user)
-            messages.success(request, "Signup successful!")
+            # messages.success(request, "Signup successful!")
             return redirect("index")
         else:
-            messages.error(request, "Please correct the errors below.")
+            # messages.error(request, "Please correct the errors below.")
+            pass
     else:
         form = SignUpForm()
 
@@ -147,10 +148,11 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            messages.success(request, "Login successful!")
+            # messages.success(request, "Login successful!")
             return redirect("index")
         else:
-            messages.error(request, "Invalid username or password.")
+            # messages.error(request, "Invalid username or password.")
+            pass
     else:
         form = LoginForm()
     return render(request, "login.html", {"form": form})
@@ -197,7 +199,7 @@ def profile_view(request):
 
             profile_instance.save()
 
-            messages.success(request, "Profile updated successfully.")
+            # messages.success(request, "Profile updated successfully.")
             return redirect("profile")
     else:
         user_form = UserForm(instance=request.user)
@@ -218,7 +220,8 @@ def profile_view(request):
 def news_list(request):
     news_items = News.objects.filter(is_active=True).order_by("-published_at")
     if not news_items:
-        messages.warning(request, "No news available.")
+        # messages.warning(request, "No news available.")
+        pass
     return render(request, "news/news_list.html", {"news_items": news_items})
 
 
@@ -232,7 +235,7 @@ def ask_question(request):
             question.user = request.user
             question.save()
             form.save_m2m()  # ذخیره رابطه‌ی many-to-many برچسب‌ها
-            messages.success(request, "Your question has been submitted successfully.")
+            # messages.success(request, "Your question has been submitted successfully.")
             return redirect("question_detail", question_id=question.id)
     else:
         form = QuestionForm(user=request.user)  # اینجا هم user را پاس می‌دهیم
@@ -366,9 +369,10 @@ def delete_question(request, question_id):
     # Check if the current user is the author of the question
     if question.user == request.user:
         question.delete()
-        messages.success(request, "سوال با موفقیت حذف شد.")
+        # messages.success(request, "سوال با موفقیت حذف شد.")
     else:
-        messages.error(request, "شما دسترسی پاک کردن ندارید.")
+        # messages.error(request, "شما دسترسی پاک کردن ندارید.")
+        pass
 
     return redirect("index")  # Redirect to home or any o:ther page
 
@@ -405,8 +409,8 @@ def delete_profile(request):
     user_profile = request.user.userprofile
     user_profile.delete()  # Delete user profile
     request.user.delete()  # Delete user account
-    messages.success(request, "Your profile has been successfully deleted.")
-    return redirect("home")  # Redirect to home or any other page
+    # messages.success(request, "Your profile has been successfully deleted.")
+    return redirect("index")  # Redirect to home or any other page
 
 
 @csrf_exempt  # Temporarily for testing; should not be used in production
