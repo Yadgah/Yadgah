@@ -337,16 +337,6 @@ def question_detail(request, question_id):
     )
 
 
-@csrf_exempt
-def edit_reply(request, reply_id):
-    if request.method == "POST":
-        reply = get_object_or_404(Reply, id=reply_id)
-        reply.content = request.POST.get("content")
-        reply.save()
-        return JsonResponse({"success": True})
-    return JsonResponse({"success": False}, status=400)
-
-
 @login_required
 def delete_reply(request, reply_id):
     reply = get_object_or_404(Reply, id=reply_id)
