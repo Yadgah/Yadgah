@@ -13,7 +13,6 @@ from .views import (
     delete_profile,
     delete_question,
     delete_reply,
-    edit_reply,
     explore,
     home_view,
     leaderboard,
@@ -57,7 +56,6 @@ question_urlpatterns = [
         name="toggle_reaction",
     ),
     path("reply/<int:reply_id>/approve/", approve_reply, name="approve_reply"),
-    path("reply/<int:reply_id>/edit/", edit_reply, name="edit_reply"),
     path("reply/<int:reply_id>/delete/", delete_reply, name="delete_reply"),
 ]
 
