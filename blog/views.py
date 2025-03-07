@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from PIL import Image
 
 from .forms import PostForm
-from .models import Post
+from .models import Post, PostSlugHistory
 
 
 def post_list(request):
@@ -16,7 +16,12 @@ def post_list(request):
 
 
 def post_detail(request, slug):
-    post = get_object_or_404(Post, slug=slug, published=True)
+    try:
+        post = Post.objects.get(slug=slug)
+    except Post.DoesNotExist:
+        slug_history = get_object_or_404(PostSlugHistory, slug=slug)
+        post = slug_history.post
+        return redirect("post_detail", slug=post.slug, permanent=True)
     return render(request, "blog/post_detail.html", {"post": post})
 
 
@@ -28,7 +33,6 @@ def post_create(request):
             post = form.save(commit=False)
             post.author = request.user
 
-            # اگر کاربر فایل تصویر آپلود کرده باشد
             if "image" in request.FILES:
                 uploaded_file = request.FILES["image"]
                 try:
@@ -39,11 +43,9 @@ def post_create(request):
                     img.save(webp_io, format="WEBP")
                     webp_content = ContentFile(webp_io.getvalue())
 
-                    # تغییر پسوند فایل به .webp
                     filename_without_ext, _ = os.path.splitext(uploaded_file.name)
                     webp_filename = f"{filename_without_ext}.webp"
 
-                    # ذخیره فایل WebP به جای فایل اصلی
                     post.image.save(webp_filename, webp_content, save=False)
                 except Exception as e:
                     print(f"Error converting image to WebP: {e}")
@@ -54,3 +56,36 @@ def post_create(request):
         form = PostForm()
 
     return render(request, "blog/post_create.html", {"form": form})
+
+
+@login_required
+def post_edit(request, slug):
+    post = get_object_or_404(Post, slug=slug, author=request.user)
+    if request.method == "POST":
+        form = PostForm(request.POST, request.FILES, instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)
+
+            if "image" in request.FILES:
+                uploaded_file = request.FILES["image"]
+                try:
+                    img = Image.open(uploaded_file)
+                    if img.mode != "RGB":
+                        img = img.convert("RGB")
+                    webp_io = BytesIO()
+                    img.save(webp_io, format="WEBP")
+                    webp_content = ContentFile(webp_io.getvalue())
+
+                    filename_without_ext, _ = os.path.splitext(uploaded_file.name)
+                    webp_filename = f"{filename_without_ext}.webp"
+
+                    post.image.save(webp_filename, webp_content, save=False)
+                except Exception as e:
+                    print(f"Error converting image to WebP: {e}")
+
+            post.save()
+            return redirect("post_detail", slug=post.slug)
+    else:
+        form = PostForm(instance=post)
+
+    return render(request, "blog/post_edit.html", {"form": form, "post": post})

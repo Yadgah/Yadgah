@@ -5,7 +5,7 @@ from django.utils.text import slugify
 
 class Post(models.Model):
     title = models.CharField(max_length=200)
-    slug = models.SlugField(unique=True, blank=True)
+    slug = models.SlugField(unique=True, blank=True, allow_unicode=True)
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="blog_posts"
     )
@@ -16,8 +16,11 @@ class Post(models.Model):
     image = models.ImageField(upload_to="posts/", null=True, blank=True)
 
     def save(self, *args, **kwargs):
-        if not self.slug:
-            # استفاده از allow_unicode=True
+        if self.pk and self.title != Post.objects.get(pk=self.pk).title:
+            old_slug = self.slug
+            self.slug = slugify(self.title, allow_unicode=True)
+            PostSlugHistory.objects.create(post=self, slug=old_slug)
+        elif not self.slug:
             self.slug = slugify(self.title, allow_unicode=True)
         super().save(*args, **kwargs)
 
@@ -26,3 +29,14 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class PostSlugHistory(models.Model):
+    post = models.ForeignKey(
+        Post, on_delete=models.CASCADE, related_name="slug_history"
+    )
+    slug = models.SlugField(unique=True, allow_unicode=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.slug

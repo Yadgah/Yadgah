@@ -1,11 +1,17 @@
 {% extends 'base.html' %}
+
 <head>
     <title>{{ post.title }}</title>
 </head>
 
 {% block content %}
 <h1>{{ post.title }}</h1>
-<p>by {{ post.author }} on {{ post.created_at }}</p>
+<a href="{% url 'post_edit' slug=post.slug %}">ویرایش</a>
+<p>
+    نوشته شده توسط
+    <a href="{% url 'user_profile' username=post.author.username %}">{{ post.author }}</a>
+    در تاریخ {{ post.created_at }}
+</p>
 
 {% if post.image %}
     <img src="{{ post.image.url }}" alt="{{ post.title }}">
@@ -13,5 +19,5 @@
 
 <p>{{ post.body }}</p>
 
-<a href="{% url 'post_list' %}">Back to all posts</a>
+<a href="{% url 'post_list' %}">بازگشت به همه پست‌ها</a>
 {% endblock %}
