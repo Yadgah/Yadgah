@@ -255,8 +255,12 @@
         </div>
 
         <div class="reactions">
-            <button class="btn-like" onclick="toggleReaction('like')">لایک ({{ likes_count }})</button>
-            <button class="btn-dislike" onclick="toggleReaction('dislike')">دیس‌لایک ({{ dislikes_count }})</button>
+            <button class="btn-like" onclick="toggleReaction('like')">
+                <img src="{% static 'icons/reaction/like-1-svgrepo-com.svg' %}" alt="Like Icon" width="32" height="32"> {{ likes_count }}
+            </button>
+            <button class="btn-dislike" onclick="toggleReaction('dislike')">
+                <img src="{% static 'icons/reaction/dislike-svgrepo-com.svg' %}" alt="Dislike Icon" width="32" height="32"> {{ dislikes_count }}
+            </button>
         </div>
     </div>
 
