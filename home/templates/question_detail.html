@@ -1,4 +1,8 @@
-{% extends 'base.html' %} {% load custom_filters %} {% block content %} {% load static %}
+{% extends 'base.html' %}
+{% block title %}{{ question.title }}{% endblock %}
+
+{% load custom_filters %} {% block content %} {% load static %}
+
 <style>
     :root {
         --bg-dark: #121212;
@@ -7,45 +11,55 @@
         --accent-green: #69b987;
         --accent-red: #ff5252;
         --text-muted: #bbb;
+        --transition-speed: 0.3s;
     }
 
-      input,
-      textarea {
+    input,
+    textarea {
         width: 100%;
-        padding: 10px;
+        padding: 12px;
         border: 1px solid #555;
-        border-radius: 4px;
+        border-radius: 8px;
         background-color: #2b2b2b;
-        color: #fff;
-      }
+        color: var(--text-primary);
+        font-size: 1rem;
+        transition: border-color var(--transition-speed) ease;
+    }
+
+    input:focus,
+    textarea:focus {
+        border-color: var(--accent-green);
+        outline: none;
+    }
 
     .question-card {
         background-color: var(--bg-card);
         border-radius: 12px;
         box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-        padding: 20px;
-        margin-bottom: 20px;
+        padding: 24px;
+        margin-bottom: 24px;
     }
 
     .question-header {
         display: flex;
         flex-direction: column;
-        gap: 15px;
-        margin-bottom: 15px;
+        gap: 16px;
+        margin-bottom: 16px;
         border-bottom: 1px solid #2c2c2c;
-        padding-bottom: 15px;
+        padding-bottom: 16px;
     }
 
     .question-title {
         color: var(--accent-green);
-        font-size: 1.4rem;
-        margin-bottom: 10px;
+        font-size: 1.6rem;
+        font-weight: 600;
+        margin-bottom: 12px;
     }
 
     .question-metadata {
         display: flex;
         flex-wrap: wrap;
-        gap: 10px;
+        gap: 12px;
         justify-content: space-between;
         align-items: center;
     }
@@ -53,36 +67,36 @@
     .metadata-group {
         display: flex;
         flex-wrap: wrap;
-        gap: 10px;
+        gap: 12px;
         align-items: center;
     }
 
     .metadata-item {
         background-color: #2c2c2c;
-        padding: 5px 10px;
-        border-radius: 6px;
-        font-size: 0.85rem;
+        padding: 6px 12px;
+        border-radius: 8px;
         display: flex;
         align-items: center;
-        gap: 5px;
+        gap: 6px;
+        color: var(--text-muted);
     }
 
     .question-actions {
         display: flex;
         flex-wrap: wrap;
-        gap: 10px;
-        margin-top: 10px;
+        gap: 12px;
+        margin-top: 12px;
     }
 
     .delete-question button {
         background-color: var(--accent-red);
         color: white;
         border: none;
-        border-radius: 6px;
-        padding: 8px 15px;
+        border-radius: 8px;
+        padding: 10px 18px;
         font-weight: bold;
         cursor: pointer;
-        transition: background-color 0.3s ease;
+        transition: background-color var(--transition-speed) ease;
     }
 
     .delete-question button:hover {
@@ -90,27 +104,35 @@
     }
 
     .question-content {
-        margin-bottom: 20px;
+        margin-bottom: 24px;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        color: var(--text-primary);
     }
 
     .reactions {
         display: flex;
-        gap: 10px;
+        gap: 12px;
+        margin-top: 16px;
     }
 
     .reactions button {
         flex: 1;
-        padding: 12px;
+        padding: 14px;
         border: none;
         border-radius: 8px;
         font-weight: bold;
         cursor: pointer;
-        transition: opacity 0.3s ease;
+        transition: opacity var(--transition-speed) ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
     }
 
     .reactions .btn-like {
         background-color: var(--accent-green);
-        color: var(--bg-dark);
+        color: var(--text-primary);
     }
 
     .reactions .btn-dislike {
@@ -123,21 +145,39 @@
     }
 
     .reply-section {
-        margin-top: 20px;
+        margin-top: 24px;
     }
 
     .reply-card {
         background-color: var(--bg-card);
         border-radius: 10px;
-        padding: 15px;
-        margin-bottom: 15px;
+        padding: 16px;
+        margin-bottom: 16px;
+        transition: transform var(--transition-speed) ease;
     }
 
     .reply-form {
         background-color: var(--bg-card);
         border-radius: 10px;
-        padding: 20px;
+        padding: 24px;
     }
+
+    .reply-form h3 {
+        margin-bottom: 16px;
+        font-size: 1.4rem;
+        color: var(--accent-green);
+    }
+
+    .btn-submit {
+        border: none;
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-size: 1rem;
+        cursor: pointer;
+        width: 100%;
+        margin-top: 20px;
+    }
+
 
     /* Mobile Responsiveness */
     @media screen and (max-width: 600px) {
@@ -147,7 +187,6 @@
         }
 
         .question-metadata {
-            flex-direction: column;
             align-items: flex-start;
         }
 
@@ -166,58 +205,15 @@
         }
 
         .reactions button {
-            padding: 15px;
+            padding: 16px;
         }
     }
-    .modal-backdrop {
-        z-index: 1040 !important; /* پس‌زمینه مدال */
-    }
-
-    /* استایل‌های پاپ‌آپ */
-    .modal {
-        position: fixed;
-        z-index: 1050 !important; /* اطمینان از قرارگیری در بالاترین سطح */
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0, 0, 0, 0.5);
-    }
-
-    .modal-content {
-        background-color: var(--bg-card);
-        margin: 15% auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 80%;
-        max-width: 600px;
-        border-radius: 10px;
-    }
-
-    .close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-        cursor: pointer;
-    }
-
-    .close:hover,
-    .close:focus {
-        color: var(--text-primary);
-        text-decoration: none;
-    }
-
-
-
 </style>
 
 <div class="container">
     <div class="question-card">
         <div class="question-header">
             <h2 class="question-title">{{ question.title }}</h2>
-
             <div class="question-metadata">
                 <div class="metadata-group">
                     <div class="metadata-item view-count">
@@ -229,7 +225,6 @@
                         <span>{{ question.created_at|jalali_date }}</span>
                     </div>
                 </div>
-
                 <div class="metadata-group">
                     <div class="metadata-item author">
                         <i class="icon-user"></i>
@@ -239,7 +234,6 @@
                     </div>
                 </div>
             </div>
-
             {% if question.user == user %}
             <div class="question-actions">
                 <form action="{% url 'delete_question' question.id %}" method="POST" class="delete-question">
@@ -249,154 +243,71 @@
             </div>
             {% endif %}
         </div>
-
         <div class="question-content">
             {{ content_as_html|safe }}
         </div>
-
         <div class="reactions">
-            <button class="btn-like" onclick="toggleReaction('like')">
-                <img src="{% static 'icons/reaction/like-1-svgrepo-com.svg' %}" alt="Like Icon" width="32" height="32"> {{ likes_count }}
+            <button class="btn-like" onclick="toggleReaction('like')" aria-label="Like">
+                <img src="{% static 'icons/reaction/like-1-svgrepo-com.svg' %}" alt="Like Icon" width="24" height="24"> {{ likes_count }}
             </button>
-            <button class="btn-dislike" onclick="toggleReaction('dislike')">
-                <img src="{% static 'icons/reaction/dislike-svgrepo-com.svg' %}" alt="Dislike Icon" width="32" height="32"> {{ dislikes_count }}
+            <button class="btn-dislike" onclick="toggleReaction('dislike')" aria-label="Dislike">
+                <img src="{% static 'icons/reaction/dislike-svgrepo-com.svg' %}" alt="Dislike Icon" width="24" height="24"> {{ dislikes_count }}
             </button>
         </div>
     </div>
 
-    <!-- Schema markup for SEO -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "QAPage",
-      "mainEntity": {
-        "@type": "Question",
-        "name": "{{ question.title|escapejs }}",
-        "text": "{{ question.content|striptags|escapejs }}",
-        "author": {
-          "@type": "Person",
-          "name": "{% if question.user and question.user.username %}{{ question.user.username|escapejs }}{% else %}کاربر ناشناس{% endif %}"
-        },
-        "dateCreated": "{{ question.created_at|date:'c' }}",
-        "answerCount": {{ question.replies.count }},
-        "upvoteCount": {{ likes_count }},
-        "downvoteCount": {{ dislikes_count }},
-        {% for reply in question.replies.all %}
-          {% if reply.is_approved %}
-            {% if forloop.first %}"acceptedAnswer": [{% endif %}
-              {
-                "@type": "Answer",
-                "text": "{{ reply.content|striptags|escapejs }}",
-                "author": {
-                  "@type": "Person",
-                  "name": "{% if reply.user and reply.user.username %}{{ reply.user.username|escapejs }}{% else %}کاربر ناشناس{% endif %}"
-                },
-                "dateCreated": "{{ reply.created_at|date:'c' }}"
-              }{% if not forloop.last %},{% endif %}
-            {% if forloop.last %}],{% endif %}
-          {% endif %}
-        {% endfor %}
-        "suggestedAnswer": [
-          {% for reply in question.replies.all %}
-            {% if not reply.is_approved %}
-              {
-                "@type": "Answer",
-                "text": "{{ reply.content|striptags|escapejs }}",
-                "author": {
-                  "@type": "Person",
-                  "name": "{% if reply.user and reply.user.username %}{{ reply.user.username|escapejs }}{% else %}کاربر ناشناس{% endif %}"
-                },
-                "dateCreated": "{{ reply.created_at|date:'c' }}"
-              }{% if not forloop.last %},{% endif %}
-            {% endif %}
-          {% endfor %}
-        ],
-        "publisher": {
-          "@type": "Organization",
-          "name": "یادگاه - Yadgah",
-          "url": "https://yadgah.pythonanywhere.com",
-          "logo": {
-            "@type": "ImageObject",
-            "url": "{% static 'favicon.ico' %}"
-          }
-        }
-      }
-    }
-    </script>
-
-
-    <!-- پاپ‌آپ برای ویرایش پاسخ -->
-    <div id="editReplyModal" class="modal fade" tabindex="-1" aria-labelledby="editReplyModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editReplyModalLabel">ویرایش پاسخ</h5>
-                    <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="بستن"></button> -->
-                </div>
-                <div class="modal-body">
-                    <form id="editReplyForm" method="POST">
-                        {% csrf_token %}
-                        <div class="mb-3">
-                            <!-- <label for="editReplyContent" class="form-label">متن پاسخ:</label> -->
-                            <textarea id="editReplyContent" name="content" class="form-control" rows="4"></textarea>
-                        </div>
-                        <div class="d-flex justify-content-end">
-                            <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">لغو</button>
-                            <button type="submit" class="btn btn-primary">ذخیره تغییرات</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- پاسخ‌ها -->
+    <!-- Replies Section -->
     <div class="reply-section">
         <h3>پاسخ‌ها</h3>
-        {% if question.replies.all %} {% for reply in question.replies.all %}
-        <div class="reply-card {% if reply.is_approved %}approved{% endif %}">
-            <div class="reply-content">
-                {{ reply.get_content_as_html|safe }}
-            </div>
-            <p class="reply-meta">
-                پاسخ توسط: {% if reply.user %}
-                <a href="{% url 'user_profile' reply.user.username %}">{{ reply.user.username }}</a>
-                {% else %} کاربر ناشناس {% endif %} - تاریخ پاسخ: {{ reply.created_at|jalali_date }}
-            </p>
-            {% if reply.is_approved %}
-            <p class="reply-status">این پاسخ تایید شده است.</p>
-            {% else %}
-            <p class="reply-status">منتظر تایید</p>
-            {% if user == question.user %}
-            <form action="{% url 'approve_reply' reply.id %}" method="POST" style="display: inline;">
-                {% csrf_token %}
-                <button class="btn btn-success btn-sm">تایید پاسخ</button>
-            </form>
-            {% endif %} {% endif %}
+        {% if question.replies.all %}
+            {% for reply in question.replies.all %}
+            <div class="reply-card {% if reply.is_approved %}approved{% endif %}">
+                <div class="reply-content">
+                    {{ reply.get_content_as_html|safe }}
+                </div>
+                <p class="reply-meta">
+                    پاسخ توسط: {% if reply.user %}
+                    <a href="{% url 'user_profile' reply.user.username %}">{{ reply.user.username }}</a>
+                    {% else %} کاربر ناشناس {% endif %} - تاریخ پاسخ: {{ reply.created_at|jalali_date }}
+                </p>
 
-            <!-- Edit and Delete reply buttons -->
-            {% if reply.user == user or user.is_staff %}
-            <div class="reply-actions">
-                <a href="#" onclick="openEditModal({{ reply.id }}, '{{ reply.content|escapejs }}')" class="btn btn-warning btn-sm">ویرایش</a>
-                <form action="{% url 'delete_reply' reply.id %}" method="POST" style="display: inline;">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('آیا مطمئن هستید که می‌خواهید این پاسخ را حذف کنید؟')">حذف</button>
-                </form>
+                {% if reply.user == user or user.is_staff %}
+                <div class="reply-actions" style="display: flex; gap: 8px; margin-top: 12px;">
+                    {% if reply.is_approved %}
+                        <p class="reply-status">این پاسخ تایید شده است.</p>
+                    {% else %}
+                        <p class="reply-status">منتظر تایید</p>
+                        {% if user == question.user %}
+                            <form action="{% url 'approve_reply' reply.id %}" method="POST" style="margin: 0;">
+                                {% csrf_token %}
+                                <button class="btn btn-success ">تایید پاسخ</button>
+                            </form>
+                        {% endif %}
+                    {% endif %}
+
+                    {% if reply.user == user or user.is_staff %}
+                        <!-- <a href="#" onclick="openEditModal({{ reply.id }}, '{{ reply.content|escapejs }}')" class="btn btn-warning ">ویرایش</a> -->
+                        <form action="{% url 'delete_reply' reply.id %}" method="POST" style="margin: 0;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger " onclick="return confirm('آیا مطمئن هستید که می‌خواهید این پاسخ را حذف کنید؟')">حذف</button>
+                        </form>
+                    {% endif %}
+                </div>
+                {% endif %}
             </div>
-            {% endif %}
-        </div>
-        {% endfor %} {% else %}
-        <p class="text-muted">هیچ پاسخی برای این سوال ثبت نشده است.</p>
+            {% endfor %}
+        {% else %}
+            <p class="text-muted">هیچ پاسخی برای این سوال ثبت نشده است.</p>
         {% endif %}
     </div>
 
-    <!-- فرم ارسال پاسخ -->
+    <!-- Reply Form -->
     {% if user.is_authenticated %}
     <div class="reply-form">
         <h3>ارسال پاسخ</h3>
         <form method="POST">
             {% csrf_token %} {{ form.as_p }}
-            <button class="btn btn-primary" type="submit">ارسال پاسخ</button>
+            <button class="btn-success btn-submit" type="submit">ارسال پاسخ</button>
         </form>
     </div>
     {% else %}
@@ -420,55 +331,9 @@
         })
             .then((response) => response.json())
             .then((data) => {
-                document.querySelector(".btn-like").innerText = `لایک (${data.likes})`;
-                document.querySelector(".btn-dislike").innerText = `دیس‌لایک (${data.dislikes})`;
+                document.querySelector(".btn-like").innerText = `${data.likes}`;
+                document.querySelector(".btn-dislike").innerText = `${data.dislikes}`;
             });
     }
-
-    // باز کردن پاپ‌آپ
-    function openEditModal(replyId, content) {
-        document.getElementById("editReplyContent").value = content;
-        document.getElementById("editReplyForm").action = `/edit_reply/${replyId}/`;
-
-        // استفاده از Bootstrap 5 برای باز کردن مدال
-        let modal = new bootstrap.Modal(document.getElementById("editReplyModal"));
-        modal.show();
-    }
-
-    // بستن پاپ‌آپ
-    // document.querySelector('.close').onclick = function() {
-    //     document.getElementById('editReplyModal').style.display = 'none';
-    // }
-
-    // بستن پاپ‌آپ وقتی کاربر خارج از آن کلیک می‌کند
-    window.onclick = function (event) {
-        const modal = document.getElementById("editReplyModal");
-        if (event.target === modal) {
-            modal.style.display = "none";
-        }
-    };
-
-    // ارسال فرم به صورت AJAX
-    document.getElementById("editReplyForm").onsubmit = function (event) {
-        event.preventDefault();
-        const form = event.target;
-        const formData = new FormData(form);
-
-        fetch(form.action, {
-            method: "POST",
-            body: formData,
-            headers: {
-                "X-CSRFToken": formData.get("csrfmiddlewaretoken"),
-            },
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.success) {
-                    location.reload(); // یا به‌روزرسانی بخشی از صفحه
-                } else {
-                    alert("خطا در ویرایش پاسخ");
-                }
-            });
-    };
 </script>
 {% endblock %}

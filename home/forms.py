@@ -124,7 +124,7 @@ class QuestionForm(forms.ModelForm):
         fields = ["title", "content", "labels"]
         widgets = {
             "content": forms.Textarea(
-                attrs={"placeholder": "Your question (Markdown supported)", "rows": 5}
+                attrs={"placeholder": "سوال شما (Markdown پشتیبانی میشود.)", "rows": 5}
             ),
         }
 
@@ -154,7 +154,7 @@ class ReplyForm(forms.ModelForm):
         fields = ["content"]
         widgets = {
             "content": forms.Textarea(
-                attrs={"placeholder": "Your reply (Markdown supported)", "size": 2}
+                attrs={"placeholder": "پاسخ شما (Markdown پشتیبانی میشود.)", "size": 2}
             ),
         }
         labels = {"content": ""}
