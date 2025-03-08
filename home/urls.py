@@ -5,7 +5,7 @@ from django.urls import path
 
 from blog.views import post_list
 
-from .sitemaps import QuestionSitemap, StaticViewSitemap
+from .sitemaps import QuestionSitemap, StaticViewSitemap, BlogSitemap
 from .views import (
     approve_reply,
     ask_question,
@@ -35,6 +35,7 @@ from .views import (
 sitemaps = {
     "questions": QuestionSitemap,
     "static": StaticViewSitemap,
+    "blog": BlogSitemap,
 }
 
 # URL patterns grouped by category

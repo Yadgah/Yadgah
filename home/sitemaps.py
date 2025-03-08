@@ -2,7 +2,20 @@ from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
 
 from .models import News, Question
+from blog.models import Post
 
+class BlogSitemap(Sitemap):
+    changefreq = "weekly"
+    priority = 0.7
+
+    def items(self):
+        return Post.objects.all().order_by("-created_at")  # Ensure ordering
+
+    def lastmod(self, obj):
+        return obj.created_at
+
+    def location(self, obj):
+        return reverse("post_detail", args=[str(obj.slug)])
 
 class QuestionSitemap(Sitemap):
     changefreq = "weekly"
@@ -25,11 +38,9 @@ class StaticViewSitemap(Sitemap):
     def items(self):
         return [
             "index",
-            "privacy_policy",
-            "mit_license",
-            "rules",
             "leaderboard",
             "explore",
+            "post_list",
         ]
 
     def location(self, item):
