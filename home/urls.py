@@ -18,7 +18,6 @@ from .views import (
     leaderboard,
     login_view,
     logout_view,
-    mit_license,
     news_list,
     privacy_policy,
     profile_view,
@@ -62,7 +61,6 @@ question_urlpatterns = [
 
 info_urlpatterns = [
     path("privacy-policy/", privacy_policy, name="privacy_policy"),
-    path("mit-license/", mit_license, name="mit_license"),
     path("rules/", rules, name="rules"),
 ]
 

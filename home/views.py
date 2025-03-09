@@ -461,11 +461,6 @@ def approve_reply(request, reply_id):
 def privacy_policy(request):
     return render(request, "privacy_policy.html")
 
-
-def mit_license(request):
-    return render(request, "mit_license.html")
-
-
 def rules(request):
     return render(request, "rules.html")
 
