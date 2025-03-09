@@ -517,3 +517,36 @@ def custom_page_not_found(request, exception):
 
 def custom_error(request):
     return render(request, "500.html", status=500)
+
+@login_required
+def edit_question(request, question_id):
+    question = get_object_or_404(Question, id=question_id)
+    # Only the owner (or staff) can edit the question
+    if request.user != question.user and not request.user.is_staff:
+        return HttpResponseForbidden("You do not have permission to edit this question.")
+
+    if request.method == "POST":
+        form = QuestionForm(request.POST, instance=question)
+        if form.is_valid():
+            form.save()
+            return redirect("question_detail", question_id=question.id)
+    else:
+        form = QuestionForm(instance=question)
+    return render(request, "edit_question.html", {"form": form, "question": question})
+
+
+@login_required
+def edit_reply(request, reply_id):
+    reply = get_object_or_404(Reply, id=reply_id)
+    # Only the owner (or staff) can edit the reply
+    if request.user != reply.user and not request.user.is_staff:
+        return HttpResponseForbidden("You do not have permission to edit this reply.")
+
+    if request.method == "POST":
+        form = ReplyForm(request.POST, instance=reply)
+        if form.is_valid():
+            form.save()
+            return redirect("question_detail", question_id=reply.question.id)
+    else:
+        form = ReplyForm(instance=reply)
+    return render(request, "edit_reply.html", {"form": form, "reply": reply})

@@ -28,6 +28,9 @@ from .views import (
     signup_view,
     toggle_reaction,
     user_profile,
+    edit_question,
+    edit_reply,
+
 )
 
 # Sitemap configuration
@@ -57,6 +60,9 @@ question_urlpatterns = [
     ),
     path("reply/<int:reply_id>/approve/", approve_reply, name="approve_reply"),
     path("reply/<int:reply_id>/delete/", delete_reply, name="delete_reply"),
+
+    path('question/<int:question_id>/edit/', edit_question, name='edit_question'),
+    path('reply/<int:reply_id>/edit/', edit_reply, name='edit_reply'),
 ]
 
 info_urlpatterns = [

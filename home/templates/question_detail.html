@@ -88,7 +88,7 @@
         margin-top: 12px;
     }
 
-    .delete-question button {
+/*    .delete-question button {
         background-color: var(--accent-red);
         color: white;
         border: none;
@@ -97,11 +97,11 @@
         font-weight: bold;
         cursor: pointer;
         transition: background-color var(--transition-speed) ease;
-    }
+    }*/
 
-    .delete-question button:hover {
+/*    .delete-question button:hover {
         background-color: #e34a4a;
-    }
+    }*/
 
     .question-content {
         margin-bottom: 24px;
@@ -236,12 +236,14 @@
             </div>
             {% if question.user == user %}
             <div class="question-actions">
-                <form action="{% url 'delete_question' question.id %}" method="POST" class="delete-question">
+                <a href="{% url 'edit_question' question.id %}" class="btn btn-warning">ویرایش سوال</a>
+                <form action="{% url 'delete_question' question.id %}" method="POST" class="delete-question" style="display:inline;">
                     {% csrf_token %}
-                    <button type="submit">حذف سوال</button>
+                    <button type="submit" class="btn btn-danger">حذف سوال</button>
                 </form>
             </div>
             {% endif %}
+
         </div>
         <div class="question-content">
             {{ content_as_html|safe }}
@@ -280,20 +282,21 @@
                         {% if user == question.user %}
                             <form action="{% url 'approve_reply' reply.id %}" method="POST" style="margin: 0;">
                                 {% csrf_token %}
-                                <button class="btn btn-success ">تایید پاسخ</button>
+                                <button class="btn btn-success">تایید پاسخ</button>
                             </form>
                         {% endif %}
                     {% endif %}
 
-                    {% if reply.user == user or user.is_staff %}
-                        <!-- <a href="#" onclick="openEditModal({{ reply.id }}, '{{ reply.content|escapejs }}')" class="btn btn-warning ">ویرایش</a> -->
-                        <form action="{% url 'delete_reply' reply.id %}" method="POST" style="margin: 0;">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-danger " onclick="return confirm('آیا مطمئن هستید که می‌خواهید این پاسخ را حذف کنید؟')">حذف</button>
-                        </form>
-                    {% endif %}
+                    <!-- Edit button for the reply -->
+                    <a href="{% url 'edit_reply' reply.id %}" class="btn btn-warning">ویرایش</a>
+
+                    <form action="{% url 'delete_reply' reply.id %}" method="POST" style="margin: 0;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('آیا مطمئن هستید که می‌خواهید این پاسخ را حذف کنید؟')">حذف</button>
+                    </form>
                 </div>
                 {% endif %}
+
             </div>
             {% endfor %}
         {% else %}
