@@ -1,10 +1,20 @@
 import re  # Importing the 're' module for regex operations
 
 import jdatetime
+from bs4 import BeautifulSoup
 from django import template
 from django.forms import BoundField
 
 register = template.Library()
+
+
+@register.filter
+def remove_empty_paragraphs(value):
+    soup = BeautifulSoup(value, "html.parser")
+    for p in soup.find_all("p"):
+        if p.get_text(strip=True) == "\xa0":
+            p.extract()
+    return str(soup)
 
 
 @register.filter

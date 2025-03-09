@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}{{ post.title }} - یادگاه{% endblock %}
-
+{% load custom_filters %}
 {% block content %}
 
 <style>
@@ -104,7 +104,7 @@
 
     <!-- Post Body -->
     <div class="post-body">
-        <p>{{ post.body }}</p>
+        <p>{{ post.body|remove_empty_paragraphs|safe }}</p>
     </div>
 
 

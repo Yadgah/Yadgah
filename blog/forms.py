@@ -1,4 +1,5 @@
 from django import forms
+from django_ckeditor_5.widgets import CKEditor5Widget
 
 from .models import Post
 
@@ -8,10 +9,5 @@ class PostForm(forms.ModelForm):
         model = Post
         fields = ("title", "body", "published", "image")
         widgets = {
-            "body": forms.Textarea(
-                attrs={
-                    "placeholder": "محتوای شما (Markdown پشتیبانی میشود.)",
-                    "rows": 8,
-                }
-            ),
+            "body": CKEditor5Widget(config_name="default"),
         }

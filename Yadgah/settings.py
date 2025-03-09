@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "bootstrap5",
     "home",
     "blog",
+    "django_ckeditor_5",
 ]
 
 MIDDLEWARE = [
@@ -146,3 +147,80 @@ LOGIN_URL = "/login/"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 # -------------------------------------------------------------------------
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+CKEDITOR_5_CONFIGS = {
+    "default": {
+        "language": "fa",  # یا 'ar' ب
+        "toolbar": {
+            "items": [
+                "heading",
+                "|",
+                "bold",
+                "italic",
+                "link",
+                "bulletedList",
+                "numberedList",
+                "blockQuote",
+                "imageUpload",
+            ],
+        },
+        "image": {
+            "toolbar": [
+                "imageTextAlternative",
+                "|",
+                "imageStyle:alignLeft",
+                "imageStyle:alignRight",
+                "imageStyle:alignCenter",
+                "imageStyle:side",
+                "|",
+            ],
+            "styles": [
+                "full",
+                "side",
+                "alignLeft",
+                "alignRight",
+                "alignCenter",
+            ],
+        },
+        "heading": {
+            "options": [
+                {
+                    "model": "paragraph",
+                    "title": "Paragraph",
+                    "class": "ck-heading_paragraph",
+                },
+                {
+                    "model": "heading2",
+                    "view": "h2",
+                    "title": "Heading 2",
+                    "class": "ck-heading_heading2",
+                },
+                {
+                    "model": "heading3",
+                    "view": "h3",
+                    "title": "Heading 3",
+                    "class": "ck-heading_heading3",
+                },
+                {
+                    "model": "heading4",
+                    "view": "h4",
+                    "title": "Heading 4",
+                    "class": "ck-heading_heading4",
+                },
+                {
+                    "model": "heading5",
+                    "view": "h5",
+                    "title": "Heading 5",
+                    "class": "ck-heading_heading5",
+                },
+                {
+                    "model": "heading6",
+                    "view": "h6",
+                    "title": "Heading 6",
+                    "class": "ck-heading_heading6",
+                },
+            ]
+        },
+        "remove_empty": True,
+    },
+}
