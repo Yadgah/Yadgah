@@ -1,4 +1,5 @@
 {% extends 'base.html' %} {% block content %} {% load custom_filters %}
+
 <style>
   /* General styles for dark theme */
   body {
@@ -44,19 +45,6 @@
     border-radius: 10px;
     padding: 15px;
   }
-
-  /* Style for circular date box */
-  /*.date-box {
-    width: 45px;
-    height: 130px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    color: #bbbbbb;
-    text-align: center;
-    margin-right: -25px;
-  }*/
 
   /* Style for labels */
   .label {
@@ -109,130 +97,92 @@
     align-items: center;
   }
 </style>
-
 <div class="container my-4">
   <div class="row">
     <!-- News Section (Sidebar on the right) -->
     <div class="col-md-4 mb-4">
       <div class="news-section shadow-box p-4 rounded">
-        <h2>اخبار جدید</h2>
-        {% if news_items %} {% for news in news_items %}
-        <div class="card mb-3">
+        <h2>اخبار جدید</h2> {% if news_items %} {% for news in news_items %} <div class="card mb-3">
           <div class="card-body">
             <h5 class="card-title">{{ news.title }}</h5>
             <p class="card-text">{{ news.content|truncatewords:20 }}</p>
-            <p class="text-muted small">
-              تاریخ انتشار: {{ news.published_at|jalali_date }}
+            <p class="text-muted small"> تاریخ انتشار: {{ news.published_at|jalali_date }}
             </p>
           </div>
-        </div>
-        {% endfor %} {% else %}
-        <p>هیچ خبری در حال حاضر موجود نیست.</p>
-        {% endif %}
+        </div> {% endfor %} {% else %} <p>هیچ خبری در حال حاضر موجود نیست.</p> {% endif %}
       </div>
     </div>
     <!-- Main Content Section -->
     <div class="col-md-8">
       <div class="main-content shadow-box p-4 rounded">
         <div class="d-flex justify-content-between align-items-center mb-4">
-          <h2>سوالات اخیر</h2>
-          {% if user.is_authenticated %}
-          <a href="{% url 'ask_question' %}" class="btn btn-success"
-            >پرسیدن سوال</a
-          >
-          {% else %}
-          <br>
-          <a href="{% url 'login' %}">پرسیدن سوال</a>
-          {% endif %}
+          <h2>سوالات اخیر</h2> {% if user.is_authenticated %} <a href="{% url 'ask_question' %}" class="btn btn-success">پرسیدن سوال</a> {% else %} <br>
+          <a href="{% url 'login' %}">پرسیدن سوال</a> {% endif %}
         </div>
-        <div id="recent-questions">
-          {% if questions %} {% for question in questions %}
-          <div class="d-flex mb-4 align-items-start">
+        <div id="recent-questions"> {% if questions %} {% for question in questions %} <div class="d-flex mb-4 align-items-start">
             <div class="d-flex align-items-center">
-              <!-- <div class="date-box">
-                <span>{{ question.created_at|jalali_date|slice:":10" }}</span>
-              </div> -->
+              <!-- <div class="date-box"><span>{{ question.created_at|jalali_date|slice:":10" }}</span></div> -->
             </div>
-            <div class="card flex-grow-1">
-              <div class="card-body">
-                <h5 class="card-title">
-                  <a
-                    href="{% url 'question_detail' question.id %}"
-                    class="text-decoration-none text-primary"
-                    >{{ question.title }}</a
-                  >
-                </h5>
-                <p class="card-text">
-                  {{ question.content|striptags|truncatewords:20 }}
-                </p>
-                <span>{{ question.created_at|jalali_date|slice:":10" }}</span>
-                <div class="mt-2">
-                  {% for label in question.labels.all %}
-                  <span
-                    class="label"
-                    style="background-color: {{ label.color }}"
-                    >{{ label.name }}</span
-                  >
-                  {% endfor %}
-                </div>
-              </div>
+            <div class="card-body">
+              <h5 class="card-title">
+                <a href="{% url 'question_detail' question.id %}" class="text-decoration-none text-primary">{{ question.title }}</a>
+              </h5>
+              <p class="card-text">
+                {{ question.content|striptags|truncatewords:20 }}
+              </p>
+              <span>{{ question.created_at|jalali_date|slice:":10" }}</span>
+              <div class="mt-2"> {% for label in question.labels.all %} <span class="label" style="background-color: {{ label.color }}">{{ label.name }}</span> {% endfor %} </div>
             </div>
-          </div>
-          {% endfor %} {% else %}
-          <p>هیچ سوالی ارسال نشده است.</p>
-          {% endif %}
-        </div>
-        <div class="load-more__btn">
-          {% if show_load_more %}
-              <button id="load-more" class="btn btn-primary">بارگذاری بیشتر</button>
-          {% endif %}
-        </div>
+          </div> {% endfor %} {% else %} <p>هیچ سوالی ارسال نشده است.</p> {% endif %} </div>
+        <div class="load-more__btn"> {% if show_load_more %} <button id="load-more" class="btn btn-primary">بارگذاری بیشتر</button> {% endif %} </div>
       </div>
     </div>
   </div>
 </div>
 <script>
   $(document).ready(function() {
-      let page = 2;
-      $('#load-more').click(function() {
-          $.ajax({
-              url: `/?page=${page}`,
-              dataType: 'json',
-              headers: {
-                  'X-Requested-With': 'XMLHttpRequest'
-              },
-              success: function(response) {
-                  if (response.questions.length > 0) {
-                      response.questions.forEach(function(question) {
-                          let questionHtml = `
-                              <div class="d-flex mb-4 align-items-start">
-                                  <div class="d-flex align-items-center"></div>
-                                  <div class="card flex-grow-1">
-                                      <div class="card-body">
-                                          <h5 class="card-title">
-                                              <a href="${question.url}" class="text-decoration-none text-primary">${question.title}</a>
-                                          </h5>
-                                          <p class="card-text">${question.content}</p>
-                                          <span>${question.created_at}</span> <!-- تاریخ شمسی -->
-                                          <div class="mt-2">
-                                              ${question.labels.map(label => `<span class="label" style="background-color: ${label.color}">${label.name}</span>`).join('')}
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>
-                          `;
-                          $('#recent-questions').append(questionHtml);
-                      });
-                      page++;
-                  }
+    let page = 2;
+    $('#load-more').click(function() {
+      $.ajax({
+        url: `/?page=${page}`,
+        dataType: 'json',
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest'
+        },
+        success: function(response) {
+          if (response.questions.length > 0) {
+            response.questions.forEach(function(question) {
+              let questionHtml = `
 
-                  if (!response.has_next) {
-                      $('#load-more').hide();
-                  }
-              }
-          });
+    <div class="d-flex mb-4 align-items-start">
+      <div class="d-flex align-items-center"></div>
+      <div class="card flex-grow-1">
+        <div class="card-body">
+          <h5 class="card-title">
+            <a href="${question.url}" class="text-decoration-none text-primary">${question.title}</a>
+          </h5>
+          <p class="card-text">${question.content}</p>
+          <span>${question.created_at}</span>
+          <!-- تاریخ شمسی -->
+          <div class="mt-2">
+                                               ${question.labels.map(label => `
+            <span class="label" style="background-color: ${label.color}">${label.name}</span>`).join('')}
+
+          </div>
+        </div>
+      </div>
+    </div>
+                           `;
+              $('#recent-questions').append(questionHtml);
+            });
+            page++;
+          }
+          if (!response.has_next) {
+            $('#load-more').hide();
+          }
+        }
       });
+    });
   });
-
 </script>
 {% endblock %}
