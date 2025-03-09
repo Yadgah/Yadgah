@@ -1,8 +1,10 @@
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
 
-from .models import News, Question
 from blog.models import Post
+
+from .models import News, Question
+
 
 class BlogSitemap(Sitemap):
     changefreq = "weekly"
@@ -16,6 +18,7 @@ class BlogSitemap(Sitemap):
 
     def location(self, obj):
         return reverse("post_detail", args=[str(obj.slug)])
+
 
 class QuestionSitemap(Sitemap):
     changefreq = "weekly"

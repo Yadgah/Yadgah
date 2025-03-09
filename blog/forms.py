@@ -9,6 +9,9 @@ class PostForm(forms.ModelForm):
         fields = ("title", "body", "published", "image")
         widgets = {
             "body": forms.Textarea(
-                attrs={"placeholder": "محتوای شما (Markdown پشتیبانی میشود.)", "rows": 8}
+                attrs={
+                    "placeholder": "محتوای شما (Markdown پشتیبانی میشود.)",
+                    "rows": 8,
+                }
             ),
         }

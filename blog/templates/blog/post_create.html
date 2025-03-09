@@ -146,17 +146,17 @@
         <div class="col-md-8 col-lg-6">
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
-                
+
                 <div class="mb-3">
                     <label for="id_title" class="form-label">عنوان</label>
                     {{ form.title }}
                 </div>
-                
+
                 <div class="mb-3">
                     <label for="id_content" class="form-label">محتوا</label>
                     {{ form.body }}
                 </div>
-                
+
                 <div class="mb-3">
                     <label for="id_content" class="form-label">منتشر شود؟</label>
                     {{ form.published }}
@@ -166,7 +166,7 @@
                     <label for="id_image" class="form-label">تصویر</label>
                     {{ form.image }}
                 </div>
-                
+
                 <button type="submit" class="btn btn-success btn-submit">ارسال</button>
             </form>
         </div>
