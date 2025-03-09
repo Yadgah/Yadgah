@@ -150,26 +150,25 @@
 </style>
 
 <div class="container mt-5">
-    <h1 class="text-center mb-4">Create New Post</h1>
     <div class="row justify-content-center">
         <div class="col-md-12 col-lg-12">
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form.media }}
                 <div class="mb-3">
-                    <label for="id_title" class="form-label">Title</label>
+                    <label for="id_title" class="form-label">تیتر</label>
                     {{ form.title }}
                 </div>
                 <div class="mb-3">
-                    <label for="id_body" class="form-label">Content</label>
+                    <label for="id_body" class="form-label">محتوا</label>
                     {{ form.body }}
                 </div>
                 <div class="mb-3">
-                    <label for="id_published" class="form-label">Publish?</label>
+                    <label for="id_published" class="form-label">منتشر شود؟</label>
                     {{ form.published }}
                 </div>
                 <div class="mb-3">
-                    <label for="id_image" class="form-label">Image</label>
+                    <label for="id_image" class="form-label">تصویر شاخص</label>
                     {{ form.image }}
                 </div>
                 <button type="submit" class="btn btn-success btn-submit">Submit</button>
