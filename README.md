@@ -88,60 +88,82 @@ Automated workflows include:
 
 ```
 .
+├── blog
+│   ├── admin.py
+│   ├── apps.py
+│   ├── forms.py
+│   ├── __init__.py
+│   ├── models.py
+│   ├── signals.py
+│   ├── templates
+│   │   ├── base.html
+│   │   └── blog
+│   │       ├── post_create.html
+│   │       ├── post_detail.html
+│   │       ├── post_edit.html
+│   │       └── post_list.html
+│   ├── tests.py
+│   ├── urls.py
+│   └── views.py
 ├── CHANGELOG.md
 ├── db.sqlite3
-├── doc/
-│   ├── Screenshot 2025-02-07 at 19-26-06 yadgah.pythonanywhere.com Website SEO Review Seobility.net.png
-│   ├── Screenshot 2025-02-07 at 19-26-56 SEO Audit for yadgah.pythonanywhere.com - SEOptimer.png
-│   └── Screenshot 2025-02-07 at 19-27-18 yadgah.pythonanywhere.com SEO Report SEO Site Checkup.png
 ├── favicon.ico
-├── home/
-│   ├── admin.py
-│   ├── apps.py
-│   ├── forms.py
-│   ├── __init__.py
-│   ├── models.py
-│   ├── __pycache__/
-│   ├── signals.py
-│   ├── sitemaps.py
-│   ├── static/
-│   ├── templates/
-│   │   ├── ask_question.html
-│   │   ├── base.html
-│   │   ├── edit_reply.html
-│   │   ├── explore.html
-│   │   ├── index.html
-│   │   ├── leaderboard.html
-│   │   ├── login.html
-│   │   ├── mit_license.html
-│   │   ├── news/
-│   │   │   ├── create_news.html
-│   │   │   └── edit_news.html
-│   │   ├── privacy_policy.html
-│   │   ├── profile.html
-│   │   ├── question_detail.html
-│   │   ├── rules.html
-│   │   ├── search_results.html
-│   │   ├── signup.html
-│   │   └── user_profile.html
-│   ├── templatetags/
-│   ├── tests.py
-│   ├── urls.py
-│   └── views.py
+├── home
+│   ├── admin.py
+│   ├── apps.py
+│   ├── forms.py
+│   ├── __init__.py
+│   ├── models.py
+│   ├── signals.py
+│   ├── sitemaps.py
+│   ├── static
+│   │   ├── default-avatar.png
+│   │   ├── favicon.ico
+│   │   ├── icons
+│   │   │   ├── menu-svgrepo-com.svg
+│   │   │   ├── reaction
+│   │   │   │   ├── dislike-svgrepo-com.svg
+│   │   │   │   └── like-1-svgrepo-com.svg
+│   │   │   └── search-svgrepo-com.svg
+│   │   ├── images
+│   │   │   └── default-post-image.jpg
+│   │   └── thumbnail.png
+│   ├── templates
+│   │   ├── 404.html
+│   │   ├── 500.html
+│   │   ├── ask_question.html
+│   │   ├── base.html
+│   │   ├── edit_question.html
+│   │   ├── edit_reply.html
+│   │   ├── explore.html
+│   │   ├── index.html
+│   │   ├── leaderboard.html
+│   │   ├── login.html
+│   │   ├── privacy_policy.html
+│   │   ├── profile.html
+│   │   ├── question_detail.html
+│   │   ├── rules.html
+│   │   ├── search_results.html
+│   │   ├── signup.html
+│   │   └── user_profile.html
+│   ├── templatetags
+│   │   ├── custom_filters.py
+│   │   └── __init__.py
+│   ├── tests.py
+│   ├── urls.py
+│   └── views.py
 ├── LICENSE
 ├── manage.py
-├── media/
-│   └── avatars/
 ├── pyproject.toml
 ├── README.md
 ├── requirements.txt
-└── Yadgah/
+└── Yadgah
     ├── asgi.py
     ├── __init__.py
-    ├── __pycache__/
     ├── settings.py
     ├── urls.py
     └── wsgi.py
+
 ```
 
 ---
