@@ -456,12 +456,15 @@ def approve_reply(request, reply_id):
         reply.is_approved = True
         reply.save()
 
-        # به روزرسانی امتیاز کاربر (صاحب سوال)
-        user_profile = reply.question.user.userprofile
-        user_profile.score += 10  # فرض بر اینکه 10 امتیاز داده می‌شود
-        user_profile.save()
+        # چک می‌کنیم که آیا کاربر تایید کننده همان صاحب سوال است یا نه
+        if reply.user != reply.question.user:
+            # به روزرسانی امتیاز کاربر (صاحب سوال) فقط اگر صاحب سوال پاسخ را تایید نکرده باشد
+            user_profile = reply.question.user.userprofile
+            user_profile.score += 10  # فرض بر اینکه 10 امتیاز داده می‌شود
+            user_profile.save()
 
     return redirect("question_detail", question_id=reply.question.id)
+
 
 
 def privacy_policy(request):

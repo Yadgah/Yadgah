@@ -8,7 +8,7 @@ from PIL import Image
 
 from .forms import PostForm
 from .models import Post, PostSlugHistory
-
+from home.models import UserProfile
 
 def post_list(request):
     posts = Post.objects.filter(published=True).order_by("-created_at")
@@ -33,6 +33,7 @@ def post_create(request):
             post = form.save(commit=False)
             post.author = request.user
 
+            # Handle image conversion to WebP format if provided
             if "image" in request.FILES:
                 uploaded_file = request.FILES["image"]
                 try:
@@ -51,6 +52,12 @@ def post_create(request):
                     print(f"Error converting image to WebP: {e}")
 
             post.save()
+
+            # Increase score if the post is published
+            if post.published:
+                user_profile = UserProfile.objects.get(user=request.user)
+                user_profile.increase_score(10)
+
             return redirect("post_list")
     else:
         form = PostForm()
@@ -66,6 +73,7 @@ def post_edit(request, slug):
         if form.is_valid():
             post = form.save(commit=False)
 
+            # پردازش تصویر و تبدیل به WebP (در صورت ارسال)
             if "image" in request.FILES:
                 uploaded_file = request.FILES["image"]
                 try:
@@ -83,9 +91,15 @@ def post_edit(request, slug):
                 except Exception as e:
                     print(f"Error converting image to WebP: {e}")
 
+            # اگر وضعیت پست از "پیش‌نویس" به "منتشر شده" تغییر کرده باشد، امتیاز کاربر را افزایش بده
+            if post.published and not post.pk:  # بررسی اولین بار انتشار
+                user_profile = UserProfile.objects.get(user=request.user)
+                user_profile.increase_score(10)
+
             post.save()
             return redirect("post_detail", slug=post.slug)
     else:
         form = PostForm(instance=post)
 
     return render(request, "blog/post_edit.html", {"form": form, "post": post})
+
