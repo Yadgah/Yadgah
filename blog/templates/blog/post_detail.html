@@ -91,7 +91,9 @@
                 <a href="{% url 'user_profile' username=post.author.username %}" class="author-link">{{ post.author }}</a>
                 در تاریخ {{ post.created_at }}
             </span>
-            <a href="{% url 'post_edit' slug=post.slug %}" class="btn-success edit-button">ویرایش</a>
+            {% if request.user == post.author %}
+                <a href="{% url 'post_edit' slug=post.slug %}" class="btn-success edit-button">ویرایش</a>
+            {% endif %}
         </div>
     </header>
 
