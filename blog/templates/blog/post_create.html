@@ -159,6 +159,10 @@
                     <label for="id_title" class="form-label">تیتر</label>
                     {{ form.title }}
                 </div>
+		<div class="mb-3">
+		    <label for="id_title" class="form-label">آدرس مقاله</label>
+                    {{ form.slug }}
+                </div>
                 <div class="mb-3">
                     <label for="id_body" class="form-label">محتوا</label>
                     {{ form.body }}
@@ -178,3 +182,4 @@
 </div>
 
 {% endblock %}
+
