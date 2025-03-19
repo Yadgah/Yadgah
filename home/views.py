@@ -466,7 +466,6 @@ def approve_reply(request, reply_id):
     return redirect("question_detail", question_id=reply.question.id)
 
 
-
 def privacy_policy(request):
     return render(request, "privacy_policy.html")
 

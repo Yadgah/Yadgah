@@ -6,9 +6,11 @@ from django.core.files.base import ContentFile
 from django.shortcuts import get_object_or_404, redirect, render
 from PIL import Image
 
+from home.models import UserProfile
+
 from .forms import PostForm
 from .models import Post, PostSlugHistory
-from home.models import UserProfile
+
 
 def post_list(request):
     posts = Post.objects.filter(published=True).order_by("-created_at")
@@ -102,4 +104,3 @@ def post_edit(request, slug):
         form = PostForm(instance=post)
 
     return render(request, "blog/post_edit.html", {"form": form, "post": post})
-
