@@ -73,7 +73,6 @@ Yadgah follows best coding practices to ensure maintainability and quality.
 
 - **Code Linting:** `flake8` for Python.
 - **Pre-commit Hooks:** Automates code checks before commits.
-- **Frontend Formatting:** `prettier` for consistent styling.
 
 ### GitHub Actions Workflows
 Automated workflows include:
