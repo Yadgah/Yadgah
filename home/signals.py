@@ -2,16 +2,12 @@ import re
 
 import jdatetime
 from django import template
-from django.db.models.signals import post_migrate
+from django.db.models.signals import post_migrate, pre_save
 from django.dispatch import receiver
 
-from .models import Label
+from .models import Label, UserProfile
 
 register = template.Library()
-from django.db.models.signals import pre_save
-from django.dispatch import receiver
-
-from .models import UserProfile
 
 
 @receiver(pre_save, sender=UserProfile)
