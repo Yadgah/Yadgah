@@ -224,3 +224,9 @@ CKEDITOR_5_CONFIGS = {
         "remove_empty": True,
     },
 }
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
+}

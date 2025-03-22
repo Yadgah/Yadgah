@@ -2,6 +2,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
 from django.urls import path
+from rest_framework_simplejwt.views import TokenRefreshView
 
 from blog.views import post_list
 
@@ -18,6 +19,7 @@ from .views import (
     explore,
     home_view,
     leaderboard,
+    login_api,
     login_view,
     logout_view,
     news_list,
@@ -27,6 +29,7 @@ from .views import (
     robots_txt,
     rules,
     search_view,
+    signup_api,
     signup_view,
     toggle_reaction,
     user_profile,
@@ -86,12 +89,22 @@ general_urlpatterns = [
     path("blog/", post_list, name="blog"),
 ]
 
+api_urlpatterns = [
+    path("api/signup/", signup_api, name="signup_api"),
+    path("api/login/", login_api, name="login_api"),
+    path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+]
+
 handler404 = "home.views.custom_page_not_found"
 handler500 = "home.views.custom_error"
 
 # Combine all URL patterns
 urlpatterns = (
-    user_urlpatterns + question_urlpatterns + info_urlpatterns + general_urlpatterns
+    user_urlpatterns
+    + question_urlpatterns
+    + info_urlpatterns
+    + general_urlpatterns
+    + api_urlpatterns
 )
 
 # Serve media files during development
