@@ -10,8 +10,12 @@
     </div>
     <div class="mb-3">
       <label for="id_password" class="form-label">رمز عبور</label>
-      {{ form.password|add_class:"form-control" }}
-    </div>
+      <div class="position-relative">
+        {{ form.password|add_class:"form-control" }}
+        <span class="position-absolute start-0 top-50 translate-middle-y p-2" style="cursor: pointer; color: black;" onclick="togglePassword()">
+          <i class="bi bi-eye" id="togglePasswordIcon"></i>
+        </span>
+      </div>    </div>
     <div class="d-grid gap-2">
       <button type="submit" class="btn btn-primary">ورود</button>
     </div>
@@ -27,4 +31,21 @@
   </div>
   {% endif %}
 </div>
+
+<script>
+  function togglePassword() {
+      const passwordField = document.querySelector('#id_password');
+      const toggleIcon = document.querySelector('#togglePasswordIcon');
+      if (passwordField.type === 'password') {
+          passwordField.type = 'text';
+          toggleIcon.classList.remove('bi-eye');
+          toggleIcon.classList.add('bi-eye-slash');
+      } else {
+          passwordField.type = 'password';
+          toggleIcon.classList.remove('bi-eye-slash');
+          toggleIcon.classList.add('bi-eye');
+      }
+  }
+  </script>
+
 {% endblock %}
