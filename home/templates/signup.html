@@ -51,7 +51,12 @@
     </div>
     <div class="mb-3">
       <label for="{{ form.password.id_for_label }}" class="form-label">رمز عبور</label>
-      {{ form.password|add_class:"form-control" }}
+      <div class="position-relative">
+        {{ form.password|add_class:"form-control" }}
+        <span class="position-absolute start-0 top-50 translate-middle-y p-2" style="cursor: pointer; color: black;" onclick="togglePassword()">
+          <i class="bi bi-eye" id="togglePasswordIcon"></i>
+        </span>
+      </div>
       <small class="text-muted">رمز باید شامل حداقل ۸ کاراکتر و عدد باشد.</small>
     </div>
     <!-- <div class="mb-3">
@@ -66,5 +71,21 @@
     </div>
   </form>
 </div>
+
+<script>
+  function togglePassword() {
+      const passwordField = document.querySelector('#id_password');
+      const toggleIcon = document.querySelector('#togglePasswordIcon');
+      if (passwordField.type === 'password') {
+          passwordField.type = 'text';
+          toggleIcon.classList.remove('bi-eye');
+          toggleIcon.classList.add('bi-eye-slash');
+      } else {
+          passwordField.type = 'password';
+          toggleIcon.classList.remove('bi-eye-slash');
+          toggleIcon.classList.add('bi-eye');
+      }
+  }
+  </script>
 
 {% endblock %}
