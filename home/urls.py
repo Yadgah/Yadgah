@@ -1,3 +1,5 @@
+from itertools import chain
+
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
@@ -99,12 +101,14 @@ handler404 = "home.views.custom_page_not_found"
 handler500 = "home.views.custom_error"
 
 # Combine all URL patterns
-urlpatterns = (
-    user_urlpatterns
-    + question_urlpatterns
-    + info_urlpatterns
-    + general_urlpatterns
-    + api_urlpatterns
+urlpatterns = list(
+    chain(
+        user_urlpatterns,
+        question_urlpatterns,
+        info_urlpatterns,
+        general_urlpatterns,
+        api_urlpatterns,
+    )
 )
 
 # Serve media files during development
