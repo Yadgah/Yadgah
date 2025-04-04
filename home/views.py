@@ -602,7 +602,8 @@ def signup_api(request):
 
     user = User.objects.create_user(username=username, email=email, password=password)
     return Response(
-        {"message": "User registered successfully."}, status=status.HTTP_201_CREATED
+        {"message": f"User {user.username} registered successfully."},
+        status=status.HTTP_201_CREATED,
     )
 
 
