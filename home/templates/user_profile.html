@@ -247,7 +247,7 @@
             </div>
           {% endif %}
         </div>
-
+        {% if user.is_authenticated %}
         <!-- پیش‌نویس‌ها -->
         <div class="col-md-6">
           <h4 class="text-white mb-3">
@@ -276,6 +276,7 @@
             </div>
           {% endif %}
         </div>
+        {% endif %}
       </div>
     </div>
 

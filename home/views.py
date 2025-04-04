@@ -390,7 +390,9 @@ def user_profile(request, username):
 
     # 4. واکشی پست‌های منتشرشده و منتشرنشده کاربر
     published_posts = Post.objects.filter(author=user, published=True)
-    unpublished_posts = Post.objects.filter(author=user, published=False)
+    unpublished_posts = []
+    if request.user.is_authenticated:
+        unpublished_posts = Post.objects.filter(author=request.user, published=False)
 
     # 5. رندر تمپلیت به همراه کانتکست مورد نیاز
     context = {
