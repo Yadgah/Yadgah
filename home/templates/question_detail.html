@@ -217,8 +217,8 @@
             <div class="question-metadata">
                 <div class="metadata-group">
                     <div class="metadata-item view-count">
-                        <i class="icon-eye"></i>
-                        <span>{{ view_count }} بازدید</span>
+                        <i class="bi bi-eye" id="toggleViewIcon" style="cursor: pointer;"></i>
+                        <span id="viewCountText">{{ view_count }} بازدید</span>
                     </div>
                     <div class="metadata-item creation-date">
                         <i class="icon-calendar"></i>
@@ -338,5 +338,19 @@
                 document.querySelector(".btn-dislike").innerText = `${data.dislikes}`;
             });
     }
+    const toggleViewIcon = document.getElementById('toggleViewIcon');
+    const viewCountText = document.getElementById('viewCountText');
+
+    toggleViewIcon.addEventListener('click', () => {
+        if (viewCountText.style.display === 'none') {
+            viewCountText.style.display = 'inline';
+            toggleViewIcon.classList.remove('bi-eye-slash');
+            toggleViewIcon.classList.add('bi-eye');
+        } else {
+            viewCountText.style.display = 'none';
+            toggleViewIcon.classList.remove('bi-eye');
+            toggleViewIcon.classList.add('bi-eye-slash');
+        }
+    });
 </script>
 {% endblock %}
