@@ -88,21 +88,6 @@
         margin-top: 12px;
     }
 
-/*    .delete-question button {
-        background-color: var(--accent-red);
-        color: white;
-        border: none;
-        border-radius: 8px;
-        padding: 10px 18px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: background-color var(--transition-speed) ease;
-    }*/
-
-/*    .delete-question button:hover {
-        background-color: #e34a4a;
-    }*/
-
     .question-content {
         margin-bottom: 24px;
         font-size: 1.1rem;
@@ -146,14 +131,6 @@
 
     .reply-section {
         margin-top: 24px;
-    }
-
-    .reply-card {
-        background-color: var(--bg-card);
-        border-radius: 10px;
-        padding: 16px;
-        margin-bottom: 16px;
-        transition: transform var(--transition-speed) ease;
     }
 
     .reply-form {
@@ -207,6 +184,68 @@
         .reactions button {
             padding: 16px;
         }
+    }
+
+    .reply-card {
+        background-color: var(--bg-card);
+        border-radius: 10px;
+        padding: 16px 16px 56px; /* پایین رو بیشتر کردیم برای جای دکمه‌ها */
+        margin-bottom: 16px;
+        position: relative;
+    }
+
+    .reply-content {
+        font-size: 1rem;
+        color: var(--text-primary);
+        line-height: 1.6;
+    }
+
+    .reply-meta {
+        margin-top: 12px;
+        font-size: 0.9rem;
+        color: var(--text-muted);
+    }
+
+    .reply-status {
+        margin-bottom: 12px;
+        color: var(--accent-green);
+        font-weight: bold;
+    }
+
+    .reply-actions {
+        position: absolute;
+        bottom: 12px;
+        right: 16px;
+        display: flex;
+        gap: 8px;
+    }
+
+    .reply-actions .btn {
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+        transition: opacity 0.3s ease;
+    }
+
+    .reply-actions .btn-warning {
+        background-color: #ffc107;
+        color: #000;
+    }
+
+    .reply-actions .btn-danger {
+        background-color: var(--accent-red);
+        color: #fff;
+    }
+
+    .reply-actions .btn-success {
+        background-color: var(--accent-green);
+        color: #fff;
+    }
+
+    .reply-actions .btn:hover {
+        opacity: 0.9;
     }
 </style>
 
@@ -263,41 +302,41 @@
         <h3>پاسخ‌ها</h3>
         {% if question.replies.all %}
             {% for reply in question.replies.all %}
-            <div class="reply-card {% if reply.is_approved %}approved{% endif %}">
-                <div class="reply-content">
-                    {{ reply.get_content_as_html|safe }}
-                </div>
-                <p class="reply-meta">
-                    پاسخ توسط: {% if reply.user %}
-                    <a href="{% url 'user_profile' reply.user.username %}">{{ reply.user.username }}</a>
-                    {% else %} کاربر ناشناس {% endif %} - تاریخ {{ reply.created_at|jalali_date }}
-                </p>
+                <div class="reply-card {% if reply.is_approved %}approved{% endif %}">
+                    <div class="reply-content">
+                        {{ reply.get_content_as_html|safe }}
+                    </div>
 
-                {% if reply.user == user or user.is_staff %}
-                <div class="reply-actions" style="display: flex; gap: 8px; margin-top: 12px;">
-                    {% if reply.is_approved %}
-                        <p class="reply-status">این پاسخ تایید شده است.</p>
-                    {% else %}
-                        <p class="reply-status">منتظر تایید</p>
-                        {% if user == question.user %}
-                            <form action="{% url 'approve_reply' reply.id %}" method="POST" style="margin: 0;">
-                                {% csrf_token %}
-                                <button class="btn btn-success">تایید پاسخ</button>
-                            </form>
+                    <p class="reply-meta">
+                        پاسخ توسط: {% if reply.user %}
+                        <a href="{% url 'user_profile' reply.user.username %}">{{ reply.user.username }}</a>
+                        {% else %} کاربر ناشناس {% endif %} - تاریخ {{ reply.created_at|jalali_date }}
+                    </p>
+
+                    {% if reply.user == user or user.is_staff %}
+                        {% if reply.is_approved %}
+                            <p class="reply-status">این پاسخ تایید شده است.</p>
+                        {% else %}
+                            <p class="reply-status">منتظر تایید</p>
                         {% endif %}
+
+                        <div class="reply-actions">
+                            {% if not reply.is_approved and user == question.user %}
+                                <form action="{% url 'approve_reply' reply.id %}" method="POST" style="margin: 0;">
+                                    {% csrf_token %}
+                                    <button class="btn btn-success">تایید پاسخ</button>
+                                </form>
+                            {% endif %}
+
+                            <a href="{% url 'edit_reply' reply.id %}" class="btn btn-warning">ویرایش</a>
+
+                            <form action="{% url 'delete_reply' reply.id %}" method="POST" style="margin: 0;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('آیا مطمئن هستید که می‌خواهید این پاسخ را حذف کنید؟')">حذف</button>
+                            </form>
+                        </div>
                     {% endif %}
-
-                    <!-- Edit button for the reply -->
-                    <a href="{% url 'edit_reply' reply.id %}" class="btn btn-warning">ویرایش</a>
-
-                    <form action="{% url 'delete_reply' reply.id %}" method="POST" style="margin: 0;">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-danger" onclick="return confirm('آیا مطمئن هستید که می‌خواهید این پاسخ را حذف کنید؟')">حذف</button>
-                    </form>
                 </div>
-                {% endif %}
-
-            </div>
             {% endfor %}
         {% else %}
             <p class="text-muted">هیچ پاسخی برای این سوال ثبت نشده است.</p>
