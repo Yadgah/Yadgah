@@ -31,7 +31,7 @@
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">
                             <a href="{% url 'post_detail' slug=post.slug %}" class="stretched-link text-decoration-none text-white">
-                                {{ post.title|truncatechars:34 }}      
+                                {{ post.title|truncatechars:26 }}      
                             </a>    <!-- Truncate title to 34 characters -->
                         </h5>
                         <p class="card-text text-muted small">از {{ post.author }} در {{ post.created_at|jalali_date }}</p>
