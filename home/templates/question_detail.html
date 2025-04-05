@@ -270,7 +270,7 @@
                 <p class="reply-meta">
                     پاسخ توسط: {% if reply.user %}
                     <a href="{% url 'user_profile' reply.user.username %}">{{ reply.user.username }}</a>
-                    {% else %} کاربر ناشناس {% endif %} - تاریخ پاسخ: {{ reply.created_at|jalali_date }}
+                    {% else %} کاربر ناشناس {% endif %} - تاریخ {{ reply.created_at|jalali_date }}
                 </p>
 
                 {% if reply.user == user or user.is_staff %}
