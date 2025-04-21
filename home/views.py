@@ -2,6 +2,7 @@ import json
 import os
 import re
 from io import BytesIO
+from .ai import get_ai_reply
 
 import jdatetime
 import markdown
@@ -239,18 +240,33 @@ def news_list(request):
 @login_required
 def ask_question(request):
     if request.method == "POST":
-        form = QuestionForm(request.POST, user=request.user)  # اینجا user را پاس می‌دهیم
+        form = QuestionForm(request.POST, user=request.user)
         if form.is_valid():
             question = form.save(commit=False)
             question.user = request.user
             question.save()
-            form.save_m2m()  # ذخیره رابطه‌ی many-to-many برچسب‌ها
-            # messages.success(request, "Your question has been submitted successfully.")
+            form.save_m2m()
+
+            # گرفتن پاسخ از AI
+            ai_reply_content = get_ai_reply(question)
+
+            # گرفتن یا ساختن کاربر AI
+            ai_user, _ = User.objects.get_or_create(username="AI_Agent", defaults={"is_active": False})
+
+            # ساختن اولین ریپلای از طرف AI
+            Reply.objects.create(
+                content=ai_reply_content,
+                question=question,
+                user=ai_user,
+                # is_approved=True
+            )
+
             return redirect("question_detail", question_id=question.id)
     else:
-        form = QuestionForm(user=request.user)  # اینجا هم user را پاس می‌دهیم
+        form = QuestionForm(user=request.user)
 
     return render(request, "ask_question.html", {"form": form})
+
 
 
 def create_label(request):
