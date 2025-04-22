@@ -10,6 +10,7 @@
         <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
         {% load bootstrap5 %} {% bootstrap_css %} {% bootstrap_javascript %}
 
@@ -69,7 +70,6 @@
             }
             body {
                 background-color: #121212;
-                color: #fff;
                 font-family: Vazirmatn, sans-serif;
             }
 
@@ -108,6 +108,8 @@
                         <li><a href="{% url 'leaderboard' %}" class="nav-link px-2 text-white">تابلوی امتیازات</a></li>
                         <li><a href="{% url 'blog' %}" class="nav-link px-2 text-white">مقالات</a></li>
                         <li><a href="{% url 'explore' %}" class="nav-link px-2 text-white">کاوش</a></li>
+                        <li><a href="{% url 'donate' %}" class="nav-link px-2 text-white">حمایت</a></li>
+
                     </ul>
 
                     <!-- Hamburger Menu Button (Mobile) -->
@@ -210,7 +212,6 @@
         <!-- Main Content Section -->
         <div class="container my-4">{% block content %}{% endblock %}</div>
 
-        <!-- Remove the container if you want to extend the Footer to full width. -->
         <footer style="background-color: #212529; color: #fff; margin-top: auto;">
             <div class="container p-4">
                 <div class="row">
@@ -236,14 +237,16 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="col-lg-3 col-md-6 mb-4 text-center">
+                    <div class="col-lg-3 col-md-6 mb-4">
                         <h5 class="mb-3" style="color: #69b987;">من</h5>
-                        <a href="https://github.com/BDadmehr0/" target="_blank" style="text-decoration: none;">
-                            <div style="width: 60px; height: 60px; border-radius: 50%; background-color: #69b987; display: flex; justify-content: center; align-items: center; margin: 0 auto;">
-                                <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub Icon" style="width: 40px; height: 40px;" />
-                            </div>
-                        </a>
-						emamidadmehr@gmail.com
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-2">
+                                <a href="https://github.com/BDadmehr0" style="color: #fff; text-decoration: none;">گیت هاب</a>
+                            </li>
+                            <li class="mb-2">
+                                <a href="mailto:emamidadmehr@gmail.com" style="color: #fff; text-decoration: none;">ایمیل</a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>

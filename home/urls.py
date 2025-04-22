@@ -35,6 +35,7 @@ from .views import (
     signup_view,
     toggle_reaction,
     user_profile,
+    donate,
 )
 
 # Sitemap configuration
@@ -78,6 +79,7 @@ general_urlpatterns = [
     path("news/", news_list, name="news_list"),
     path("leaderboard/", leaderboard, name="leaderboard"),
     path("explore/", explore, name="explore"),
+    path("donate/", donate, name="donate"),
     path("create-label/", create_label, name="create_label"),
     path("search/", search_view, name="search"),
     path("profile/<str:username>/", user_profile, name="user_profile"),

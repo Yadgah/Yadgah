@@ -2,20 +2,6 @@
 
 <style>
   /* General styles for dark theme */
-  body {
-    background-color: #121212;
-    color: #e0e0e0;
-  }
-
-  a {
-    color: #bb86fc;
-    text-decoration: none;
-  }
-
-  a:hover {
-    color: #cfbafc;
-  }
-
   .round {
     border-radius: 10px;
   }
@@ -126,7 +112,7 @@
               <p class="card-text">
                 {{ question.content|striptags|truncatewords:20 }}
               </p>
-              <span>{{ question.created_at|jalali_date|slice:":10" }}</span>
+              <span>{{ question.created_at|jalali_date }}</span>
               <div class="mt-2"> {% for label in question.labels.all %} <span class="label" style="background-color: {{ label.color }}">{{ label.name }}</span> {% endfor %} </div>
             </div>
           </div> {% endfor %} {% else %} <p>هیچ سوالی ارسال نشده است.</p> {% endif %} </div>

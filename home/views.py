@@ -642,3 +642,6 @@ def login_api(request):
         return Response(
             {"error": "Invalid credentials."}, status=status.HTTP_401_UNAUTHORIZED
         )
+
+def donate(request):
+    return render(request, "donate.html")

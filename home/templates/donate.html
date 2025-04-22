@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    .donation-option {
+        border-radius: 10px;
+        transition: all 0.3s ease;
+        border: 1px solid #e0e0e0;
+        background-color: #212529;
+    }
+    .donation-option:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    .wallet-address {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        font-family: monospace;
+        position: relative;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        padding-right: 40px;
+    }
+    .address {
+        display: inline-block;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .copy-btn {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+    }
+    .support-header {
+        background: linear-gradient(135deg, #66c26a 0%, #39843d 100%);
+        color: white;
+        border-radius: 15px;
+    }
+    .crypto-icon {
+        font-size: 1.5rem;
+        margin-left: 10px;
+    }
+    @media (max-width: 576px) {
+        .wallet-address {
+            font-size: 0.8rem;
+        }
+    }
+</style>
+
+<!-- Main Content -->
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Support Header -->
+            <div class="support-header p-4 text-center mb-5">
+                <h1 class="display-5 fw-bold">حمایت مالی</h1>
+                <p class="lead mb-0">با حمایت شما می‌توانم محتوای بهتری تولید کنم</p>
+            </div>
+
+            <!-- Donation Options -->
+            <div class="row g-4">
+                <!-- Buy Me a Coffee -->
+                <div class="col-md-6">
+                    <div class="donation-option p-4 h-100 text-center">
+                        <i class="fas fa-coffee fa-3x mb-3 text-primary"></i>
+                        <h3 class="h4">Buy Me a Coffee</h3>
+                        <p class="text-muted">با خرید یک قهوه از من حمایت کنید</p>
+                        <a href="https://www.coffeete.ir/dadmehr" target="_blank" class="btn btn-primary px-4">حمایت کنید</a>
+                    </div>
+                </div>
+
+                <!-- Bitcoin -->
+                <div class="col-md-6">
+                    <div class="donation-option p-4 h-100">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fab fa-bitcoin crypto-icon text-warning"></i>
+                            <h3 class="h4 mb-0">بیتکوین</h3>
+                        </div>
+                        <p class="text-muted">آدرس کیف پول بیتکوین:</p>
+                        <div class="wallet-address p-3 ps-5 position-relative">
+                            <span class="copy-btn text-muted" title="کپی کردن">
+                                <i class="far fa-copy"></i>
+                            </span>
+                            <span class="address">bc1qxy2kgdygjrsqtzq2n0yrf2493w83kfj00xq4fc</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tether (USDT) -->
+                <div class="col-md-6">
+                    <div class="donation-option p-4 h-100">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-dollar-sign crypto-icon text-success"></i>
+                            <h3 class="h4 mb-0">تتر (USDT)</h3>
+                        </div>
+                        <p class="text-muted">آدرس کیف پول تتر (TRC20):</p>
+                        <div class="wallet-address p-3 ps-5 position-relative">
+                            <span class="copy-btn text-muted" title="کپی کردن">
+                                <i class="far fa-copy"></i>
+                            </span>
+                            <span class="address">TNPU6xRuUzVJ3i6B8VPRxyZg4dFjvQjX9J</span>
+                        </div>
+                        <small class="text-muted mt-2 d-block">شبکه: TRC20</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Thank You Message -->
+            <!-- <div class="alert alert-success mt-5 text-center">
+                <p>از حمایت صمیمانه شما بسیار سپاسگزارم. هر مقدار کمک شما ارزشمند است و انگیزه‌ای برای ادامه کارم خواهد بود.</p>
+            </div> -->
+        </div>
+    </div>
+</div>
+
+<script>
+    // Copy Functionality
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const address = this.nextElementSibling.textContent;
+            navigator.clipboard.writeText(address).then(() => {
+                const originalIcon = this.innerHTML;
+                this.innerHTML = '<i class="fas fa-check"></i>';
+                setTimeout(() => {
+                    this.innerHTML = originalIcon;
+                }, 2000);
+            });
+        });
+    });
+</script>
+{% endblock %}
