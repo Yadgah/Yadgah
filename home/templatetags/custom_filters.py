@@ -55,12 +55,14 @@ def jalali_date(value):
     if value:
         # Convert the Gregorian date to Jalali
         jalali_date = jdatetime.date.fromgregorian(date=value)
-        # Format the date as "day month"
-        return (
-            jalali_date.strftime("%d")
-            + " "  # noqa: W503
-            + jalali_date.j_months_fa[jalali_date.month - 1]  # noqa: W503
-        )
+        # Remove leading zero from day and convert to Persian digits
+        day = str(jalali_date.day).lstrip('0') or '0'  # Handle case when day is 0 (unlikely)
+        # Convert Arabic digits to Persian digits
+        persian_digits = str.maketrans('0123456789', '۰۱۲۳۴۵۶۷۸۹')
+        day_fa = day.translate(persian_digits)
+        # Get month name in Persian
+        month_fa = jalali_date.j_months_fa[jalali_date.month - 1]
+        return f"{day_fa} {month_fa}"
     return value
 
 
