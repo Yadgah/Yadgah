@@ -247,13 +247,9 @@ def ask_question(request):
             question.save()
             form.save_m2m()
 
-            # گرفتن پاسخ از AI
-            ai_reply_content = get_ai_reply(question)
-
-            # گرفتن یا ساختن کاربر AI
+            ai_reply_content = get_ai_reply(question.content)  # فقط content ارسال می‌شود
             ai_user, _ = User.objects.get_or_create(username="AI_Agent", defaults={"is_active": False})
 
-            # ساختن اولین ریپلای از طرف AI
             Reply.objects.create(
                 content=ai_reply_content,
                 question=question,

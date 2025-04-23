@@ -1,11 +1,24 @@
 import requests
 import json
 
-def get_ai_reply(question):
+def get_ai_reply(question_content):
+    """
+    Get reply from AI based only on the question content
+    
+    Args:
+        question_content (str): Only the content/text of the question
+    
+    Returns:
+        str: AI's reply
+    """
     try:
         response = requests.get(
             "https://yw85opafq6.execute-api.us-east-1.amazonaws.com/default/boss_mode_15aug",
-            params={"text": question, "country": "Asia", "user_id": "usery3peypi26p"},
+            params={
+                "text": "Say the answer in Persian, and keep the words that don't have a Persian equivalent in English :" + question_content,  # فقط محتوای سوال ارسال می‌شود
+                "country": "Iran",
+                "user_id": "usery3peypi26p"
+            },
             timeout=10
         )
 
@@ -18,12 +31,12 @@ def get_ai_reply(question):
             try:
                 data = json.loads(response.text)
             except Exception:
-                return f"پاسخ غیرمنتظره از سرور: {response.text[:100]}..."
+                return f"{response.text}"
 
         if isinstance(data, dict):
-            return data.get("reply", "AI پاسخی ارسال نکرد.")
+            return data.get("reply", "AI پاسخی ندارد.")
         else:
-            return f"پاسخ در قالب دیکشنری نبود: {data}"
+            return f"{data}"
 
     except Exception as e:
         return f"خطا در تماس با API: {e}"
