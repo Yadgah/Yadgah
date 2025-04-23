@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
-{% block title %}Edit Question{% endblock %}
+{% load custom_filters %}
+{% block title %}Create Question{% endblock %}
 {% block content %}
 <style>
   .form-group {
@@ -142,10 +143,112 @@
   }
 </style>
 
-<h2>ویرایش سوال: {{ question.title }}</h2>
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">ذخیره تغییرات</button>
-</form>
+<!-- استفاده از کلاس‌های Bootstrap برای مرکزچینی -->
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10">
+
+      <form method="post">
+        {% csrf_token %}
+
+        <!-- بخش عنوان -->
+        <div class="form-group">
+          <label for="id_title">عنوان</label>
+          {{ form.title }}
+        </div>
+
+        <!-- بخش توضیحات -->
+        <div class="form-group">
+          <label for="id_content">توضیحات</label>
+          {{ form.content }}
+        </div>
+
+        <!-- انتخاب برچسب‌های موجود -->
+        <div class="form-group">
+          <label for="id_labels">برچسب‌های موجود</label>
+          {{ form.labels|add_class:"custom-multi-select" }}
+        </div>
+
+        <!-- بخش برچسب شخصی با چیدمان مدرن‌تر -->
+        <div class="form-group">
+          <label>ایجاد برچسب شخصی</label>
+          <div class="row g-2 align-items-end">
+
+            <!-- نام برچسب -->
+            <div class="col-sm-5">
+              <input type="text" id="custom-label-name" placeholder="نام برچسب" />
+            </div>
+
+            <!-- دکمه تولید رنگ -->
+            <div class="col-sm-3">
+              <button type="button" id="generate-color" class="btn-feature w-100">تولید رنگ</button>
+            </div>
+
+            <!-- فیلد رنگ هگز -->
+            <div class="col-sm-4">
+              <input type="text" id="custom-label-color" placeholder="کد رنگ هگز" readonly />
+            </div>
+          </div>
+
+          <!-- پیش‌نمایش رنگ -->
+          <div id="color-preview" class="mt-2"></div>
+
+          <!-- دکمه ذخیره برچسب جدید -->
+          <div class="mt-3">
+            <button type="button" id="add-label" class="btn-feature">برچسب جدید را ذخیره کنید</button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit">ارسال</button>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  // تولید رنگ تصادفی
+  document.getElementById('generate-color').addEventListener('click', () => {
+    const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
+    const colorInput = document.getElementById('custom-label-color');
+    colorInput.value = randomColor;
+
+    const colorPreview = document.getElementById('color-preview');
+    colorPreview.style.backgroundColor = randomColor;
+    colorPreview.style.display = 'block';
+  });
+
+  // ارسال درخواست ایجاد برچسب جدید به سرور
+  document.getElementById('add-label').addEventListener('click', async () => {
+    const labelName = document.getElementById('custom-label-name').value.trim();
+    const labelColor = document.getElementById('custom-label-color').value.trim();
+
+    if (!labelName) {
+      alert('لطفاً نام برچسب را وارد کنید.');
+      return;
+    }
+
+    try {
+      const response = await fetch('/create-label/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': '{{ csrf_token }}',
+        },
+        body: JSON.stringify({ name: labelName, color: labelColor }),
+      });
+
+      if (response.ok) {
+        alert('برچسب با موفقیت ایجاد شد. صفحه به‌روز می‌شود...');
+        window.location.reload();
+      } else {
+        const result = await response.json();
+        alert(result.error || 'خطایی رخ داده است.');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('ایجاد برچسب با مشکل مواجه شد.');
+    }
+  });
+</script>
 {% endblock %}

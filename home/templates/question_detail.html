@@ -247,12 +247,92 @@
     .reply-actions .btn:hover {
         opacity: 0.9;
     }
-</style>
 
+    .title-actions-container {
+        display: flex;
+        align-items: center; /* تراز عمودی */
+        justify-content: space-between; /* فاصله بین عنوان و دکمه‌ها */
+        gap: 20px; /* فاصله بین عناصر */
+        width: 100%;
+        margin-bottom: 16px;
+    }
+    .question-title {
+        margin: 0; /* حذف margin پیش‌فرض h2 */
+        flex-grow: 1; /* عنوان فضای باقیمانده را پر کند */
+    }
+    .question-actions {
+        display: flex;
+        gap: 12px;
+        flex-shrink: 0; /* جلوگیری از فشرده شدن دکمه‌ها */
+        margin: 0;
+    }
+
+    .title-and-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin-bottom: 12px;
+    }
+
+    .question-actions .btn {
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+        transition: opacity 0.3s ease;
+        text-decoration: none;
+        font-size: 0.9rem;
+        white-space: nowrap; /* جلوگیری از شکستن خط دکمه‌ها */
+    }
+
+    .question-actions .btn-warning {
+        background-color: #ffc107;
+        color: #000;
+    }
+
+    .question-actions .btn-danger {
+        background-color: var(--accent-red);
+        color: #fff;
+    }
+
+    .question-actions .btn:hover {
+        opacity: 0.9;
+    }
+
+    @media screen and (max-width: 768px) {
+        .title-actions-container {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        
+        .question-actions {
+            width: 100%;
+        }
+        
+        .question-actions .btn {
+            flex: 1;
+            text-align: center;
+        }
+    }
+</style>
 <div class="container">
     <div class="question-card">
         <div class="question-header">
-            <h2 class="question-title">{{ question.title }}</h2>
+            <div class="title-and-actions">
+                <h2 class="question-title">{{ question.title }}</h2>
+                {% if question.user == user %}
+                <div class="question-actions">
+                    <a href="{% url 'edit_question' question.id %}" class="btn btn-warning">ویرایش سوال</a>
+                    <form action="{% url 'delete_question' question.id %}" method="POST" class="delete-question" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">حذف سوال</button>
+                    </form>
+                </div>
+                {% endif %}
+            </div>
             <div class="question-metadata">
                 <div class="metadata-group">
                     <div class="metadata-item view-count">
@@ -273,33 +353,23 @@
                     </div>
                 </div>
             </div>
-            {% if question.user == user %}
-            <div class="question-actions">
-                <a href="{% url 'edit_question' question.id %}" class="btn btn-warning">ویرایش سوال</a>
-                <form action="{% url 'delete_question' question.id %}" method="POST" class="delete-question" style="display:inline;">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-danger">حذف سوال</button>
-                </form>
-            </div>
-            {% endif %}
-
         </div>
         <div class="question-content">
             {{ content_as_html|safe }}
         </div>
         <div class="reactions">
-            <button class="btn-like" onclick="toggleReaction('like')" aria-label="Like">
-                <img src="{% static 'icons/reaction/like-1-svgrepo-com.svg' %}" alt="Like Icon" width="24" height="24"> {{ likes_count }}
+            <button class="btn-like" style="font-size: 20px; color: black;" onclick="toggleReaction('like')" aria-label="Like">
+                <i class="bi bi-hand-thumbs-up-fill"></i> {{ likes_count }}
             </button>
-            <button class="btn-dislike" onclick="toggleReaction('dislike')" aria-label="Dislike">
-                <img src="{% static 'icons/reaction/dislike-svgrepo-com.svg' %}" alt="Dislike Icon" width="24" height="24"> {{ dislikes_count }}
+            <button class="btn-dislike" style="font-size: 20px; color: black;" onclick="toggleReaction('dislike')" aria-label="Dislike">
+                <i class="bi bi-hand-thumbs-down-fill"></i> {{ dislikes_count }}
             </button>
         </div>
     </div>
 
     <!-- Replies Section -->
     <div class="reply-section">
-        <h3>پاسخ‌ها</h3>
+        <h3 class="text-white mb-3">پاسخ‌ها</h3>
         {% if question.replies.all %}
             {% for reply in question.replies.all %}
                 <div class="reply-card {% if reply.is_approved %}approved{% endif %}">
@@ -308,7 +378,7 @@
                     </div>
 
                     <p class="reply-meta">
-                        پاسخ توسط: {% if reply.user %}
+                        پاسخ {% if reply.user %}
                         <a href="{% url 'user_profile' reply.user.username %}">{{ reply.user.username }}</a>
                         {% else %} کاربر ناشناس {% endif %} - تاریخ {{ reply.created_at|jalali_date }}
                     </p>
@@ -371,11 +441,11 @@
             },
             body: JSON.stringify({ reaction_type: type }),
         })
-            .then((response) => response.json())
-            .then((data) => {
-                document.querySelector(".btn-like").innerText = `${data.likes}`;
-                document.querySelector(".btn-dislike").innerText = `${data.dislikes}`;
-            });
+        .then((response) => response.json())
+        .then((data) => {
+            document.querySelector(".btn-like").innerHTML = `<i class="bi bi-hand-thumbs-up-fill"></i> ${data.likes}`;
+            document.querySelector(".btn-dislike").innerHTML = `<i class="bi bi-hand-thumbs-down-fill"></i> ${data.dislikes}`;
+        });
     }
 </script>
 {% endblock %}

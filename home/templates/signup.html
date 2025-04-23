@@ -2,22 +2,8 @@
 {% load custom_filters %}
 {% block content %}
 
-<style>
-  .btn-primary {
-    color: #fff;
-    background-color: #69b987;
-    border-color: #69b987;
-  }
-
-  .btn-primary:hover {
-    color: #fff;
-    background-color: #39843d;
-    border-color: #69b987;
-  }
-</style>
-
 <div class="container mt-5">
-  <h2 class="text-center mb-4">ثبت‌نام</h2>
+  <h2 class="text-center text-white mb-4">ثبت‌نام</h2>
   <form method="POST" class="w-50 mx-auto" enctype="multipart/form-data">
     {% csrf_token %}
     <!-- نمایش پیام‌ها -->
@@ -42,15 +28,15 @@
 
     <!-- فرم فیلدهای ثبت‌نام -->
     <div class="mb-3">
-      <label for="{{ form.username.id_for_label }}" class="form-label">نام کاربری</label>
+      <label for="{{ form.username.id_for_label }}" class="text-white form-label">نام کاربری</label>
       {{ form.username|add_class:"form-control" }}
     </div>
     <div class="mb-3">
-      <label for="{{ form.email.id_for_label }}" class="form-label">ایمیل</label>
+      <label for="{{ form.email.id_for_label }}" class="text-white form-label">ایمیل</label>
       {{ form.email|add_class:"form-control" }}
     </div>
     <div class="mb-3">
-      <label for="{{ form.password.id_for_label }}" class="form-label">رمز عبور</label>
+      <label for="{{ form.password.id_for_label }}" class="text-white form-label">رمز عبور</label>
       <div class="position-relative">
         {{ form.password|add_class:"form-control" }}
         <span class="position-absolute start-0 top-50 translate-middle-y p-2" style="cursor: pointer; color: black;" onclick="togglePassword()">
@@ -67,7 +53,7 @@
 
     <!-- دکمه ثبت‌نام -->
     <div class="d-grid gap-2">
-      <button type="submit" class="btn btn-primary">ثبت‌نام</button>
+      <button type="submit" class="btn btn-success">ثبت‌نام</button>
     </div>
   </form>
 </div>
