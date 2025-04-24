@@ -211,7 +211,12 @@
         font-size: 0.9rem;
         color: var(--text-muted);
     }
-    .reply-status {
+    .reply-status-wait {
+        margin: 12px 0;
+        color: var(--accent-yellow);
+        font-weight: bold;
+    }
+    .reply-status-approve {
         margin: 12px 0;
         color: var(--accent-green);
         font-weight: bold;
@@ -286,7 +291,7 @@
                 <h2 class="question-title">{{ question.title }}</h2>
                 {% if question.user == user %}
                 <div class="question-actions">
-                    <a href="{% url 'edit_question' question.id %}" class="btn btn-warning">ویرایش سوال</a>
+                    <a href="{% url 'edit_question' question.id %}" class="btn btn-warning">ویرایش</a>
                     <form action="{% url 'delete_question' question.id %}" method="POST" class="delete-question" style="display:inline;">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-danger">حذف سوال</button>
@@ -341,9 +346,9 @@
                             <div class="reply-content">
                                 {{ reply.get_content_as_html|safe }}
                                 {% if reply.is_approved %}
-                                    <p class="reply-status"> - این پاسخ تایید شده است.</p>
+                                    <p class="reply-status-approve">این پاسخ تایید شده است.</p>
                                 {% else %}
-                                    <p class="reply-status"> - منتظر تایید</p>
+                                    <p class="reply-status-wait">منتظر تایید</p>
                                 {% endif %}
                             </div>
                             <p class="reply-meta">
