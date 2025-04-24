@@ -8,316 +8,277 @@
         --bg-dark: #121212;
         --bg-card: #1c1c1c;
         --text-primary: #fff;
+        --text-muted: #bbb;
         --accent-green: #69b987;
         --accent-red: #ff5252;
-        --text-muted: #bbb;
+        --accent-yellow: #ffc107;
+        --input-bg: #2b2b2b;
+        --input-border: #555;
         --transition-speed: 0.3s;
+        --radius: 8px;
+        --shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
     }
 
-    input,
-    textarea {
+    /* Input Styles */
+    input, textarea {
         width: 100%;
         padding: 12px;
-        border: 1px solid #555;
-        border-radius: 8px;
-        background-color: #2b2b2b;
+        border: 1px solid var(--input-border);
+        border-radius: var(--radius);
+        background-color: var(--input-bg);
         color: var(--text-primary);
         font-size: 1rem;
-        transition: border-color var(--transition-speed) ease;
+        transition: border-color var(--transition-speed);
     }
-
-    input:focus,
-    textarea:focus {
+    input:focus, textarea:focus {
         border-color: var(--accent-green);
         outline: none;
     }
 
+    /* Button Base */
+    .btn {
+        padding: 10px 18px;
+        border-radius: var(--radius);
+        font-weight: bold;
+        font-size: 0.9rem;
+        border: none;
+        cursor: pointer;
+        text-decoration: none;
+        white-space: nowrap;
+        transition: background-color var(--transition-speed), color var(--transition-speed), opacity var(--transition-speed);
+        color: var(--text-primary);
+        background-color: #444;
+    }
+    .btn:hover {
+        opacity: 0.95;
+    }
+
+    /* Button Variants */
+    .btn-success {
+        background-color: var(--accent-green);
+        color: #fff;
+    }
+    .btn-success:hover {
+        background-color: #5da97b;
+    }
+
+    .btn-danger {
+        background-color: var(--accent-red);
+        color: #fff;
+    }
+    .btn-danger:hover {
+        background-color: #ff3333;
+    }
+
+    .btn-warning {
+        background-color: var(--accent-yellow);
+        color: #000;
+    }
+    .btn-warning:hover {
+        background-color: #e0a800;
+        color: #000;
+    }
+
+    /* Question Card */
     .question-card {
         background-color: var(--bg-card);
         border-radius: 12px;
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        box-shadow: var(--shadow);
         padding: 24px;
         margin-bottom: 24px;
     }
-
     .question-header {
         display: flex;
         flex-direction: column;
         gap: 16px;
-        margin-bottom: 16px;
         border-bottom: 1px solid #2c2c2c;
         padding-bottom: 16px;
     }
-
     .question-title {
         color: var(--accent-green);
         font-size: 1.6rem;
         font-weight: 600;
-        margin-bottom: 12px;
+        margin: 0;
+        flex-grow: 1;
     }
 
+    /* Metadata */
     .question-metadata {
         display: flex;
         flex-wrap: wrap;
-        gap: 12px;
         justify-content: space-between;
-        align-items: center;
+        gap: 12px;
     }
-
     .metadata-group {
         display: flex;
         flex-wrap: wrap;
         gap: 12px;
-        align-items: center;
     }
-
     .metadata-item {
-        background-color: #2c2c2c;
+        background: #2c2c2c;
         padding: 6px 12px;
-        border-radius: 8px;
+        border-radius: var(--radius);
+        color: var(--text-muted);
         display: flex;
         align-items: center;
         gap: 6px;
-        color: var(--text-muted);
     }
 
-    .question-actions {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-        margin-top: 12px;
-    }
-
+    /* Content */
     .question-content {
-        margin-bottom: 24px;
-        font-size: 1.1rem;
-        line-height: 1.6;
-        color: var(--text-primary);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 24px;
+        margin: 24px 0;
+    }
+    .question-body {
+        flex: 1;
+    }
+    .question-body p {
+        margin: 0 !important;
+        color: white;
     }
 
+    .reply-content p {
+        margin: 0 !important;
+    }
+
+    /* Reactions */
     .reactions {
         display: flex;
         gap: 12px;
-        margin-top: 16px;
+        flex-wrap: wrap;
     }
-
     .reactions button {
-        flex: 1;
         padding: 14px;
         border: none;
-        border-radius: 8px;
+        border-radius: var(--radius);
         font-weight: bold;
+        font-size: 1rem;
         cursor: pointer;
-        transition: opacity var(--transition-speed) ease;
         display: flex;
         align-items: center;
         justify-content: center;
         gap: 8px;
+        transition: opacity var(--transition-speed);
+        color: var(--text-primary);
     }
-
-    .reactions .btn-like {
+    .btn-like {
         background-color: var(--accent-green);
-        color: var(--text-primary);
     }
-
-    .reactions .btn-dislike {
+    .btn-dislike {
         background-color: var(--accent-red);
-        color: var(--text-primary);
     }
-
     .reactions button:hover {
         opacity: 0.9;
     }
 
-    .reply-section {
-        margin-top: 24px;
-    }
-
-    .reply-form {
-        background-color: var(--bg-card);
-        border-radius: 10px;
-        padding: 24px;
-    }
-
-    .reply-form h3 {
-        margin-bottom: 16px;
-        font-size: 1.4rem;
-        color: var(--accent-green);
-    }
-
-    .btn-submit {
-        border: none;
-        padding: 12px 20px;
-        border-radius: 8px;
-        font-size: 1rem;
-        cursor: pointer;
-        width: 100%;
-        margin-top: 20px;
-    }
-
-
-    /* Mobile Responsiveness */
-    @media screen and (max-width: 600px) {
-        .question-header {
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .question-metadata {
-            align-items: flex-start;
-        }
-
-        .metadata-group {
-            width: 100%;
-            justify-content: flex-start;
-        }
-
-        .metadata-item {
-            flex-grow: 1;
-            justify-content: center;
-        }
-
-        .reactions {
-            flex-direction: column;
-        }
-
-        .reactions button {
-            padding: 16px;
-        }
-    }
-
-    .reply-card {
-        background-color: var(--bg-card);
-        border-radius: 10px;
-        padding: 16px 16px 56px; /* پایین رو بیشتر کردیم برای جای دکمه‌ها */
-        margin-bottom: 16px;
-        position: relative;
-    }
-
-    .reply-content {
-        font-size: 1rem;
-        color: var(--text-primary);
-        line-height: 1.6;
-    }
-
-    .reply-meta {
-        margin-top: 12px;
-        font-size: 0.9rem;
-        color: var(--text-muted);
-    }
-
-    .reply-status {
-        margin-bottom: 12px;
-        color: var(--accent-green);
-        font-weight: bold;
-    }
-
-    .reply-actions {
-        position: absolute;
-        bottom: 12px;
-        right: 16px;
-        display: flex;
-        gap: 8px;
-    }
-
-    .reply-actions .btn {
-        padding: 8px 16px;
-        border-radius: 8px;
-        font-weight: bold;
-        border: none;
-        cursor: pointer;
-        transition: opacity 0.3s ease;
-    }
-
-    .reply-actions .btn-warning {
-        background-color: #ffc107;
-        color: #000;
-    }
-
-    .reply-actions .btn-danger {
-        background-color: var(--accent-red);
-        color: #fff;
-    }
-
-    .reply-actions .btn-success {
-        background-color: var(--accent-green);
-        color: #fff;
-    }
-
-    .reply-actions .btn:hover {
-        opacity: 0.9;
-    }
-
-    .title-actions-container {
-        display: flex;
-        align-items: center; /* تراز عمودی */
-        justify-content: space-between; /* فاصله بین عنوان و دکمه‌ها */
-        gap: 20px; /* فاصله بین عناصر */
-        width: 100%;
-        margin-bottom: 16px;
-    }
-    .question-title {
-        margin: 0; /* حذف margin پیش‌فرض h2 */
-        flex-grow: 1; /* عنوان فضای باقیمانده را پر کند */
-    }
-    .question-actions {
-        display: flex;
-        gap: 12px;
-        flex-shrink: 0; /* جلوگیری از فشرده شدن دکمه‌ها */
-        margin: 0;
-    }
-
+    /* Title + Action Buttons */
     .title-and-actions {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        gap: 20px;
         width: 100%;
-        margin-bottom: 12px;
+        margin-bottom: 16px;
+    }
+    .question-actions {
+        display: flex;
+        gap: 12px;
+        flex-shrink: 0;
     }
 
-    .question-actions .btn {
-        padding: 8px 16px;
-        border-radius: 8px;
-        font-weight: bold;
-        border: none;
-        cursor: pointer;
-        transition: opacity 0.3s ease;
-        text-decoration: none;
+    /* Replies */
+    .reply-section {
+        margin-top: 24px;
+    }
+    .reply-card {
+        background: var(--bg-card);
+        border-radius: 10px;
+        padding: 16px 16px 56px;
+        margin-bottom: 16px;
+        position: relative;
+    }
+    .reply-content {
+        display: flex;
+        font-size: 1rem;
+        color: var(--text-primary);
+        line-height: 1.6;
+    }
+    .reply-meta {
+        margin: 0;
         font-size: 0.9rem;
-        white-space: nowrap; /* جلوگیری از شکستن خط دکمه‌ها */
+        color: var(--text-muted);
+    }
+    .reply-status {
+        margin: 12px 0;
+        color: var(--accent-green);
+        font-weight: bold;
+    }
+    .reply-actions {
+        display: flex;
+        gap: 8px;
+        min-width: 120px;
     }
 
-    .question-actions .btn-warning {
-        background-color: #ffc107;
-        color: #000;
+    /* Reply Form */
+    .reply-form {
+        background: var(--bg-card);
+        border-radius: 10px;
+        padding: 24px;
+    }
+    .reply-form h3 {
+        font-size: 1.4rem;
+        color: var(--accent-green);
+        margin-bottom: 16px;
+    }
+    .btn-submit {
+        width: 100%;
+        margin-top: 20px;
     }
 
-    .question-actions .btn-danger {
-        background-color: var(--accent-red);
-        color: #fff;
+    .reply-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 12px;
+        flex-wrap: wrap;
     }
 
-    .question-actions .btn:hover {
-        opacity: 0.9;
+    .reply-content-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 24px;
     }
 
-    @media screen and (max-width: 768px) {
-        .title-actions-container {
+    .reply-body {
+        flex: 1;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .title-and-actions {
             flex-direction: column;
             align-items: flex-start;
             gap: 12px;
         }
-        
         .question-actions {
             width: 100%;
+            flex-wrap: wrap;
         }
-        
         .question-actions .btn {
             flex: 1;
             text-align: center;
         }
+        .reactions {
+            flex-direction: column;
+        }
     }
 </style>
+    
 <div class="container">
     <div class="question-card">
         <div class="question-header">
@@ -355,15 +316,17 @@
             </div>
         </div>
         <div class="question-content">
-            {{ content_as_html|safe }}
-        </div>
-        <div class="reactions">
-            <button class="btn-like" style="font-size: 20px; color: black;" onclick="toggleReaction('like')" aria-label="Like">
-                <i class="bi bi-hand-thumbs-up-fill"></i> {{ likes_count }}
-            </button>
-            <button class="btn-dislike" style="font-size: 20px; color: black;" onclick="toggleReaction('dislike')" aria-label="Dislike">
-                <i class="bi bi-hand-thumbs-down-fill"></i> {{ dislikes_count }}
-            </button>
+            <div class="question-body">
+                {{ content_as_html|safe }}
+            </div>
+            <div class="reactions">
+                <button class="btn-like" onclick="toggleReaction('like')" aria-label="Like">
+                    <i class="bi bi-hand-thumbs-up-fill"></i> {{ likes_count }}
+                </button>
+                <button class="btn-dislike" onclick="toggleReaction('dislike')" aria-label="Dislike">
+                    <i class="bi bi-hand-thumbs-down-fill"></i> {{ dislikes_count }}
+                </button>
+            </div>
         </div>
     </div>
 
@@ -373,39 +336,40 @@
         {% if question.replies.all %}
             {% for reply in question.replies.all %}
                 <div class="reply-card {% if reply.is_approved %}approved{% endif %}">
-                    <div class="reply-content">
-                        {{ reply.get_content_as_html|safe }}
-                    </div>
-
-                    <p class="reply-meta">
-                        پاسخ {% if reply.user %}
-                        <a href="{% url 'user_profile' reply.user.username %}">{{ reply.user.username }}</a>
-                        {% else %} کاربر ناشناس {% endif %} - تاریخ {{ reply.created_at|jalali_date }}
-                    </p>
-
-                    {% if reply.user == user or user.is_staff %}
-                        {% if reply.is_approved %}
-                            <p class="reply-status">این پاسخ تایید شده است.</p>
-                        {% else %}
-                            <p class="reply-status">منتظر تایید</p>
-                        {% endif %}
-
+                    <div class="reply-content-wrapper">
+                        <div class="reply-body">
+                            <div class="reply-content">
+                                {{ reply.get_content_as_html|safe }}
+                                {% if reply.is_approved %}
+                                    <p class="reply-status"> - این پاسخ تایید شده است.</p>
+                                {% else %}
+                                    <p class="reply-status"> - منتظر تایید</p>
+                                {% endif %}
+                            </div>
+                            <p class="reply-meta">
+                                پاسخ {% if reply.user %}
+                                <a href="{% url 'user_profile' reply.user.username %}">{{ reply.user.username }}</a>
+                                {% else %} کاربر ناشناس {% endif %} - تاریخ {{ reply.created_at|jalali_date }}
+                            </p>
+                            
+                        </div>
+                
+                        {% if reply.user == user or user.is_staff %}
                         <div class="reply-actions">
                             {% if not reply.is_approved and user == question.user %}
-                                <form action="{% url 'approve_reply' reply.id %}" method="POST" style="margin: 0;">
+                                <form action="{% url 'approve_reply' reply.id %}" method="POST">
                                     {% csrf_token %}
-                                    <button class="btn btn-success">تایید پاسخ</button>
+                                    <button class="btn btn-success">تایید</button>
                                 </form>
                             {% endif %}
-
                             <a href="{% url 'edit_reply' reply.id %}" class="btn btn-warning">ویرایش</a>
-
-                            <form action="{% url 'delete_reply' reply.id %}" method="POST" style="margin: 0;">
+                            <form action="{% url 'delete_reply' reply.id %}" method="POST">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-danger" onclick="return confirm('آیا مطمئن هستید که می‌خواهید این پاسخ را حذف کنید؟')">حذف</button>
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('آیا مطمئن هستید؟')">حذف</button>
                             </form>
                         </div>
-                    {% endif %}
+                        {% endif %}
+                    </div>
                 </div>
             {% endfor %}
         {% else %}

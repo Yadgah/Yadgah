@@ -8,9 +8,9 @@
   <div class="row">
     {% for question in trending_questions %}
     <div class="col-md-6 col-lg-4 mb-4">
-      <div class="card shadow-sm border-0 h-100" style="background: #ffffff;">
+      <div class="card shadow-sm border-0 h-100" style="background: #212529;">
         <div class="card-body">
-          <h5 class="card-title text-truncate text-dark">{{ question.title }}</h5>
+          <h5 class="card-title text-truncate text-dark text-white">{{ question.title }}</h5>
           <p class="card-text text-muted small">
             {{ question.content|slice:":100" }}...
           </p>
