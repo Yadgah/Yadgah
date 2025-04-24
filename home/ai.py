@@ -3,7 +3,7 @@ import json
 
 def get_ai_reply(question_content):
     """
-    Get reply from AI based only on the question content
+    Get reply from AI based only on the question content (@mmd-dll AI API)
     
     Args:
         question_content (str): Only the content/text of the question
