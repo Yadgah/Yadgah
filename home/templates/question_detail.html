@@ -15,8 +15,6 @@
         --input-bg: #2b2b2b;
         --input-border: #555;
         --transition-speed: 0.3s;
-        --radius: 8px;
-        --shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
     }
 
     /* Input Styles */
@@ -24,7 +22,7 @@
         width: 100%;
         padding: 12px;
         border: 1px solid var(--input-border);
-        border-radius: var(--radius);
+        border-radius: 8px;
         background-color: var(--input-bg);
         color: var(--text-primary);
         font-size: 1rem;
@@ -35,31 +33,9 @@
         outline: none;
     }
 
-    /* Button Base */
-    .btn {
-        padding: 10px 18px;
-        border-radius: var(--radius);
-        font-weight: bold;
-        font-size: 0.9rem;
-        border: none;
-        cursor: pointer;
-        text-decoration: none;
-        white-space: nowrap;
-        transition: background-color var(--transition-speed), color var(--transition-speed), opacity var(--transition-speed);
-        color: var(--text-primary);
-        background-color: #444;
-    }
+    
     .btn:hover {
         opacity: 0.95;
-    }
-
-    /* Button Variants */
-    .btn-success {
-        background-color: var(--accent-green);
-        color: #fff;
-    }
-    .btn-success:hover {
-        background-color: #5da97b;
     }
 
     .btn-danger {
@@ -83,7 +59,6 @@
     .question-card {
         background-color: var(--bg-card);
         border-radius: 12px;
-        box-shadow: var(--shadow);
         padding: 24px;
         margin-bottom: 24px;
     }
@@ -117,7 +92,7 @@
     .metadata-item {
         background: #2c2c2c;
         padding: 6px 12px;
-        border-radius: var(--radius);
+        border-radius: 8px;
         color: var(--text-muted);
         display: flex;
         align-items: center;
@@ -153,7 +128,7 @@
     .reactions button {
         padding: 14px;
         border: none;
-        border-radius: var(--radius);
+        border-radius: 8px;
         font-weight: bold;
         font-size: 1rem;
         cursor: pointer;
