@@ -1,27 +1,25 @@
-{% extends 'base.html' %} {% block content %} {% load custom_filters %} 
+{% extends 'base.html' %}
+{% load custom_filters %}
 
+{% block content %}
 <style>
-    /* General styles for dark theme */
     .round {
         border-radius: 10px;
     }
 
-    .news-section,
-    .main-content {
+    .news-section, .main-content {
         background-color: #1e1e1e;
-        margin-bottom: 20px;
         color: #e0e0e0;
+        margin-bottom: 20px;
     }
 
-    /* Style for card-body */
     .card-body {
         background-color: #2c2c2c;
-        color: #e0e0e0;
         border-radius: 10px;
         padding: 15px;
+        color: #e0e0e0;
     }
 
-    /* Style for labels */
     .label {
         display: inline-block;
         padding: 5px 10px;
@@ -62,107 +60,138 @@
         }
     }
 </style>
+
 <div id="intro-welcome">
     <svg id="hello-svg" viewBox="0 0 400 100" width="1600" height="900">
-        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="40" font-family="Vazirmatn, sans-serif" fill="none" stroke="white" stroke-width="1">سلام</text>
+        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle"
+              font-size="40" font-family="Vazirmatn, sans-serif"
+              fill="none" stroke="white" stroke-width="1">سلام</text>
     </svg>
 </div>
+
 <div class="container my-4">
     <div class="row">
-        <!-- News Section (Sidebar on the right) -->
+        <!-- News Section -->
         <div class="col-md-4 mb-4">
             <div class="news-section p-4 round">
-                <h2>اخبار جدید</h2> {% if news_items %} {% for news in news_items %} <div class="card mb-3">
-                    <div class="card-body"> > <h5 class="card-title">{{ news.title }}</h5>
-                        <p class="card-muted">{{ news.content|truncatewords:20 }}</p>
-                        <p class="text-muted small"> تاریخ انتشار: {{ news.published_at|jalali_date }}
-                        </p> >
-                    </div>
-                </div> {% endfor %} {% else %} <p>هیچ خبری در حال حاضر موجود نیست.</p> {% endif %}
+                <h2>اخبار جدید</h2>
+                {% if news_items %}
+                    {% for news in news_items %}
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ news.title }}</h5>
+                                <p class="card-muted">{{ news.content|truncatewords:20 }}</p>
+                                <p class="text-muted small">تاریخ انتشار: {{ news.published_at|jalali_date }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>هیچ خبری در حال حاضر موجود نیست.</p>
+                {% endif %}
             </div>
         </div>
+
         <!-- Main Content Section -->
         <div class="col-md-8">
             <div class="main-content p-4 round">
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h2>سوالات اخیر</h2> {% if user.is_authenticated %} <a href="{% url 'ask_question' %}" class="btn btn-success">پرسیدن سوال</a> {% else %} <br>
-                    <a href="{% url 'login' %}">پرسیدن سوال</a> {% endif %}
+                    <h2>سوالات اخیر</h2>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'ask_question' %}" class="btn btn-success">پرسیدن سوال</a>
+                    {% else %}
+                        <a href="{% url 'login' %}">پرسیدن سوال</a>
+                    {% endif %}
                 </div>
-                <div id="recent-questions"> {% if questions %} {% for question in questions %} <div class="d-flex mb-4 align-items-start">
-                        <div class="d-flex align-items-center">
-                            <!-- <div class="date-box"><span>{{ question.created_at|jalali_date|slice:":10" }}</span></div> -->
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <a href="{% url 'question_detail' question.id %}" class="text-decoration-none text-primary">{{ question.title }}</a>
-                            </h5>
-                            <p class="text-muted">
-                                {{ question.content|striptags|truncatewords:20 }}
-                            </p>
-                            <span>{{ question.created_at|jalali_date }}</span>
-                            <div class="mt-2"> {% for label in question.labels.all %} <span class="label" style="background-color: {{ label.color }}">{{ label.name }}</span> {% endfor %} </div>
-                        </div>
-                    </div> {% endfor %} {% else %} <p>هیچ سوالی ارسال نشده است.</p> {% endif %} </div>
-                <div class="load-more__btn"> {% if show_load_more %} <button id="load-more" class="btn btn-success">نمایش بیشتر</button> {% endif %} </div>
+
+                <div id="recent-questions">
+                    {% if questions %}
+                        {% for question in questions %}
+                            <div class="d-flex mb-4 align-items-start">
+                                <div class="card-body flex-grow-1">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h5 class="card-title">
+                                            <a href="{% url 'question_detail' question.id %}"
+                                               class="text-decoration-none text-primary">{{ question.title }}</a>
+                                        </h5>
+                                        <span>{{ question.created_at|jalali_date }}</span>
+                                    </div>
+                                    <p class="text-muted">
+                                        {{ question.content|striptags|truncatewords:20 }}
+                                    </p>
+                                    <div class="mt-2">
+                                        {% for label in question.labels.all %}
+                                            <span class="label" style="background-color: {{ label.color }}">{{ label.name }}</span>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>هیچ سوالی ارسال نشده است.</p>
+                    {% endif %}
+                </div>
+
+                <div class="load-more__btn">
+                    {% if show_load_more %}
+                        <button id="load-more" class="btn btn-success">نمایش بیشتر</button>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
 </div>
+
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", () => {
         const intro = document.getElementById("intro-welcome");
         if (!localStorage.getItem("yadgahWelcomeShown")) {
             setTimeout(() => {
                 intro.style.opacity = "0";
                 intro.style.visibility = "hidden";
                 localStorage.setItem("yadgahWelcomeShown", "true");
-            }, 3000); // بعد از کامل شدن انیمیشن SVG
+            }, 3000);
         } else {
             intro.style.display = "none";
         }
     });
 
-    $(document).ready(function() {
-	    let page = 2;
-	    $('#load-more').click(function() {
-	        $.ajax({
-	            url: `/?page=${page}`,
-	            dataType: 'json',
-	            headers: {
-	                'X-Requested-With': 'XMLHttpRequest'
-	            },
-	            success: function(response) {
-	                if (response.questions.length > 0) {
-	                    response.questions.forEach(function(question) {
-	                        let questionHtml = `
-	                            <div class="d-flex mb-4 align-items-start">
-	                                <div class="d-flex align-items-center"></div>
-	                                <div class="flex-grow-1">
-	                                    <div class="card-body">
-	                                        <h5 class="card-title">
-	                                            <a href="${question.url}" class="text-decoration-none text-primary">${question.title}</a>
-	                                        </h5>
-	                                        <p class="text-muted">${question.content}</p>
-	                                        <span>${question.created_at}</span>
-	                                        <div class="mt-2">
-	                                            ${question.labels.map(label => `
-	                                            <span class="label" style="background-color: ${label.color}">${label.name}</span>`).join('')}
-	                                        </div>
-	                                    </div>
-	                                </div>
-	                            </div>
-	                        `;
-	                        $('#recent-questions').append(questionHtml);
-	                    });
-	                    page++;
-	                }
-	                if (!response.has_next) {
-	                    $('#load-more').hide();
-	                }
-	            }
-	        });
-	    });
-	});
-
-
-</script> {% endblock %}
+    $(function () {
+        let page = 2;
+        $('#load-more').on('click', () => {
+            $.ajax({
+                url: `/?page=${page}`,
+                dataType: 'json',
+                headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                success: function (response) {
+                    if (response.questions.length) {
+                        response.questions.forEach(q => {
+                            $('#recent-questions').append(`
+                                <div class="d-flex mb-4 align-items-start">
+                                    <div class="flex-grow-1">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <h5 class="card-title">
+                                                    <a href="${q.url}" class="text-decoration-none text-primary">${q.title}</a>
+                                                </h5>
+                                                <span>${q.created_at}</span>
+                                            </div>
+                                            <p class="text-muted">${q.content}</p>
+                                            <div class="mt-2">
+                                                ${q.labels.map(l => `<span class="label" style="background-color: ${l.color}">${l.name}</span>`).join('')}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `);
+                        });
+                        page++;
+                    }
+                    if (!response.has_next) {
+                        $('#load-more').hide();
+                    }
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}
