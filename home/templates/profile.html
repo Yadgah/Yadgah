@@ -2,7 +2,7 @@
 {% load static %}
 
 <div class="container mt-5">
-  <h2 class="text-center mb-4">ویرایش پروفایل</h2>
+  <h2 class="text-center mb-4 text-white">ویرایش پروفایل</h2>
   <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <!-- Display Avatar with preview -->
@@ -39,7 +39,7 @@
     <div class="row mb-4">
       <div class="col-md-6">
         <div class="form-group">
-          <label for="id_username" class="form-label">نام کاربری</label>
+          <label for="id_username" class="form-label text-white">نام کاربری</label>
           {{ user_form.username }} {% if user_form.username.errors %}
           <div class="text-danger">
             {% for error in user_form.username.errors %}
@@ -51,7 +51,7 @@
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <label for="id_email" class="form-label">ایمیل</label>
+          <label for="id_email" class="form-label text-white">ایمیل</label>
           {{ user_form.email }} {% if user_form.email.errors %}
           <div class="text-danger">
             {% for error in user_form.email.errors %}
@@ -66,7 +66,7 @@
     <div class="row mb-4">
       <div class="col-md-6">
         <div class="form-group">
-          <label for="id_first_name" class="form-label">نام</label>
+          <label for="id_first_name" class="form-label text-white">نام</label>
           {{ profile_form.first_name }} {% if profile_form.first_name.errors %}
           <div class="text-danger">
             {% for error in profile_form.first_name.errors %}
@@ -78,7 +78,7 @@
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <label for="id_last_name" class="form-label">نام خانوادگی</label>
+          <label for="id_last_name" class="form-label text-white">نام خانوادگی</label>
           {{ profile_form.last_name }} {% if profile_form.last_name.errors %}
           <div class="text-danger">
             {% for error in profile_form.last_name.errors %}

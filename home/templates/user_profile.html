@@ -32,10 +32,6 @@
     transition: transform 0.3s ease;
   }
 
-/*  .avatar-wrapper:hover {
-    transform: scale(1.05);
-  }*/
-
   .avatar {
     width: 120px;
     height: 120px;
@@ -121,7 +117,7 @@
         {% endif %}
       </div>
 
-      <div class="text-white text-center text-md-start">
+      <div class="text-white">
         <h2 class="h2 mb-2 fw-bold">{{ profile_user.username }}</h2>
         <div class="d-flex flex-column flex-md-row gap-3">
           <div>
@@ -190,7 +186,7 @@
                 {{ question.votes.count }} رأی
               </span> -->
             </div>
-            <div class="small">
+            <div class="text-muted">
               <span class="me-3">
                 <i class="fas fa-clock me-1"></i>
                 {{ question.created_at|jalali_date }}
@@ -236,7 +232,7 @@
                     {{ post.views }}
                   </span> -->
                 </div>
-                <div class="small mt-2">
+                <div class="text-muted mt-2">
                   {{ post.created_at|jalali_date }}
                 </div>
               </div>
@@ -258,14 +254,14 @@
             {% for post in unpublished_posts %}
               <div class="post-card">
                 <div class="d-flex align-items-center justify-content-between">
-                  <span>{{ post.title }}</span>
+                  <span class="text-white">{{ post.title }}</span>
                   <div class="d-flex gap-2">
                     <a href="{% url 'post_edit' slug=post.slug %}" class="btn btn-sm btn-outline-warning">
                       ویرایش
                     </a>
                   </div>
                 </div>
-                <div class="small mt-2">
+                <div class="text-muted mt-2">
                   آخرین تغییر: {{ post.updated_at|jalali_date }}
                 </div>
               </div>
