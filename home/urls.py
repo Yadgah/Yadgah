@@ -16,6 +16,7 @@ from .views import (
     delete_profile,
     delete_question,
     delete_reply,
+    donate,
     edit_question,
     edit_reply,
     explore,
@@ -35,7 +36,6 @@ from .views import (
     signup_view,
     toggle_reaction,
     user_profile,
-    donate,
 )
 
 # Sitemap configuration

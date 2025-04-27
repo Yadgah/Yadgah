@@ -1,13 +1,15 @@
-import requests
 import json
+
+import requests
+
 
 def get_ai_reply(question_content):
     """
     Get reply from AI based only on the question content (@mmd-dll AI API)
-    
+
     Args:
         question_content (str): Only the content/text of the question
-    
+
     Returns:
         str: AI's reply
     """
@@ -15,11 +17,12 @@ def get_ai_reply(question_content):
         response = requests.get(
             "https://yw85opafq6.execute-api.us-east-1.amazonaws.com/default/boss_mode_15aug",
             params={
-                "text": "Say the answer in Persian, and keep the words that don't have a Persian equivalent in English :" + question_content,  # فقط محتوای سوال ارسال می‌شود
+                "text": "Say the answer in Persian, and keep the words that don't have a Persian equivalent in English :"
+                + question_content,  # noqa: W503
                 "country": "Iran",
-                "user_id": "usery3peypi26p"
+                "user_id": "usery3peypi26p",
             },
-            timeout=10
+            timeout=10,
         )
 
         # بررسی نوع پاسخ

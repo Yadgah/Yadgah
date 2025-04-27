@@ -131,7 +131,7 @@ Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
 Date:   Sat Apr 5 22:35:28 2025 +0330
 
     Merge pull request #155 from Jivi-this-side/post-limit-char-br
-    
+
     Optimized Post titles in the Post_list to limited Char_length.
 
 commit 26ba02d83e94612add40e58130b8674756685126
@@ -152,7 +152,7 @@ Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
 Date:   Sat Apr 5 17:19:02 2025 +0330
 
     Merge pull request #153 from pulkitgarg04/main
-    
+
     Change view count from text to eye icon
 
 commit f1c4b89866ee472f8326cb4060457e056c2ae409
@@ -179,7 +179,7 @@ Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
 Date:   Fri Apr 4 21:06:03 2025 +0330
 
     Merge pull request #145 from Abulfadl-Ahmadi/fix/issue-138-hide-drafts
-    
+
     Fix: Hide drafts in others' profiles (#138)
 
 commit 9764920f7967878427a347a5dbae990d7b9959d8
@@ -188,7 +188,7 @@ Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
 Date:   Fri Apr 4 21:05:10 2025 +0330
 
     Merge pull request #146 from Abulfadl-Ahmadi/fix/pre-commit-issues
-    
+
     Fix pre-commit formatting issues
 
 commit e9bee1f8e8f1ca8b787be63c7fcdb52334adf4f3
@@ -202,7 +202,7 @@ Author: Abulfadl Ahmadi <abulfadl.ahmadi@gmail.com>
 Date:   Fri Apr 4 14:10:46 2025 +0330
 
     Fix: Hide drafts in others' profiles (#138)
-    
+
     - Hidden drafts in other users' profiles
     - Only published posts are visible
     - Removed edit button for unauthorized users
@@ -213,7 +213,7 @@ Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
 Date:   Thu Apr 3 23:20:57 2025 +0330
 
     Merge pull request #144 from Abulfadl-Ahmadi/feature/130-password-eye-icon
-    
+
     Resolve #130: Add "Eye" icon to password field in login page
 
 commit 2c614bd220b2e02f8a352b1e1c942b6089da4508
@@ -241,7 +241,7 @@ Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
 Date:   Sat Mar 22 20:08:05 2025 +0000
 
     Merge pull request #142 from Yadgah/api
-    
+
     added login, signup api
 
 commit 8fb1dfd46184dc061fb4365edd8347b2979b82a2
@@ -610,7 +610,7 @@ Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
 Date:   Tue Mar 4 19:23:07 2025 +0000
 
     Merge pull request #98 from obriewil/fix_flake8
-    
+
     Fix flake8
 
 commit 14f93a6490501dc2c4e56fe6f80af628ab88a584
@@ -630,7 +630,7 @@ Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
 Date:   Fri Feb 28 18:47:12 2025 +0000
 
     Update base.html
-    
+
     signup btn yellow color changed to green (btn-success)
 
 commit 4b59ecd22f332e4ad148dd8134b0718d43b97afe
@@ -693,7 +693,7 @@ Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
 Date:   Fri Feb 14 16:12:37 2025 +0330
 
     Merge pull request #89 from BDadmehr0/solved-issuse-100
-    
+
     Update README.md
 
 commit b242a84e5a81bc3998f12168eca4a0e781c4e275
@@ -701,7 +701,7 @@ Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
 Date:   Fri Feb 14 12:38:04 2025 +0000
 
     Update README.md
-    
+
     remove migration dir tree in readme
 
 commit 518684f8d2e16c6f31e812e18bb15b8de0272243
@@ -783,7 +783,7 @@ Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
 Date:   Sun Feb 9 19:56:26 2025 +0330
 
     Merge pull request #74 from novinnovin/fix
-    
+
     Update README.md
 
 commit e02b76af1e8bca4a437e15b6cd6fd177687c1780
@@ -822,7 +822,7 @@ Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
 Date:   Sun Feb 9 13:33:08 2025 +0330
 
     Merge pull request #54 from Marih935/solved_issue_49
-    
+
     Solved issue 49
 
 commit 63c58cb7679078217427d6e0476a4b29341a4ca7
@@ -838,7 +838,7 @@ Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
 Date:   Sun Feb 9 13:30:07 2025 +0330
 
     Merge pull request #70 from mdimado/patch-1
-    
+
     Update README.md
 
 commit e7fd78d5031163953a20efe35ce3100688c9c307
@@ -1178,7 +1178,7 @@ Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
 Date:   Sun Jan 26 14:49:02 2025 +0330
 
     Merge pull request #47 from mdimado/main
-    
+
     Improve Question Detail Page UI and mobile responsive
 
 commit e83748c98ad5fa3c0610447004b55b068c8bd4e3
@@ -1229,7 +1229,7 @@ Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
 Date:   Fri Jan 24 15:40:04 2025 +0000
 
     Merge pull request #44 from BDadmehr0/patch1
-    
+
     auto changelog
 
 commit c92b1ee904d19b380d36700f17d928f03acf1f0f
@@ -1244,7 +1244,7 @@ Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
 Date:   Fri Jan 24 13:06:09 2025 +0000
 
     Merge pull request #41 from BDadmehr0/patch1
-    
+
     Created Trend Question & explore page
 
 commit fa8553a6d4d1db3bb016208d1ee5b028b850988b
@@ -1259,7 +1259,7 @@ Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
 Date:   Fri Jan 24 12:45:22 2025 +0000
 
     Merge pull request #40 from BDadmehr0/patch1
-    
+
     Created Ranking System & LeaderBoard
 
 commit 7d94178b2f0acaffbdf8b977000aa0cbd680e39c
@@ -1274,7 +1274,7 @@ Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
 Date:   Fri Jan 24 00:22:34 2025 +0000
 
     Merge pull request #36 from BDadmehr0/patch1
-    
+
     question view add by sessionid cookies
 
 commit 3365a3634cabb315a5892d34828d99112f736cbc
@@ -1289,7 +1289,7 @@ Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
 Date:   Fri Jan 24 00:04:10 2025 +0000
 
     Merge pull request #35 from BDadmehr0/patch1
-    
+
     users can delete questions
 
 commit b2b3ea252b2b0dc4d116c1f482fb1724da0ca39d
@@ -1334,7 +1334,7 @@ Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
 Date:   Tue Jan 21 23:03:04 2025 +0000
 
     Merge pull request #31 from BDadmehr0/better-ui-ux
-    
+
     Merge pull request #30 from BDadmehr0/main
 
 commit d46c6d511b99d5aa3a5006be222fd7b075ba7945
@@ -1343,7 +1343,7 @@ Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
 Date:   Tue Jan 21 22:59:50 2025 +0000
 
     Merge pull request #30 from BDadmehr0/main
-    
+
     0
 
 commit fbae81f2d08be4db4f5a810f974be83673a26dc5
@@ -1388,7 +1388,7 @@ Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
 Date:   Mon Jan 20 19:31:44 2025 +0000
 
     Merge pull request #21 from BDadmehr0/test
-    
+
     configure test.py for test full & better - clean up
 
 commit 927cb7543df5b047f77cf6fb673d891f19e25be3
@@ -1421,7 +1421,7 @@ Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
 Date:   Sun Jan 19 18:33:27 2025 +0000
 
     Merge pull request #19 from BDadmehr0/better-ui-ux
-    
+
     Better UI/UX ...
 
 commit cd3b3330a6ab06f92c8d65ac4311f679ae30c434
@@ -1442,7 +1442,7 @@ Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
 Date:   Sat Jan 18 20:35:27 2025 +0000
 
     Merge pull request #18 from BDadmehr0/better-ui-ux
-    
+
     Better UI/UX
 
 commit 75f08581f008717e85c95aebee3fe0f44d46b975
@@ -1475,7 +1475,7 @@ Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
 Date:   Fri Jan 17 15:21:00 2025 +0000
 
     Merge pull request #12 from BDadmehr0/load-more
-    
+
     load more button - javascript tree to static use npm-module
 
 commit ae8001ea2d9fd75f49352b414eec10ada9e96689
@@ -1658,7 +1658,7 @@ Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
 Date:   Fri Jan 10 10:37:42 2025 +0000
 
     Merge pull request #6 from BDadmehr0/work-formmat
-    
+
     Work formmat
 
 commit 5d4dc603eaa40dde67f4478379572c450f0704a1
@@ -1721,7 +1721,7 @@ Author: Dadmehr <134191240+BDadmehr0@users.noreply.github.com>
 Date:   Wed Jan 8 23:19:40 2025 +0000
 
     Merge pull request #4 from BDadmehr0/big-update
-    
+
     big
 
 commit c51ac636d9f4ea65e0ccf46787df33903785194f

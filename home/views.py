@@ -2,7 +2,6 @@ import json
 import os
 import re
 from io import BytesIO
-from .ai import get_ai_reply
 
 import jdatetime
 import markdown
@@ -35,6 +34,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 from blog.models import Post
 
+from .ai import get_ai_reply
 from .forms import (
     LoginForm,
     NewsForm,
@@ -248,7 +248,9 @@ def ask_question(request):
             form.save_m2m()
 
             ai_reply_content = get_ai_reply(question.content)  # فقط content ارسال می‌شود
-            ai_user, _ = User.objects.get_or_create(username="AI_Agent", defaults={"is_active": False})
+            ai_user, _ = User.objects.get_or_create(
+                username="AI_Agent", defaults={"is_active": False}
+            )
 
             Reply.objects.create(
                 content=ai_reply_content,
@@ -262,7 +264,6 @@ def ask_question(request):
         form = QuestionForm(user=request.user)
 
     return render(request, "ask_question.html", {"form": form})
-
 
 
 def create_label(request):
@@ -638,6 +639,7 @@ def login_api(request):
         return Response(
             {"error": "Invalid credentials."}, status=status.HTTP_401_UNAUTHORIZED
         )
+
 
 def donate(request):
     return render(request, "donate.html")
