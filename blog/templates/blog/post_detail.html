@@ -23,7 +23,12 @@
     font-size: 2rem;
     color: #fff;
     margin-bottom: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;  /* Ensures the text stays on a single line */
+    max-width: 100%;  /* Or set a specific width if necessary */
 }
+
 
 .post-body img {
     width: 100%;
