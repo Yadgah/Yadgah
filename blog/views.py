@@ -25,7 +25,15 @@ def post_detail(request, slug):
         slug_history = get_object_or_404(PostSlugHistory, slug=slug)
         post = slug_history.post
         return redirect("post_detail", slug=post.slug, permanent=True)
+
+    # Only count a view once per session
+    if not request.session.get(f"viewed_post_{post.id}", False):
+        post.view_count += 1
+        post.save(update_fields=["view_count"])
+        request.session[f"viewed_post_{post.id}"] = True
+
     return render(request, "blog/post_detail.html", {"post": post})
+
 
 
 @login_required

@@ -96,9 +96,29 @@
     min-width: 110px;
 }
 
+.title-sec {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-top: 20px;
+
+}
+
+.metadata-item {
+    background: #2c2c2c;
+    padding: 6px 12px;
+    border-radius: 8px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
 #copySuccess {
     margin-top: 10px;
 }
+
 </style>
 
 <div class="post-container">
@@ -111,7 +131,14 @@
 
     <!-- Post Header -->
     <header class="post-header">
-        <h1 class="post-title">{{ post.title }}</h1>
+        <div class="view-count text-light title-sec">
+            <h1 class="post-title">{{ post.title }}</h1>
+            <div class="metadata-item view-count">
+                <span> {{ post.view_count }}</span>
+                <i class="bi bi-eye"></i>
+            </div>
+        </div>
+
         <div class="post-meta">
             <span class="author">
                 نوشته شده توسط

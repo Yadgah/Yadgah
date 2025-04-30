@@ -534,7 +534,6 @@ Disallow: /signup/
 Disallow: /delete_profile/
 Allow: /
 Sitemap: https://{domain}/sitemap.xml
-# dadmehr control google robots :>
 """
     return HttpResponse(content, content_type="text/plain")
 

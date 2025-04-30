@@ -15,7 +15,8 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     image = models.ImageField(upload_to="posts/", null=True, blank=True)
-
+    view_count = models.PositiveIntegerField(default=0)
+    
     def save(self, *args, **kwargs):
         if self.pk and self.title != Post.objects.get(pk=self.pk).title:
             old_slug = self.slug
