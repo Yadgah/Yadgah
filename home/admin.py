@@ -6,24 +6,6 @@ from django.utils.safestring import mark_safe
 from .models import Label, News, Question, Reply, UserProfile
 
 
-def profile_picture_display(obj):
-    """
-    Function to display the profile picture of a user.
-    """
-    try:
-        if obj.userprofile.avatar:
-            return format_html(
-                '<img src="{}" style="height:50px;width:50px;border-radius:50%;" />',
-                obj.userprofile.avatar.url,
-            )
-    except UserProfile.DoesNotExist:
-        return "No Profile"
-    return "No Avatar"
-
-
-profile_picture_display.short_description = "Profile Picture"
-
-
 class QuestionAdmin(admin.ModelAdmin):
     list_display = ("title", "user", "created_at")
     search_fields = ("title", "content")
@@ -43,11 +25,36 @@ class UserProfileInline(admin.StackedInline):
     can_delete = False
     verbose_name_plural = "Profile"
     fk_name = "user"
-    fields = ("avatar",)
+    fields = ("avatar", "score")
 
 
 class UserAdmin(admin.ModelAdmin):
     inlines = [UserProfileInline]
+
+    def profile_picture_display(obj):
+        """
+        Function to display the profile picture of a user.
+        """
+        try:
+            if obj.userprofile.avatar:
+                return format_html(
+                    '<img src="{}" style="height:50px;width:50px;border-radius:50%;" />',
+                    obj.userprofile.avatar.url,
+                )
+        except UserProfile.DoesNotExist:
+            return "No Profile"
+        return "No Avatar"
+
+    profile_picture_display.short_description = "Profile Picture"
+
+    def user_score(obj):
+        try:
+            return obj.userprofile.score
+        except UserProfile.DoesNotExist:
+            return "No Profile"
+
+    user_score.short_description = "Score"
+
     list_display = (
         "username",
         "email",
@@ -56,6 +63,7 @@ class UserAdmin(admin.ModelAdmin):
         "is_active",
         "is_staff",
         profile_picture_display,
+        user_score,
     )
     search_fields = ("username", "email", "first_name", "last_name")
     list_filter = ("is_active", "is_staff")

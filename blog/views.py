@@ -35,7 +35,6 @@ def post_detail(request, slug):
     return render(request, "blog/post_detail.html", {"post": post})
 
 
-
 @login_required
 def post_create(request):
     if request.method == "POST":
