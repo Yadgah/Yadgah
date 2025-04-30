@@ -2,10 +2,13 @@ import re
 
 import jdatetime
 from django import template
+from django.db.models.signals import post_save
 from django.db.models.signals import post_migrate, pre_save
 from django.dispatch import receiver
 
 from .models import Label, UserProfile
+from blog.models import Post
+
 
 
 @receiver(pre_save, sender=UserProfile)
@@ -45,3 +48,10 @@ def create_default_labels(sender, **kwargs):
     # Create labels if they don't exist
     for label_name, label_color in labels:
         Label.objects.get_or_create(name=label_name, color=label_color)
+
+@receiver(post_save, sender=Post)
+def update_user_score(sender, instance, created, **kwargs):
+    if created and instance.published:  # تنها در صورت انتشار پست
+        user_profile = instance.author.userprofile  # دسترسی به پروفایل کاربر
+        user_profile.score += 5  # اضافه کردن 10 امتیاز به کاربر
+        user_profile.save()  # ذخیره تغییرات
