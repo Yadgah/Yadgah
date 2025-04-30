@@ -1,7 +1,7 @@
 from django import forms
 from django_ckeditor_5.widgets import CKEditor5Widget
 
-from .models import Post
+from .models import Comment, Post
 
 
 class PostForm(forms.ModelForm):
@@ -16,3 +16,16 @@ class PostForm(forms.ModelForm):
                 }
             ),
         }
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ["content"]
+
+    content = forms.CharField(
+        widget=forms.Textarea(
+            attrs={"rows": 4, "placeholder": "Write your comment..."}
+        ),
+        label="",
+    )  # حذف label

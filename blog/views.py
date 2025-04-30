@@ -9,8 +9,8 @@ from PIL import Image
 
 from home.models import UserProfile
 
-from .forms import PostForm
-from .models import Post, PostSlugHistory
+from .forms import CommentForm, PostForm
+from .models import Comment, Post, PostSlugHistory
 
 
 def post_list(request):
@@ -19,12 +19,7 @@ def post_list(request):
 
 
 def post_detail(request, slug):
-    try:
-        post = Post.objects.get(slug=slug)
-    except Post.DoesNotExist:
-        slug_history = get_object_or_404(PostSlugHistory, slug=slug)
-        post = slug_history.post
-        return redirect("post_detail", slug=post.slug, permanent=True)
+    post = get_object_or_404(Post, slug=slug)
 
     # Only count a view once per session
     if not request.session.get(f"viewed_post_{post.id}", False):
@@ -32,7 +27,28 @@ def post_detail(request, slug):
         post.save(update_fields=["view_count"])
         request.session[f"viewed_post_{post.id}"] = True
 
-    return render(request, "blog/post_detail.html", {"post": post})
+    # Handling comment form submission
+    if request.method == "POST" and request.user.is_authenticated:
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            # Create a new comment and associate it with the post and user
+            comment = comment_form.save(commit=False)
+            comment.post = post
+            comment.user = request.user
+            comment.save()
+            return redirect(
+                "post_detail", slug=post.slug
+            )  # Redirect to avoid re-posting on refresh
+    else:
+        comment_form = CommentForm()
+
+    comments = post.comments.all()  # Fetch all comments for the post
+
+    return render(
+        request,
+        "blog/post_detail.html",
+        {"post": post, "comment_form": comment_form, "comments": comments},
+    )
 
 
 @login_required
