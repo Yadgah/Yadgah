@@ -98,8 +98,17 @@
                 در تاریخ {{ post.created_at }}
             </span>
             {% if request.user == post.author %}
-                <a href="{% url 'post_edit' slug=post.slug %}" class="btn-success edit-button">ویرایش</a>
+                <div>
+                    <a href="{% url 'post_edit' slug=post.slug %}" class="btn btn-warning edit-button">ویرایش</a>
+                    <form action="{% url 'post_delete' slug=post.slug %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger edit-button" onclick="return confirm('آیا مطمئن هستید که می‌خواهید این پست را حذف کنید؟');">
+                            حذف
+                        </button>
+                    </form>
+                </div>
             {% endif %}
+
         </div>
     </header>
 

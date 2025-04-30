@@ -2,6 +2,7 @@ import os
 from io import BytesIO
 
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 from django.core.files.base import ContentFile
 from django.shortcuts import get_object_or_404, redirect, render
 from PIL import Image
@@ -10,6 +11,8 @@ from home.models import UserProfile
 
 from .forms import PostForm
 from .models import Post, PostSlugHistory
+
+
 
 
 def post_list(request):
@@ -104,3 +107,10 @@ def post_edit(request, slug):
         form = PostForm(instance=post)
 
     return render(request, "blog/post_edit.html", {"form": form, "post": post})
+
+@login_required
+@require_POST
+def post_delete(request, slug):
+    post = get_object_or_404(Post, slug=slug, author=request.user)
+    post.delete()
+    return redirect("post_list")
