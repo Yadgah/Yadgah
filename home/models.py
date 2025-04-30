@@ -17,7 +17,9 @@ class UserProfile(models.Model):
     last_name = models.CharField(max_length=30, blank=True)
     avatar = models.ImageField(upload_to="avatars/", blank=True, null=True)
     score = models.PositiveIntegerField(default=0)  # Store user score for ranking
-    show_email = models.BooleanField(default=False, verbose_name="نمایش ایمیل به دیگران")
+    show_email = models.BooleanField(
+        default=False, verbose_name="نمایش ایمیل به دیگران"
+    )
 
     def __str__(self):
         return f"{self.user.username} Profile"

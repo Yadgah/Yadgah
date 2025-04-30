@@ -4,6 +4,7 @@
 {% load custom_filters %}
 {% block content %}
 
+
 <style>
 .post-container {
     max-width: 800px;
@@ -26,7 +27,7 @@
 
 .post-body img {
     width: 100%;
-    height: auto; /* برای حفظ نسبت تصویر */
+    height: auto;
     border-radius: 8px;
 }
 
@@ -37,10 +38,12 @@
     font-size: 0.9rem;
     color: #fff;
     margin-bottom: 10px;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .author-link {
-    color: #007bff;
+    color: #0d6efd;
     text-decoration: none;
 }
 
@@ -73,19 +76,37 @@
 }
 
 .back-link {
-    color: #007bff;
+    color: #0d6efd;
     text-decoration: none;
 }
 
 .back-link:hover {
     text-decoration: underline;
 }
+
+.share-box {
+    background-color: #2b2b2b;
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 30px;
+    text-align: center;
+}
+
+.share-box .btn {
+    min-width: 110px;
+}
+
+#copySuccess {
+    margin-top: 10px;
+}
 </style>
 
 <div class="post-container">
     <!-- Back to Posts -->
     <div class="back-to-posts">
-        <a href="{% url 'post_list' %}" class="back-link">بازگشت به همه پست‌ها</a>
+        <a href="{% url 'post_list' %}" class="back-link">
+            <i class="fa fa-arrow-right"></i> بازگشت به همه پست‌ها
+        </a>
     </div>
 
     <!-- Post Header -->
@@ -99,16 +120,17 @@
             </span>
             {% if request.user == post.author %}
                 <div>
-                    <a href="{% url 'post_edit' slug=post.slug %}" class="btn btn-warning edit-button">ویرایش</a>
+                    <a href="{% url 'post_edit' slug=post.slug %}" class="btn btn-warning edit-button">
+                        <i class="fa fa-edit"></i> ویرایش
+                    </a>
                     <form action="{% url 'post_delete' slug=post.slug %}" method="post" style="display:inline;">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-danger edit-button" onclick="return confirm('آیا مطمئن هستید که می‌خواهید این پست را حذف کنید؟');">
-                            حذف
+                            <i class="fa fa-trash"></i> حذف
                         </button>
                     </form>
                 </div>
             {% endif %}
-
         </div>
     </header>
 
@@ -124,6 +146,47 @@
         <p>{{ post.body|remove_empty_paragraphs|safe }}</p>
     </div>
 
+    <!-- Share Buttons -->
+    <div class="share-box">
+        <p class="text-light mb-2">اشتراک‌گذاری این پست:</p>
+        <div class="d-flex justify-content-center flex-wrap gap-2">
+            <!-- WhatsApp -->
+            <a href="https://wa.me/?text={{ request.build_absolute_uri }}" target="_blank" class="btn btn-success btn-sm">
+                <i class="fab fa-whatsapp"></i> واتساپ
+            </a>
 
+            <!-- Telegram -->
+            <a href="https://t.me/share/url?url={{ request.build_absolute_uri }}" target="_blank" class="btn btn-info btn-sm">
+                <i class="fab fa-telegram"></i> تلگرام
+            </a>
+
+            <!-- Twitter -->
+            <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ post.title }}" target="_blank" class="btn btn-primary btn-sm">
+                <i class="fab fa-twitter"></i> توییتر
+            </a>
+
+            <!-- Copy Link -->
+            <button onclick="copyToClipboard()" class="btn btn-secondary btn-sm">
+                <i class="fa fa-link"></i> کپی لینک
+            </button>
+        </div>
+        <small id="copySuccess" class="text-success d-none">✅ لینک کپی شد!</small>
+    </div>
 </div>
+
+<script>
+  function copyToClipboard() {
+    const tempInput = document.createElement("input");
+    tempInput.value = "{{ request.build_absolute_uri }}";
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    document.execCommand("copy");
+    document.body.removeChild(tempInput);
+
+    const success = document.getElementById("copySuccess");
+    success.classList.remove("d-none");
+    setTimeout(() => success.classList.add("d-none"), 2000);
+  }
+</script>
+
 {% endblock %}
