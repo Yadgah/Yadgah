@@ -1,6 +1,8 @@
-{% extends 'base.html' %} {% block content %} {% load custom_filters %}
+{% extends 'base.html' %}
+{% load custom_filters %}
 {% load static %}
 
+{% block content %}
 <div class="container mt-5">
   <h2 class="text-center mb-4 text-white">ویرایش پروفایل</h2>
   <form method="POST" enctype="multipart/form-data">
@@ -8,25 +10,24 @@
     <!-- Display Avatar with preview -->
     <div class="text-center mb-4">
       {% if profile_form.instance.avatar %}
-      <img
-        id="profile-avatar"
-        src="{{ profile_form.instance.avatar.url }}"
-        alt="Avatar"
-        class="rounded-circle"
-        style="width: 150px; height: 150px; object-fit: cover; cursor: pointer"
-        onclick="document.getElementById('avatar-input').click();"
-      />
+        <img
+          id="profile-avatar"
+          src="{{ profile_form.instance.avatar.url }}"
+          alt="Avatar"
+          class="rounded-circle"
+          style="width: 150px; height: 150px; object-fit: cover; cursor: pointer"
+          onclick="document.getElementById('avatar-input').click();"
+        />
       {% else %}
-      <img
-        id="profile-avatar"
-        src="{% static 'default-avatar.png' %}"
-        alt="Avatar"
-        class="rounded-circle"
-        style="width: 150px; height: 150px; object-fit: cover; cursor: pointer"
-        onclick="document.getElementById('avatar-input').click();"
-      />
+        <img
+          id="profile-avatar"
+          src="{% static 'default-avatar.png' %}"
+          alt="Avatar"
+          class="rounded-circle"
+          style="width: 150px; height: 150px; object-fit: cover; cursor: pointer"
+          onclick="document.getElementById('avatar-input').click();"
+        />
       {% endif %}
-      <!-- Input for avatar upload -->
       <input
         id="avatar-input"
         type="file"
@@ -35,63 +36,81 @@
         onchange="previewAvatar(event)"
       />
     </div>
+
     <!-- User Information Form -->
     <div class="row mb-4">
       <div class="col-md-6">
         <div class="form-group">
           <label for="id_username" class="form-label text-white">نام کاربری</label>
-          {{ user_form.username }} {% if user_form.username.errors %}
-          <div class="text-danger">
-            {% for error in user_form.username.errors %}
-            <p>{{ error }}</p>
-            {% endfor %}
-          </div>
+          {{ user_form.username }}
+          {% if user_form.username.errors %}
+            <div class="text-danger">
+              {% for error in user_form.username.errors %}
+                <p>{{ error }}</p>
+              {% endfor %}
+            </div>
           {% endif %}
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group">
           <label for="id_email" class="form-label text-white">ایمیل</label>
-          {{ user_form.email }} {% if user_form.email.errors %}
-          <div class="text-danger">
-            {% for error in user_form.email.errors %}
-            <p>{{ error }}</p>
-            {% endfor %}
-          </div>
+          {{ user_form.email }}
+          {% if user_form.email.errors %}
+            <div class="text-danger">
+              {% for error in user_form.email.errors %}
+                <p>{{ error }}</p>
+              {% endfor %}
+            </div>
           {% endif %}
         </div>
       </div>
     </div>
+
     <!-- Profile Information Form -->
     <div class="row mb-4">
       <div class="col-md-6">
         <div class="form-group">
           <label for="id_first_name" class="form-label text-white">نام</label>
-          {{ profile_form.first_name }} {% if profile_form.first_name.errors %}
-          <div class="text-danger">
-            {% for error in profile_form.first_name.errors %}
-            <p>{{ error }}</p>
-            {% endfor %}
-          </div>
+          {{ profile_form.first_name }}
+          {% if profile_form.first_name.errors %}
+            <div class="text-danger">
+              {% for error in profile_form.first_name.errors %}
+                <p>{{ error }}</p>
+              {% endfor %}
+            </div>
           {% endif %}
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group">
           <label for="id_last_name" class="form-label text-white">نام خانوادگی</label>
-          {{ profile_form.last_name }} {% if profile_form.last_name.errors %}
-          <div class="text-danger">
-            {% for error in profile_form.last_name.errors %}
-            <p>{{ error }}</p>
-            {% endfor %}
-          </div>
+          {{ profile_form.last_name }}
+          {% if profile_form.last_name.errors %}
+            <div class="text-danger">
+              {% for error in profile_form.last_name.errors %}
+                <p>{{ error }}</p>
+              {% endfor %}
+            </div>
           {% endif %}
         </div>
       </div>
     </div>
-    <!-- Save Changes Button -->
+
+    <!-- Show Email Option -->
+    <div class="form-check mb-3 text-end">
+      <input type="checkbox" class="form-check-input" name="show_email" id="id_show_email"
+        {% if profile_form.instance.show_email %}checked{% endif %}>
+      <label class="form-check-label text-white me-2" for="id_show_email">
+        نمایش ایمیل من به دیگران
+      </label>
+    </div>
+
+
+    <!-- Save Button -->
     <button type="submit" class="btn btn-primary w-100">ذخیره تغییرات</button>
   </form>
+
   <!-- Profile Deletion Form -->
   <form method="POST" action="{% url 'delete_profile' %}" class="mt-4">
     {% csrf_token %}
@@ -104,17 +123,16 @@
     </button>
   </form>
 </div>
+
 <script>
   function previewAvatar(event) {
-    var file = event.target.files[0];
-    var reader = new FileReader();
+    const file = event.target.files[0];
+    const reader = new FileReader();
 
     reader.onload = function (e) {
-      // Update the avatar preview
       document.getElementById('profile-avatar').src = e.target.result;
     };
 
-    // Read the file as data URL
     if (file) {
       reader.readAsDataURL(file);
     }

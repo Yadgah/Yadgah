@@ -120,10 +120,13 @@
       <div class="text-white">
         <h2 class="h2 mb-2 fw-bold">{{ profile_user.username }}</h2>
         <div class="d-flex flex-column flex-md-row gap-3">
-          <div>
-            <i class="fas fa-envelope me-2"></i>
-            {{ profile_user.email }}
-          </div>
+          {% if user_profile.show_email %}
+            <div>
+              <i class="fas fa-envelope me-2"></i>
+              {{ profile_user.email }}
+            </div>
+          {% endif %}
+
           <div>
             <i class="fas fa-calendar-alt me-2"></i>
             عضو شده در {{ profile_user.date_joined|date:"Y/m/d" }}
