@@ -52,21 +52,47 @@
         </script>
 
         <style>
+            /* For Chrome, Edge, Safari */
+            ::-webkit-scrollbar {
+                width: 12px;
+                height: 12px;
+            }
+
+            ::-webkit-scrollbar-track {
+                background: #121212;
+            }
+
+            ::-webkit-scrollbar-thumb {
+                background-color: #66c26a;
+                border-radius: 10px;
+                border: 2px solid #121212;
+            }
+
+            /* Firefox */
+            * {
+                scrollbar-width: big;
+                scrollbar-color: #66c26a #121212;
+            }
+
             .nav-link {
                 font-weight: 500;
                 border: none !important;
                 position: relative;
             }
+
             .link-dark {
                 color: #69b987;
             }
+
             .link-dark:focus,
             .link-dark:hover {
                 color: #b3b1b1;
             }
+
             .dropdown-menu.show {
                 text-align: center;
             }
+
             body {
                 background-color: #121212;
                 font-family: Vazirmatn, sans-serif;
@@ -80,6 +106,7 @@
                 border-top-left-radius: 25;
                 border-bottom-left-radius: 25;
             }
+            
             .q_box_btn {
                 margin-left: -1px;
                 border-top-right-radius: 25;
