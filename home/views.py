@@ -46,11 +46,6 @@ from .forms import (
 )
 from .models import Label, News, Question, QuestionReaction, Reply, UserProfile
 
-# Decorator to restrict access to staff members only
-# def staff_member_required(view_func):
-#     return user_passes_test(lambda u: u.is_staff)(view_func)
-
-
 # Home view to show recent questions and news
 def home_view(request):
     questions = Question.objects.all().order_by("-created_at")
