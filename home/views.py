@@ -170,8 +170,6 @@ def logout_view(request):
 
 
 # View for user profile
-
-
 @login_required
 def profile_view(request):
     user_profile, _ = UserProfile.objects.get_or_create(user=request.user)
