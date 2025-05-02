@@ -17,4 +17,3 @@ jobs:
         uses: release-drafter/release-drafter@v5
         with:
           config-name: default
-
