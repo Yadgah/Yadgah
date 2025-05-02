@@ -2,168 +2,179 @@
 
 {% block title %}{{ post.title }} - یادگاه{% endblock %}
 {% load custom_filters %}
+
+{% block head %}
+    <!-- Set Open Graph Image dynamically -->
+    <meta property="og:title" content="یادگاه - {{ post.title }}" />
+    <meta property="og:description" content="{{ post.body|slice:':150'|safe }}" />
+    {% if post.image %}
+        <meta property="og:image" content="{{ post.image.url }}" />
+    {% else %}
+        <meta property="og:image" content="{% static 'thumbnail.png' %}" />
+    {% endif %}
+{% endblock %}
+
 {% block content %}
 
 <style>
-.post-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #212529;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
+    .post-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #212529;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
 
-.comment-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #212529;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    .comment-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #212529;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
-    margin-top: 50px;
-    margin-bottom: 50px;
-}
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
 
-.post-header {
-    margin-bottom: 20px;
-}
+    .post-header {
+        margin-bottom: 20px;
+    }
 
-.post-title {
-    font-size: 2rem;
-    color: #fff;
-    margin-bottom: 10px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;  /* Ensures the text stays on a single line */
-    max-width: 100%;  /* Or set a specific width if necessary */
-}
+    .post-title {
+        font-size: 2rem;
+        color: #fff;
+        margin-bottom: 10px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;  /* Ensures the text stays on a single line */
+        max-width: 100%;  /* Or set a specific width if necessary */
+    }
 
-.post-body img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-}
+    .post-body img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+    }
 
-.post-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.9rem;
-    color: #fff;
-    margin-bottom: 10px;
-    flex-wrap: wrap;
-    gap: 10px;
-}
+    .post-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.9rem;
+        color: #fff;
+        margin-bottom: 10px;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
 
-.author-link {
-    color: #0d6efd;
-    text-decoration: none;
-}
+    .author-link {
+        color: #0d6efd;
+        text-decoration: none;
+    }
 
-.author-link:hover {
-    text-decoration: underline;
-}
+    .author-link:hover {
+        text-decoration: underline;
+    }
 
-.edit-button {
-    padding: 8px 16px;
-    text-decoration: none;
-    border-radius: 4px;
-}
+    .edit-button {
+        padding: 8px 16px;
+        text-decoration: none;
+        border-radius: 4px;
+    }
 
-.post-image img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-    margin-bottom: 20px;
-}
+    .post-image img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
 
-.post-body {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    color: #fff;
-}
+    .post-body {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        color: #fff;
+    }
 
-.back-to-posts {
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
+    .back-to-posts {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
 
-.back-link {
-    color: #0d6efd;
-    text-decoration: none;
-}
+    .back-link {
+        color: #0d6efd;
+        text-decoration: none;
+    }
 
-.back-link:hover {
-    text-decoration: underline;
-}
+    .back-link:hover {
+        text-decoration: underline;
+    }
 
-.share-box {
-    background-color: #2b2b2b;
-    border-radius: 8px;
-    padding: 15px;
-    margin-top: 30px;
-    text-align: center;
-}
+    .share-box {
+        background-color: #2b2b2b;
+        border-radius: 8px;
+        padding: 15px;
+        margin-top: 30px;
+        text-align: center;
+    }
 
-.share-box .btn {
-    min-width: 110px;
-}
+    .share-box .btn {
+        min-width: 110px;
+    }
 
-.title-sec {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    margin-top: 20px;
-}
+    .title-sec {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        margin-top: 20px;
+    }
 
-.metadata-item {
-    background: #2c2c2c;
-    padding: 6px 12px;
-    border-radius: 8px;
-    color: var(--text-muted);
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
+    .metadata-item {
+        background: #2c2c2c;
+        padding: 6px 12px;
+        border-radius: 8px;
+        color: var(--text-muted);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
 
-#copySuccess {
-    margin-top: 10px;
-}
+    #copySuccess {
+        margin-top: 10px;
+    }
 
-.comment-box {
-    background-color: #2b2b2b;
+    .comment-box {
+        background-color: #2b2b2b;
 
-    border-radius: 8px;
-    padding: 15px;
-    margin-top: 20px;
-}
+        border-radius: 8px;
+        padding: 15px;
+        margin-top: 20px;
+    }
 
-.comment-box textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    background-color: #2c2c2c;
-    color: #fff;
-}
+    .comment-box textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        background-color: #2c2c2c;
+        color: #fff;
+    }
 
-.comment-box button {
-    padding: 8px 16px;
-    background-color: #0d6efd;
-    border: none;
-    border-radius: 4px;
-    color: white;
-    cursor: pointer;
-}
+    .comment-box button {
+        padding: 8px 16px;
+        background-color: #0d6efd;
+        border: none;
+        border-radius: 4px;
+        color: white;
+        cursor: pointer;
+    }
 
-.comment-box button:hover {
-    background-color: #004085;
-}
-
+    .comment-box button:hover {
+        background-color: #004085;
+    }
 </style>
 
 <div class="post-container">

@@ -180,6 +180,7 @@
         font-size: 1rem;
         color: var(--text-primary);
         line-height: 1.6;
+        justify-content: space-between;
     }
     .reply-meta {
         margin: 0;
@@ -384,6 +385,11 @@
 
 <script>
     function toggleReaction(type) {
+        {% if not user.is_authenticated %}
+        alert("برای لایک یا دیسلایک کردن باید وارد حساب کاربری شوید.");
+        return;
+        {% endif %}
+
         const csrfToken = "{{ csrf_token }}";
         fetch("{% url 'toggle_reaction' question.id %}", {
             method: "POST",
@@ -399,5 +405,6 @@
             document.querySelector(".btn-dislike").innerHTML = `<i class="bi bi-hand-thumbs-down-fill"></i> ${data.dislikes}`;
         });
     }
+
 </script>
 {% endblock %}
