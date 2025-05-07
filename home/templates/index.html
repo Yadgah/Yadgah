@@ -68,12 +68,11 @@
     }
 
     .featured-question {
-        background: linear-gradient(135deg, #1a3a1a, #121212);
-        border-left: 4px solid #69b987;
+        background: linear-gradient(135deg, #D3AF37, #8A6E2F);
     }
 
     .stats-box {
-        background-color: #1a3a1a;
+        background-color: #537D5D;
         border-radius: 10px;
         padding: 15px;
         text-align: center;
@@ -82,11 +81,10 @@
     .stats-box .number {
         font-size: 2.5rem;
         font-weight: bold;
-        color: #69b987;
     }
 
     .swiper-slide {
-        background: linear-gradient(90deg, #1a3a1a, #121212);
+        background: linear-gradient(120deg, #D2D0A0, #537D5D);
         padding: 20px;
         border-radius: 10px;
     }
@@ -102,7 +100,7 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background-color: #1a3a1a;
+            background-color: #537D5D;
             padding: 10px;
             justify-content: space-around;
             z-index: 1000;
@@ -150,109 +148,89 @@
     <div class="row mb-4">
         <div class="col-md-4 mb-3">
             <div class="stats-box">
-                <div class="number" data-count="1250">0</div>
-                <div>سوالات</div>
+                <div class="number" data-count="{{ total_questions }}">0</div>
+                <p class="text-white">سوالات</p>
             </div>
         </div>
         <div class="col-md-4 mb-3">
             <div class="stats-box">
-                <div class="number" data-count="850">0</div>
-                <div>پاسخ‌ها</div>
+                <div class="number" data-count="{{ total_replies }}">0</div>
+                <p class="text-white">پاسخ‌ها</p>
             </div>
         </div>
         <div class="col-md-4 mb-3">
             <div class="stats-box">
-                <div class="number" data-count="320">0</div>
-                <div>کاربران</div>
+                <div class="number" data-count="{{ total_users }}">0</div>
+                <p class="text-white">کاربران</p>
             </div>
         </div>
     </div>
 
-    <div class="row">
-        <!-- News Section -->
-        <div class="col-md-4 mb-4">
-            <div class="news-section p-4 round">
-                <h2 class="mb-4">اخبار جدید</h2>
-                {% if news_items %}
-                    {% for news in news_items %}
-                        <div class="card mb-3">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ news.title }}</h5>
-                                <p class="card-muted">{{ news.content|truncatewords:20 }}</p>
-                                <p class="text-muted small">تاریخ انتشار: {{ news.published_at|jalali_date }}</p>
-                            </div>
-                        </div>
-                    {% endfor %}
-                {% else %}
-                    <p>هیچ خبری در حال حاضر موجود نیست.</p>
-                {% endif %}
-            </div>
+
+    <!-- Main Content Section -->
+    <!-- سوال برجسته هفته -->
+    <div class="p-4 my-4 round featured-question">
+        <h3 class="mb-3">⭐ سوال برجسته هفته</h3>
+        <h4>{{ top_question_of_week.title }}</h4>
+        <p>
+            این سوال با بیش از {{ top_question_of_week.num_replies }} پاسخ و
+            {{ top_question_of_week.num_likes }} رای مثبت به عنوان سوال برتر هفته انتخاب شده است
+        </p>
+        <a href="{{ top_question_of_week.get_absolute_url }}#replies" class="btn btn-outline-warning">مشاهده پاسخ‌ها</a>
+    </div>
+
+    <div class="main-content p-4 round">
+        <!-- تب‌های دسته‌بندی -->
+        <div class="d-flex mb-4 gap-2 flex-wrap">
+            <button class="btn btn-outline-success active">همه</button>
+            <button class="btn btn-outline-success">برنامه‌نویسی</button>
+            <button class="btn btn-outline-success">طراحی</button>
+            <button class="btn btn-outline-success">هوش مصنوعی</button>
+            <button class="btn btn-outline-success">وب</button>
+            <button class="btn btn-outline-success">موبایل</button>
         </div>
 
-        <!-- Main Content Section -->
-        <div class="col-md-8">
-            <!-- سوال برجسته هفته -->
-            <div class="p-4 my-4 round featured-question">
-                <h3 class="text-warning mb-3">⭐ سوال برجسته هفته</h3>
-                <h4>چگونه در پایتون Async کار کنیم؟</h4>
-                <p class="text-muted">این سوال با بیش از 15 پاسخ و 50 رای مثبت به عنوان سوال برتر هفته انتخاب شده است</p>
-                <a href="#" class="btn btn-outline-warning">مشاهده پاسخ‌ها</a>
-            </div>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>سوالات اخیر</h2>
+            {% if user.is_authenticated %}
+                <a href="{% url 'ask_question' %}" class="btn btn-success">پرسیدن سوال</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn btn-outline-success">پرسیدن سوال</a>
+            {% endif %}
+        </div>
 
-            <div class="main-content p-4 round">
-                <!-- تب‌های دسته‌بندی -->
-                <div class="d-flex mb-4 gap-2 flex-wrap">
-                    <button class="btn btn-outline-success active">همه</button>
-                    <button class="btn btn-outline-success">برنامه‌نویسی</button>
-                    <button class="btn btn-outline-success">طراحی</button>
-                    <button class="btn btn-outline-success">هوش مصنوعی</button>
-                    <button class="btn btn-outline-success">وب</button>
-                    <button class="btn btn-outline-success">موبایل</button>
-                </div>
-
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h2>سوالات اخیر</h2>
-                    {% if user.is_authenticated %}
-                        <a href="{% url 'ask_question' %}" class="btn btn-success">پرسیدن سوال</a>
-                    {% else %}
-                        <a href="{% url 'login' %}" class="btn btn-outline-success">پرسیدن سوال</a>
-                    {% endif %}
-                </div>
-
-                <div id="recent-questions">
-                    {% if questions %}
-                        {% for question in questions %}
-                            <div class="d-flex mb-4 align-items-start">
-                                <div class="card-body flex-grow-1">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <h5 class="card-title">
-                                            <a href="{% url 'question_detail' question.id %}"
-                                               class="text-decoration-none text-primary">{{ question.title }}</a>
-                                        </h5>
-                                        <span>{{ question.created_at|jalali_date }}</span>
-                                    </div>
-                                    <p class="text-muted">
-                                        {{ question.content|striptags|truncatewords:20 }}
-                                    </p>
-                                    <div class="mt-2">
-                                        {% for label in question.labels.all %}
-                                            <span class="label" style="background-color: {{ label.color }}">{{ label.name }}</span>
-                                        {% endfor %}
-                                    </div>
-                                </div>
+        <div id="recent-questions">
+            {% if questions %}
+                {% for question in questions %}
+                    <div class="d-flex mb-4 align-items-start">
+                        <div class="card-body flex-grow-1">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="card-title">
+                                    <a href="{% url 'question_detail' question.id %}"
+                                       class="text-decoration-none text-primary">{{ question.title }}</a>
+                                </h5>
+                                <span>{{ question.created_at|jalali_date }}</span>
                             </div>
-                        {% endfor %}
-                    {% else %}
-                        <p>هیچ سوالی ارسال نشده است.</p>
-                    {% endif %}
-                </div>
+                            <p class="text-muted">
+                                {{ question.content|striptags|truncatewords:20 }}
+                            </p>
+                            <div class="mt-2">
+                                {% for label in question.labels.all %}
+                                    <span class="label" style="background-color: {{ label.color }}">{{ label.name }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>هیچ سوالی ارسال نشده است.</p>
+            {% endif %}
+        </div>
 
-                <div class="load-more__btn">
-                    {% if show_load_more %}
-                        <button id="load-more" class="btn btn-success">نمایش بیشتر</button>
-                    {% endif %}
-                </div>
-            </div>
+        <div class="load-more__btn">
+            {% if show_load_more %}
+                <button id="load-more" class="btn btn-success">نمایش بیشتر</button>
+            {% endif %}
         </div>
     </div>
 </div>
@@ -270,69 +248,38 @@
 <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-    // نمایش انیمیشن ابتدایی فقط یک بار
-    const intro = document.getElementById("intro-welcome");
-    if (!localStorage.getItem("yadgahWelcomeShown")) {
-        setTimeout(() => {
-            intro.style.opacity = "0";
-            intro.style.visibility = "hidden";
-            localStorage.setItem("yadgahWelcomeShown", "true");
-        }, 3000);
-    } else {
-        intro.style.display = "none";
-    }
+    document.addEventListener("DOMContentLoaded", () => {
+        const intro = document.getElementById("intro-welcome");
 
-    // انیمیشن شمارنده آمار
-    document.querySelectorAll('[data-count]').forEach(el => {
-        let target = parseInt(el.getAttribute('data-count'), 10);
-        let count = 0;
-        let increment = target / 30;
-        let interval = setInterval(() => {
-            if (count >= target) {
-                el.textContent = target;
-                clearInterval(interval);
-            } else {
-                count += increment;
-                el.textContent = Math.floor(count);
-            }
-        }, 50);
-    });
-
-    // شمارش معکوس برای همه countdownها
-    function toPersian(num) {
-        return String(num).replace(/\d/g, d => "۰۱۲۳۴۵۶۷۸۹"[d]);
-    }
-
-    function startCountdown(el) {
-        const expiry = new Date(el.dataset.expiry);
-        function update() {
-            const now = new Date();
-            const diff = expiry - now;
-            if (diff <= 0) {
-                el.textContent = "منقضی شده";
-                return;
-            }
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-            const minutes = Math.floor((diff / (1000 * 60)) % 60);
-            const seconds = Math.floor((diff / 1000) % 60);
-            el.textContent =
-                toPersian(days) + " روز " +
-                toPersian(hours).padStart(2, "۰") + ":" +
-                toPersian(minutes).padStart(2, "۰") + ":" +
-                toPersian(seconds).padStart(2, "۰");
+        // بررسی اینکه آیا انیمیشن قبلاً نشان داده شده یا نه
+        if (!localStorage.getItem("yadgahWelcomeShown")) {
+            setTimeout(() => {
+                intro.style.opacity = "0";  // محو کردن انیمیشن بعد از 3 ثانیه
+                intro.style.visibility = "hidden";
+                localStorage.setItem("yadgahWelcomeShown", "true");  // ذخیره وضعیت نمایش انیمیشن
+            }, 3000);
+        } else {
+            intro.style.display = "none";  // اگر قبلاً نمایش داده شده باشد، پنهانش کن
         }
-        update();
-        setInterval(update, 1000);
-    }
 
-    document.querySelectorAll('#countdown[data-expiry]').forEach(startCountdown);
+        // انیمیشن شمارنده آمار
+        document.querySelectorAll('[data-count]').forEach(el => {
+            let target = +el.getAttribute('data-count');
+            let count = 0;
+            let increment = target / 30;
+            let interval = setInterval(() => {
+                if (count >= target) {
+                    el.textContent = target;
+                    clearInterval(interval);
+                } else {
+                    count += increment;
+                    el.textContent = Math.floor(count);
+                }
+            }, 50);
+        });
 
-    // اسلایدر فقط در صورت وجود بیش از 1 اسلاید
-    const slidesCount = document.querySelectorAll('.swiper-slide').length;
-    if (slidesCount > 1) {
-        new Swiper('.swiper', {
+        // اسلایدر
+        const swiper = new Swiper('.swiper', {
             loop: true,
             autoplay: {
                 delay: 5000,
@@ -342,64 +289,94 @@ document.addEventListener("DOMContentLoaded", function () {
                 clickable: true,
             },
         });
-    }
+    });
 
-    // بارگذاری بیشتر سوالات
-    let page = 2;
-    document.getElementById('load-more')?.addEventListener('click', function () {
-        fetch(`/?page=${page}`, {
-            headers: { 'X-Requested-With': 'XMLHttpRequest' }
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.questions.length) {
-                data.questions.forEach(q => {
-                    document.getElementById('recent-questions').insertAdjacentHTML('beforeend', `
-                        <div class="d-flex mb-4 align-items-start">
-                            <div class="flex-grow-1">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <h5 class="card-title">
-                                            <a href="${q.url}" class="text-decoration-none text-primary">${q.title}</a>
-                                        </h5>
-                                        <span>${q.created_at}</span>
-                                    </div>
-                                    <p class="text-muted">${q.content}</p>
-                                    <div class="mt-2">
-                                        ${q.labels.map(l => `<span class="label" style="background-color: ${l.color}">${l.name}</span>`).join('')}
+    $(function () {
+        let page = 2;
+        // بارگذاری بیشتر سوالات با دکمه "نمایش بیشتر"
+        $('#load-more').on('click', () => {
+            $.ajax({
+                url: `/?page=${page}`,
+                dataType: 'json',
+                headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                success: function (response) {
+                    if (response.questions.length) {
+                        response.questions.forEach(q => {
+                            $('#recent-questions').append(`
+                                <div class="d-flex mb-4 align-items-start">
+                                    <div class="flex-grow-1">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <h5 class="card-title">
+                                                    <a href="${q.url}" class="text-decoration-none text-primary">${q.title}</a>
+                                                </h5>
+                                                <span>${q.created_at}</span>
+                                            </div>
+                                            <p class="text-muted">${q.content}</p>
+                                            <div class="mt-2">
+                                                ${q.labels.map(l => `<span class="label" style="background-color: ${l.color}">${l.name}</span>`).join('')}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    `);
-                });
-                page++;
-                if (!data.has_next) {
-                    this.style.display = "none";
+                            `);
+                        });
+                        page++;
+                    }
+                    if (!response.has_next) {
+                        $('#load-more').hide();  // اگر سوالات بیشتری وجود نداشته باشد، دکمه "نمایش بیشتر" پنهان شود
+                    }
                 }
+            });
+        });
+
+        // جستجوی هوشمند
+        $('#smart-search').on('input', async function() {
+            let query = $(this).val();
+            if (query.length > 2) {
+                let results = await fetch(`/api/search?q=${query}`).then(res => res.json());
+                $('#search-suggestions').html(
+                    results.map(r => `<a class="dropdown-item" href="${r.url}">${r.title}</a>`).join('')
+                ).show();
+            } else {
+                $('#search-suggestions').hide();
             }
         });
     });
 
-    // جستجوی هوشمند
-    const searchInput = document.getElementById('smart-search');
-    const suggestions = document.getElementById('search-suggestions');
+    // شمارش معکوس برای نمایش زمان باقی‌مانده
+    document.addEventListener("DOMContentLoaded", function () {
+        const countdownEl = document.getElementById("countdown");
+        const expiryTime = new Date(countdownEl.dataset.expiry);
 
-    if (searchInput) {
-        searchInput.addEventListener('input', async function () {
-            const query = this.value;
-            if (query.length > 2) {
-                const res = await fetch(`/api/search?q=${query}`);
-                const results = await res.json();
-                suggestions.innerHTML = results.map(r =>
-                    `<a class="dropdown-item" href="${r.url}">${r.title}</a>`
-                ).join('');
-                suggestions.style.display = 'block';
-            } else {
-                suggestions.style.display = 'none';
+        function updateCountdown() {
+            const now = new Date();
+            const diff = expiryTime - now;
+
+            if (diff <= 0) {
+                countdownEl.textContent = "منقضی شده";
+                return;
             }
-        });
-    }
-});
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((diff / (1000 * 60)) % 60);
+            const seconds = Math.floor((diff / 1000) % 60);
+
+            countdownEl.textContent =
+                toPersian(days) + " روز " +
+                toPersian(hours) + ":" +
+                toPersian(minutes).padStart(2, "۰") + ":" +
+                toPersian(seconds).padStart(2, "۰");
+        }
+
+        function toPersian(num) {
+            return String(num).replace(/\d/g, d => "۰۱۲۳۴۵۶۷۸۹"[d]);
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);  // بروزرسانی هر ثانیه
+    });
 </script>
+
 {% endblock %}

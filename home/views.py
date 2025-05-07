@@ -1,6 +1,7 @@
 import json
 import os
 import re
+from datetime import timedelta
 from io import BytesIO
 
 import jdatetime
@@ -15,8 +16,7 @@ from django.core.exceptions import ValidationError
 from django.core.files.base import ContentFile
 from django.core.paginator import EmptyPage, Paginator
 from django.db import models
-from django.db.models import Count, F, FloatField, Q
-from django.db.models.expressions import ExpressionWrapper
+from django.db.models import Count, ExpressionWrapper, F, FloatField, Q
 from django.http import (
     HttpResponse,
     HttpResponseForbidden,
@@ -85,11 +85,31 @@ def home_view(request):
             }
         )
 
-    # حذف اسلایدهای منقضی‌شده
     Slide.objects.filter(expires_at__lt=timezone.now()).delete()
-
-    # دریافت اسلایدهای معتبر
     slides = Slide.objects.all()
+
+    total_questions = Question.objects.count()
+    total_replies = Reply.objects.count()
+    total_users = User.objects.count()
+
+    # تاریخ یک هفته پیش از امروز
+    one_week_ago = timezone.now() - timedelta(days=7)
+
+    # سوالات برتر هفته
+    top_question_of_week = (
+        Question.objects.filter(created_at__gte=one_week_ago)
+        .annotate(
+            num_likes=Count("likes_count"),
+            num_replies=Count("replies"),
+            calculated_trend_score=ExpressionWrapper(
+                (F("num_likes") * 2) + (F("num_replies") * 1) + (F("view_count") * 0.5),
+                output_field=FloatField(),
+            ),
+        )
+        .order_by("-calculated_trend_score")
+        .first()
+    )
+
     return render(
         request,
         "index.html",
@@ -97,6 +117,10 @@ def home_view(request):
             "questions": page_obj,
             "slides": slides,
             "show_load_more": questions.count() > 5,
+            "total_questions": total_questions,
+            "total_replies": total_replies,
+            "total_users": total_users,
+            "top_question_of_week": top_question_of_week,
         },
     )
 

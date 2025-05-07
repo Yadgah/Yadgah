@@ -49,6 +49,27 @@ def strip_markdown(value):
 @register.filter
 def jalali_date(value):
     """
+    Converts Gregorian datetime to Jalali with time, e.g., '۲۳ اردیبهشت ۱۴۰۳'
+    """
+    if not value:
+        return ""
+
+    try:
+        jdt = jdatetime.datetime.fromgregorian(datetime=value)
+        persian_digits = str.maketrans("0123456789", "۰۱۲۳۴۵۶۷۸۹")
+
+        day = str(jdt.day).translate(persian_digits)
+        month = jdt.j_months_fa[jdt.month - 1]
+        # year = str(jdt.year).translate(persian_digits)
+
+        return f"{day} {month}"
+    except Exception:
+        return value
+
+
+@register.filter
+def jalali_time(value):
+    """
     Converts Gregorian datetime to Jalali with time, e.g., '۲۳ اردیبهشت ۱۴۰۳ - ساعت ۱۴:۳۰'
     """
     if not value:

@@ -321,7 +321,7 @@
 
     <!-- Replies Section -->
     <div class="reply-section">
-        <h3 class="text-white mb-3">پاسخ‌ها</h3>
+        <h3 id='replies' class="text-white mb-3">پاسخ‌ها</h3>
         {% if question.replies.all %}
             {% for reply in question.replies.all %}
                 <div class="reply-card {% if reply.is_approved %}approved{% endif %}">
