@@ -1,51 +1,288 @@
-{% extends 'base.html' %} {% block content %} {% load custom_filters %}
-<div class="container mt-5">
-  <h2 class="text-center text-white mb-4">ورود به حساب کاربری</h2>
-  <form method="post" class="w-50 mx-auto">
-    {% csrf_token %}
-    <!-- نمایش فرم ورود به صورت زیبا با استفاده از کلاس‌های Bootstrap -->
-    <div class="mb-3">
-      <label for="id_username" class="text-white form-label">نام کاربری</label>
-      {{ form.username|add_class:"form-control" }}
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block content %}
+<style>
+    .login-container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #1e1e1e;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  border: 1px solid #2e2e2e;
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.login-header img {
+    width: 80px;
+    margin-bottom: 1rem;
+}
+
+.login-header h2 {
+    color: #69b987;
+    font-weight: 700;
+}
+
+.main-search-form {
+    width: 100%; /* این خط رو اضافه کن */
+    background-color: #2c2c2c;
+    border: 1px solid #3e3e3e;
+    color: #fff;
+    padding: 12px 3.5rem 12px 15px;
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+
+
+.main-search-form:focus {
+    background-color: #2c2c2c;
+    color: #fff;
+    border-color: #69b987;
+    box-shadow: 0 0 0 0.25rem rgba(105, 185, 135, 0.25);
+}
+
+.form-label {
+    color: #b3b3b3;
+    margin-bottom: 0.5rem;
+}
+
+.btn-login {
+    background-color: #69b987;
+    border: none;
+    padding: 12px;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+.btn-login:hover {
+    background-color: #5aa077;
+    transform: translateY(-2px);
+}
+
+.password-toggle {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #b3b3b3;
+    margin-right: 25rem !important;
+}
+
+/* موبایل */
+@media (max-width: 576px) {
+    .password-toggle {
+        margin-right: 18rem !important;
+    }
+}
+
+.password-toggle:hover {
+    color: #69b987;
+}
+
+.login-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    color: #b3b3b3;
+}
+
+.login-footer a {
+    color: #69b987;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.login-footer a:hover {
+    color: #5aa077;
+    text-decoration: underline;
+}
+
+.social-login {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+.social-login p {
+    color: #b3b3b3;
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.social-login p::before,
+.social-login p::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 30%;
+    height: 1px;
+    background-color: #3e3e3e;
+}
+
+.social-login p::before {
+    left: 0;
+}
+
+.social-login p::after {
+    right: 0;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.social-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #2c2c2c;
+    color: #fff;
+    transition: all 0.3s;
+}
+
+.social-icon:hover {
+    background-color: #69b987;
+    transform: translateY(-3px);
+}
+
+@media (max-width: 576px) {
+    .login-container {
+        padding: 1.5rem 1rem;
+    }
+
+    .main-search-form {
+        padding-right: 2.5rem !important; /* آیکون جا بشه */
+    }
+
+    .social-icons {
+        gap: 0.75rem;
+    }
+
+    .btn-login {
+        font-size: 0.95rem;
+    }
+
+    .login-header h2 {
+        font-size: 1.25rem;
+    }
+
+    .login-header img {
+        width: 60px;
+    }
+}
+
+
+</style>
+<div class="container py-5">
+    <div class="login-container">
+        <div class="login-header">
+            <img src="{% static 'favicon.ico' %}" alt="یادگاه">
+            <h2>ورود به حساب کاربری</h2>
+            <p class="text-muted">لطفا اطلاعات حساب خود را وارد کنید</p>
+        </div>
+
+        <form method="post">
+          {% csrf_token %}
+          
+          <div class="mb-4 position-relative">
+              <label for="id_username" class="form-label">نام کاربری یا ایمیل</label>
+              <div class="position-relative">
+                  {{ form.username|add_class:"main-search-form ps-5" }}
+                  <span class="position-absolute top-50 translate-middle-y end-0 me-3 text-muted">
+                      <i class="bi bi-person-fill"></i>
+                  </span>
+              </div>
+          </div>
+
+          <div class="mb-4 position-relative">
+              <label for="id_password" class="form-label">رمز عبور</label>
+              <div class="position-relative">
+                  {{ form.password|add_class:"main-search-form ps-5" }}
+                  <span class="position-absolute top-50 translate-middle-y end-0 me-3 text-muted">
+                      <i class="bi bi-lock-fill"></i>
+                  </span>
+                  <span class="password-toggle position-absolute top-50 translate-middle-y end-0" onclick="togglePassword()">
+                      <i class="bi bi-eye" id="togglePasswordIcon"></i>
+                  </span>
+              </div>
+          </div>
+
+          
+          <div class="d-grid gap-2 mb-3">
+              <button type="submit" class="btn btn-login">
+                  <i class="bi bi-box-arrow-in-right me-2"></i> ورود به حساب
+              </button>
+          </div>
+          
+          {% if form.non_field_errors %}
+          <div class="alert alert-danger">
+              <i class="bi bi-exclamation-triangle-fill me-2"></i>
+              {% for error in form.non_field_errors %}
+                  {{ error }}
+              {% endfor %}
+          </div>
+          {% endif %}
+      </form>
+
+
+        <div class="social-login">
+            <p>یا وارد شوید با</p>
+            <div class="social-icons">
+                <a href="#" class="social-icon">
+                    <i class="bi bi-google"></i>
+                </a>
+                <a href="#" class="social-icon">
+                    <i class="bi bi-github"></i>
+                </a>
+                <a href="#" class="social-icon">
+                    <i class="bi bi-twitter"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="login-footer">
+            حساب کاربری ندارید؟ <a href="{% url 'signup' %}">ثبت‌نام کنید</a>
+        </div>
     </div>
-    <div class="mb-3">
-      <label for="id_password" class="text-white form-label">رمز عبور</label>
-      <div class="position-relative">
-        {{ form.password|add_class:"form-control" }}
-        <span class="position-absolute start-0 top-50 translate-middle-y p-2" style="cursor: pointer; color: black;" onclick="togglePassword()">
-          <i class="bi bi-eye" id="togglePasswordIcon"></i>
-        </span>
-      </div>    </div>
-    <div class="d-grid gap-2">
-      <button type="submit" class="btn btn-success">ورود</button>
-    </div>
-  </form>
-  <!-- نمایش پیام خطا در صورت وجود -->
-  {% if form.non_field_errors %}
-  <div class="alert alert-danger mt-3">
-    <ul>
-      {% for error in form.non_field_errors %}
-      <li>{{ error }}</li>
-      {% endfor %}
-    </ul>
-  </div>
-  {% endif %}
 </div>
 
 <script>
-  function togglePassword() {
-      const passwordField = document.querySelector('#id_password');
-      const toggleIcon = document.querySelector('#togglePasswordIcon');
-      if (passwordField.type === 'password') {
-          passwordField.type = 'text';
-          toggleIcon.classList.remove('bi-eye');
-          toggleIcon.classList.add('bi-eye-slash');
-      } else {
-          passwordField.type = 'password';
-          toggleIcon.classList.remove('bi-eye-slash');
-          toggleIcon.classList.add('bi-eye');
-      }
-  }
-  </script>
-
+    function togglePassword() {
+        const passwordField = document.querySelector('#id_password');
+        const toggleIcon = document.querySelector('#togglePasswordIcon');
+        
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            toggleIcon.classList.remove('bi-eye');
+            toggleIcon.classList.add('bi-eye-slash');
+        } else {
+            passwordField.type = 'password';
+            toggleIcon.classList.remove('bi-eye-slash');
+            toggleIcon.classList.add('bi-eye');
+        }
+    }
+    
+    // افزودن افکت فوکوس به فیلدها
+    document.querySelectorAll('.form-control').forEach(input => {
+        input.addEventListener('focus', function() {
+            this.parentElement.querySelector('.input-group-text').style.borderColor = '#69b987';
+        });
+        
+        input.addEventListener('blur', function() {
+            this.parentElement.querySelector('.input-group-text').style.borderColor = '#3e3e3e';
+        });
+    });
+</script>
 {% endblock %}

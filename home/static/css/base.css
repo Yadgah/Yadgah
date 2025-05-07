@@ -1,0 +1,48 @@
+
+.link-dark {
+    color: #69b987;
+}
+
+.link-dark:focus,
+.link-dark:hover {
+    color: #b3b1b1;
+}
+
+.dropdown-menu.show {
+    text-align: center;
+}
+
+.q_btn {
+    margin-left: -1px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+
+    border-top-left-radius: 25;
+    border-bottom-left-radius: 25;
+}
+
+.q_box_btn {
+    margin-left: -1px;
+    border-top-right-radius: 25;
+    border-bottom-right-radius: 25;
+
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.form-control {
+    background-color: #2c2c2c;
+    border: 1px solid #3e3e3e;
+    color: #fff;
+    padding: 12px 3.5rem 12px 15px; /* افزایش padding-right به حدود 3.5rem */
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+
+.form-control:focus {
+    background-color: #2c2c2c;
+    color: #fff;
+    border-color: #69b987;
+    box-shadow: 0 0 0 0.25rem rgba(105, 185, 135, 0.25);
+}
