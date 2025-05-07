@@ -1,77 +1,166 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load custom_filters %}
+
 {% block content %}
+<style>
+  .signup-container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: #1e1e1e;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    border: 1px solid #2e2e2e;
+  }
 
-<div class="container mt-5">
-  <h2 class="text-center text-white mb-4">ثبت‌نام</h2>
-  <form method="POST" class="w-50 mx-auto" enctype="multipart/form-data">
-    {% csrf_token %}
-    <!-- نمایش پیام‌ها -->
-    {% if messages %}
-    <div class="alert-container">
-      {% for message in messages %}
-      <div
-        class="alert alert-{{ message.tags|default:"info" }} alert-dismissible fade show"
-        role="alert"
-      >
-        {{ message }}
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="alert"
-          aria-label="Close"
-        ></button>
+  .form-label {
+    color: #b3b3b3;
+    margin-bottom: 0.5rem;
+  }
+
+  .main-search-form {
+    width: 100%;
+    background-color: #2c2c2c;
+    border: 1px solid #3e3e3e;
+    color: #fff;
+    padding: 12px 3.5rem 12px 15px;
+    border-radius: 8px;
+    transition: all 0.3s;
+  }
+
+  .main-search-form:focus {
+    background-color: #2c2c2c;
+    color: #fff;
+    border-color: #69b987;
+    box-shadow: 0 0 0 0.25rem rgba(105, 185, 135, 0.25);
+  }
+
+  .password-toggle {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #b3b3b3;
+    margin-right: 25rem !important;
+  }
+
+  .password-toggle:hover {
+    color: #69b987;
+  }
+
+  .btn-signup {
+    background-color: #69b987;
+    border: none;
+    padding: 12px;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.3s;
+  }
+
+  .btn-signup:hover {
+    background-color: #5aa077;
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 576px) {
+    .signup-container {
+      padding: 1.5rem 1rem;
+    }
+
+    .main-search-form {
+      padding-right: 2.5rem !important;
+    }
+
+    .password-toggle {
+      margin-right: 18rem !important;
+    }
+
+    .btn-signup {
+      font-size: 0.95rem;
+    }
+  }
+</style>
+
+<div class="container py-5">
+  <div class="signup-container">
+    <h2 class="text-center text-white mb-4">ثبت‌نام</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      {% if messages %}
+      <div class="alert-container mb-3">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags|default:"info" }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
       </div>
-      {% endfor %}
-    </div>
-    {% endif %}
+      {% endif %}
 
-    <!-- فرم فیلدهای ثبت‌نام -->
-    <div class="mb-3">
-      <label for="{{ form.username.id_for_label }}" class="text-white form-label">نام کاربری</label>
-      {{ form.username|add_class:"form-control" }}
-    </div>
-    <div class="mb-3">
-      <label for="{{ form.email.id_for_label }}" class="text-white form-label">ایمیل</label>
-      {{ form.email|add_class:"form-control" }}
-    </div>
-    <div class="mb-3">
-      <label for="{{ form.password.id_for_label }}" class="text-white form-label">رمز عبور</label>
-      <div class="position-relative">
-        {{ form.password|add_class:"form-control" }}
-        <span class="position-absolute start-0 top-50 translate-middle-y p-2" style="cursor: pointer; color: black;" onclick="togglePassword()">
-          <i class="bi bi-eye" id="togglePasswordIcon"></i>
-        </span>
+      <!-- نام کاربری -->
+      <div class="mb-4 position-relative">
+        <label for="{{ form.username.id_for_label }}" class="form-label">نام کاربری (به انگلیسی)</label>
+        <div class="position-relative">
+          {{ form.username|add_class:"main-search-form ps-5" }}
+          <span class="position-absolute top-50 translate-middle-y end-0 me-3 text-muted">
+            <i class="bi bi-person-fill"></i>
+          </span>
+        </div>
       </div>
-      <small class="text-muted">رمز باید شامل حداقل ۸ کاراکتر و عدد باشد.</small>
-    </div>
-    <!-- <div class="mb-3">
-      <label for="{{ form.confirm_password.id_for_label }}" class="form-label">تکرار رمز عبور</label>
-      {{ form.confirm_password|add_class:"form-control" }}
-    </div> -->
 
+      <!-- ایمیل -->
+      <div class="mb-4 position-relative">
+        <label for="{{ form.email.id_for_label }}" class="form-label">ایمیل</label>
+        <div class="position-relative">
+          {{ form.email|add_class:"main-search-form ps-5" }}
+          <span class="position-absolute top-50 translate-middle-y end-0 me-3 text-muted">
+            <i class="bi bi-envelope-fill"></i>
+          </span>
+        </div>
+      </div>
 
-    <!-- دکمه ثبت‌نام -->
-    <div class="d-grid gap-2">
-      <button type="submit" class="btn btn-success">ثبت‌نام</button>
-    </div>
-  </form>
+      <!-- رمز عبور -->
+      <div class="mb-4 position-relative">
+        <label for="{{ form.password.id_for_label }}" class="form-label">رمز عبور</label>
+        <div class="position-relative">
+          {{ form.password|add_class:"main-search-form ps-5" }}
+          <span class="position-absolute top-50 translate-middle-y end-0 me-3 text-muted">
+            <i class="bi bi-lock-fill"></i>
+          </span>
+          <span class="password-toggle position-absolute top-50 translate-middle-y end-0" onclick="togglePassword()">
+            <i class="bi bi-eye" id="togglePasswordIcon"></i>
+          </span>
+        </div>
+        <small class="text-muted">رمز باید شامل حداقل ۸ کاراکتر و عدد باشد.</small>
+      </div>
+
+      <!-- دکمه ثبت‌نام -->
+      <div class="d-grid gap-2">
+        <button type="submit" class="btn btn-signup">
+          <i class="bi bi-person-plus-fill me-2"></i> ثبت‌نام
+        </button>
+      </div>
+    </form>
+  </div>
 </div>
 
 <script>
   function togglePassword() {
-      const passwordField = document.querySelector('#id_password');
-      const toggleIcon = document.querySelector('#togglePasswordIcon');
-      if (passwordField.type === 'password') {
-          passwordField.type = 'text';
-          toggleIcon.classList.remove('bi-eye');
-          toggleIcon.classList.add('bi-eye-slash');
-      } else {
-          passwordField.type = 'password';
-          toggleIcon.classList.remove('bi-eye-slash');
-          toggleIcon.classList.add('bi-eye');
-      }
+    const passwordField = document.querySelector('#id_password');
+    const toggleIcon = document.querySelector('#togglePasswordIcon');
+    if (passwordField.type === 'password') {
+      passwordField.type = 'text';
+      toggleIcon.classList.remove('bi-eye');
+      toggleIcon.classList.add('bi-eye-slash');
+    } else {
+      passwordField.type = 'password';
+      toggleIcon.classList.remove('bi-eye-slash');
+      toggleIcon.classList.add('bi-eye');
+    }
   }
-  </script>
-
+</script>
 {% endblock %}
