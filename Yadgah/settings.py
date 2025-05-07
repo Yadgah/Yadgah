@@ -230,3 +230,13 @@ REST_FRAMEWORK = {
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
 }
+
+# -------------------------------------------------------------------------
+# SESSION & REMEMBER ME SETTINGS
+# -------------------------------------------------------------------------
+# Default session expiry (when "Remember me" is NOT checked)
+SESSION_COOKIE_AGE = 1209600  # 2 weeks, in seconds (Django default)
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # Sessions expire when browser closes
+
+# Remember me settings (when "Remember me" IS checked)
+REMEMBER_ME_DURATION = 1209600  # 2 weeks (in seconds)

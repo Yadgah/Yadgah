@@ -5,6 +5,9 @@ from django.contrib.auth.decorators import login_required
 from django.core.files.base import ContentFile
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
+from django.contrib.auth import login as auth_login
+from django.conf import settings
+from .forms import RememberMeLoginForm
 from PIL import Image
 
 from home.models import UserProfile
@@ -141,3 +144,22 @@ def post_delete(request, slug):
 def short_link_redirect_by_id(request, pk):
     post = get_object_or_404(Post, pk=pk)
     return redirect("post_detail", slug=post.slug)
+
+def login_view(request):
+    if request.method == 'POST':
+        form = RememberMeLoginForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            auth_login(request, user)
+            
+            # Set session expiry based on "Remember Me"
+            if not form.cleaned_data['remember_me']:
+                request.session.set_expiry(0)  # Browser session
+            else:
+                request.session.set_expiry(settings.REMEMBER_ME_DURATION)  # 2 weeks
+            
+            return redirect('home')
+    else:
+        form = RememberMeLoginForm()
+    
+    return render(request, 'home/login.html', {'form': form})
