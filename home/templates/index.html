@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
 {% load custom_filters %}
+{% load static %}
 
 {% block content %}
 <style>
     .round {
-        border-radius: 10px;
+        border-radius: 12px;
     }
 
     .news-section, .main-content {
@@ -18,6 +19,12 @@
         border-radius: 10px;
         padding: 15px;
         color: #e0e0e0;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 15px rgba(0, 255, 100, 0.2);
     }
 
     .label {
@@ -59,6 +66,53 @@
             stroke-dashoffset: 0;
         }
     }
+
+    .featured-question {
+        background: linear-gradient(135deg, #1a3a1a, #121212);
+        border-left: 4px solid #69b987;
+    }
+
+    .stats-box {
+        background-color: #1a3a1a;
+        border-radius: 10px;
+        padding: 15px;
+        text-align: center;
+    }
+
+    .stats-box .number {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #69b987;
+    }
+
+    .swiper-slide {
+        background: linear-gradient(90deg, #1a3a1a, #121212);
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .mobile-bottom-nav {
+        display: none;
+    }
+
+    @media (max-width: 992px) {
+        .mobile-bottom-nav {
+            display: flex;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #1a3a1a;
+            padding: 10px;
+            justify-content: space-around;
+            z-index: 1000;
+        }
+        
+        .mobile-bottom-nav a {
+            color: white;
+            font-size: 1.5rem;
+        }
+    }
 </style>
 
 <div id="intro-welcome">
@@ -70,11 +124,50 @@
 </div>
 
 <div class="container my-4">
+    <!-- اسلایدر اخبار مهم -->
+    <div class="swiper my-4 round">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <h3>دوره جدید یادگیری پایتون!</h3>
+                <p>همین حالا در دوره رایگان ما ثبت‌نام کنید</p>
+                <a href="#" class="btn btn-success">مشاهده جزئیات</a>
+            </div>
+            <div class="swiper-slide">
+                <h3>مسابقه برنامه‌نویسی یادگاه</h3>
+                <p>جوایز نقدی برای برندگان مسابقه</p>
+                <a href="#" class="btn btn-success">شرکت در مسابقه</a>
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+
+    <!-- آمار سایت -->
+    <div class="row mb-4">
+        <div class="col-md-4 mb-3">
+            <div class="stats-box">
+                <div class="number" data-count="1250">0</div>
+                <div>سوالات</div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="stats-box">
+                <div class="number" data-count="850">0</div>
+                <div>پاسخ‌ها</div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="stats-box">
+                <div class="number" data-count="320">0</div>
+                <div>کاربران</div>
+            </div>
+        </div>
+    </div>
+
     <div class="row">
         <!-- News Section -->
         <div class="col-md-4 mb-4">
             <div class="news-section p-4 round">
-                <h2>اخبار جدید</h2>
+                <h2 class="mb-4">اخبار جدید</h2>
                 {% if news_items %}
                     {% for news in news_items %}
                         <div class="card mb-3">
@@ -93,13 +186,31 @@
 
         <!-- Main Content Section -->
         <div class="col-md-8">
+            <!-- سوال برجسته هفته -->
+            <div class="p-4 my-4 round featured-question">
+                <h3 class="text-warning mb-3">⭐ سوال برجسته هفته</h3>
+                <h4>چگونه در پایتون Async کار کنیم؟</h4>
+                <p class="text-muted">این سوال با بیش از 15 پاسخ و 50 رای مثبت به عنوان سوال برتر هفته انتخاب شده است</p>
+                <a href="#" class="btn btn-outline-warning">مشاهده پاسخ‌ها</a>
+            </div>
+
             <div class="main-content p-4 round">
+                <!-- تب‌های دسته‌بندی -->
+                <div class="d-flex mb-4 gap-2 flex-wrap">
+                    <button class="btn btn-outline-success active">همه</button>
+                    <button class="btn btn-outline-success">برنامه‌نویسی</button>
+                    <button class="btn btn-outline-success">طراحی</button>
+                    <button class="btn btn-outline-success">هوش مصنوعی</button>
+                    <button class="btn btn-outline-success">وب</button>
+                    <button class="btn btn-outline-success">موبایل</button>
+                </div>
+
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h2>سوالات اخیر</h2>
                     {% if user.is_authenticated %}
                         <a href="{% url 'ask_question' %}" class="btn btn-success">پرسیدن سوال</a>
                     {% else %}
-                        <a href="{% url 'login' %}">پرسیدن سوال</a>
+                        <a href="{% url 'login' %}" class="btn btn-outline-success">پرسیدن سوال</a>
                     {% endif %}
                 </div>
 
@@ -141,6 +252,18 @@
     </div>
 </div>
 
+<!-- نوار پایینی برای موبایل -->
+<div class="mobile-bottom-nav d-lg-none">
+    <a href="/"><i class="bi bi-house"></i></a>
+    <a href="{% url 'ask_question' %}"><i class="bi bi-plus-circle"></i></a>
+    <a href="{% url 'search' %}"><i class="bi bi-search"></i></a>
+    <a href="{% url 'profile' %}"><i class="bi bi-person"></i></a>
+</div>
+
+<!-- اسکریپت‌های مورد نیاز -->
+<link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
+<script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         const intro = document.getElementById("intro-welcome");
@@ -153,6 +276,34 @@
         } else {
             intro.style.display = "none";
         }
+
+        // انیمیشن شمارنده آمار
+        document.querySelectorAll('[data-count]').forEach(el => {
+            let target = +el.getAttribute('data-count');
+            let count = 0;
+            let increment = target / 30;
+            let interval = setInterval(() => {
+                if (count >= target) {
+                    el.textContent = target;
+                    clearInterval(interval);
+                } else {
+                    count += increment;
+                    el.textContent = Math.floor(count);
+                }
+            }, 50);
+        });
+
+        // اسلایدر
+        const swiper = new Swiper('.swiper', {
+            loop: true,
+            autoplay: {
+                delay: 5000,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+        });
     });
 
     $(function () {
@@ -191,6 +342,19 @@
                     }
                 }
             });
+        });
+
+        // جستجوی هوشمند
+        $('#smart-search').on('input', async function() {
+            let query = $(this).val();
+            if (query.length > 2) {
+                let results = await fetch(`/api/search?q=${query}`).then(res => res.json());
+                $('#search-suggestions').html(
+                    results.map(r => `<a class="dropdown-item" href="${r.url}">${r.title}</a>`)
+                ).show();
+            } else {
+                $('#search-suggestions').hide();
+            }
         });
     });
 </script>
