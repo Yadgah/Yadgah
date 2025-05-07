@@ -148,3 +148,11 @@ class ReplyForm(forms.ModelForm):
             ),
         }
         labels = {"content": ""}
+
+class RememberMeLoginForm(AuthenticationForm):
+    remember_me = forms.BooleanField(
+        required=False,
+        initial=False,
+        widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        label="Remember me"
+    )
