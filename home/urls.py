@@ -25,7 +25,6 @@ from .views import (
     login_api,
     login_view,
     logout_view,
-    news_list,
     privacy_policy,
     profile_view,
     question_detail,
@@ -34,6 +33,7 @@ from .views import (
     search_view,
     signup_api,
     signup_view,
+    slide_detail,
     toggle_reaction,
     user_profile,
 )
@@ -76,8 +76,8 @@ info_urlpatterns = [
 
 general_urlpatterns = [
     path("", home_view, name="index"),
-    path("news/", news_list, name="news_list"),
     path("leaderboard/", leaderboard, name="leaderboard"),
+    path("slide/<slug:slug>/", slide_detail, name="slide_detail"),
     path("explore/", explore, name="explore"),
     path("donate/", donate, name="donate"),
     path("create-label/", create_label, name="create_label"),

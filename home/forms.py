@@ -7,17 +7,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.db.models import Q
 
-from .models import Label, News, Question, Reply, UserProfile
-
-
-class NewsForm(forms.ModelForm):
-    """
-    Form for creating and editing news articles.
-    """
-
-    class Meta:
-        model = News
-        fields = ["title", "content", "is_active"]
+from .models import Label, Question, Reply, UserProfile
 
 
 class SignUpForm(forms.ModelForm):

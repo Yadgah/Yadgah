@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="competition-slide">
+    <h1>🎯 {{ slide.title }}</h1>
+    {% if slide.thumbnail %}
+        <img src="{{ slide.thumbnail.url }}" alt="{{ slide.title }}" class="img-thumbnail my-3">
+    {% endif %}
+    <div class="alert alert-warning">
+        <strong>شرکت در مسابقه!</strong> - {{ slide.description }}
+    </div>
+    <div>{{ slide.content|linebreaks }}</div>
+    <a href="#" class="btn btn-danger mt-3">{{ slide.button_text }}</a>
+</div>
+{% endblock %}

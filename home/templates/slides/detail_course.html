@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="course-slide">
+    <h1>{{ slide.title }}</h1>
+    {% if slide.thumbnail %}
+        <img src="{{ slide.thumbnail.url }}" alt="{{ slide.title }}" class="img-fluid mb-3">
+    {% endif %}
+    <p class="text-muted">{{ slide.description }}</p>
+    <hr>
+    <h3>توضیحات کامل دوره</h3>
+    <div>{{ slide.content|linebreaks }}</div>
+    <a href="#" class="btn btn-primary mt-4">{{ slide.button_text }}</a>
+</div>
+{% endblock %}

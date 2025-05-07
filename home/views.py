@@ -24,6 +24,7 @@ from django.http import (
     JsonResponse,
 )
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils import timezone
 from django.utils.safestring import mark_safe
 from django.views.decorators.csrf import csrf_exempt
 from PIL import Image
@@ -37,14 +38,14 @@ from blog.models import Post
 from .ai import get_ai_reply
 from .forms import (
     LoginForm,
-    NewsForm,
     QuestionForm,
     ReplyForm,
     SignUpForm,
     UserForm,
     UserProfileForm,
 )
-from .models import Label, News, Question, QuestionReaction, Reply, UserProfile
+from .models import Label, Question, QuestionReaction, Reply, Slide, UserProfile
+
 
 # Home view to show recent questions and news
 def home_view(request):
@@ -84,13 +85,17 @@ def home_view(request):
             }
         )
 
-    news_items = News.objects.filter(is_active=True).order_by("-published_at")[:5]
+    # حذف اسلایدهای منقضی‌شده
+    Slide.objects.filter(expires_at__lt=timezone.now()).delete()
+
+    # دریافت اسلایدهای معتبر
+    slides = Slide.objects.all()
     return render(
         request,
         "index.html",
         {
             "questions": page_obj,
-            "news_items": news_items,
+            "slides": slides,
             "show_load_more": questions.count() > 5,
         },
     )
@@ -218,15 +223,6 @@ def profile_view(request):
             "profile_form": profile_form,
         },
     )
-
-
-# View to list news
-def news_list(request):
-    news_items = News.objects.filter(is_active=True).order_by("-published_at")
-    if not news_items:
-        # messages.warning(request, "No news available.")
-        pass
-    return render(request, "news/news_list.html", {"news_items": news_items})
 
 
 # View to ask a question
@@ -508,12 +504,11 @@ def explore(request):
 def search_view(request):
     query = request.GET.get("q", "")
     questions = Question.search(query) if query else Question.objects.none()
-    news = News.search(query) if query else News.objects.none()
 
     return render(
         request,
         "search_results.html",
-        {"query": query, "questions": questions, "news": news},
+        {"query": query, "questions": questions},
     )
 
 
@@ -635,3 +630,16 @@ def login_api(request):
 
 def donate(request):
     return render(request, "donate.html")
+
+
+def slide_detail(request, slug):
+    slide = get_object_or_404(Slide, slug=slug)
+
+    template_map = {
+        "course": "slides/detail_course.html",
+        "competition": "slides/detail_competition.html",
+        "news": "slides/detail_news.html",
+    }
+
+    template_name = template_map.get(slide.type, "slides/detail.html")  # fallback
+    return render(request, template_name, {"slide": slide})

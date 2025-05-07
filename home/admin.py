@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 
-from .models import Label, News, Question, Reply, UserProfile
+from .models import Label, Question, Reply, Slide, UserProfile
 
 
 class QuestionAdmin(admin.ModelAdmin):
@@ -32,9 +32,6 @@ class UserAdmin(admin.ModelAdmin):
     inlines = [UserProfileInline]
 
     def profile_picture_display(obj):
-        """
-        Function to display the profile picture of a user.
-        """
         try:
             if obj.userprofile.avatar:
                 return format_html(
@@ -70,24 +67,20 @@ class UserAdmin(admin.ModelAdmin):
     ordering = ("username",)
 
 
-@admin.register(News)
-class NewsAdmin(admin.ModelAdmin):
-    list_display = ("title", "author", "published_at", "is_active")
-    list_filter = ("is_active", "published_at")
-    search_fields = ("title", "content")
-    ordering = ("-published_at",)
+@admin.register(Slide)
+class SlideAdmin(admin.ModelAdmin):
+    list_display = ("title", "slug", "order")
+    readonly_fields = ("order", "slug")
+    search_fields = ("title", "description")
+    ordering = ("order",)
 
 
-# Admin configuration for the Label model
 class LabelAdmin(admin.ModelAdmin):
-    list_display = ("name", "color_preview")  # Shows the name and color preview
-    search_fields = ("name",)  # Allows searching by name
-    ordering = ("name",)  # Orders by name
+    list_display = ("name", "color_preview")
+    search_fields = ("name",)
+    ordering = ("name",)
 
     def color_preview(self, obj):
-        """
-        Exibe uma pré-visualização da cor no painel admin.
-        """
         return format_html(
             '<div style="width:30px; height:30px; background-color:{}; border-radius:50%;"></div>',
             obj.color,
@@ -96,11 +89,8 @@ class LabelAdmin(admin.ModelAdmin):
     color_preview.short_description = "Cor"
 
 
-# Register models in the admin panel
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(Reply, ReplyAdmin)
 admin.site.register(Label)
-
-# Unregister the default User admin and register the customized one
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)

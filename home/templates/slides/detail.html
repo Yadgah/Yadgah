@@ -1,0 +1,6 @@
+<h1>{{ slide.title }}</h1>
+{% if slide.thumbnail %}
+  <img src="{{ slide.thumbnail.url }}" alt="{{ slide.title }}">
+{% endif %}
+<p>{{ slide.description }}</p>
+<div>{{ slide.content|linebreaks }}</div>

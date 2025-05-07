@@ -46,26 +46,28 @@ def strip_markdown(value):
     return value.strip()
 
 
-# Filter to convert Gregorian date to Jalali (Persian) date
 @register.filter
 def jalali_date(value):
     """
-    Converts a Gregorian date to a Jalali (Persian) date format.
+    Converts Gregorian datetime to Jalali with time, e.g., '۲۳ اردیبهشت ۱۴۰۳ - ساعت ۱۴:۳۰'
     """
-    if value:
-        # Convert the Gregorian date to Jalali
-        jalali_date = jdatetime.date.fromgregorian(date=value)
-        # Remove leading zero from day and convert to Persian digits
-        day = (
-            str(jalali_date.day).lstrip("0") or "0"
-        )  # Handle case when day is 0 (unlikely)
-        # Convert Arabic digits to Persian digits
+    if not value:
+        return ""
+
+    try:
+        jdt = jdatetime.datetime.fromgregorian(datetime=value)
         persian_digits = str.maketrans("0123456789", "۰۱۲۳۴۵۶۷۸۹")
-        day_fa = day.translate(persian_digits)
-        # Get month name in Persian
-        month_fa = jalali_date.j_months_fa[jalali_date.month - 1]
-        return f"{day_fa} {month_fa}"
-    return value
+
+        day = str(jdt.day).translate(persian_digits)
+        month = jdt.j_months_fa[jdt.month - 1]
+        year = str(jdt.year).translate(persian_digits)
+
+        hour = str(jdt.hour).zfill(2).translate(persian_digits)
+        minute = str(jdt.minute).zfill(2).translate(persian_digits)
+
+        return f"{day} {month} {year} - ساعت {hour}:{minute}"
+    except Exception:
+        return value
 
 
 # Filter to add a CSS class to a form field widget

@@ -3,7 +3,7 @@ from django.urls import reverse
 
 from blog.models import Post
 
-from .models import News, Question
+from .models import Question
 
 
 class BlogSitemap(Sitemap):

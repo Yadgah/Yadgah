@@ -107,7 +107,7 @@
             justify-content: space-around;
             z-index: 1000;
         }
-        
+
         .mobile-bottom-nav a {
             color: white;
             font-size: 1.5rem;
@@ -125,21 +125,26 @@
 
 <div class="container my-4">
     <!-- اسلایدر اخبار مهم -->
-    <div class="swiper my-4 round">
+    <div class="swiper my-4 round" id="news-swiper" data-slide-count="{{ slides|length }}">
         <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <h3>دوره جدید یادگیری پایتون!</h3>
-                <p>همین حالا در دوره رایگان ما ثبت‌نام کنید</p>
-                <a href="#" class="btn btn-success">مشاهده جزئیات</a>
-            </div>
-            <div class="swiper-slide">
-                <h3>مسابقه برنامه‌نویسی یادگاه</h3>
-                <p>جوایز نقدی برای برندگان مسابقه</p>
-                <a href="#" class="btn btn-success">شرکت در مسابقه</a>
-            </div>
+            {% for slide in slides %}
+                <div class="swiper-slide">
+                    <h3>{{ slide.title }}</h3>
+                    <p>{{ slide.description }}</p>
+                    <p class="text-danger">
+                        زمان باقی‌مانده:
+                        <span id="countdown" data-expiry="{{ slide.expires_at|date:'c' }}"></span>
+                    </p>
+                    <a href="{{ slide.get_absolute_url }}" class="btn btn-success">
+                        {{ slide.button_text }}
+                    </a>
+                </div>
+            {% endfor %}
         </div>
         <div class="swiper-pagination"></div>
     </div>
+
+
 
     <!-- آمار سایت -->
     <div class="row mb-4">
@@ -265,36 +270,69 @@
 <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
 
 <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const intro = document.getElementById("intro-welcome");
-        if (!localStorage.getItem("yadgahWelcomeShown")) {
-            setTimeout(() => {
-                intro.style.opacity = "0";
-                intro.style.visibility = "hidden";
-                localStorage.setItem("yadgahWelcomeShown", "true");
-            }, 3000);
-        } else {
-            intro.style.display = "none";
+document.addEventListener("DOMContentLoaded", function () {
+    // نمایش انیمیشن ابتدایی فقط یک بار
+    const intro = document.getElementById("intro-welcome");
+    if (!localStorage.getItem("yadgahWelcomeShown")) {
+        setTimeout(() => {
+            intro.style.opacity = "0";
+            intro.style.visibility = "hidden";
+            localStorage.setItem("yadgahWelcomeShown", "true");
+        }, 3000);
+    } else {
+        intro.style.display = "none";
+    }
+
+    // انیمیشن شمارنده آمار
+    document.querySelectorAll('[data-count]').forEach(el => {
+        let target = parseInt(el.getAttribute('data-count'), 10);
+        let count = 0;
+        let increment = target / 30;
+        let interval = setInterval(() => {
+            if (count >= target) {
+                el.textContent = target;
+                clearInterval(interval);
+            } else {
+                count += increment;
+                el.textContent = Math.floor(count);
+            }
+        }, 50);
+    });
+
+    // شمارش معکوس برای همه countdownها
+    function toPersian(num) {
+        return String(num).replace(/\d/g, d => "۰۱۲۳۴۵۶۷۸۹"[d]);
+    }
+
+    function startCountdown(el) {
+        const expiry = new Date(el.dataset.expiry);
+        function update() {
+            const now = new Date();
+            const diff = expiry - now;
+            if (diff <= 0) {
+                el.textContent = "منقضی شده";
+                return;
+            }
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((diff / (1000 * 60)) % 60);
+            const seconds = Math.floor((diff / 1000) % 60);
+            el.textContent =
+                toPersian(days) + " روز " +
+                toPersian(hours).padStart(2, "۰") + ":" +
+                toPersian(minutes).padStart(2, "۰") + ":" +
+                toPersian(seconds).padStart(2, "۰");
         }
+        update();
+        setInterval(update, 1000);
+    }
 
-        // انیمیشن شمارنده آمار
-        document.querySelectorAll('[data-count]').forEach(el => {
-            let target = +el.getAttribute('data-count');
-            let count = 0;
-            let increment = target / 30;
-            let interval = setInterval(() => {
-                if (count >= target) {
-                    el.textContent = target;
-                    clearInterval(interval);
-                } else {
-                    count += increment;
-                    el.textContent = Math.floor(count);
-                }
-            }, 50);
-        });
+    document.querySelectorAll('#countdown[data-expiry]').forEach(startCountdown);
 
-        // اسلایدر
-        const swiper = new Swiper('.swiper', {
+    // اسلایدر فقط در صورت وجود بیش از 1 اسلاید
+    const slidesCount = document.querySelectorAll('.swiper-slide').length;
+    if (slidesCount > 1) {
+        new Swiper('.swiper', {
             loop: true,
             autoplay: {
                 delay: 5000,
@@ -304,58 +342,64 @@
                 clickable: true,
             },
         });
-    });
+    }
 
-    $(function () {
-        let page = 2;
-        $('#load-more').on('click', () => {
-            $.ajax({
-                url: `/?page=${page}`,
-                dataType: 'json',
-                headers: { 'X-Requested-With': 'XMLHttpRequest' },
-                success: function (response) {
-                    if (response.questions.length) {
-                        response.questions.forEach(q => {
-                            $('#recent-questions').append(`
-                                <div class="d-flex mb-4 align-items-start">
-                                    <div class="flex-grow-1">
-                                        <div class="card-body">
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <h5 class="card-title">
-                                                    <a href="${q.url}" class="text-decoration-none text-primary">${q.title}</a>
-                                                </h5>
-                                                <span>${q.created_at}</span>
-                                            </div>
-                                            <p class="text-muted">${q.content}</p>
-                                            <div class="mt-2">
-                                                ${q.labels.map(l => `<span class="label" style="background-color: ${l.color}">${l.name}</span>`).join('')}
-                                            </div>
-                                        </div>
+    // بارگذاری بیشتر سوالات
+    let page = 2;
+    document.getElementById('load-more')?.addEventListener('click', function () {
+        fetch(`/?page=${page}`, {
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.questions.length) {
+                data.questions.forEach(q => {
+                    document.getElementById('recent-questions').insertAdjacentHTML('beforeend', `
+                        <div class="d-flex mb-4 align-items-start">
+                            <div class="flex-grow-1">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h5 class="card-title">
+                                            <a href="${q.url}" class="text-decoration-none text-primary">${q.title}</a>
+                                        </h5>
+                                        <span>${q.created_at}</span>
+                                    </div>
+                                    <p class="text-muted">${q.content}</p>
+                                    <div class="mt-2">
+                                        ${q.labels.map(l => `<span class="label" style="background-color: ${l.color}">${l.name}</span>`).join('')}
                                     </div>
                                 </div>
-                            `);
-                        });
-                        page++;
-                    }
-                    if (!response.has_next) {
-                        $('#load-more').hide();
-                    }
+                            </div>
+                        </div>
+                    `);
+                });
+                page++;
+                if (!data.has_next) {
+                    this.style.display = "none";
                 }
-            });
-        });
-
-        // جستجوی هوشمند
-        $('#smart-search').on('input', async function() {
-            let query = $(this).val();
-            if (query.length > 2) {
-                let results = await fetch(`/api/search?q=${query}`).then(res => res.json());
-                $('#search-suggestions').html(
-                    results.map(r => `<a class="dropdown-item" href="${r.url}">${r.title}</a>`)
-                ).show();
-            } else {
-                $('#search-suggestions').hide();
             }
         });
     });
+
+    // جستجوی هوشمند
+    const searchInput = document.getElementById('smart-search');
+    const suggestions = document.getElementById('search-suggestions');
+
+    if (searchInput) {
+        searchInput.addEventListener('input', async function () {
+            const query = this.value;
+            if (query.length > 2) {
+                const res = await fetch(`/api/search?q=${query}`);
+                const results = await res.json();
+                suggestions.innerHTML = results.map(r =>
+                    `<a class="dropdown-item" href="${r.url}">${r.title}</a>`
+                ).join('');
+                suggestions.style.display = 'block';
+            } else {
+                suggestions.style.display = 'none';
+            }
+        });
+    }
+});
 </script>
 {% endblock %}

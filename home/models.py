@@ -5,6 +5,8 @@ from django.db.models import Q
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.urls import reverse
+from django.utils import timezone
+from django.utils.text import slugify
 
 
 class UserProfile(models.Model):
@@ -191,35 +193,47 @@ class QuestionReaction(models.Model):
         return f"{self.user.username} {self.get_reaction_type_display()} {self.question.title}"
 
 
-class News(models.Model):
-    """
-    Represents a news article.
-    """
-
-    title = models.CharField(max_length=200, verbose_name="News Title")
-    content = models.TextField(verbose_name="Content")
-    published_at = models.DateTimeField(
-        auto_now_add=True, verbose_name="Published Date"
-    )
-    is_active = models.BooleanField(default=True, verbose_name="Is Active")
-    author = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="news", verbose_name="Author"
+class Slide(models.Model):
+    SLIDE_TYPES = (
+        ("course", "دوره آموزشی"),
+        ("competition", "مسابقه"),
+        ("news", "خبر"),
     )
 
-    @classmethod
-    def search(cls, query):
-        """
-        Searches for news articles based on a query string in the title or content.
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    button_text = models.CharField(max_length=50, default="مشاهده")
+    slug = models.SlugField(unique=True, blank=True)
+    thumbnail = models.ImageField(upload_to="slides/", null=True, blank=True)
+    content = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    order = models.PositiveIntegerField(editable=False)
 
-        Args:
-            query (str): The search term.
+    type = models.CharField(max_length=20, choices=SLIDE_TYPES, default="news")
+    expires_at = models.DateTimeField(null=True, blank=True, verbose_name="زمان انقضا")
 
-        Returns:
-            QuerySet: A list of news articles that match the query.
-        """
-        return cls.objects.filter(
-            Q(title__icontains=query) | Q(content__icontains=query)
-        )
+    class Meta:
+        ordering = ["order"]
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            last_order = Slide.objects.aggregate(models.Max("order"))["order__max"] or 0
+            self.order = last_order + 1
+
+        if not self.slug:
+            # ایجاد slug عددی بر اساس ترتیب ساخت
+            base_id = Slide.objects.aggregate(models.Max("id"))["id__max"] or 0
+            self.slug = str(base_id + 1)
+
+        super().save(*args, **kwargs)
+
+    def is_expired(self):
+        return self.expires_at and self.expires_at <= timezone.now()
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        from django.urls import reverse
+
+        return reverse("slide_detail", kwargs={"slug": self.slug})
