@@ -26,7 +26,8 @@ DEBUG = True
 ALLOWED_HOSTS = [
     "127.0.0.1",
     "localhost",
-    "Yadgah.pythonanywhere.com",
+    "yadgahh.ir",
+    "www.yadgahh.ir",
 ]
 
 # -------------------------------------------------------------------------
