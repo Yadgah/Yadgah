@@ -81,11 +81,125 @@
       font-size: 0.95rem;
     }
   }
+
+  .login-header {
+      text-align: center;
+      margin-bottom: 2rem;
+  }
+
+  .login-header img {
+      width: 80px;
+      margin-bottom: 1rem;
+  }
+
+  .login-header h2 {
+      color: #69b987;
+      font-weight: 700;
+  }
+
+  .social-login {
+      margin-top: 1.5rem;
+      text-align: center;
+  }
+
+  .social-login p {
+      color: #b3b3b3;
+      position: relative;
+      margin-bottom: 1rem;
+  }
+
+  .social-login p::before,
+  .social-login p::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 30%;
+      height: 1px;
+      background-color: #3e3e3e;
+  }
+
+  .social-login p::before {
+      left: 0;
+  }
+
+  .social-login p::after {
+      right: 0;
+  }
+
+  .login-footer {
+      text-align: center;
+      margin-top: 1.5rem;
+      color: #b3b3b3;
+  }
+
+  .login-footer a {
+      color: #69b987;
+      text-decoration: none;
+      transition: all 0.3s;
+  }
+
+  .login-footer a:hover {
+      color: #5aa077;
+      text-decoration: underline;
+  }
+
+  .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+  }
+
+  .social-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #2c2c2c;
+      color: #fff;
+      transition: all 0.3s;
+  }
+
+  .social-icon:hover {
+      background-color: #69b987;
+      transform: translateY(-3px);
+  }
+
+  @media (max-width: 576px) {
+      .login-container {
+          padding: 1.5rem 1rem;
+      }
+
+      .main-search-form {
+          padding-right: 2.5rem !important; /* آیکون جا بشه */
+      }
+
+      .social-icons {
+          gap: 0.75rem;
+      }
+
+      .btn-login {
+          font-size: 0.95rem;
+      }
+
+      .login-header h2 {
+          font-size: 1.25rem;
+      }
+
+      .login-header img {
+          width: 60px;
+      }
+  }
+
 </style>
 
 <div class="container py-5">
   <div class="signup-container">
-    <h2 class="text-center text-white mb-4">ثبت‌نام</h2>
+    <div class="login-header">
+        <img src="{% static 'favicon.ico' %}" alt="یادگاه">
+        <h2>ثبت‌نام</h2>
+    </div>
 
     <form method="POST" enctype="multipart/form-data">
       {% csrf_token %}
@@ -140,11 +254,28 @@
 
       <!-- دکمه ثبت‌نام -->
       <div class="d-grid gap-2">
-        <button type="submit" class="btn btn-signup">
-          <i class="bi bi-person-plus-fill me-2"></i> ثبت‌نام
-        </button>
+        <button type="submit" class="btn btn-signup">ثبت‌نام</button>
       </div>
     </form>
+
+    <div class="social-login">
+        <p>یا وارد شوید با</p>
+        <div class="social-icons">
+            <a href="#" class="social-icon">
+                <i class="bi bi-google"></i>
+            </a>
+            <a href="#" class="social-icon">
+                <i class="bi bi-github"></i>
+            </a>
+            <a href="#" class="social-icon">
+                <i class="bi bi-twitter"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="login-footer">
+        حساب کاربری ندارید؟ <a href="{% url 'signup' %}">ثبت‌نام کنید</a>
+    </div>
   </div>
 </div>
 

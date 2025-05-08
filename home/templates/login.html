@@ -195,7 +195,7 @@
 
         <form method="post">
           {% csrf_token %}
-          
+
           <div class="mb-4 position-relative">
               <label for="id_username" class="form-label">نام کاربری یا ایمیل</label>
               <div class="position-relative">
@@ -219,13 +219,11 @@
               </div>
           </div>
 
-          
+
           <div class="d-grid gap-2 mb-3">
-              <button type="submit" class="btn btn-login">
-                  <i class="bi bi-box-arrow-in-right me-2"></i> ورود به حساب
-              </button>
+              <button type="submit" class="btn btn-login">ورود به حساب</button>
           </div>
-          
+
           {% if form.non_field_errors %}
           <div class="alert alert-danger">
               <i class="bi bi-exclamation-triangle-fill me-2"></i>
@@ -262,7 +260,7 @@
     function togglePassword() {
         const passwordField = document.querySelector('#id_password');
         const toggleIcon = document.querySelector('#togglePasswordIcon');
-        
+
         if (passwordField.type === 'password') {
             passwordField.type = 'text';
             toggleIcon.classList.remove('bi-eye');
@@ -273,13 +271,13 @@
             toggleIcon.classList.add('bi-eye');
         }
     }
-    
+
     // افزودن افکت فوکوس به فیلدها
     document.querySelectorAll('.form-control').forEach(input => {
         input.addEventListener('focus', function() {
             this.parentElement.querySelector('.input-group-text').style.borderColor = '#69b987';
         });
-        
+
         input.addEventListener('blur', function() {
             this.parentElement.querySelector('.input-group-text').style.borderColor = '#3e3e3e';
         });

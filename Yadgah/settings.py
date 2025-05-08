@@ -1,5 +1,3 @@
-
-
 """
 Django settings for Yadgah project.
 
