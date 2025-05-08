@@ -24,6 +24,7 @@ from django.http import (
     JsonResponse,
 )
 from django.shortcuts import get_object_or_404, redirect, render
+from django.template.loader import render_to_string
 from django.utils import timezone
 from django.utils.safestring import mark_safe
 from django.views.decorators.csrf import csrf_exempt
@@ -110,6 +111,8 @@ def home_view(request):
         .first()
     )
 
+    labels = Label.objects.filter(is_custom=False)
+
     return render(
         request,
         "index.html",
@@ -121,6 +124,7 @@ def home_view(request):
             "total_replies": total_replies,
             "total_users": total_users,
             "top_question_of_week": top_question_of_week,
+            "labels": labels,
         },
     )
 
@@ -667,3 +671,14 @@ def slide_detail(request, slug):
 
     template_name = template_map.get(slide.type, "slides/detail.html")  # fallback
     return render(request, template_name, {"slide": slide})
+
+
+def filter_questions(request):
+    label_id = request.GET.get("label_id")
+    if label_id:
+        questions = Question.objects.filter(labels__id=label_id).order_by("-created_at")
+    else:
+        questions = Question.objects.all().order_by("-created_at")
+
+    html = render_to_string("partials/question_list.html", {"questions": questions})
+    return JsonResponse({"html": html})

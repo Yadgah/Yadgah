@@ -181,14 +181,18 @@
 
     <div class="main-content p-4 round">
         <!-- تب‌های دسته‌بندی -->
-        <div class="d-flex mb-4 gap-2 flex-wrap">
-            <button class="btn btn-outline-success active">همه</button>
-            <button class="btn btn-outline-success">برنامه‌نویسی</button>
-            <button class="btn btn-outline-success">طراحی</button>
-            <button class="btn btn-outline-success">هوش مصنوعی</button>
-            <button class="btn btn-outline-success">وب</button>
-            <button class="btn btn-outline-success">موبایل</button>
+        <div class="d-flex mb-4 gap-2 flex-wrap" id="label-buttons">
+            <button class="btn btn-outline-success active" data-label-id="">همه</button>
+            {% for label in labels %}
+                <button class="btn btn-outline-success"
+                        data-label-id="{{ label.id }}"
+                        style="--bs-btn-border-color: {{ label.color }}; --bs-btn-color: {{ label.color }};">
+                    {{ label.name }}
+                </button>
+            {% endfor %}
         </div>
+
+
 
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2>سوالات اخیر</h2>
@@ -199,33 +203,32 @@
             {% endif %}
         </div>
 
-        <div id="recent-questions">
-            {% if questions %}
-                {% for question in questions %}
-                    <div class="d-flex mb-4 align-items-start">
-                        <div class="card-body flex-grow-1">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <h5 class="card-title">
-                                    <a href="{% url 'question_detail' question.id %}"
-                                       class="text-decoration-none text-primary">{{ question.title }}</a>
-                                </h5>
-                                <span>{{ question.created_at|jalali_date }}</span>
-                            </div>
-                            <p class="text-muted">
-                                {{ question.content|striptags|truncatewords:20 }}
-                            </p>
-                            <div class="mt-2">
-                                {% for label in question.labels.all %}
-                                    <span class="label" style="background-color: {{ label.color }}">{{ label.name }}</span>
-                                {% endfor %}
-                            </div>
+        <div id="question-list">
+            {% for question in questions %}
+                <div class="d-flex mb-4 align-items-start">
+                    <div class="card-body flex-grow-1">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="card-title">
+                                <a href="{% url 'question_detail' question.id %}"
+                                   class="text-decoration-none text-primary">{{ question.title }}</a>
+                            </h5>
+                            <span>{{ question.created_at|jalali_date }}</span>
+                        </div>
+                        <p class="text-muted">
+                            {{ question.content|striptags|truncatewords:20 }}
+                        </p>
+                        <div class="mt-2">
+                            {% for label in question.labels.all %}
+                                <span class="label" style="background-color: {{ label.color }}">{{ label.name }}</span>
+                            {% endfor %}
                         </div>
                     </div>
-                {% endfor %}
-            {% else %}
+                </div>
+            {% empty %}
                 <p>هیچ سوالی ارسال نشده است.</p>
-            {% endif %}
+            {% endfor %}
         </div>
+
 
         <div class="load-more__btn">
             {% if show_load_more %}
@@ -302,7 +305,7 @@
                 success: function (response) {
                     if (response.questions.length) {
                         response.questions.forEach(q => {
-                            $('#recent-questions').append(`
+                            $('#question-list').append(`
                                 <div class="d-flex mb-4 align-items-start">
                                     <div class="flex-grow-1">
                                         <div class="card-body">
@@ -377,6 +380,26 @@
         updateCountdown();
         setInterval(updateCountdown, 1000);  // بروزرسانی هر ثانیه
     });
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const buttons = document.querySelectorAll("#label-buttons button");
+
+        buttons.forEach(btn => {
+            btn.addEventListener("click", function () {
+                buttons.forEach(b => b.classList.remove("active"));
+                this.classList.add("active");
+
+                const labelId = this.dataset.labelId;
+
+                fetch(`/filter-questions/?label_id=${labelId}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        document.getElementById("question-list").innerHTML = data.html;
+                    });
+            });
+        });
+    });
 </script>
+
 
 {% endblock %}

@@ -20,6 +20,7 @@ from .views import (
     edit_question,
     edit_reply,
     explore,
+    filter_questions,
     home_view,
     leaderboard,
     login_api,
@@ -91,6 +92,7 @@ general_urlpatterns = [
     ),
     path("robots.txt", robots_txt, name="robots_txt"),
     path("blog/", post_list, name="blog"),
+    path("filter-questions/", filter_questions, name="filter_questions"),
 ]
 
 api_urlpatterns = [

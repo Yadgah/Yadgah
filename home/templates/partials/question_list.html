@@ -1,0 +1,25 @@
+{% load custom_filters %}
+
+{% for question in questions %}
+    <div class="d-flex mb-4 align-items-start">
+        <div class="card-body flex-grow-1">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="card-title">
+                    <a href="{% url 'question_detail' question.id %}"
+                       class="text-decoration-none text-primary">{{ question.title }}</a>
+                </h5>
+                <span>{{ question.created_at|jalali_date }}</span>
+            </div>
+            <p class="text-muted">
+                {{ question.content|striptags|truncatewords:20 }}
+            </p>
+            <div class="mt-2">
+                {% for label in question.labels.all %}
+                    <span class="label" style="background-color: {{ label.color }}">{{ label.name }}</span>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% empty %}
+    <p>هیچ سوالی برای این دسته‌بندی موجود نیست.</p>
+{% endfor %}
