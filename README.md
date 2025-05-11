@@ -46,17 +46,24 @@ Yadgah is a community-driven platform designed for sharing experiences, asking q
    pip install -r requirements.txt
    ```
 
-3. **Apply database migrations:**
+4. **Make migrations:**
+   ```bash
+   python manage.py makemigrations home
+   python manage.py makemigrations blog
+   
+   ```
+
+5. **Apply database migrations:**
    ```bash
    python manage.py migrate
    ```
 
-4. **Create a superuser (admin account):**
+6. **Create a superuser (admin account):**
    ```bash
    python manage.py createsuperuser
    ```
 
-5. **Start the development server:**
+7. **Start the development server:**
    ```bash
    python manage.py runserver
    ```
