@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="news-slide">
-    <h1>{{ slide.title }}</h1>
-    {% if slide.thumbnail %}
-        <img src="{{ slide.thumbnail.url }}" alt="{{ slide.title }}" class="img-fluid rounded mb-3">
-    {% endif %}
-    <p class="lead">{{ slide.description }}</p>
-    <article class="mt-4">
-        {{ slide.content|linebreaks }}
-    </article>
-    <a href="#" class="btn btn-outline-secondary mt-4">{{ slide.button_text }}</a>
-</div>
+    <div class="news-slide">
+        <h1>{{ slide.title }}</h1>
+        {% if slide.thumbnail %}
+            <img src="{{ slide.thumbnail.url }}"
+                 alt="{{ slide.title }}"
+                 class="img-fluid rounded mb-3">
+        {% endif %}
+        <p class="lead">{{ slide.description }}</p>
+        <article class="mt-4">{{ slide.content|linebreaks }}</article>
+        <a href="#" class="btn btn-outline-secondary mt-4">{{ slide.button_text }}</a>
+    </div>
 {% endblock %}

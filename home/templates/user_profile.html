@@ -1,8 +1,7 @@
 {% extends 'base.html' %}
 {% load static custom_filters %}
-
 {% block content %}
-<style>
+    <style>
   .profile-header {
     background: linear-gradient(135deg, #1a3b2d 0%, #69b987 100%);
     border-radius: 16px;
@@ -103,184 +102,168 @@
     padding: 0.4rem 0.8rem;
     border-radius: 8px;
   }
-</style>
-
-<div class="container-lg py-4">
-  <!-- هدر پروفایل -->
-  <div class="profile-header">
-    <div class="d-flex flex-column flex-md-row align-items-center position-relative z-2">
-      <div class="avatar-wrapper mb-3 mb-md-0">
-        {% if profile_user.userprofile.avatar %}
-          <img class="avatar" src="{{ profile_user.userprofile.avatar.url }}" alt="آواتار">
-        {% else %}
-          <img class="avatar" src="{% static 'default-avatar.png' %}" alt="آواتار پیش‌فرض">
-        {% endif %}
-      </div>
-
-      <div class="text-white">
-        <h2 class="h2 mb-2 fw-bold">{{ profile_user.username }}</h2>
-        <div class="d-flex flex-column flex-md-row gap-3">
-          {% if user_profile.show_email %}
-            <div>
-              <i class="fas fa-envelope me-2"></i>
-              {{ profile_user.email }}
+    </style>
+    <div class="container-lg py-4">
+        <!-- هدر پروفایل -->
+        <div class="profile-header">
+            <div class="d-flex flex-column flex-md-row align-items-center position-relative z-2">
+                <div class="avatar-wrapper mb-3 mb-md-0">
+                    {% if profile_user.userprofile.avatar %}
+                        <img class="avatar"
+                             src="{{ profile_user.userprofile.avatar.url }}"
+                             alt="آواتار">
+                    {% else %}
+                        <img class="avatar"
+                             src="{% static 'default-avatar.png' %}"
+                             alt="آواتار پیش‌فرض">
+                    {% endif %}
+                </div>
+                <div class="text-white">
+                    <h2 class="h2 mb-2 fw-bold">{{ profile_user.username }}</h2>
+                    <div class="d-flex flex-column flex-md-row gap-3">
+                        {% if user_profile.show_email %}
+                            <div>
+                                <i class="fas fa-envelope me-2"></i>
+                                {{ profile_user.email }}
+                            </div>
+                        {% endif %}
+                        <div>
+                            <i class="fas fa-calendar-alt me-2"></i>
+                            عضو شده در {{ profile_user.date_joined|date:"Y/m/d" }}
+                        </div>
+                    </div>
+                </div>
             </div>
-          {% endif %}
-
-          <div>
-            <i class="fas fa-calendar-alt me-2"></i>
-            عضو شده در {{ profile_user.date_joined|date:"Y/m/d" }}
-          </div>
+            <!-- آمارکاردها -->
+            <div class="profile-stats position-relative z-2 mt-3">
+                <div class="stat-card">
+                    <div class="stat-value">{{ questions.count }}</div>
+                    <div class="">سوالات</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">{{ published_posts.count }}</div>
+                    <div class="">پست‌ها</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">{{ user_profile.score }}</div>
+                    <div class="">امتیاز</div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-
-    <!-- آمارکاردها -->
-    <div class="profile-stats position-relative z-2 mt-3">
-      <div class="stat-card">
-        <div class="stat-value">{{ questions.count }}</div>
-        <div class="">سوالات</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value">{{ published_posts.count }}</div>
-        <div class="">پست‌ها</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value">{{ user_profile.score }}</div>
-        <div class="">امتیاز</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- تب‌ها -->
-  <ul class="nav nav-tabs mb-4">
-    <li class="nav-item">
-      <a class="nav-link active" data-bs-toggle="tab" href="#questions">
-        <i class="fas fa-question-circle me-2"></i>
-        سوالات
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" data-bs-toggle="tab" href="#posts">
-        <i class="fas fa-pen-alt me-2"></i>
-        نوشته‌ها
-      </a>
-    </li>
-    <!-- <li class="nav-item">
+        <!-- تب‌ها -->
+        <ul class="nav nav-tabs mb-4">
+            <li class="nav-item">
+                <a class="nav-link active" data-bs-toggle="tab" href="#questions">
+                    <i class="fas fa-question-circle me-2"></i>
+                    سوالات
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#posts">
+                    <i class="fas fa-pen-alt me-2"></i>
+                    نوشته‌ها
+                </a>
+            </li>
+            <!-- <li class="nav-item">
       <a class="nav-link" data-bs-toggle="tab" href="#activity">
         <i class="fas fa-chart-line me-2"></i>
         فعالیت‌ها
       </a>
     </li> -->
-  </ul>
-
-  <!-- محتوای تب‌ها -->
-  <div class="tab-content">
-    <!-- تب سوالات -->
-    <div class="tab-pane fade show active" id="questions">
-      {% if questions %}
-        {% for question in questions %}
-          <div class="post-card">
-            <div class="d-flex justify-content-between align-items-center">
-              <a href="{% url 'question_detail' question.id %}" class="h5 mb-2 text-decoration-none text-white">
-                {{ question.title }}
-              </a>
-              <!-- <span class="badge-custom">
+        </ul>
+        <!-- محتوای تب‌ها -->
+        <div class="tab-content">
+            <!-- تب سوالات -->
+            <div class="tab-pane fade show active" id="questions">
+                {% if questions %}
+                    {% for question in questions %}
+                        <div class="post-card">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a href="{% url 'question_detail' question.id %}"
+                                   class="h5 mb-2 text-decoration-none text-white">{{ question.title }}</a>
+                                <!-- <span class="badge-custom">
                 {{ question.votes.count }} رأی
               </span> -->
-            </div>
-            <div class="text-muted">
-              <span class="me-3">
-                <i class="fas fa-clock me-1"></i>
-                {{ question.created_at|jalali_date }}
-              </span>
-             <!--  <span>
+                            </div>
+                            <div class="text-muted">
+                                <span class="me-3">
+                                    <i class="fas fa-clock me-1"></i>
+                                    {{ question.created_at|jalali_date }}
+                                </span>
+                                <!--  <span>
                 <i class="fas fa-comment me-1"></i>
                 {{ question.answers.count }} پاسخ
               </span> -->
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="alert alert-dark text-center py-4">
+                        <i class="fas fa-question-circle fa-2x mb-3"></i>
+                        <p class="mb-0">هنوز سوالی ثبت نشده است</p>
+                    </div>
+                {% endif %}
             </div>
-          </div>
-        {% endfor %}
-      {% else %}
-        <div class="alert alert-dark text-center py-4">
-          <i class="fas fa-question-circle fa-2x mb-3"></i>
-          <p class="mb-0">هنوز سوالی ثبت نشده است</p>
-        </div>
-      {% endif %}
-    </div>
-
-    <!-- تب نوشته‌ها -->
-    <div class="tab-pane fade" id="posts">
-      <div class="row g-4">
-        <!-- پست‌های منتشر شده -->
-        <div class="col-md-6">
-          <h4 class="text-white mb-3">
-            <i class="fas fa-check-circle text-success me-2"></i>
-            منتشر شده
-          </h4>
-          {% if published_posts %}
-            {% for post in published_posts %}
-              <div class="post-card">
-                <div class="d-flex align-items-center justify-content-between">
-                  <a href="{% url 'post_detail' post.slug %}" class="text-decoration-none text-white">
-                    {{ post.title }}
-                  </a>
-                   <div class="d-flex gap-2">
-                    <a href="{% url 'post_edit' slug=post.slug %}" class="btn btn-sm btn-outline-warning">
-                      ویرایش
-                    </a>
-                  </div>
-                  <!-- <span class="badge-custom">
+            <!-- تب نوشته‌ها -->
+            <div class="tab-pane fade" id="posts">
+                <div class="row g-4">
+                    <!-- پست‌های منتشر شده -->
+                    <div class="col-md-6">
+                        <h4 class="text-white mb-3">
+                            <i class="fas fa-check-circle text-success me-2"></i>
+                            منتشر شده
+                        </h4>
+                        {% if published_posts %}
+                            {% for post in published_posts %}
+                                <div class="post-card">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <a href="{% url 'post_detail' post.slug %}"
+                                           class="text-decoration-none text-white">{{ post.title }}</a>
+                                        <div class="d-flex gap-2">
+                                            <a href="{% url 'post_edit' slug=post.slug %}"
+                                               class="btn btn-sm btn-outline-warning">ویرایش</a>
+                                        </div>
+                                        <!-- <span class="badge-custom">
                     <i class="fas fa-eye me-1"></i>
                     {{ post.views }}
                   </span> -->
+                                    </div>
+                                    <div class="text-muted mt-2">{{ post.created_at|jalali_date }}</div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="alert alert-dark py-3">موردی یافت نشد</div>
+                        {% endif %}
+                    </div>
+                    {% if user.is_authenticated %}
+                        <!-- پیش‌نویس‌ها -->
+                        <div class="col-md-6">
+                            <h4 class="text-white mb-3">
+                                <i class="fas fa-pen text-warning me-2"></i>
+                                پیش‌نویس‌ها
+                            </h4>
+                            {% if unpublished_posts %}
+                                {% for post in unpublished_posts %}
+                                    <div class="post-card">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <span class="text-white">{{ post.title }}</span>
+                                            <div class="d-flex gap-2">
+                                                <a href="{% url 'post_edit' slug=post.slug %}"
+                                                   class="btn btn-sm btn-outline-warning">ویرایش</a>
+                                            </div>
+                                        </div>
+                                        <div class="text-muted mt-2">آخرین تغییر: {{ post.updated_at|jalali_date }}</div>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <div class="alert alert-dark py-3">پیش‌نویسی وجود ندارد</div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
                 </div>
-                <div class="text-muted mt-2">
-                  {{ post.created_at|jalali_date }}
-                </div>
-              </div>
-            {% endfor %}
-          {% else %}
-            <div class="alert alert-dark py-3">
-              موردی یافت نشد
             </div>
-          {% endif %}
-        </div>
-        {% if user.is_authenticated %}
-        <!-- پیش‌نویس‌ها -->
-        <div class="col-md-6">
-          <h4 class="text-white mb-3">
-            <i class="fas fa-pen text-warning me-2"></i>
-            پیش‌نویس‌ها
-          </h4>
-          {% if unpublished_posts %}
-            {% for post in unpublished_posts %}
-              <div class="post-card">
-                <div class="d-flex align-items-center justify-content-between">
-                  <span class="text-white">{{ post.title }}</span>
-                  <div class="d-flex gap-2">
-                    <a href="{% url 'post_edit' slug=post.slug %}" class="btn btn-sm btn-outline-warning">
-                      ویرایش
-                    </a>
-                  </div>
-                </div>
-                <div class="text-muted mt-2">
-                  آخرین تغییر: {{ post.updated_at|jalali_date }}
-                </div>
-              </div>
-            {% endfor %}
-          {% else %}
-            <div class="alert alert-dark py-3">
-              پیش‌نویسی وجود ندارد
-            </div>
-          {% endif %}
-        </div>
-        {% endif %}
-      </div>
-    </div>
-
-    <!-- تب فعالیت‌ها -->
-    <!-- <div class="tab-pane fade" id="activity">
+            <!-- تب فعالیت‌ها -->
+            <!-- <div class="tab-pane fade" id="activity">
       <div class="post-card">
         <h5 class="text-white mb-3">آمار فعالیت (test)</h5>
         <div class="row text-center">
@@ -305,6 +288,6 @@
         </div>
       </div>
     </div> -->
-  </div>
-</div>
+        </div>
+    </div>
 {% endblock %}

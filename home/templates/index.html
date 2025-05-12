@@ -1,9 +1,8 @@
 {% extends 'base.html' %}
 {% load custom_filters %}
 {% load static %}
-
 {% block content %}
-<style>
+    <style>
     .round {
         border-radius: 12px;
     }
@@ -111,146 +110,124 @@
             font-size: 1.5rem;
         }
     }
-</style>
-
-<div id="intro-welcome">
-    <svg id="hello-svg" viewBox="0 0 400 100" width="1600" height="900">
-        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle"
-              font-size="40" font-family="Vazirmatn, sans-serif"
-              fill="none" stroke="white" stroke-width="1">سلام</text>
-    </svg>
-</div>
-
-<div class="container my-4">
-    <!-- اسلایدر اخبار مهم -->
-    <div class="swiper my-4 round" id="news-swiper" data-slide-count="{{ slides|length }}">
-        <div class="swiper-wrapper">
-            {% for slide in slides %}
-                <div class="swiper-slide">
-                    <h3>{{ slide.title }}</h3>
-                    <p>{{ slide.description }}</p>
-                    <p class="text-danger">
-                        زمان باقی‌مانده:
-                        <span id="countdown" data-expiry="{{ slide.expires_at|date:'c' }}"></span>
-                    </p>
-                    <a href="{{ slide.get_absolute_url }}" class="btn btn-success">
-                        {{ slide.button_text }}
-                    </a>
-                </div>
-            {% endfor %}
-        </div>
-        <div class="swiper-pagination"></div>
+    </style>
+    <div id="intro-welcome">
+        <svg id="hello-svg" viewBox="0 0 400 100" width="1600" height="900">
+            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="40" font-family="Vazirmatn, sans-serif" fill="none" stroke="white" stroke-width="1">سلام</text>
+        </svg>
     </div>
-
-
-
-    <!-- آمار سایت -->
-    <div class="row mb-4">
-        <div class="col-md-4 mb-3">
-            <div class="stats-box">
-                <div class="number" data-count="{{ total_questions }}">0</div>
-                <p class="text-white">سوالات</p>
-            </div>
-        </div>
-        <div class="col-md-4 mb-3">
-            <div class="stats-box">
-                <div class="number" data-count="{{ total_replies }}">0</div>
-                <p class="text-white">پاسخ‌ها</p>
-            </div>
-        </div>
-        <div class="col-md-4 mb-3">
-            <div class="stats-box">
-                <div class="number" data-count="{{ total_users }}">0</div>
-                <p class="text-white">کاربران</p>
-            </div>
-        </div>
-    </div>
-
-
-    <!-- Main Content Section -->
-    <!-- سوال برجسته هفته -->
-    <div class="p-4 my-4 round featured-question">
-        <h3 class="mb-3">⭐ سوال برجسته هفته</h3>
-        <h4>{{ top_question_of_week.title }}</h4>
-        <p>
-            این سوال با بیش از {{ top_question_of_week.num_replies }} پاسخ و
-            {{ top_question_of_week.num_likes }} رای مثبت به عنوان سوال برتر هفته انتخاب شده است
-        </p>
-        <a href="{{ top_question_of_week.get_absolute_url }}#replies" class="btn btn-outline-warning">مشاهده پاسخ‌ها</a>
-    </div>
-
-    <div class="main-content p-4 round">
-        <!-- تب‌های دسته‌بندی -->
-        <div class="d-flex mb-4 gap-2 flex-wrap" id="label-buttons">
-            <button class="btn btn-outline-success active" data-label-id="">همه</button>
-            {% for label in labels %}
-                <button class="btn btn-outline-success"
-                        data-label-id="{{ label.id }}"
-                        style="--bs-btn-border-color: {{ label.color }}; --bs-btn-color: {{ label.color }};">
-                    {{ label.name }}
-                </button>
-            {% endfor %}
-        </div>
-
-
-
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2>سوالات اخیر</h2>
-            {% if user.is_authenticated %}
-                <a href="{% url 'ask_question' %}" class="btn btn-success">پرسیدن سوال</a>
-            {% else %}
-                <a href="{% url 'login' %}" class="btn btn-outline-success">پرسیدن سوال</a>
-            {% endif %}
-        </div>
-
-        <div id="question-list">
-            {% for question in questions %}
-                <div class="d-flex mb-4 align-items-start">
-                    <div class="card-body flex-grow-1">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <h5 class="card-title">
-                                <a href="{% url 'question_detail' question.id %}"
-                                   class="text-decoration-none text-primary">{{ question.title }}</a>
-                            </h5>
-                            <span>{{ question.created_at|jalali_date }}</span>
-                        </div>
-                        <p class="text-muted">
-                            {{ question.content|striptags|truncatewords:20 }}
+    <div class="container my-4">
+        <!-- اسلایدر اخبار مهم -->
+        <div class="swiper my-4 round"
+             id="news-swiper"
+             data-slide-count="{{ slides|length }}">
+            <div class="swiper-wrapper">
+                {% for slide in slides %}
+                    <div class="swiper-slide">
+                        <h3>{{ slide.title }}</h3>
+                        <p>{{ slide.description }}</p>
+                        <p class="text-danger">
+                            زمان باقی‌مانده:
+                            <span id="countdown" data-expiry="{{ slide.expires_at|date:'c' }}"></span>
                         </p>
-                        <div class="mt-2">
-                            {% for label in question.labels.all %}
-                                <span class="label" style="background-color: {{ label.color }}">{{ label.name }}</span>
-                            {% endfor %}
+                        <a href="{{ slide.get_absolute_url }}" class="btn btn-success">{{ slide.button_text }}</a>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+        <!-- آمار سایت -->
+        <div class="row mb-4">
+            <div class="col-md-4 mb-3">
+                <div class="stats-box">
+                    <div class="number" data-count="{{ total_questions }}">0</div>
+                    <p class="text-white">سوالات</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="stats-box">
+                    <div class="number" data-count="{{ total_replies }}">0</div>
+                    <p class="text-white">پاسخ‌ها</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="stats-box">
+                    <div class="number" data-count="{{ total_users }}">0</div>
+                    <p class="text-white">کاربران</p>
+                </div>
+            </div>
+        </div>
+        <!-- Main Content Section -->
+        <!-- سوال برجسته هفته -->
+        <div class="p-4 my-4 round featured-question">
+            <h3 class="mb-3">⭐ سوال برجسته هفته</h3>
+            <h4>{{ top_question_of_week.title }}</h4>
+            <p>
+                این سوال با بیش از {{ top_question_of_week.num_replies }} پاسخ و
+                {{ top_question_of_week.num_likes }} رای مثبت به عنوان سوال برتر هفته انتخاب شده است
+            </p>
+            <a href="{{ top_question_of_week.get_absolute_url }}#replies"
+               class="btn btn-outline-warning">مشاهده پاسخ‌ها</a>
+        </div>
+        <div class="main-content p-4 round">
+            <!-- تب‌های دسته‌بندی -->
+            <div class="d-flex mb-4 gap-2 flex-wrap" id="label-buttons">
+                <button class="btn btn-outline-success active" data-label-id="">همه</button>
+                {% for label in labels %}
+                    <button class="btn btn-outline-success"
+                            data-label-id="{{ label.id }}"
+                            style="--bs-btn-border-color: {{ label.color }};
+                                   --bs-btn-color: {{ label.color }}">{{ label.name }}</button>
+                {% endfor %}
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>سوالات اخیر</h2>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'ask_question' %}" class="btn btn-success">پرسیدن سوال</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-outline-success">پرسیدن سوال</a>
+                {% endif %}
+            </div>
+            <div id="question-list">
+                {% for question in questions %}
+                    <div class="d-flex mb-4 align-items-start">
+                        <div class="card-body flex-grow-1">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="card-title">
+                                    <a href="{% url 'question_detail' question.id %}"
+                                       class="text-decoration-none text-primary">{{ question.title }}</a>
+                                </h5>
+                                <span>{{ question.created_at|jalali_date }}</span>
+                            </div>
+                            <p class="text-muted">{{ question.content|striptags|truncatewords:20 }}</p>
+                            <div class="mt-2">
+                                {% for label in question.labels.all %}
+                                    <span class="label" style="background-color: {{ label.color }}">{{ label.name }}</span>
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% empty %}
-                <p>هیچ سوالی ارسال نشده است.</p>
-            {% endfor %}
-        </div>
-
-
-        <div class="load-more__btn">
-            {% if show_load_more %}
-                <button id="load-more" class="btn btn-success">نمایش بیشتر</button>
-            {% endif %}
+                {% empty %}
+                    <p>هیچ سوالی ارسال نشده است.</p>
+                {% endfor %}
+            </div>
+            <div class="load-more__btn">
+                {% if show_load_more %}<button id="load-more" class="btn btn-success">نمایش بیشتر</button>{% endif %}
+            </div>
         </div>
     </div>
-</div>
-
-<!-- نوار پایینی برای موبایل -->
-<div class="mobile-bottom-nav d-lg-none">
-    <a href="/"><i class="bi bi-house"></i></a>
-    <a href="{% url 'ask_question' %}"><i class="bi bi-plus-circle"></i></a>
-    <a href="{% url 'search' %}"><i class="bi bi-search"></i></a>
-    <a href="{% url 'profile' %}"><i class="bi bi-person"></i></a>
-</div>
-
-<!-- اسکریپت‌های مورد نیاز -->
-<link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
-<script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
-
-<script>
+    <!-- نوار پایینی برای موبایل -->
+    <div class="mobile-bottom-nav d-lg-none">
+        <a href="/"><i class="bi bi-house"></i></a>
+        <a href="{% url 'ask_question' %}"><i class="bi bi-plus-circle"></i></a>
+        <a href="{% url 'search' %}"><i class="bi bi-search"></i></a>
+        <a href="{% url 'profile' %}"><i class="bi bi-person"></i></a>
+    </div>
+    <!-- اسکریپت‌های مورد نیاز -->
+    <link rel="stylesheet"
+          href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
+    <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+    <script>
     document.addEventListener("DOMContentLoaded", () => {
         const intro = document.getElementById("intro-welcome");
 
@@ -399,7 +376,5 @@
             });
         });
     });
-</script>
-
-
+    </script>
 {% endblock %}

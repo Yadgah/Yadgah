@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-<style>
+    <style>
   @font-face {
     font-family: 'Vazir';
     src: url('https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font/dist/Vazir.woff2') format('woff2'),
@@ -56,52 +56,34 @@
     direction: ltr;
     text-align: left;
   }
-</style>
-
-<div class="container">
-  <div class="law-container shadow-box">
-    <h2 class="text-center">Laws & Regulations / قوانین و مقررات</h2>
-    <div class="language-switch">
-      <button id="toggle-lang-btn" class="btn-toggle">Switch to English</button>
+    </style>
+    <div class="container">
+        <div class="law-container shadow-box">
+            <h2 class="text-center">Laws & Regulations / قوانین و مقررات</h2>
+            <div class="language-switch">
+                <button id="toggle-lang-btn" class="btn-toggle">Switch to English</button>
+            </div>
+            <!-- متن فارسی -->
+            <div id="content-fa">
+                <h2>قوانین و مقررات</h2>
+                <p>1. کاربران باید در ارائه اطلاعات صادق باشند و از انتشار اطلاعات نادرست خودداری کنند.</p>
+                <p>2. رعایت احترام متقابل بین کاربران ضروری است. هرگونه توهین و رفتار ناپسند منجر به مسدودیت حساب کاربری خواهد شد.</p>
+                <p>3. محتوای ارسال شده نباید ناقض قوانین جمهوری اسلامی ایران باشد.</p>
+                <p>4. تمامی حقوق مرتبط با محتواهای تولید شده متعلق به Yadgah است.</p>
+            </div>
+            <!-- English Content -->
+            <div id="content-en" class="hidden">
+                <h2>Laws & Regulations</h2>
+                <p>1. Users must be honest in providing information and refrain from sharing false data.</p>
+                <p>
+                    2. Mutual respect among users is essential. Any form of disrespect or inappropriate behavior will result in account suspension.
+                </p>
+                <p>3. The submitted content must comply with the laws of the Islamic Republic of Iran.</p>
+                <p>4. All rights related to the generated content belong to Yadgah.</p>
+            </div>
+        </div>
     </div>
-
-    <!-- متن فارسی -->
-    <div id="content-fa">
-      <h2>قوانین و مقررات</h2>
-      <p>
-        1. کاربران باید در ارائه اطلاعات صادق باشند و از انتشار اطلاعات نادرست خودداری کنند.
-      </p>
-      <p>
-        2. رعایت احترام متقابل بین کاربران ضروری است. هرگونه توهین و رفتار ناپسند منجر به مسدودیت حساب کاربری خواهد شد.
-      </p>
-      <p>
-        3. محتوای ارسال شده نباید ناقض قوانین جمهوری اسلامی ایران باشد.
-      </p>
-      <p>
-        4. تمامی حقوق مرتبط با محتواهای تولید شده متعلق به Yadgah است.
-      </p>
-    </div>
-
-    <!-- English Content -->
-    <div id="content-en" class="hidden">
-      <h2>Laws & Regulations</h2>
-      <p>
-        1. Users must be honest in providing information and refrain from sharing false data.
-      </p>
-      <p>
-        2. Mutual respect among users is essential. Any form of disrespect or inappropriate behavior will result in account suspension.
-      </p>
-      <p>
-        3. The submitted content must comply with the laws of the Islamic Republic of Iran.
-      </p>
-      <p>
-        4. All rights related to the generated content belong to Yadgah.
-      </p>
-    </div>
-  </div>
-</div>
-
-<script>
+    <script>
   const toggleLangBtn = document.getElementById('toggle-lang-btn');
   const contentFa = document.getElementById('content-fa');
   const contentEn = document.getElementById('content-en');
@@ -112,5 +94,5 @@
     contentEn.classList.toggle('hidden', !isFaVisible);
     toggleLangBtn.textContent = isFaVisible ? 'تغییر به فارسی' : 'Switch to English';
   });
-</script>
+    </script>
 {% endblock %}
