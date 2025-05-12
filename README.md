@@ -50,7 +50,7 @@ Yadgah is a community-driven platform designed for sharing experiences, asking q
    ```bash
    python manage.py makemigrations home
    python manage.py makemigrations blog
-   
+
    ```
 
 5. **Apply database migrations:**

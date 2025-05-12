@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-<style>
+    <style>
     .donation-option {
         border-radius: 10px;
         transition: all 0.3s ease;
@@ -47,105 +47,97 @@
             font-size: 0.8rem;
         }
     }
-</style>
-
-<!-- Main Content -->
-<div class="container my-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <!-- Support Header -->
-            <div class="support-header p-4 text-center mb-5">
-                <h1 class="display-5 fw-bold">حمایت مالی</h1>
-                <p class="lead mb-0">با حمایت شما می‌توانم محتوای بهتری تولید کنم</p>
-            </div>
-
-            <!-- Donation Options -->
-            <div class="row g-4">
-
-                <!-- Buy Me a Coffee -->
-                <div class="col-md-6">
-                    <div class="donation-option p-4 h-100 text-center">
-                        <i class="fas fa-coffee fa-3x mb-3 text-primary"></i>
-                        <h3 class="h4 mb-2 text-white">برام قهوه بخر</h3>
-                        <!-- <a href="https://www.coffeete.ir/dadmehr" target="_blank" class="btn btn-primary px-4">حمایت کنید</a> -->
-                    </div>
+    </style>
+    <!-- Main Content -->
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <!-- Support Header -->
+                <div class="support-header p-4 text-center mb-5">
+                    <h1 class="display-5 fw-bold">حمایت مالی</h1>
+                    <p class="lead mb-0">با حمایت شما می‌توانم محتوای بهتری تولید کنم</p>
                 </div>
-
-                <div class="col-md-6">
-                    <div class="donation-option p-4 h-100">
-                        <div class="d-flex align-items-center mb-3">
-                            <i class="fab fa-bitcoin crypto-icon text-warning"></i>
-                            <h3 class="h4 mb-0 text-white">بیتکوین</h3>
-                        </div>
-                        <p class="text-muted">آدرس کیف پول بیتکوین:</p>
-                        <div class="wallet-address p-3 ps-5 position-relative">
-                            <span class="copy-btn text-muted" title="کپی کردن">
-                                <i class="far fa-copy"></i>
-                            </span>
-                            <span class="address">bc1q554tgkr7nrv5v8e8dc0gdezzy86unr7n9ff988</span>
+                <!-- Donation Options -->
+                <div class="row g-4">
+                    <!-- Buy Me a Coffee -->
+                    <div class="col-md-6">
+                        <div class="donation-option p-4 h-100 text-center">
+                            <i class="fas fa-coffee fa-3x mb-3 text-primary"></i>
+                            <h3 class="h4 mb-2 text-white">برام قهوه بخر</h3>
+                            <!-- <a href="https://www.coffeete.ir/dadmehr"
+    target="_blank"
+    class="btn btn-primary px-4">حمایت کنید</a> -->
                         </div>
                     </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="donation-option p-4 h-100">
-                        <div class="d-flex align-items-center mb-3">
-                            <i class="fab fa-ethereum crypto-icon text-white"></i>
-                            <h3 class="h4 mb-0 text-white">اتریوم</h3>
-                        </div>
-                        <p class="text-muted">آدرس کیف پول اتریوم:</p>
-                        <div class="wallet-address p-3 ps-5 position-relative">
-                            <span class="copy-btn text-muted" title="کپی کردن">
-                                <i class="far fa-copy"></i>
-                            </span>
-                            <span class="address">0x99216e9208ccd1dab66913b73493b395498a341e</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="donation-option p-4 h-100">
-                        <div class="d-flex align-items-center mb-3">
-                            <i class="fab fa-binance crypto-icon text-white"></i>
-                            <h3 class="h4 mb-0 text-white">BNB</h3>
-                        </div>
-                        <p class="text-muted">آدرس کیف پول BNB:</p>
-                        <div class="wallet-address p-3 ps-5 position-relative">
-                            <span class="copy-btn text-muted" title="کپی کردن">
-                                <i class="far fa-copy"></i>
-                            </span>
-                            <span class="address">0x99216E9208cCd1dAB66913B73493B395498A341E</span>
+                    <div class="col-md-6">
+                        <div class="donation-option p-4 h-100">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fab fa-bitcoin crypto-icon text-warning"></i>
+                                <h3 class="h4 mb-0 text-white">بیتکوین</h3>
+                            </div>
+                            <p class="text-muted">آدرس کیف پول بیتکوین:</p>
+                            <div class="wallet-address p-3 ps-5 position-relative">
+                                <span class="copy-btn text-muted" title="کپی کردن">
+                                    <i class="far fa-copy"></i>
+                                </span>
+                                <span class="address">bc1q554tgkr7nrv5v8e8dc0gdezzy86unr7n9ff988</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="donation-option p-4 h-100">
-                        <div class="d-flex align-items-center mb-3">
-                            <i class="fas fa-dollar-sign crypto-icon text-success"></i>
-                            <h3 class="h4 mb-0 text-white">تتر (USDT)</h3>
+                    <div class="col-md-6">
+                        <div class="donation-option p-4 h-100">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fab fa-ethereum crypto-icon text-white"></i>
+                                <h3 class="h4 mb-0 text-white">اتریوم</h3>
+                            </div>
+                            <p class="text-muted">آدرس کیف پول اتریوم:</p>
+                            <div class="wallet-address p-3 ps-5 position-relative">
+                                <span class="copy-btn text-muted" title="کپی کردن">
+                                    <i class="far fa-copy"></i>
+                                </span>
+                                <span class="address">0x99216e9208ccd1dab66913b73493b395498a341e</span>
+                            </div>
                         </div>
-                        <p class="text-muted">آدرس کیف پول تتر (TRC20):</p>
-                        <div class="wallet-address p-3 ps-5 position-relative">
-                            <span class="copy-btn text-muted" title="کپی کردن">
-                                <i class="far fa-copy"></i>
-                            </span>
-                            <span class="address">0x99216E9208cCd1dAB66913B73493B395498A341E</span>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="donation-option p-4 h-100">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fab fa-binance crypto-icon text-white"></i>
+                                <h3 class="h4 mb-0 text-white">BNB</h3>
+                            </div>
+                            <p class="text-muted">آدرس کیف پول BNB:</p>
+                            <div class="wallet-address p-3 ps-5 position-relative">
+                                <span class="copy-btn text-muted" title="کپی کردن">
+                                    <i class="far fa-copy"></i>
+                                </span>
+                                <span class="address">0x99216E9208cCd1dAB66913B73493B395498A341E</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="donation-option p-4 h-100">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-dollar-sign crypto-icon text-success"></i>
+                                <h3 class="h4 mb-0 text-white">تتر (USDT)</h3>
+                            </div>
+                            <p class="text-muted">آدرس کیف پول تتر (TRC20):</p>
+                            <div class="wallet-address p-3 ps-5 position-relative">
+                                <span class="copy-btn text-muted" title="کپی کردن">
+                                    <i class="far fa-copy"></i>
+                                </span>
+                                <span class="address">0x99216E9208cCd1dAB66913B73493B395498A341E</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-            </div>
-
-            <!-- Thank You Message -->
-            <!-- <div class="alert alert-success mt-5 text-center">
+                <!-- Thank You Message -->
+                <!-- <div class="alert alert-success mt-5 text-center">
                 <p>از حمایت صمیمانه شما بسیار سپاسگزارم. هر مقدار کمک شما ارزشمند است و انگیزه‌ای برای ادامه کارم خواهد بود.</p>
             </div> -->
+            </div>
         </div>
     </div>
-</div>
-
-<script>
+    <script>
     // Copy Functionality
     document.querySelectorAll('.copy-btn').forEach(btn => {
         btn.addEventListener('click', function() {
@@ -159,5 +151,5 @@
             });
         });
     });
-</script>
+    </script>
 {% endblock %}

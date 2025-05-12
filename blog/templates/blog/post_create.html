@@ -1,8 +1,6 @@
 {% extends 'base.html' %}
-
 {% block content %}
-
-<style>
+    <style>
   .ck.ck-editor__editable {
     background-color: #2b2b2b;
     color: #000;
@@ -65,44 +63,36 @@
   .errorlist li {
     margin-bottom: 5px;
   }
-</style>
-
-<div class="container mt-5">
-  <div class="row justify-content-center">
-    <div class="col-md-12 col-lg-12">
-      <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.media }}
-
-        <div class="form-group">
-          <label for="id_title">تیتر</label>
-          {{ form.title }}
+    </style>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-12 col-lg-12">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.media }}
+                    <div class="form-group">
+                        <label for="id_title">تیتر</label>
+                        {{ form.title }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_slug">آدرس مقاله</label>
+                        {{ form.slug }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_body">محتوا</label>
+                        {{ form.body }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_published">منتشر شود؟</label>
+                        {{ form.published }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_image">تصویر شاخص</label>
+                        {{ form.image }}
+                    </div>
+                    <button type="submit" class="btn-submit">ارسال</button>
+                </form>
+            </div>
         </div>
-
-        <div class="form-group">
-          <label for="id_slug">آدرس مقاله</label>
-          {{ form.slug }}
-        </div>
-
-        <div class="form-group">
-          <label for="id_body">محتوا</label>
-          {{ form.body }}
-        </div>
-
-        <div class="form-group">
-          <label for="id_published">منتشر شود؟</label>
-          {{ form.published }}
-        </div>
-
-        <div class="form-group">
-          <label for="id_image">تصویر شاخص</label>
-          {{ form.image }}
-        </div>
-
-        <button type="submit" class="btn-submit">ارسال</button>
-      </form>
     </div>
-  </div>
-</div>
-
 {% endblock %}

@@ -1,27 +1,28 @@
 {% extends "base.html" %}
-
 {% block content %}
-<h2>نتایج جستجو برای "{{ query }}"</h2>
-
-{% if questions or news %}
-    {% if questions %}
-        <h3>سوالات</h3>
-        <ul>
-            {% for question in questions %}
-                <li><a href="{% url 'question_detail' question.id %}">{{ question.title }}</a></li>
-            {% endfor %}
-        </ul>
+    <h2>نتایج جستجو برای "{{ query }}"</h2>
+    {% if questions or news %}
+        {% if questions %}
+            <h3>سوالات</h3>
+            <ul>
+                {% for question in questions %}
+                    <li>
+                        <a href="{% url 'question_detail' question.id %}">{{ question.title }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% if news %}
+            <h3>اخبار</h3>
+            <ul>
+                {% for article in news %}
+                    <li>
+                        <a>{{ article.title }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% else %}
+        <p>هیچ نتیجه‌ای یافت نشد.</p>
     {% endif %}
-
-    {% if news %}
-        <h3>اخبار</h3>
-        <ul>
-            {% for article in news %}
-                <li><a>{{ article.title }}</a></li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-{% else %}
-    <p>هیچ نتیجه‌ای یافت نشد.</p>
-{% endif %}
 {% endblock %}

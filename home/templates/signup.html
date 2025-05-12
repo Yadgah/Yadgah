@@ -1,9 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load custom_filters %}
-
 {% block content %}
-<style>
+    <style>
   .signup-container {
     max-width: 500px;
     margin: 0 auto;
@@ -192,94 +191,89 @@
       }
   }
 
-</style>
-
-<div class="container py-5">
-  <div class="signup-container">
-    <div class="login-header">
-        <img src="{% static 'favicon.ico' %}" alt="یادگاه">
-        <h2>ثبت‌نام</h2>
+    </style>
+    <div class="container py-5">
+        <div class="signup-container">
+            <div class="login-header">
+                <img src="{% static 'favicon.ico' %}" alt="یادگاه">
+                <h2>ثبت‌نام</h2>
+            </div>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% if messages %}
+                    <div class="alert-container mb-3">
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags|default:"info" }} alert-dismissible fade show"
+                                 role="alert">
+                                {{ message }}
+                                <button type="button"
+                                        class="btn-close"
+                                        data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                <!-- نام کاربری -->
+                <div class="mb-4 position-relative">
+                    <label for="{{ form.username.id_for_label }}" class="form-label">نام کاربری (به انگلیسی)</label>
+                    <div class="position-relative">
+                        {{ form.username|add_class:"main-search-form ps-5" }}
+                        <span class="position-absolute top-50 translate-middle-y end-0 me-3 text-muted">
+                            <i class="bi bi-person-fill"></i>
+                        </span>
+                    </div>
+                </div>
+                <!-- ایمیل -->
+                <div class="mb-4 position-relative">
+                    <label for="{{ form.email.id_for_label }}" class="form-label">ایمیل</label>
+                    <div class="position-relative">
+                        {{ form.email|add_class:"main-search-form ps-5" }}
+                        <span class="position-absolute top-50 translate-middle-y end-0 me-3 text-muted">
+                            <i class="bi bi-envelope-fill"></i>
+                        </span>
+                    </div>
+                </div>
+                <!-- رمز عبور -->
+                <div class="mb-4 position-relative">
+                    <label for="{{ form.password.id_for_label }}" class="form-label">رمز عبور</label>
+                    <div class="position-relative">
+                        {{ form.password|add_class:"main-search-form ps-5" }}
+                        <span class="position-absolute top-50 translate-middle-y end-0 me-3 text-muted">
+                            <i class="bi bi-lock-fill"></i>
+                        </span>
+                        <span class="password-toggle position-absolute top-50 translate-middle-y end-0"
+                              onclick="togglePassword()">
+                            <i class="bi bi-eye" id="togglePasswordIcon"></i>
+                        </span>
+                    </div>
+                    <small class="text-muted">رمز باید شامل حداقل ۸ کاراکتر و عدد باشد.</small>
+                </div>
+                <!-- دکمه ثبت‌نام -->
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-signup">ثبت‌نام</button>
+                </div>
+            </form>
+            <div class="social-login">
+                <p>یا وارد شوید با</p>
+                <div class="social-icons">
+                    <a href="#" class="social-icon">
+                        <i class="bi bi-google"></i>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <i class="bi bi-github"></i>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <i class="bi bi-twitter"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="login-footer">
+                حساب کاربری ندارید؟ <a href="{% url 'signup' %}">ثبت‌نام کنید</a>
+            </div>
+        </div>
     </div>
-
-    <form method="POST" enctype="multipart/form-data">
-      {% csrf_token %}
-
-      {% if messages %}
-      <div class="alert-container mb-3">
-        {% for message in messages %}
-        <div class="alert alert-{{ message.tags|default:"info" }} alert-dismissible fade show" role="alert">
-          {{ message }}
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        {% endfor %}
-      </div>
-      {% endif %}
-
-      <!-- نام کاربری -->
-      <div class="mb-4 position-relative">
-        <label for="{{ form.username.id_for_label }}" class="form-label">نام کاربری (به انگلیسی)</label>
-        <div class="position-relative">
-          {{ form.username|add_class:"main-search-form ps-5" }}
-          <span class="position-absolute top-50 translate-middle-y end-0 me-3 text-muted">
-            <i class="bi bi-person-fill"></i>
-          </span>
-        </div>
-      </div>
-
-      <!-- ایمیل -->
-      <div class="mb-4 position-relative">
-        <label for="{{ form.email.id_for_label }}" class="form-label">ایمیل</label>
-        <div class="position-relative">
-          {{ form.email|add_class:"main-search-form ps-5" }}
-          <span class="position-absolute top-50 translate-middle-y end-0 me-3 text-muted">
-            <i class="bi bi-envelope-fill"></i>
-          </span>
-        </div>
-      </div>
-
-      <!-- رمز عبور -->
-      <div class="mb-4 position-relative">
-        <label for="{{ form.password.id_for_label }}" class="form-label">رمز عبور</label>
-        <div class="position-relative">
-          {{ form.password|add_class:"main-search-form ps-5" }}
-          <span class="position-absolute top-50 translate-middle-y end-0 me-3 text-muted">
-            <i class="bi bi-lock-fill"></i>
-          </span>
-          <span class="password-toggle position-absolute top-50 translate-middle-y end-0" onclick="togglePassword()">
-            <i class="bi bi-eye" id="togglePasswordIcon"></i>
-          </span>
-        </div>
-        <small class="text-muted">رمز باید شامل حداقل ۸ کاراکتر و عدد باشد.</small>
-      </div>
-
-      <!-- دکمه ثبت‌نام -->
-      <div class="d-grid gap-2">
-        <button type="submit" class="btn btn-signup">ثبت‌نام</button>
-      </div>
-    </form>
-
-    <div class="social-login">
-        <p>یا وارد شوید با</p>
-        <div class="social-icons">
-            <a href="#" class="social-icon">
-                <i class="bi bi-google"></i>
-            </a>
-            <a href="#" class="social-icon">
-                <i class="bi bi-github"></i>
-            </a>
-            <a href="#" class="social-icon">
-                <i class="bi bi-twitter"></i>
-            </a>
-        </div>
-    </div>
-
-    <div class="login-footer">
-        حساب کاربری ندارید؟ <a href="{% url 'signup' %}">ثبت‌نام کنید</a>
-    </div>
-  </div>
-</div>
-
-<script>
+    <script>
   function togglePassword() {
     const passwordField = document.querySelector('#id_password');
     const toggleIcon = document.querySelector('#togglePasswordIcon');
@@ -293,5 +287,5 @@
       toggleIcon.classList.add('bi-eye');
     }
   }
-</script>
+    </script>
 {% endblock %}

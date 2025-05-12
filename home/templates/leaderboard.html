@@ -1,26 +1,28 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container mt-4">
-  <h2 class="text-center mb-4 text-white">امتیازات</h2>
-  <div class="table-responsive">
-    <table class="table text-center align-middle" style="background-color: #212529; color: #ffffff;">
-      <thead style="background-color: #198754; color: #ffffff;">
-        <tr>
-          <th scope="col">Rank</th>
-          <th scope="col">User</th>
-          <th scope="col">Score</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for user in users %}
-        <tr>
-          <td class="fw-bold">{{ forloop.counter }}</td>
-          <td>{{ user.user.username }}</td>
-          <td class="fw-semibold">{{ user.score }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
-</div>
+    <div class="container mt-4">
+        <h2 class="text-center mb-4 text-white">امتیازات</h2>
+        <div class="table-responsive">
+            <table class="table text-center align-middle"
+                   style="background-color: #212529;
+                          color: #ffffff">
+                <thead style="background-color: #198754; color: #ffffff;">
+                    <tr>
+                        <th scope="col">Rank</th>
+                        <th scope="col">User</th>
+                        <th scope="col">Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <td class="fw-bold">{{ forloop.counter }}</td>
+                            <td>{{ user.user.username }}</td>
+                            <td class="fw-semibold">{{ user.score }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}

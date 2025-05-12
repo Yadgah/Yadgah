@@ -1,8 +1,6 @@
 {% extends 'base.html' %}
-
 {% block title %}{{ post.title }} - یادگاه{% endblock %}
 {% load custom_filters %}
-
 {% block head %}
     <!-- Set Open Graph Image dynamically -->
     <meta property="og:title" content="یادگاه - {{ post.title }}" />
@@ -13,10 +11,8 @@
         <meta property="og:image" content="{% static 'thumbnail.png' %}" />
     {% endif %}
 {% endblock %}
-
 {% block content %}
-
-<style>
+    <style>
     .post-container {
         max-width: 800px;
         margin: 0 auto;
@@ -175,117 +171,118 @@
     .comment-box button:hover {
         background-color: #004085;
     }
-</style>
-
-<div class="post-container">
-    <!-- Back to Posts -->
-    <div class="back-to-posts">
-        <a href="{% url 'post_list' %}" class="back-link">
-            <i class="fa fa-arrow-right"></i> بازگشت به همه پست‌ها
-        </a>
-    </div>
-
-    <!-- Post Header -->
-    <header class="post-header">
-        <div class="view-count text-light title-sec">
-            <h1 class="post-title">{{ post.title }}</h1>
-            <div class="metadata-item view-count">
-                <span> {{ post.view_count }}</span>
-                <i class="bi bi-eye"></i>
-            </div>
+    </style>
+    <div class="post-container">
+        <!-- Back to Posts -->
+        <div class="back-to-posts">
+            <a href="{% url 'post_list' %}" class="back-link">
+                <i class="fa fa-arrow-right"></i> بازگشت به همه پست‌ها
+            </a>
         </div>
-
-        <div class="post-meta">
-            <span class="author">
-                نوشته شده توسط
-                <a href="{% url 'user_profile' username=post.author.username %}" class="author-link">{{ post.author }}</a>
-                در تاریخ {{ post.created_at|jalali_date }}
-            </span>
-            {% if request.user == post.author %}
-                <div>
-                    <a href="{% url 'post_edit' slug=post.slug %}" class="btn btn-warning edit-button">
-                        <i class="fa fa-edit"></i> ویرایش
-                    </a>
-                    <form action="{% url 'post_delete' slug=post.slug %}" method="post" style="display:inline;">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-danger edit-button" onclick="return confirm('آیا مطمئن هستید که می‌خواهید این پست را حذف کنید؟');">
-                            <i class="fa fa-trash"></i> حذف
-                        </button>
-                    </form>
+        <!-- Post Header -->
+        <header class="post-header">
+            <div class="view-count text-light title-sec">
+                <h1 class="post-title">{{ post.title }}</h1>
+                <div class="metadata-item view-count">
+                    <span>{{ post.view_count }}</span>
+                    <i class="bi bi-eye"></i>
                 </div>
+            </div>
+            <div class="post-meta">
+                <span class="author">
+                    نوشته شده توسط
+                    <a href="{% url 'user_profile' username=post.author.username %}"
+                       class="author-link">{{ post.author }}</a>
+                    در تاریخ {{ post.created_at|jalali_date }}
+                </span>
+                {% if request.user == post.author %}
+                    <div>
+                        <a href="{% url 'post_edit' slug=post.slug %}"
+                           class="btn btn-warning edit-button">
+                            <i class="fa fa-edit"></i> ویرایش
+                        </a>
+                        <form action="{% url 'post_delete' slug=post.slug %}"
+                              method="post"
+                              style="display:inline">
+                            {% csrf_token %}
+                            <button type="submit"
+                                    class="btn btn-danger edit-button"
+                                    onclick="return confirm('آیا مطمئن هستید که می‌خواهید این پست را حذف کنید؟');">
+                                <i class="fa fa-trash"></i> حذف
+                            </button>
+                        </form>
+                    </div>
+                {% endif %}
+            </div>
+        </header>
+        <!-- Post Image -->
+        {% if post.image %}
+            <div class="post-image">
+                <img src="{{ post.image.url }}"
+                     alt="{{ post.title }}"
+                     class="img-responsive">
+            </div>
+        {% endif %}
+        <!-- Post Body -->
+        <div class="post-body">
+            <p>{{ post.body|remove_empty_paragraphs|safe }}</p>
+        </div>
+    </div>
+    <div class="comment-container">
+        <!-- Comments Section -->
+        <div class="comments-list">
+            <h3 class="text-light">دیدگاه‌ها</h3>
+            <ul>
+                {% for comment in comments %}
+                    <li class="comment-item text-white">
+                        <strong>{{ comment.user.username }}</strong> ({{ comment.created_at|jalali_date }})
+                        <p>{{ comment.content }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="comment-box">
+            {% if user.is_authenticated %}
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ comment_form.as_p }}
+                    <button type="submit">ارسال نظر</button>
+                </form>
+            {% else %}
+                <p class="text-light">برای ارسال نظر باید وارد حساب کاربری خود شوید.</p>
             {% endif %}
         </div>
-    </header>
-
-    <!-- Post Image -->
-    {% if post.image %}
-    <div class="post-image">
-        <img src="{{ post.image.url }}" alt="{{ post.title }}" class="img-responsive">
-    </div>
-    {% endif %}
-
-    <!-- Post Body -->
-    <div class="post-body">
-        <p>{{ post.body|remove_empty_paragraphs|safe }}</p>
-    </div>
-</div>
-
-<div class="comment-container">
-    <!-- Comments Section -->
-    <div class="comments-list">
-        <h3 class="text-light">دیدگاه‌ها</h3>
-
-        <ul>
-            {% for comment in comments %}
-                <li class="comment-item text-white">
-                    <strong>{{ comment.user.username }}</strong> ({{ comment.created_at|jalali_date }})
-                    <p>{{ comment.content }}</p>
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
-
-    <div class="comment-box">
-        {% if user.is_authenticated %}
-            <form method="POST">
-                {% csrf_token %}
-                {{ comment_form.as_p }}
-                <button type="submit">ارسال نظر</button>
-            </form>
-        {% else %}
-            <p class="text-light">برای ارسال نظر باید وارد حساب کاربری خود شوید.</p>
-        {% endif %}
-    </div>
-
-    <!-- Share Buttons -->
-    <div class="share-box">
-        <p class="text-light mb-2">اشتراک‌گذاری این پست:</p>
-        <div class="d-flex justify-content-center flex-wrap gap-2">
-            <!-- WhatsApp -->
-            <a href="https://wa.me/?text={{ request.build_absolute_uri }}" target="_blank" class="btn btn-success btn-sm">
-                <i class="fab fa-whatsapp"></i> واتساپ
-            </a>
-
-            <!-- Telegram -->
-            <a href="https://t.me/share/url?url={{ request.build_absolute_uri }}" target="_blank" class="btn btn-info btn-sm">
-                <i class="fab fa-telegram"></i> تلگرام
-            </a>
-
-            <!-- Twitter -->
-            <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ post.title }}" target="_blank" class="btn btn-primary btn-sm">
-                <i class="fab fa-twitter"></i> توییتر
-            </a>
-
-            <!-- Copy Link -->
-            <button onclick="copyToClipboard()" class="btn btn-secondary btn-sm">
-                <i class="fa fa-link"></i> کپی لینک
-            </button>
+        <!-- Share Buttons -->
+        <div class="share-box">
+            <p class="text-light mb-2">اشتراک‌گذاری این پست:</p>
+            <div class="d-flex justify-content-center flex-wrap gap-2">
+                <!-- WhatsApp -->
+                <a href="https://wa.me/?text={{ request.build_absolute_uri }}"
+                   target="_blank"
+                   class="btn btn-success btn-sm">
+                    <i class="fab fa-whatsapp"></i> واتساپ
+                </a>
+                <!-- Telegram -->
+                <a href="https://t.me/share/url?url={{ request.build_absolute_uri }}"
+                   target="_blank"
+                   class="btn btn-info btn-sm">
+                    <i class="fab fa-telegram"></i> تلگرام
+                </a>
+                <!-- Twitter -->
+                <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ post.title }}"
+                   target="_blank"
+                   class="btn btn-primary btn-sm">
+                    <i class="fab fa-twitter"></i> توییتر
+                </a>
+                <!-- Copy Link -->
+                <button onclick="copyToClipboard()" class="btn btn-secondary btn-sm">
+                    <i class="fa fa-link"></i> کپی لینک
+                </button>
+            </div>
+            <small id="copySuccess" class="text-success d-none">✅ لینک کپی شد!</small>
         </div>
-        <small id="copySuccess" class="text-success d-none">✅ لینک کپی شد!</small>
     </div>
-</div>
-
-<script>
+    <script>
   function copyToClipboard() {
     const tempInput = document.createElement("input");
     tempInput.value = "{{ request.build_absolute_uri }}";
@@ -298,6 +295,5 @@
     success.classList.remove("d-none");
     setTimeout(() => success.classList.add("d-none"), 2000);
   }
-</script>
-
+    </script>
 {% endblock %}

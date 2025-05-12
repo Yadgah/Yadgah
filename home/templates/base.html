@@ -4,37 +4,44 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         {% load static %}
-
-        <title>{% block title %}یادگاه - Yadgah{% endblock %}</title>
+        <title>
+            {% block title %}یادگاه - Yadgah{% endblock %}
+        </title>
         <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
-        <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css"
+              rel="stylesheet"
+              type="text/css" />
+        <link rel="stylesheet"
+              href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-        {% load bootstrap5 %} {% bootstrap_css %} {% bootstrap_javascript %}
-
-        <meta name="google-site-verification" content="CEQQGa3JbQoZo0eSW6LuPGrJbBavgRogjUF-Rsuig_E" />
-
+        {% load bootstrap5 %}
+        {% bootstrap_css %} {% bootstrap_javascript %}
+        <meta name="google-site-verification"
+              content="CEQQGa3JbQoZo0eSW6LuPGrJbBavgRogjUF-Rsuig_E" />
         <!-- SEO Meta Tags -->
-        <meta name="description" content="یادگاه - بستری برای یادگیری، اشتراک تجربیات و دریافت اطلاعات مفید." />
-        <meta name="keywords" content="یادگاه, یادگیری, اشتراک تجربیات, مقالات, پرسش و پاسخ" />
+        <meta name="description"
+              content="یادگاه - بستری برای یادگیری، اشتراک تجربیات و دریافت اطلاعات مفید." />
+        <meta name="keywords"
+              content="یادگاه, یادگیری, اشتراک تجربیات, مقالات, پرسش و پاسخ" />
         <meta name="author" content="یادگاه" />
         <meta name="robots" content="index, follow" />
-
         <!-- Open Graph Meta Tags -->
-        <meta property="og:title" content="یادگاه - بستری برای یادگیری و اشتراک تجربیات" />
-        <meta property="og:description" content="با یادگاه سوال بپرسید، تجربه به اشتراک بگذارید و یاد بگیرید." />
+        <meta property="og:title"
+              content="یادگاه - بستری برای یادگیری و اشتراک تجربیات" />
+        <meta property="og:description"
+              content="با یادگاه سوال بپرسید، تجربه به اشتراک بگذارید و یاد بگیرید." />
         <meta property="og:image" content="{% static 'thumbnail.png' %}" />
         <meta property="og:url" content="https://yadgah.com" />
         <meta property="og:type" content="website" />
-
         <!-- Twitter Card -->
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="یادگاه - بستری برای یادگیری و اشتراک تجربیات" />
-        <meta name="twitter:description" content="با یادگاه سوال بپرسید، تجربه به اشتراک بگذارید و یاد بگیرید." />
+        <meta name="twitter:title"
+              content="یادگاه - بستری برای یادگیری و اشتراک تجربیات" />
+        <meta name="twitter:description"
+              content="با یادگاه سوال بپرسید، تجربه به اشتراک بگذارید و یاد بگیرید." />
         <meta name="twitter:image" content="{% static 'thumbnail.png' %}" />
-
         <!-- Structured Data (Schema.org) -->
         <script type="application/ld+json">
             {
@@ -49,7 +56,6 @@
                 ]
             }
         </script>
-
         <style>
             /* For Chrome, Edge, Safari */
             ::-webkit-scrollbar {
@@ -116,100 +122,176 @@
             }
         </style>
     </head>
-    <body dir="rtl" style="display: flex; flex-direction: column; min-height: 100vh;">
+    <body dir="rtl"
+          style="display: flex;
+                 flex-direction: column;
+                 min-height: 100vh">
         <!-- Header Section -->
         <header class="p-3 bg-dark text-white">
             <div class="container">
                 <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
                     <!-- Logo and Title -->
-                    <a href="/" class="d-flex align-items-center text-white text-decoration-none">
-                        <img src="{% static 'favicon.ico' %}" alt="یادگاه لوگو" width="50" height="50" />
+                    <a href="/"
+                       class="d-flex align-items-center text-white text-decoration-none">
+                        <img src="{% static 'favicon.ico' %}"
+                             alt="یادگاه لوگو"
+                             width="50"
+                             height="50" />
                         <h1 class="ms-2 mb-0">یادگاه</h1>
                     </a>
-
                     <!-- Navigation Menu (Desktop) -->
                     <ul class="nav d-none d-lg-flex col-auto justify-content-center">
-                        <li><a href="{% url 'index' %}" class="nav-link px-2 text-white">خانه</a></li>
-                        <li><a href="{% url 'leaderboard' %}" class="nav-link px-2 text-white">تابلوی امتیازات</a></li>
-                        <li><a href="{% url 'blog' %}" class="nav-link px-2 text-white">مقالات</a></li>
-                        <li><a href="{% url 'explore' %}" class="nav-link px-2 text-white">کاوش</a></li>
-                        <li><a href="{% url 'donate' %}" class="nav-link px-2 text-white">حمایت</a></li>
-
+                        <li>
+                            <a href="{% url 'index' %}" class="nav-link px-2 text-white">خانه</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'leaderboard' %}" class="nav-link px-2 text-white">تابلوی امتیازات</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'blog' %}" class="nav-link px-2 text-white">مقالات</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'explore' %}" class="nav-link px-2 text-white">کاوش</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'donate' %}" class="nav-link px-2 text-white">حمایت</a>
+                        </li>
                     </ul>
-
                     <!-- Hamburger Menu Button (Mobile) -->
-                    <button class="btn d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#megaMenu" aria-controls="megaMenu">
+                    <button class="btn d-lg-none"
+                            type="button"
+                            data-bs-toggle="offcanvas"
+                            data-bs-target="#megaMenu"
+                            aria-controls="megaMenu">
                         <img src="{% static 'icons/menu-svgrepo-com.svg' %}" alt="منو" width="30" />
                     </button>
-
                     <!-- Search Form (Desktop) -->
                     <form action="{% url 'search' %}" method="get" class="d-none d-lg-block">
                         <div class="d-flex">
-                            <input name="q" type="search" class="form-control q_box_btn" placeholder="جست و جو..." aria-label="جست و جو" value="{{ request.GET.q }}" />
+                            <input name="q"
+                                   type="search"
+                                   class="form-control q_box_btn"
+                                   placeholder="جست و جو..."
+                                   aria-label="جست و جو"
+                                   value="{{ request.GET.q }}" />
                             <button class="btn btn-success q_btn" type="submit">جستجو</button>
                         </div>
                     </form>
-
                     <!-- Search Button (Mobile) -->
-                    <button class="btn d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#searchModal" aria-controls="searchModal">
-                        <img src="{% static 'icons/search-svgrepo-com.svg' %}" alt="جستجو" width="28" />
+                    <button class="btn d-lg-none"
+                            type="button"
+                            data-bs-toggle="offcanvas"
+                            data-bs-target="#searchModal"
+                            aria-controls="searchModal">
+                        <img src="{% static 'icons/search-svgrepo-com.svg' %}"
+                             alt="جستجو"
+                             width="28" />
                     </button>
-
                     <!-- User Authentication Section -->
                     <div class="text-end d-none d-lg-block">
                         {% if user.is_authenticated %}
-                            <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a href="#"
+                               class="d-block link-light text-decoration-none dropdown-toggle"
+                               id="dropdownUser1"
+                               data-bs-toggle="dropdown"
+                               aria-expanded="false">
                                 {% if user.userprofile.avatar %}
-                                <img src="{{ user.userprofile.avatar.url }}" alt="{{ user.username }}'s avatar" width="40" height="40" class="rounded-circle" />
+                                    <img src="{{ user.userprofile.avatar.url }}"
+                                         alt="{{ user.username }}'s avatar"
+                                         width="40"
+                                         height="40"
+                                         class="rounded-circle" />
                                 {% else %}
-                                <img src="{% static 'default-avatar.png' %}" alt="default avatar" width="32" height="32" class="rounded-circle" />
+                                    <img src="{% static 'default-avatar.png' %}"
+                                         alt="default avatar"
+                                         width="32"
+                                         height="32"
+                                         class="rounded-circle" />
                                 {% endif %}
                             </a>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser1">
-                                <li><a class="dropdown-item" href="{% url 'user_profile' user.username %}">پروفایل</a></li>
-                                <li><a class="dropdown-item" href="{% url 'profile' %}">تنظیمات</a></li>
-                                <li><a class="dropdown-item" href="{% url 'logout' %}">خروج</a></li>
+                            <ul class="dropdown-menu dropdown-menu-end"
+                                aria-labelledby="dropdownUser1">
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'user_profile' user.username %}">پروفایل</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'profile' %}">تنظیمات</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'logout' %}">خروج</a>
+                                </li>
                             </ul>
                         {% else %}
                             <a href="{% url 'login' %}" class="btn btn-outline-light me-2">ورود</a>
                             <a href="{% url 'signup' %}" class="btn btn-success">ثبت‌نام</a>
                         {% endif %}
                     </div>
-
                 </div>
             </div>
         </header>
-
         <!-- Offcanvas Mega Menu (Mobile) -->
-        <div class="offcanvas offcanvas-end bg-dark text-white w-50" tabindex="-1" id="megaMenu" aria-labelledby="megaMenuLabel" style="min-width: 250px;">
+        <div class="offcanvas offcanvas-end bg-dark text-white w-50"
+             tabindex="-1"
+             id="megaMenu"
+             aria-labelledby="megaMenuLabel"
+             style="min-width: 250px">
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title" id="megaMenuLabel">منوی سایت</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="بستن"></button>
+                <button type="button"
+                        class="btn-close btn-close-white"
+                        data-bs-dismiss="offcanvas"
+                        aria-label="بستن"></button>
             </div>
             <div class="offcanvas-body">
                 <ul class="nav flex-column mb-3">
-                    <li><a href="{% url 'index' %}" class="nav-link px-2 text-white">خانه</a></li>
-                    <li><a href="{% url 'leaderboard' %}" class="nav-link px-2 text-white">تابلوی امتیازات</a></li>
-                    <li><a href="{% url 'blog' %}" class="nav-link px-2 text-white">مقالات</a></li>
-                    <li><a href="{% url 'explore' %}" class="nav-link px-2 text-white">کاوش</a></li>
+                    <li>
+                        <a href="{% url 'index' %}" class="nav-link px-2 text-white">خانه</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'leaderboard' %}" class="nav-link px-2 text-white">تابلوی امتیازات</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'blog' %}" class="nav-link px-2 text-white">مقالات</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'explore' %}" class="nav-link px-2 text-white">کاوش</a>
+                    </li>
                 </ul>
-
                 <!-- بخش کاربری؛ فقط مخصوص موبایل -->
                 <div class="d-block d-lg-none">
                     {% if user.is_authenticated %}
                         <div class="mb-3">
-                            <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" id="dropdownUserMobile" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a href="#"
+                               class="d-block link-light text-decoration-none dropdown-toggle"
+                               id="dropdownUserMobile"
+                               data-bs-toggle="dropdown"
+                               aria-expanded="false">
                                 {% if user.userprofile.avatar %}
-                                <img src="{{ user.userprofile.avatar.url }}" alt="{{ user.username }}'s avatar" width="40" height="40" class="rounded-circle" />
+                                    <img src="{{ user.userprofile.avatar.url }}"
+                                         alt="{{ user.username }}'s avatar"
+                                         width="40"
+                                         height="40"
+                                         class="rounded-circle" />
                                 {% else %}
-                                <img src="{% static 'default-avatar.png' %}" alt="default avatar" width="32" height="32" class="rounded-circle" />
+                                    <img src="{% static 'default-avatar.png' %}"
+                                         alt="default avatar"
+                                         width="32"
+                                         height="32"
+                                         class="rounded-circle" />
                                 {% endif %}
                                 <span class="ms-2">{{ user.username }}</span>
                             </a>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUserMobile">
-                                <li><a class="dropdown-item" href="{% url 'user_profile' user.username %}">پروفایل</a></li>
-                                <li><a class="dropdown-item" href="{% url 'profile' %}">تنظیمات</a></li>
-                                <li><a class="dropdown-item" href="{% url 'logout' %}">خروج</a></li>
+                            <ul class="dropdown-menu dropdown-menu-end"
+                                aria-labelledby="dropdownUserMobile">
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'user_profile' user.username %}">پروفایل</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'profile' %}">تنظیمات</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'logout' %}">خروج</a>
+                                </li>
                             </ul>
                         </div>
                     {% else %}
@@ -219,24 +301,35 @@
                 </div>
             </div>
         </div>
-
-
         <!-- Offcanvas Search (Mobile) -->
-        <div class="offcanvas offcanvas-top bg-dark text-white" tabindex="-1" id="searchModal" aria-labelledby="searchModalLabel" style="height: 50vh; min-height: 250px;">
+        <div class="offcanvas offcanvas-top bg-dark text-white"
+             tabindex="-1"
+             id="searchModal"
+             aria-labelledby="searchModalLabel"
+             style="height: 50vh;
+                    min-height: 250px">
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title" id="searchModalLabel">جستجو</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="بستن"></button>
+                <button type="button"
+                        class="btn-close btn-close-white"
+                        data-bs-dismiss="offcanvas"
+                        aria-label="بستن"></button>
             </div>
             <div class="offcanvas-body d-flex flex-column align-items-center justify-content-center">
                 <form action="{% url 'search' %}" method="get" class="w-100 px-3">
-                    <input name="q" type="search" class="form-control form-control-lg text-center w-100" placeholder="جست و جو..." aria-label="جست و جو" value="{{ request.GET.q }}" />
+                    <input name="q"
+                           type="search"
+                           class="form-control form-control-lg text-center w-100"
+                           placeholder="جست و جو..."
+                           aria-label="جست و جو"
+                           value="{{ request.GET.q }}" />
                 </form>
             </div>
         </div>
-
         <!-- Main Content Section -->
-        <div class="container my-4">{% block content %}{% endblock %}</div>
-
+        <div class="container my-4">
+            {% block content %}{% endblock %}
+        </div>
         <footer style="background-color: #212529; color: #fff; margin-top: auto;">
             <div class="container p-4">
                 <div class="row">
@@ -255,7 +348,9 @@
                                 <a href="/privacy-policy/" style="color: #fff; text-decoration: none;">سیاست حفظ حریم خصوصی</a>
                             </li>
                             <li class="mb-2">
-                                <a href="https://raw.githubusercontent.com/Yadgah/Yadgah/refs/heads/main/LICENSE" style="color: #fff; text-decoration: none;">اطلاعات حق نشر</a>
+                                <a href="https://raw.githubusercontent.com/Yadgah/Yadgah/refs/heads/main/LICENSE"
+                                   style="color: #fff;
+                                          text-decoration: none">اطلاعات حق نشر</a>
                             </li>
                             <li class="mb-2">
                                 <a href="/rules/" style="color: #fff; text-decoration: none;">قوانین</a>
@@ -266,10 +361,14 @@
                         <h5 class="mb-3" style="color: #69b987;">من</h5>
                         <ul class="list-unstyled mb-0">
                             <li class="mb-2">
-                                <a href="https://github.com/BDadmehr0" style="color: #fff; text-decoration: none;">گیت هاب</a>
+                                <a href="https://github.com/BDadmehr0"
+                                   style="color: #fff;
+                                          text-decoration: none">گیت هاب</a>
                             </li>
                             <li class="mb-2">
-                                <a href="mailto:emamidadmehr@gmail.com" style="color: #fff; text-decoration: none;">ایمیل</a>
+                                <a href="mailto:emamidadmehr@gmail.com"
+                                   style="color: #fff;
+                                          text-decoration: none">ایمیل</a>
                             </li>
                         </ul>
                     </div>

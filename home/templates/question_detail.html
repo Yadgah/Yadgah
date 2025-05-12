@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% block title %}{{ question.title }} - یادگاه{% endblock %}
-
-{% load custom_filters %} {% block content %} {% load static %}
-
-<style>
+{% load custom_filters %}
+{% block content %}
+    {% load static %}
+    <style>
     :root {
         --bg-dark: #121212;
         --bg-card: #1c1c1c;
@@ -266,124 +266,129 @@
             flex-direction: column;
         }
     }
-</style>
-
-<div class="container">
-    <div class="question-card">
-        <div class="question-header">
-            <div class="title-and-actions">
-                <h2 class="question-title">{{ question.title }}</h2>
-                {% if question.user == user %}
-                <div class="question-actions">
-                    <a href="{% url 'edit_question' question.id %}" class="btn btn-warning">ویرایش</a>
-                    <form action="{% url 'delete_question' question.id %}" method="POST" class="delete-question" style="display:inline;">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-danger">حذف سوال</button>
-                    </form>
-                </div>
-                {% endif %}
-            </div>
-            <div class="question-metadata">
-                <div class="metadata-group">
-                    <div class="metadata-item view-count">
-                        <span> {{ view_count }}</span>
-                        <i class="bi bi-eye"></i>
-                    </div>
-                    <div class="metadata-item creation-date">
-                        <i class="icon-calendar"></i>
-                        <span>{{ question.created_at|jalali_date }}</span>
-                    </div>
-                </div>
-                <div class="metadata-group">
-                    <div class="metadata-item author">
-                        <i class="icon-user"></i>
-                        {% if question.user and question.user.username %}
-                        <a href="{% url 'user_profile' question.user.username %}">{{ question.user.username }}</a>
-                        {% else %} کاربر ناشناس {% endif %}
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="question-content">
-            <div class="question-body">
-                {{ content_as_html|safe }}
-            </div>
-            <div class="reactions">
-                <button class="btn-like" onclick="toggleReaction('like')" aria-label="Like">
-                    <i class="bi bi-hand-thumbs-up-fill"></i> {{ likes_count }}
-                </button>
-                <button class="btn-dislike" onclick="toggleReaction('dislike')" aria-label="Dislike">
-                    <i class="bi bi-hand-thumbs-down-fill"></i> {{ dislikes_count }}
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Replies Section -->
-    <div class="reply-section">
-        <h3 id='replies' class="text-white mb-3">پاسخ‌ها</h3>
-        {% if question.replies.all %}
-            {% for reply in question.replies.all %}
-                <div class="reply-card {% if reply.is_approved %}approved{% endif %}">
-                    <div class="reply-content-wrapper">
-                        <div class="reply-body">
-                            <div class="reply-content">
-                                {{ reply.get_content_as_html|safe }}
-                                {% if reply.is_approved %}
-                                    <p class="reply-status-approve">این پاسخ تایید شده است.</p>
-                                {% else %}
-                                    <p class="reply-status-wait">منتظر تایید</p>
-                                {% endif %}
-                            </div>
-                            <p class="reply-meta">
-                                پاسخ {% if reply.user %}
-                                <a href="{% url 'user_profile' reply.user.username %}">{{ reply.user.username }}</a>
-                                {% else %} کاربر ناشناس {% endif %} - تاریخ {{ reply.created_at|jalali_date }}
-                            </p>
-
-                        </div>
-
-                        {% if reply.user == user or user.is_staff %}
-                        <div class="reply-actions">
-                            {% if not reply.is_approved and user == question.user %}
-                                <form action="{% url 'approve_reply' reply.id %}" method="POST">
-                                    {% csrf_token %}
-                                    <button class="btn btn-success">تایید</button>
-                                </form>
-                            {% endif %}
-                            <a href="{% url 'edit_reply' reply.id %}" class="btn btn-warning">ویرایش</a>
-                            <form action="{% url 'delete_reply' reply.id %}" method="POST">
+    </style>
+    <div class="container">
+        <div class="question-card">
+            <div class="question-header">
+                <div class="title-and-actions">
+                    <h2 class="question-title">{{ question.title }}</h2>
+                    {% if question.user == user %}
+                        <div class="question-actions">
+                            <a href="{% url 'edit_question' question.id %}" class="btn btn-warning">ویرایش</a>
+                            <form action="{% url 'delete_question' question.id %}"
+                                  method="POST"
+                                  class="delete-question"
+                                  style="display:inline">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-danger" onclick="return confirm('آیا مطمئن هستید؟')">حذف</button>
+                                <button type="submit" class="btn btn-danger">حذف سوال</button>
                             </form>
                         </div>
-                        {% endif %}
+                    {% endif %}
+                </div>
+                <div class="question-metadata">
+                    <div class="metadata-group">
+                        <div class="metadata-item view-count">
+                            <span>{{ view_count }}</span>
+                            <i class="bi bi-eye"></i>
+                        </div>
+                        <div class="metadata-item creation-date">
+                            <i class="icon-calendar"></i>
+                            <span>{{ question.created_at|jalali_date }}</span>
+                        </div>
+                    </div>
+                    <div class="metadata-group">
+                        <div class="metadata-item author">
+                            <i class="icon-user"></i>
+                            {% if question.user and question.user.username %}
+                                <a href="{% url 'user_profile' question.user.username %}">{{ question.user.username }}</a>
+                            {% else %}
+                                کاربر ناشناس
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
-            {% endfor %}
+            </div>
+            <div class="question-content">
+                <div class="question-body">{{ content_as_html|safe }}</div>
+                <div class="reactions">
+                    <button class="btn-like" onclick="toggleReaction('like')" aria-label="Like">
+                        <i class="bi bi-hand-thumbs-up-fill"></i> {{ likes_count }}
+                    </button>
+                    <button class="btn-dislike"
+                            onclick="toggleReaction('dislike')"
+                            aria-label="Dislike">
+                        <i class="bi bi-hand-thumbs-down-fill"></i> {{ dislikes_count }}
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Replies Section -->
+        <div class="reply-section">
+            <h3 id='replies' class="text-white mb-3">پاسخ‌ها</h3>
+            {% if question.replies.all %}
+                {% for reply in question.replies.all %}
+                    <div class="reply-card {% if reply.is_approved %}approved{% endif %}">
+                        <div class="reply-content-wrapper">
+                            <div class="reply-body">
+                                <div class="reply-content">
+                                    {{ reply.get_content_as_html|safe }}
+                                    {% if reply.is_approved %}
+                                        <p class="reply-status-approve">این پاسخ تایید شده است.</p>
+                                    {% else %}
+                                        <p class="reply-status-wait">منتظر تایید</p>
+                                    {% endif %}
+                                </div>
+                                <p class="reply-meta">
+                                    پاسخ
+                                    {% if reply.user %}
+                                        <a href="{% url 'user_profile' reply.user.username %}">{{ reply.user.username }}</a>
+                                    {% else %}
+                                        کاربر ناشناس
+                                    {% endif %}
+                                    - تاریخ {{ reply.created_at|jalali_date }}
+                                </p>
+                            </div>
+                            {% if reply.user == user or user.is_staff %}
+                                <div class="reply-actions">
+                                    {% if not reply.is_approved and user == question.user %}
+                                        <form action="{% url 'approve_reply' reply.id %}" method="POST">
+                                            {% csrf_token %}
+                                            <button class="btn btn-success">تایید</button>
+                                        </form>
+                                    {% endif %}
+                                    <a href="{% url 'edit_reply' reply.id %}" class="btn btn-warning">ویرایش</a>
+                                    <form action="{% url 'delete_reply' reply.id %}" method="POST">
+                                        {% csrf_token %}
+                                        <button type="submit"
+                                                class="btn btn-danger"
+                                                onclick="return confirm('آیا مطمئن هستید؟')">حذف</button>
+                                    </form>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class="text-muted">هیچ پاسخی برای این سوال ثبت نشده است.</p>
+            {% endif %}
+        </div>
+        <!-- Reply Form -->
+        {% if user.is_authenticated %}
+            <div class="reply-form">
+                <h3>ارسال پاسخ</h3>
+                <form method="POST">
+                    {% csrf_token %} {{ form.as_p }}
+                    <button class="btn-success btn-submit" type="submit">ارسال پاسخ</button>
+                </form>
+            </div>
         {% else %}
-            <p class="text-muted">هیچ پاسخی برای این سوال ثبت نشده است.</p>
+            <div class="alert alert-info">
+                برای ارسال پاسخ باید
+                <a href="{% url 'login' %}">وارد حساب کاربری</a> شوید.
+            </div>
         {% endif %}
     </div>
-
-    <!-- Reply Form -->
-    {% if user.is_authenticated %}
-    <div class="reply-form">
-        <h3>ارسال پاسخ</h3>
-        <form method="POST">
-            {% csrf_token %} {{ form.as_p }}
-            <button class="btn-success btn-submit" type="submit">ارسال پاسخ</button>
-        </form>
-    </div>
-    {% else %}
-    <div class="alert alert-info">
-        برای ارسال پاسخ باید
-        <a href="{% url 'login' %}">وارد حساب کاربری</a> شوید.
-    </div>
-    {% endif %}
-</div>
-
-<script>
+    <script>
     function toggleReaction(type) {
         {% if not user.is_authenticated %}
         alert("برای لایک یا دیسلایک کردن باید وارد حساب کاربری شوید.");
@@ -406,5 +411,5 @@
         });
     }
 
-</script>
+    </script>
 {% endblock %}

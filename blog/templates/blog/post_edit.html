@@ -1,8 +1,6 @@
 {% extends 'base.html' %}
-
 {% block content %}
-
-<style>
+    <style>
   .ck.ck-editor__editable {
     background-color: #2b2b2b; /* Light blue background */
     color: #000; /* Text color */
@@ -143,45 +141,40 @@
     margin-top: 5px;
     display: none;
   }
-</style>
-
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-12 col-lg-12">
-            <h1 class="text-white text-center">ویرایش مقاله</h1>
-            <form method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ form.media }}
-
-                <div class="mb-3">
-                    <label for="id_title" class="form-label">تیتر</label>
-                    {{ form.title }}
-                </div>
-				<div class="mb-3">
-                    <label for="id_slug" class="form-label">آدرس مقاله</label>
-                    {{ form.slug }}
-                </div>
-                <div class="mb-3">
-                    <label for="id_body" class="form-label">محتوا</label>
-                    {{ form.body }}
-                </div>
-
-                <div class="mb-3">
-                    <label for="id_published" class="form-label">منتشر شود؟</label>
-                    {{ form.published }}
-                </div>
-
-                <div class="mb-3">
-                    <label for="id_image" class="form-label">تصویر شاخص</label>
-                    {{ form.image }}
-                </div>
-
-                <button type="submit" class="btn btn-success btn-submit">ذخیره تغییرات</button>
-            </form>
-
-            <a href="{% url 'post_detail' slug=post.slug %}" class="btn btn-submit btn-secondary" style="margin-top: 15px;">لغو</a>
+    </style>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-12 col-lg-12">
+                <h1 class="text-white text-center">ویرایش مقاله</h1>
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.media }}
+                    <div class="mb-3">
+                        <label for="id_title" class="form-label">تیتر</label>
+                        {{ form.title }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_slug" class="form-label">آدرس مقاله</label>
+                        {{ form.slug }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_body" class="form-label">محتوا</label>
+                        {{ form.body }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_published" class="form-label">منتشر شود؟</label>
+                        {{ form.published }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_image" class="form-label">تصویر شاخص</label>
+                        {{ form.image }}
+                    </div>
+                    <button type="submit" class="btn btn-success btn-submit">ذخیره تغییرات</button>
+                </form>
+                <a href="{% url 'post_detail' slug=post.slug %}"
+                   class="btn btn-submit btn-secondary"
+                   style="margin-top: 15px">لغو</a>
+            </div>
         </div>
     </div>
-</div>
-
 {% endblock %}

@@ -1,37 +1,30 @@
 {% extends 'base.html' %}
 {% block title %}صفحه ترند‌ها{% endblock %}
-
 {% block content %}
-<div class="container">
-  <h2 class="my-4 text-center fw-bold text-white">سوالات محبوب</h2>
-
-  <div class="row">
-    {% for question in trending_questions %}
-    <div class="col-md-6 col-lg-4 mb-4">
-      <div class="card shadow-sm border-0 h-100" style="background: #212529;">
-        <div class="card-body">
-          <h5 class="card-title text-truncate text-dark text-white">{{ question.title }}</h5>
-          <p class="card-text text-muted small">
-            {{ question.content|slice:":100" }}...
-          </p>
-          <div class="d-flex justify-content-between align-items-center mt-3">
-            <a
-              href="{% url 'question_detail' question.id %}"
-              class="btn btn-sm"
-              style="background: #198754; color: #ffffff;"
-            >
-              مشاهده جزئیات
-            </a>
-            <small class="text-muted">
-              <i class="bi bi-hand-thumbs-up-fill"></i> {{ question.likes_count.count }}
-            </small>
-          </div>
+    <div class="container">
+        <h2 class="my-4 text-center fw-bold text-white">سوالات محبوب</h2>
+        <div class="row">
+            {% for question in trending_questions %}
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card shadow-sm border-0 h-100" style="background: #212529;">
+                        <div class="card-body">
+                            <h5 class="card-title text-truncate text-dark text-white">{{ question.title }}</h5>
+                            <p class="card-text text-muted small">{{ question.content|slice:":100" }}...</p>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <a href="{% url 'question_detail' question.id %}"
+                                   class="btn btn-sm"
+                                   style="background: #198754;
+                                          color: #ffffff">مشاهده جزئیات</a>
+                                <small class="text-muted">
+                                    <i class="bi bi-hand-thumbs-up-fill"></i> {{ question.likes_count.count }}
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <p class="text-center text-muted">هیچ سوال ترندی یافت نشد.</p>
+            {% endfor %}
         </div>
-      </div>
     </div>
-    {% empty %}
-    <p class="text-center text-muted">هیچ سوال ترندی یافت نشد.</p>
-    {% endfor %}
-  </div>
-</div>
 {% endblock %}

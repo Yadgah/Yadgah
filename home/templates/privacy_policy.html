@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-<style>
+    <style>
   .privacy-policy {
     background-color: #1e1e1e;
     color: #e0e0e0;
@@ -58,56 +58,52 @@
   .btn-toggle:hover {
     background-color: #198754;
   }
-</style>
-
-<div class="container">
-  <div class="privacy-policy shadow-box">
-    <h2 class="text-center">Privacy Policy / سیاست حفظ حریم خصوصی</h2>
-    <div class="language-switch">
-      <button id="toggle-lang-btn" class="btn-toggle">Switch to English</button>
+    </style>
+    <div class="container">
+        <div class="privacy-policy shadow-box">
+            <h2 class="text-center">Privacy Policy / سیاست حفظ حریم خصوصی</h2>
+            <div class="language-switch">
+                <button id="toggle-lang-btn" class="btn-toggle">Switch to English</button>
+            </div>
+            <div id="content-fa">
+                <h2>1. اطلاعاتی که جمع‌آوری می‌کنیم</h2>
+                <p>
+                    - اطلاعاتی که شما مستقیماً ارائه می‌دهید، مانند نام، ایمیل و اطلاعات پروفایل.
+                    - داده‌های مربوط به فعالیت شما شامل سوالات، پاسخ‌ها، لایک‌ها و نظرات.
+                    - اطلاعات فنی مانند آدرس IP و نوع مرورگر.
+                </p>
+                <h2>2. نحوه استفاده از اطلاعات شما</h2>
+                <p>
+                    - برای ارائه و بهبود خدمات ما.
+                    - برای شخصی‌سازی تجربه شما و پیشنهادات محتوایی.
+                    - برای ارتباط با شما درباره به‌روزرسانی‌ها و تبلیغات.
+                </p>
+                <h2>3. اشتراک‌گذاری اطلاعات شما</h2>
+                <p>
+                    ما اطلاعات شما را به اشخاص ثالث نمی‌فروشیم. با این حال، ممکن است داده‌ها را با شرکای مورد اعتماد برای بهبود خدمات خود، تحت توافق‌نامه‌های محرمانه به اشتراک بگذاریم.
+                </p>
+            </div>
+            <div id="content-en" class="hidden">
+                <h2>1. Information We Collect</h2>
+                <p>
+                    - Information you provide directly, such as your name, email, and profile information.
+                    - Data related to your activity, including questions, answers, likes, and comments.
+                    - Technical data such as your IP address and browser type.
+                </p>
+                <h2>2. How We Use Your Information</h2>
+                <p>
+                    - To provide and improve our services.
+                    - To personalize your experience and content recommendations.
+                    - To communicate with you regarding updates and promotions.
+                </p>
+                <h2>3. Sharing Your Information</h2>
+                <p>
+                    We do not sell your information to third parties. However, we may share data with trusted partners to enhance our services while adhering to strict confidentiality agreements.
+                </p>
+            </div>
+        </div>
     </div>
-
-    <div id="content-fa">
-      <h2>1. اطلاعاتی که جمع‌آوری می‌کنیم</h2>
-      <p>
-        - اطلاعاتی که شما مستقیماً ارائه می‌دهید، مانند نام، ایمیل و اطلاعات پروفایل.
-        - داده‌های مربوط به فعالیت شما شامل سوالات، پاسخ‌ها، لایک‌ها و نظرات.
-        - اطلاعات فنی مانند آدرس IP و نوع مرورگر.
-      </p>
-      <h2>2. نحوه استفاده از اطلاعات شما</h2>
-      <p>
-        - برای ارائه و بهبود خدمات ما.
-        - برای شخصی‌سازی تجربه شما و پیشنهادات محتوایی.
-        - برای ارتباط با شما درباره به‌روزرسانی‌ها و تبلیغات.
-      </p>
-      <h2>3. اشتراک‌گذاری اطلاعات شما</h2>
-      <p>
-        ما اطلاعات شما را به اشخاص ثالث نمی‌فروشیم. با این حال، ممکن است داده‌ها را با شرکای مورد اعتماد برای بهبود خدمات خود، تحت توافق‌نامه‌های محرمانه به اشتراک بگذاریم.
-      </p>
-    </div>
-
-    <div id="content-en" class="hidden">
-      <h2>1. Information We Collect</h2>
-      <p>
-        - Information you provide directly, such as your name, email, and profile information.
-        - Data related to your activity, including questions, answers, likes, and comments.
-        - Technical data such as your IP address and browser type.
-      </p>
-      <h2>2. How We Use Your Information</h2>
-      <p>
-        - To provide and improve our services.
-        - To personalize your experience and content recommendations.
-        - To communicate with you regarding updates and promotions.
-      </p>
-      <h2>3. Sharing Your Information</h2>
-      <p>
-        We do not sell your information to third parties. However, we may share data with trusted partners to enhance our services while adhering to strict confidentiality agreements.
-      </p>
-    </div>
-  </div>
-</div>
-
-<script>
+    <script>
   const toggleBtn = document.getElementById('toggle-lang-btn');
   const contentFa = document.getElementById('content-fa');
   const contentEn = document.getElementById('content-en');
@@ -123,5 +119,5 @@
       toggleBtn.textContent = 'تغییر به فارسی';
     }
   });
-</script>
+    </script>
 {% endblock %}

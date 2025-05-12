@@ -18,14 +18,17 @@ repos:
     hooks:
       - id: isort
         language_version: python3
-  
+
   - repo: https://github.com/pycqa/flake8
     rev: 7.1.2
     hooks:
       - id: flake8
         args: [--max-line-length=88]
-  - repo: https://github.com/psf/black
-    rev: 25.1.0
-    hooks:
-      - id: black
 
+  - repo: https://github.com/Riverside-Healthcare/djlint
+    rev: v1.34.0
+    hooks:
+      - id: djlint
+        name: djLint HTML formatter
+        files: \.(html|jinja|djhtml)$
+        args: [--reformat, --profile=django]

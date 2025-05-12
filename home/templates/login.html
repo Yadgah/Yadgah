@@ -1,9 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load custom_filters %}
-
 {% block content %}
-<style>
+    <style>
     .login-container {
   max-width: 500px;
   margin: 0 auto;
@@ -184,79 +183,68 @@
 }
 
 
-</style>
-<div class="container py-5">
-    <div class="login-container">
-        <div class="login-header">
-            <img src="{% static 'favicon.ico' %}" alt="یادگاه">
-            <h2>ورود به حساب کاربری</h2>
-            <p class="text-muted">لطفا اطلاعات حساب خود را وارد کنید</p>
-        </div>
-
-        <form method="post">
-          {% csrf_token %}
-
-          <div class="mb-4 position-relative">
-              <label for="id_username" class="form-label">نام کاربری یا ایمیل</label>
-              <div class="position-relative">
-                  {{ form.username|add_class:"main-search-form ps-5" }}
-                  <span class="position-absolute top-50 translate-middle-y end-0 me-3 text-muted">
-                      <i class="bi bi-person-fill"></i>
-                  </span>
-              </div>
-          </div>
-
-          <div class="mb-4 position-relative">
-              <label for="id_password" class="form-label">رمز عبور</label>
-              <div class="position-relative">
-                  {{ form.password|add_class:"main-search-form ps-5" }}
-                  <span class="position-absolute top-50 translate-middle-y end-0 me-3 text-muted">
-                      <i class="bi bi-lock-fill"></i>
-                  </span>
-                  <span class="password-toggle position-absolute top-50 translate-middle-y end-0" onclick="togglePassword()">
-                      <i class="bi bi-eye" id="togglePasswordIcon"></i>
-                  </span>
-              </div>
-          </div>
-
-
-          <div class="d-grid gap-2 mb-3">
-              <button type="submit" class="btn btn-login">ورود به حساب</button>
-          </div>
-
-          {% if form.non_field_errors %}
-          <div class="alert alert-danger">
-              <i class="bi bi-exclamation-triangle-fill me-2"></i>
-              {% for error in form.non_field_errors %}
-                  {{ error }}
-              {% endfor %}
-          </div>
-          {% endif %}
-      </form>
-
-
-        <div class="social-login">
-            <p>یا وارد شوید با</p>
-            <div class="social-icons">
-                <a href="#" class="social-icon">
-                    <i class="bi bi-google"></i>
-                </a>
-                <a href="#" class="social-icon">
-                    <i class="bi bi-github"></i>
-                </a>
-                <a href="#" class="social-icon">
-                    <i class="bi bi-twitter"></i>
-                </a>
+    </style>
+    <div class="container py-5">
+        <div class="login-container">
+            <div class="login-header">
+                <img src="{% static 'favicon.ico' %}" alt="یادگاه">
+                <h2>ورود به حساب کاربری</h2>
+                <p class="text-muted">لطفا اطلاعات حساب خود را وارد کنید</p>
+            </div>
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-4 position-relative">
+                    <label for="id_username" class="form-label">نام کاربری یا ایمیل</label>
+                    <div class="position-relative">
+                        {{ form.username|add_class:"main-search-form ps-5" }}
+                        <span class="position-absolute top-50 translate-middle-y end-0 me-3 text-muted">
+                            <i class="bi bi-person-fill"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="mb-4 position-relative">
+                    <label for="id_password" class="form-label">رمز عبور</label>
+                    <div class="position-relative">
+                        {{ form.password|add_class:"main-search-form ps-5" }}
+                        <span class="position-absolute top-50 translate-middle-y end-0 me-3 text-muted">
+                            <i class="bi bi-lock-fill"></i>
+                        </span>
+                        <span class="password-toggle position-absolute top-50 translate-middle-y end-0"
+                              onclick="togglePassword()">
+                            <i class="bi bi-eye" id="togglePasswordIcon"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="d-grid gap-2 mb-3">
+                    <button type="submit" class="btn btn-login">ورود به حساب</button>
+                </div>
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                        {% for error in form.non_field_errors %}{{ error }}{% endfor %}
+                    </div>
+                {% endif %}
+            </form>
+            <div class="social-login">
+                <p>یا وارد شوید با</p>
+                <div class="social-icons">
+                    <a href="#" class="social-icon">
+                        <i class="bi bi-google"></i>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <i class="bi bi-github"></i>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <i class="bi bi-twitter"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="login-footer">
+                حساب کاربری ندارید؟ <a href="{% url 'signup' %}">ثبت‌نام کنید</a>
             </div>
         </div>
-
-        <div class="login-footer">
-            حساب کاربری ندارید؟ <a href="{% url 'signup' %}">ثبت‌نام کنید</a>
-        </div>
     </div>
-</div>
-
-<script>
+    <script>
     function togglePassword() {
         const passwordField = document.querySelector('#id_password');
         const toggleIcon = document.querySelector('#togglePasswordIcon');
@@ -282,5 +270,5 @@
             this.parentElement.querySelector('.input-group-text').style.borderColor = '#3e3e3e';
         });
     });
-</script>
+    </script>
 {% endblock %}
