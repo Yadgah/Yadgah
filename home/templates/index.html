@@ -122,6 +122,7 @@
 </div>
 
 <div class="container my-4">
+    
     <!-- اسلایدر اخبار مهم -->
     <div class="swiper my-4 round" id="news-swiper" data-slide-count="{{ slides|length }}">
         <div class="swiper-wrapper">
@@ -131,7 +132,7 @@
                     <p>{{ slide.description }}</p>
                     <p class="text-danger">
                         زمان باقی‌مانده:
-                        <span id="countdown" data-expiry="{{ slide.expires_at|date:'c' }}"></span>
+                        <span class="countdown" data-expiry="{{ slide.expires_at|date:'c' }}"></span>
                     </p>
                     <a href="{{ slide.get_absolute_url }}" class="btn btn-success">
                         {{ slide.button_text }}
@@ -141,8 +142,6 @@
         </div>
         <div class="swiper-pagination"></div>
     </div>
-
-
 
     <!-- آمار سایت -->
     <div class="row mb-4">
@@ -165,7 +164,6 @@
             </div>
         </div>
     </div>
-
 
     <!-- Main Content Section -->
     <!-- سوال برجسته هفته -->
@@ -347,17 +345,20 @@
         });
     });
 
-    // شمارش معکوس برای نمایش زمان باقی‌مانده
     document.addEventListener("DOMContentLoaded", function () {
-        const countdownEl = document.getElementById("countdown");
-        const expiryTime = new Date(countdownEl.dataset.expiry);
+        const countdownElements = document.querySelectorAll("[data-expiry]");
 
-        function updateCountdown() {
+        function toPersian(num) {
+            return String(num).replace(/\d/g, d => "۰۱۲۳۴۵۶۷۸۹"[d]);
+        }
+
+        function updateCountdown(el) {
+            const expiryTime = new Date(el.dataset.expiry);
             const now = new Date();
             const diff = expiryTime - now;
 
             if (diff <= 0) {
-                countdownEl.textContent = "منقضی شده";
+                el.textContent = "منقضی شده";
                 return;
             }
 
@@ -366,19 +367,19 @@
             const minutes = Math.floor((diff / (1000 * 60)) % 60);
             const seconds = Math.floor((diff / 1000) % 60);
 
-            countdownEl.textContent =
+            el.textContent =
                 toPersian(days) + " روز " +
                 toPersian(hours) + ":" +
-                toPersian(minutes).padStart(2, "۰") + ":" +
-                toPersian(seconds).padStart(2, "۰");
+                toPersian(String(minutes).padStart(2, "۰")) + ":" +
+                toPersian(String(seconds).padStart(2, "۰"));
         }
 
-        function toPersian(num) {
-            return String(num).replace(/\d/g, d => "۰۱۲۳۴۵۶۷۸۹"[d]);
+        function updateAllCountdowns() {
+            countdownElements.forEach(el => updateCountdown(el));
         }
 
-        updateCountdown();
-        setInterval(updateCountdown, 1000);  // بروزرسانی هر ثانیه
+        updateAllCountdowns();
+        setInterval(updateAllCountdowns, 1000);
     });
 
     document.addEventListener("DOMContentLoaded", () => {
