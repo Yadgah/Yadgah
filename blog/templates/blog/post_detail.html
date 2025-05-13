@@ -5,11 +5,6 @@
     <!-- Set Open Graph Image dynamically -->
     <meta property="og:title" content="یادگاه - {{ post.title }}" />
     <meta property="og:description" content="{{ post.body|slice:':150'|safe }}" />
-    {% if post.image %}
-        <meta property="og:image" content="{{ post.image.url }}" />
-    {% else %}
-        <meta property="og:image" content="{% static 'thumbnail.png' %}" />
-    {% endif %}
 {% endblock %}
 {% block content %}
     <style>
