@@ -5,10 +5,9 @@ from datetime import timedelta
 from io import BytesIO
 
 import jdatetime
-import markdown
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.sessions.models import Session
@@ -20,7 +19,6 @@ from django.db.models import Count, ExpressionWrapper, F, FloatField, Q
 from django.http import (
     HttpResponse,
     HttpResponseForbidden,
-    HttpResponseRedirect,
     JsonResponse,
 )
 from django.shortcuts import get_object_or_404, redirect, render
@@ -48,29 +46,64 @@ from .forms import (
 from .models import Label, Question, QuestionReaction, Reply, Slide, UserProfile
 
 
+# Helper function to process and validate POST request with success messages
+def process_post_request(form, request, success_url, success_message=None):
+    if form.is_valid():
+        form.save()
+        if success_message:
+            messages.success(request, success_message)
+        return redirect(success_url)
+    return form
+
+
+# Helper function to convert Gregorian to Jalali
+def convert_to_jalali(date):
+    if date:
+        jalali_date = jdatetime.date.fromgregorian(date=date)
+        return f"{jalali_date.day} {jalali_date.j_months_fa[jalali_date.month - 1]}"
+    return ""
+
+
+# Helper function to validate user data for registration and login
+def validate_user_data(username, password, confirm_password, email):
+    if not username or not password or not email:
+        return "Username, email, and password are required."
+
+    if password != confirm_password:
+        return "Passwords do not match."
+
+    if User.objects.filter(username=username).exists():
+        return "Username already taken."
+
+    return None
+
+
+# Helper function to process form and handle validation errors
+def process_form(form, request, redirect_url, success_message=None):
+    if form.is_valid():
+        form.save()
+        if success_message:
+            messages.success(request, success_message)
+        return redirect(redirect_url)
+    else:
+        return render(request, "ask_question.html", {"form": form})
+
+
 # Home view to show recent questions and news
 def home_view(request):
     questions = Question.objects.all().order_by("-created_at")
     paginator = Paginator(questions, 5)
-
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
-    def convert_to_jalali(date):
-        if date:
-            jalali_date = jdatetime.date.fromgregorian(date=date)
-            return f"{jalali_date.day} {jalali_date.j_months_fa[jalali_date.month - 1]}"
-        return ""
-
+    # Handling Ajax requests
     if request.headers.get("X-Requested-With") == "XMLHttpRequest":
         questions_data = [
             {
                 "id": question.id,
                 "title": question.title,
                 "content": question.content,
-                "created_at": convert_to_jalali(
-                    question.created_at
-                ),  # تبدیل به تاریخ شمسی
+                "created_at": convert_to_jalali(question.created_at),
                 "labels": [
                     {"name": label.name, "color": label.color}
                     for label in question.labels.all()
@@ -86,17 +119,17 @@ def home_view(request):
             }
         )
 
+    # Clean up expired slides
     Slide.objects.filter(expires_at__lt=timezone.now()).delete()
     slides = Slide.objects.all()
 
+    # Aggregate data for stats
     total_questions = Question.objects.count()
     total_replies = Reply.objects.count()
     total_users = User.objects.count()
 
-    # تاریخ یک هفته پیش از امروز
+    # Get top question of the week
     one_week_ago = timezone.now() - timedelta(days=7)
-
-    # سوالات برتر هفته
     top_question_of_week = (
         Question.objects.filter(created_at__gte=one_week_ago)
         .annotate(
@@ -129,19 +162,13 @@ def home_view(request):
     )
 
 
-# User signup view
+# User signup view with password validation
 def signup_view(request):
     if request.method == "POST":
         form = SignUpForm(request.POST, request.FILES)
         password = request.POST.get("password")
-        request.POST.get("confirm_password")
 
-        # Validate password and confirm password
-        # if password != confirm_password:
-        #     messages.error(request, "Passwords do not match.")
-        #     return render(request, "signup.html", {"form": form})
-
-        # Password complexity check: At least one letter and one number
+        # Password complexity check
         password_complexity = r"^(?=.*[a-zA-Z])(?=.*\d).{8,}$"
         if not re.fullmatch(password_complexity, password):
             messages.error(
@@ -152,52 +179,38 @@ def signup_view(request):
 
         if form.is_valid():
             user = form.save(commit=False)
-            user.username = form.cleaned_data.get("username")
             user.set_password(password)
-            user.first_name = ""  # Leave first name empty
-            user.last_name = ""  # Leave last name empty
-
-            # Use default profile picture if none is provided by the user
             if not request.FILES.get("profile_picture"):
                 user.profile_picture = "profile_picture.jpg"
-
             user.save()
             login(request, user)
-            # messages.success(request, "Signup successful!")
             return redirect("index")
-        else:
-            # messages.error(request, "Please correct the errors below.")
-            pass
+
     else:
         form = SignUpForm()
-
     return render(request, "signup.html", {"form": form})
 
 
-# View for user login
+# User login view
 def login_view(request):
     if request.method == "POST":
         form = LoginForm(data=request.POST)
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            # messages.success(request, "Login successful!")
             return redirect("index")
-        else:
-            # messages.error(request, "Invalid username or password.")
-            pass
     else:
         form = LoginForm()
     return render(request, "login.html", {"form": form})
 
 
-# View for user logout
+# User logout view
 def logout_view(request):
     logout(request)
     return redirect("index")
 
 
-# View for user profile
+# User profile view with image processing
 @login_required
 def profile_view(request):
     user_profile, _ = UserProfile.objects.get_or_create(user=request.user)
@@ -209,26 +222,20 @@ def profile_view(request):
         )
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
-
             profile_instance = profile_form.save(commit=False)
 
+            # Handle image conversion to WebP format
             if profile_instance.avatar:
                 try:
                     img = Image.open(profile_instance.avatar)
-
                     if img.mode != "RGB":
                         img = img.convert("RGB")
-
                     webp_io = BytesIO()
-                    img.save(webp_io, format="WEBP")  # quality=80
-
+                    img.save(webp_io, format="WEBP")
                     webp_content = ContentFile(webp_io.getvalue())
-
-                    filename_without_ext, _ = os.path.splitext(
-                        profile_instance.avatar.name
+                    webp_filename = (
+                        f"{os.path.splitext(profile_instance.avatar.name)[0]}.webp"
                     )
-                    webp_filename = f"{filename_without_ext}.webp"
-
                     profile_instance.avatar.save(
                         webp_filename, webp_content, save=False
                     )
@@ -236,8 +243,6 @@ def profile_view(request):
                     print(f"Error converting image to WebP: {e}")
 
             profile_instance.save()
-
-            # messages.success(request, "Profile updated successfully.")
             return redirect("profile")
     else:
         user_form = UserForm(instance=request.user)
@@ -264,7 +269,7 @@ def ask_question(request):
             question.save()
             form.save_m2m()
 
-            ai_reply_content = get_ai_reply(question.content)  # فقط content ارسال می‌شود
+            ai_reply_content = get_ai_reply(question.content)  # ارسال فقط content به AI
             ai_user, _ = User.objects.get_or_create(
                 username="AI_Agent", defaults={"is_active": False}
             )
@@ -273,7 +278,6 @@ def ask_question(request):
                 content=ai_reply_content,
                 question=question,
                 user=ai_user,
-                # is_approved=True
             )
 
             return redirect("question_detail", question_id=question.id)
@@ -283,6 +287,7 @@ def ask_question(request):
     return render(request, "ask_question.html", {"form": form})
 
 
+# Create label view with enhanced error handling
 def create_label(request):
     if request.method == "POST":
         try:
@@ -293,10 +298,9 @@ def create_label(request):
             if not name:
                 return JsonResponse({"error": "Label name is required."}, status=400)
 
-            # بررسی اینکه آیا برای همین کاربر، برچسبی با این نام وجود دارد یا خیر
             label, created = Label.objects.get_or_create(
                 name=name,
-                created_by=request.user,  # مهم!
+                created_by=request.user,  # مهم! برای هر کاربر جداگانه
                 defaults={"color": color, "is_custom": True},
             )
 
@@ -313,27 +317,23 @@ def create_label(request):
                 status=201,
             )
         except Exception as e:
-            return JsonResponse({"error": str(e)}, status=500)
+            return JsonResponse({"error": f"An error occurred: {str(e)}"}, status=500)
     return JsonResponse({"error": "Invalid request method."}, status=405)
 
 
+# Detail view for a specific question
 def question_detail(request, question_id):
     question = get_object_or_404(Question, id=question_id)
 
     # Check if the user has already viewed the question in this session
     if not request.session.get(f"viewed_question_{question.id}", False):
-        # Increment the view count
         question.view_count += 1
         question.save()
-
-        # Mark that the user has viewed the question in this session
         request.session[f"viewed_question_{question.id}"] = True
 
-    # Count likes and dislikes
     likes_count = question.likes_count.count()
     dislikes_count = question.dislikes_count.count()
 
-    # Check if the user has liked or disliked this question
     user_liked = (
         request.user in question.likes_count.all()
         if request.user.is_authenticated
@@ -345,21 +345,19 @@ def question_detail(request, question_id):
         else False
     )
 
-    # Convert Markdown content to HTML
+    # Convert Markdown content to HTML for rendering
     content_as_html = mark_safe(
         markdown.markdown(question.content, extensions=["fenced_code"])
     )
 
     # Handle the reply form
-    form = ReplyForm()
-    if request.method == "POST":
-        form = ReplyForm(request.POST)
-        if form.is_valid():
-            reply = form.save(commit=False)
-            reply.user = request.user
-            reply.question = question
-            reply.save()
-            return redirect("question_detail", question_id=question.id)
+    form = ReplyForm(request.POST or None)
+    if form.is_valid():
+        reply = form.save(commit=False)
+        reply.user = request.user
+        reply.question = question
+        reply.save()
+        return redirect("question_detail", question_id=question.id)
 
     return render(
         request,
@@ -371,12 +369,13 @@ def question_detail(request, question_id):
             "dislikes_count": dislikes_count,
             "user_liked": user_liked,
             "user_disliked": user_disliked,
-            "form": form,  # Pass the form to the template
-            "view_count": question.view_count,  # Pass view count to the template
+            "form": form,
+            "view_count": question.view_count,
         },
     )
 
 
+# View to delete a reply with permission checks
 @login_required
 def delete_reply(request, reply_id):
     reply = get_object_or_404(Reply, id=reply_id)
@@ -396,42 +395,35 @@ def delete_reply(request, reply_id):
 def delete_question(request, question_id):
     question = get_object_or_404(Question, id=question_id)
 
-    # Check if the current user is the author of the question
     if question.user == request.user:
         question.delete()
-        # messages.success(request, "سوال با موفقیت حذف شد.")
+        messages.success(request, "سوال با موفقیت حذف شد.")
     else:
-        # messages.error(request, "شما دسترسی پاک کردن ندارید.")
-        pass
+        messages.error(request, "شما دسترسی پاک کردن ندارید.")
 
-    return redirect("index")  # Redirect to home or any o:ther page
+    return redirect("index")
 
 
 # View for user profiles displaying their questions
 def user_profile(request, username):
-    # 1. واکشی کاربر با توجه به username
     user = get_object_or_404(User, username=username)
-
-    # 2. واکشی پروفایل کاربر
     user_profile = get_object_or_404(UserProfile, user=user)
-
-    # 3. واکشی سؤالات پرسیده‌شده توسط این کاربر
     questions = Question.objects.filter(user=user)
-
-    # 4. واکشی پست‌های منتشرشده و منتشرنشده کاربر
     published_posts = Post.objects.filter(author=user, published=True)
-    unpublished_posts = []
-    if request.user.is_authenticated:
-        unpublished_posts = Post.objects.filter(author=request.user, published=False)
+    unpublished_posts = (
+        Post.objects.filter(author=user, published=False)
+        if request.user.is_authenticated
+        else []
+    )
 
-    # 5. رندر تمپلیت به همراه کانتکست مورد نیاز
     context = {
         "profile_user": user,
-        "user_profile": user_profile,  # اضافه کردن پروفایل کاربر به کانتکست
+        "user_profile": user_profile,
         "questions": questions,
         "published_posts": published_posts,
         "unpublished_posts": unpublished_posts,
     }
+
     return render(request, "user_profile.html", context)
 
 
@@ -441,11 +433,12 @@ def delete_profile(request):
     user_profile = request.user.userprofile
     user_profile.delete()  # Delete user profile
     request.user.delete()  # Delete user account
-    # messages.success(request, "Your profile has been successfully deleted.")
-    return redirect("index")  # Redirect to home or any other page
+    messages.success(request, "Your profile has been successfully deleted.")
+    return redirect("index")
 
 
-@csrf_exempt  # Temporarily for testing; should not be used in production
+# View to toggle like/dislike reactions on questions
+@csrf_exempt
 def toggle_reaction(request, question_id):
     if request.method == "POST":
         try:
@@ -474,7 +467,6 @@ def toggle_reaction(request, question_id):
                     "dislikes": question.dislikes_count.count(),
                 }
             )
-
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=400)
 
@@ -486,36 +478,35 @@ def toggle_reaction(request, question_id):
 def approve_reply(request, reply_id):
     reply = get_object_or_404(Reply, id=reply_id)
 
-    # Ensure only the owner of the question can approve
     if reply.question.user == request.user:
-        # تایید پاسخ
         reply.is_approved = True
         reply.save()
 
-        # چک می‌کنیم که آیا کاربر تایید کننده همان صاحب سوال است یا نه
         if reply.user != reply.question.user:
-            # به روزرسانی امتیاز کاربر (صاحب سوال) فقط اگر صاحب سوال پاسخ را تایید نکرده باشد
             user_profile = reply.question.user.userprofile
-            user_profile.score += 10  # فرض بر اینکه 10 امتیاز داده می‌شود
+            user_profile.score += 10  # Assuming 10 points for approval
             user_profile.save()
 
     return redirect("question_detail", question_id=reply.question.id)
 
 
+# Privacy Policy view
 def privacy_policy(request):
     return render(request, "privacy_policy.html")
 
 
+# Rules page view
 def rules(request):
     return render(request, "rules.html")
 
 
+# Leaderboard view for ranking users by score
 def leaderboard(request):
-    # Get all users, order them by score (descending)
-    users = UserProfile.objects.all().order_by("-score")  # Order by score
+    users = UserProfile.objects.all().order_by("-score")
     return render(request, "leaderboard.html", {"users": users})
 
 
+# Explore view to display trending questions
 def explore(request):
     trending_questions = Question.objects.annotate(
         num_likes=Count("likes_count"),
@@ -529,19 +520,19 @@ def explore(request):
     return render(request, "explore.html", {"trending_questions": trending_questions})
 
 
+# Search view for questions
 def search_view(request):
     query = request.GET.get("q", "")
     questions = Question.search(query) if query else Question.objects.none()
 
     return render(
-        request,
-        "search_results.html",
-        {"query": query, "questions": questions},
+        request, "search_results.html", {"query": query, "questions": questions}
     )
 
 
+# Robots.txt file view
 def robots_txt(request):
-    domain = request.get_host()  # Automatically get the domain name
+    domain = request.get_host()
     content = f"""User-agent: *
 Disallow: /admin/
 Disallow: /login/
@@ -554,18 +545,21 @@ Sitemap: https://{domain}/sitemap.xml
     return HttpResponse(content, content_type="text/plain")
 
 
+# Custom 404 Error Page
 def custom_page_not_found(request, exception):
     return render(request, "404.html", status=404)
 
 
+# Custom 500 Error Page
 def custom_error(request):
     return render(request, "500.html", status=500)
 
 
+# Edit Question view
 @login_required
 def edit_question(request, question_id):
     question = get_object_or_404(Question, id=question_id)
-    # Only the owner (or staff) can edit the question
+
     if request.user != question.user and not request.user.is_staff:
         return HttpResponseForbidden(
             "You do not have permission to edit this question."
@@ -578,13 +572,15 @@ def edit_question(request, question_id):
             return redirect("question_detail", question_id=question.id)
     else:
         form = QuestionForm(instance=question)
+
     return render(request, "edit_question.html", {"form": form, "question": question})
 
 
+# View to edit a reply
 @login_required
 def edit_reply(request, reply_id):
     reply = get_object_or_404(Reply, id=reply_id)
-    # Only the owner (or staff) can edit the reply
+
     if request.user != reply.user and not request.user.is_staff:
         return HttpResponseForbidden("You do not have permission to edit this reply.")
 
@@ -595,18 +591,11 @@ def edit_reply(request, reply_id):
             return redirect("question_detail", question_id=reply.question.id)
     else:
         form = ReplyForm(instance=reply)
+
     return render(request, "edit_reply.html", {"form": form, "reply": reply})
 
 
-# API's
-def get_tokens_for_user(user):
-    refresh = RefreshToken.for_user(user)
-    return {
-        "refresh": str(refresh),
-        "access": str(refresh.access_token),
-    }
-
-
+# API to handle user signup
 @api_view(["POST"])
 def signup_api(request):
     username = request.data.get("username")
@@ -614,21 +603,9 @@ def signup_api(request):
     confirm_password = request.data.get("confirm_password")
     email = request.data.get("email")
 
-    if not username or not password or not email:
-        return Response(
-            {"error": "Username, email, and password are required."},
-            status=status.HTTP_400_BAD_REQUEST,
-        )
-
-    if password != confirm_password:
-        return Response(
-            {"error": "Passwords do not match."}, status=status.HTTP_400_BAD_REQUEST
-        )
-
-    if User.objects.filter(username=username).exists():
-        return Response(
-            {"error": "Username already taken."}, status=status.HTTP_400_BAD_REQUEST
-        )
+    error_message = validate_user_data(username, password, confirm_password, email)
+    if error_message:
+        return Response({"error": error_message}, status=status.HTTP_400_BAD_REQUEST)
 
     user = User.objects.create_user(username=username, email=email, password=password)
     return Response(
@@ -637,6 +614,7 @@ def signup_api(request):
     )
 
 
+# API to handle user login
 @api_view(["POST"])
 def login_api(request):
     username = request.data.get("username")
@@ -656,10 +634,12 @@ def login_api(request):
         )
 
 
+# Donate view
 def donate(request):
     return render(request, "donate.html")
 
 
+# Slide detail view with dynamic template selection based on slide type
 def slide_detail(request, slug):
     slide = get_object_or_404(Slide, slug=slug)
 
@@ -669,10 +649,11 @@ def slide_detail(request, slug):
         "news": "slides/detail_news.html",
     }
 
-    template_name = template_map.get(slide.type, "slides/detail.html")  # fallback
+    template_name = template_map.get(slide.type, "slides/detail.html")
     return render(request, template_name, {"slide": slide})
 
 
+# Filter questions based on label ID
 def filter_questions(request):
     label_id = request.GET.get("label_id")
     if label_id:
