@@ -123,6 +123,7 @@
              data-slide-count="{{ slides|length }}">
             <div class="swiper-wrapper">
                 {% for slide in slides %}
+                    <p>slides</p>
                     <div class="swiper-slide">
                         <h3>{{ slide.title }}</h3>
                         <p>{{ slide.description }}</p>
@@ -138,27 +139,32 @@
         </div>
         <!-- آمار سایت -->
         <div class="row mb-4">
-            <div class="col-md-4 mb-3">
+            <div class="col-md-3 col-sm-6 mb-3">
                 <div class="stats-box">
                     <div class="number" data-count="{{ total_questions }}">0</div>
                     <p class="text-white">سوالات</p>
                 </div>
             </div>
-            <div class="col-md-4 mb-3">
+            <div class="col-md-3 col-sm-6 mb-3">
                 <div class="stats-box">
                     <div class="number" data-count="{{ total_replies }}">0</div>
                     <p class="text-white">پاسخ‌ها</p>
                 </div>
             </div>
-            <div class="col-md-4 mb-3">
+            <div class="col-md-3 col-sm-6 mb-3">
                 <div class="stats-box">
                     <div class="number" data-count="{{ total_users }}">0</div>
                     <p class="text-white">کاربران</p>
                 </div>
             </div>
+            <div class="col-md-3 col-sm-6 mb-3">
+                <div class="stats-box">
+                    <div class="number" data-count="{{ total_post }}">0</div>
+                    <p class="text-white">مقالات</p>
+                </div>
+            </div>
         </div>
         <!-- Main Content Section -->
-        <!-- سوال برجسته هفته -->
         <div class="p-4 my-4 round featured-question">
             <h3 class="mb-3">⭐ سوال برجسته هفته</h3>
             <h4>{{ top_question_of_week.title }}</h4>
