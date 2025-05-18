@@ -3,8 +3,9 @@ import os
 import re
 from datetime import timedelta
 from io import BytesIO
-import markdown
+
 import jdatetime
+import markdown
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -16,11 +17,7 @@ from django.core.files.base import ContentFile
 from django.core.paginator import EmptyPage, Paginator
 from django.db import models
 from django.db.models import Count, ExpressionWrapper, F, FloatField, Q
-from django.http import (
-    HttpResponse,
-    HttpResponseForbidden,
-    JsonResponse,
-)
+from django.http import HttpResponse, HttpResponseForbidden, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.utils import timezone
@@ -127,6 +124,7 @@ def home_view(request):
     total_questions = Question.objects.count()
     total_replies = Reply.objects.count()
     total_users = User.objects.count()
+    total_post = Post.objects.count()
 
     # Get top question of the week
     one_week_ago = timezone.now() - timedelta(days=7)
@@ -156,6 +154,7 @@ def home_view(request):
             "total_questions": total_questions,
             "total_replies": total_replies,
             "total_users": total_users,
+            "total_post": total_post,
             "top_question_of_week": top_question_of_week,
             "labels": labels,
         },
