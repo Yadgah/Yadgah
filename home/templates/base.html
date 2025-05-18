@@ -28,13 +28,16 @@
         <meta name="author" content="یادگاه" />
         <meta name="robots" content="index, follow" />
         <!-- Open Graph Meta Tags -->
-        <meta property="og:title"
-              content="یادگاه - بستری برای یادگیری و اشتراک تجربیات" />
-        <meta property="og:description"
-              content="با یادگاه سوال بپرسید، تجربه به اشتراک بگذارید و یاد بگیرید." />
-        <meta property="og:image" content="{% static 'thumbnail.png' %}" />
-        <meta property="og:url" content="https://yadgah.com" />
-        <meta property="og:type" content="website" />
+        {% block og_meta %}
+            <!-- مقادیر پیش‌فرض برای صفحاتی که این بلاک را override نکرده‌اند -->
+            <meta property="og:title"
+                  content="یادگاه - بستری برای یادگیری و اشتراک تجربیات" />
+            <meta property="og:description"
+                  content="با یادگاه سوال بپرسید، تجربه به اشتراک بگذارید و یاد بگیرید." />
+            <meta property="og:image" content="{% static 'thumbnail.png' %}" />
+            <meta property="og:url" content="https://yadgah.com" />
+            <meta property="og:type" content="website" />
+        {% endblock %}
         <!-- Twitter Card -->
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title"

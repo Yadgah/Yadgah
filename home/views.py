@@ -43,6 +43,15 @@ from .forms import (
 from .models import Label, Question, QuestionReaction, Reply, Slide, UserProfile
 
 
+# Token genrator for user's
+def get_tokens_for_user(user):
+    refresh = RefreshToken.for_user(user)
+    return {
+        "refresh": str(refresh),
+        "access": str(refresh.access_token),
+    }
+
+
 # Helper function to process and validate POST request with success messages
 def process_post_request(form, request, success_url, success_message=None):
     if form.is_valid():

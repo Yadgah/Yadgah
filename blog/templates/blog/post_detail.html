@@ -1,11 +1,22 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}{{ post.title }} - یادگاه{% endblock %}
-{% load custom_filters %}
-{% block head %}
-    <!-- Set Open Graph Image dynamically -->
-    <meta property="og:title" content="یادگاه - {{ post.title }}" />
-    <meta property="og:description" content="{{ post.body|slice:':150'|safe }}" />
+{% block og_meta %}
+    <!-- Open Graph Meta Tags با مقادیر داینامیک -->
+    <meta property="og:title" content="{{ post.title }} - یادگاه" />
+    <meta property="og:description"
+          content="{{ post.body|slice:':150'|striptags|safe }}" />
+    {% if post.image %}
+        <meta property="og:image"
+              content="{{ request.scheme }}://{{ request.get_host }}{{ post.image.url }}" />
+    {% else %}
+        <meta property="og:image"
+              content="{{ request.scheme }}://{{ request.get_host }}{% static 'thumbnail.png' %}" />
+    {% endif %}
+    <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+    <meta property="og:type" content="article" />
 {% endblock %}
+{% load custom_filters %}
 {% block content %}
     <style>
     .post-container {
