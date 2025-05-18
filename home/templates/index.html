@@ -264,16 +264,26 @@
         });
 
         // اسلایدر
-        const swiper = new Swiper('.swiper', {
-            loop: true,
-            autoplay: {
-                delay: 5000,
-            },
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
-            },
-        });
+        const swiperEl = document.getElementById('news-swiper');
+        if (swiperEl) {
+            const slideCount = parseInt(swiperEl.dataset.slideCount, 10);
+            const swiperConfig = {
+                loop: slideCount > 1,
+                autoplay: slideCount > 1 ? { delay: 5000 } : false,
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+            };
+            if (slideCount === 1) {
+                swiperConfig.pagination = false;
+                const paginationEl = swiperEl.querySelector('.swiper-pagination');
+                if (paginationEl) {
+                    paginationEl.style.display = 'none';
+                }
+            }
+            const swiper = new Swiper(swiperEl, swiperConfig);
+        }
     });
 
     $(function () {
@@ -314,21 +324,8 @@
                 }
             });
         });
-
-        // جستجوی هوشمند
-        $('#smart-search').on('input', async function() {
-            let query = $(this).val();
-            if (query.length > 2) {
-                let results = await fetch(`/api/search?q=${query}`).then(res => res.json());
-                $('#search-suggestions').html(
-                    results.map(r => `<a class="dropdown-item" href="${r.url}">${r.title}</a>`).join('')
-                ).show();
-            } else {
-                $('#search-suggestions').hide();
-            }
-        });
     });
-
+    
     document.addEventListener("DOMContentLoaded", function () {
         const countdownElements = document.querySelectorAll("[data-expiry]");
 
