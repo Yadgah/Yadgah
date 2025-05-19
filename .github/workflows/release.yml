@@ -28,4 +28,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          semantic-release publish -V DEBUG  # حالت دیباگ برای جزئیات بیشتر
+          DEBUG=semantic_release* semantic-release publish
+
