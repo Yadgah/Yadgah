@@ -4,7 +4,7 @@ target-version = ['py39']
 
 [tool.isort]
 profile = "black
-"
+
 [tool.semantic_release]
 branch = "main"
 version_source = "tag"
