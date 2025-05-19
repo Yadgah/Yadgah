@@ -8,5 +8,6 @@ profile = "black"
 [tool.semantic_release]
 branch = "main"
 version_source = "tag"
-changelog_file = "CHANGELOG.md"
-commit_message = "chore(release): {version} [skip ci]\n\n{changelog}"
+version_pattern = "v.*"
+tag_format = "v{version}"
+commit_message = "chore(release): {version} [skip ci]"
