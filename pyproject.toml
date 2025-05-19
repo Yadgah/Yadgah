@@ -3,12 +3,11 @@ line-length = 88
 target-version = ['py39']
 
 [tool.isort]
-profile = "black
+profile = "black"
 
 [tool.semantic_release]
 branch = "main"
 version_source = "tag"
 version_pattern = "v.*"
 tag_format = "v{version}"
-commit_message = "chore(release): {version} [skip ci]"
 upload_to_pypi = false
