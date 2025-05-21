@@ -2,7 +2,6 @@
 {% load static %}
 {% block title %}{{ post.title }} - یادگاه{% endblock %}
 {% block og_meta %}
-    <!-- Open Graph Meta Tags با مقادیر داینامیک -->
     <meta property="og:title" content="{{ post.title }} - یادگاه" />
     <meta property="og:description"
           content="{{ post.body|slice:':150'|striptags|safe }}" />
@@ -15,6 +14,18 @@
     {% endif %}
     <meta property="og:url" content="{{ request.build_absolute_uri }}" />
     <meta property="og:type" content="article" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="{{ post.title }} - یادگاه" />
+    <meta name="twitter:description"
+          content="{{ post.body|slice:':150'|striptags|safe }}" />
+    {% if post.image %}
+        <meta name="twitter:image"
+              content="{{ request.scheme }}://{{ request.get_host }}{{ post.image.url }}" />
+    {% else %}
+        <meta name="twitter:image"
+              content="{{ request.scheme }}://{{ request.get_host }}{% static 'thumbnail.png' %}" />
+    {% endif %}
 {% endblock %}
 {% load custom_filters %}
 {% block content %}
