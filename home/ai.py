@@ -15,17 +15,10 @@ def get_ai_reply(question_content):
     """
     try:
         response = requests.get(
-            "https://text.pollinations.ai/hello",
-            params={
-                "text": "Say the answer in Persian, and keep the words that don't have a Persian equivalent in English :"
-                + question_content,  # noqa: W503
-                "country": "Iran",
-                "user_id": "usery3peypi26p",
-            },
+            "https://text.pollinations.ai/" + question_content,
             timeout=10,
         )
 
-        # بررسی نوع پاسخ
         content_type = response.headers.get("Content-Type", "")
         if "application/json" in content_type:
             data = response.json()
