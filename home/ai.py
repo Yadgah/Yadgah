@@ -15,7 +15,7 @@ def get_ai_reply(question_content):
     """
     try:
         response = requests.get(
-            "https://yw85opafq6.execute-api.us-east-1.amazonaws.com/default/boss_mode_15aug",
+            "https://text.pollinations.ai/hello",
             params={
                 "text": "Say the answer in Persian, and keep the words that don't have a Persian equivalent in English :"
                 + question_content,  # noqa: W503
