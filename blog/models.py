@@ -4,6 +4,9 @@ from django.utils.text import slugify
 from django_ckeditor_5.fields import CKEditor5Field
 
 
+def post_image_upload_path(instance, filename):
+    return f"posts/{instance.slug}/uploads/{filename}"
+
 class Post(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True, blank=True, allow_unicode=True)
@@ -25,9 +28,6 @@ class Post(models.Model):
         elif not self.slug:
             self.slug = slugify(self.title, allow_unicode=True)
         super().save(*args, **kwargs)
-
-    def post_image_upload_path(instance, filename):
-        return f"posts/{instance.slug}/uploads/{filename}"
 
     class Meta:
         ordering = ("-created_at",)

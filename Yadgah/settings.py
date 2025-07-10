@@ -113,7 +113,7 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 # CKEditor Upload Path (Required for file uploads)
-CKEDITOR_UPLOAD_PATH = "ckeditor/uploads/"
+CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_IMAGE_BACKEND = "pillow"
 
 # -------------------------------------------------------------------------
