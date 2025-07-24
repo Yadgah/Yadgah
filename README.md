@@ -41,7 +41,24 @@ Yadgah is a community-driven platform designed for sharing experiences, asking q
    cd Yadgah
    ```
 
-2. **Install dependencies:**
+2. **Create and actiavte virtual envirnoment:**
+- On linux/ macOS:
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate
+   ```
+- On Windows (Command Prompt):
+   ```bash
+   python -m venv venv
+   venv\Scripts\activate
+   ```
+- On Windows (Powershell):
+   ```bash
+   python -m venv venv
+   .\venv\Scripts\Activate.ps1
+   ```
+
+3. **Install dependencies:**
    ```bash
    pip install -r requirements.txt
    ```
