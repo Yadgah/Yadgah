@@ -7,4 +7,4 @@ django-ckeditor-5==0.2.17
 djangorestframework==3.15.2
 djangorestframework_simplejwt==5.5.0
 requests==2.32.4
-ckeditor_uploader==0.0.1
+django-ckeditor==6.7.3
