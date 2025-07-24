@@ -5,7 +5,7 @@
         <img width="150" src="https://github.com/BDadmehr0/Yadgah/blob/main/favicon.ico" alt="Yadgah Logo">
     </a>
 </p>
-
+   
 # Yadgah
 
 **A Platform for Experience Sharing & Q&A**
@@ -36,37 +36,55 @@ Yadgah is a community-driven platform designed for sharing experiences, asking q
 ### Setup Instructions
 
 1. **Clone the repository:**
-   ```bash
+   ```
    git clone https://github.com/Yadgah/Yadgah.git
    cd Yadgah
    ```
 
-2. **Install dependencies:**
-   ```bash
+2. **Create and activate a virtual environment:**
+   <br>**Linux/macOS:**
+   ```
+   python3 -m venv venv
+   source venv/bin/activate
+   ```
+
+   <br>**Windows (Command Prompt or PowerShell):**
+   
+   ```
+   python -m venv venv
+   venv\Scripts\activate
+   ```
+
+3. **Install dependencies:**
+   ```
    pip install -r requirements.txt
    ```
 
 4. **Make migrations:**
-   ```bash
+   ```
    python manage.py makemigrations home
    python manage.py makemigrations blog
-
    ```
 
 5. **Apply database migrations:**
-   ```bash
+   ```
    python manage.py migrate
    ```
 
 6. **Create a superuser (admin account):**
-   ```bash
+   ```
    python manage.py createsuperuser
    ```
 
 7. **Start the development server:**
-   ```bash
+   ```
    python manage.py runserver
    ```
+
+#### NOTE: To deactivate the virtual environment at any time, just run:
+```
+deactivate
+```
 
 ## 🛠 Development
 
