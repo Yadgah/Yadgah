@@ -29,11 +29,10 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sitemaps",
-    "bootstrap5",
+    "django_bootstrap5",
     "home",
     "blog",
     "django_ckeditor_5",
-    "ckeditor_uploader",
 ]
 
 MIDDLEWARE = [
