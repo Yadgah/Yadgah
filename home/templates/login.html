@@ -197,18 +197,14 @@
                     <label for="id_username" class="form-label">نام کاربری یا ایمیل</label>
                     <div class="position-relative">
                         {{ form.username|add_class:"main-search-form ps-5" }}
-                        <span class="position-absolute top-50 translate-middle-y end-0 me-3 text-muted">
-                            <i class="bi bi-person-fill"></i>
-                        </span>
+                      
                     </div>
                 </div>
                 <div class="mb-4 position-relative">
                     <label for="id_password" class="form-label">رمز عبور</label>
                     <div class="position-relative">
                         {{ form.password|add_class:"main-search-form ps-5" }}
-                        <span class="position-absolute top-50 translate-middle-y end-0 me-3 text-muted">
-                            <i class="bi bi-lock-fill"></i>
-                        </span>
+                       
                         <span class="password-toggle position-absolute top-50 translate-middle-y end-0"
                               onclick="togglePassword()">
                             <i class="bi bi-eye" id="togglePasswordIcon"></i>
