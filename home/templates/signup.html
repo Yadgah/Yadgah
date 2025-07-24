@@ -3,39 +3,39 @@
 {% load custom_filters %}
 {% block content %}
     <style>
-  .signup-container {
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 2rem;
-    background-color: #1e1e1e;
-    border-radius: 15px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-    border: 1px solid #2e2e2e;
-  }
+.signup-container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #1e1e1e;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  border: 1px solid #2e2e2e;
+}
 
-  .form-label {
-    color: #b3b3b3;
-    margin-bottom: 0.5rem;
-  }
+.form-label {
+  color: #b3b3b3;
+  margin-bottom: 0.5rem;
+}
 
-  .main-search-form {
-    width: 100%;
-    background-color: #2c2c2c;
-    border: 1px solid #3e3e3e;
-    color: #fff;
-    padding: 12px 3.5rem 12px 15px;
-    border-radius: 8px;
-    transition: all 0.3s;
-  }
+.main-search-form {
+  width: 100%;
+  background-color: #2c2c2c;
+  border: 1px solid #3e3e3e;
+  color: #fff;
+  padding: 12px 3.5rem 12px 15px;
+  border-radius: 8px;
+  transition: all 0.3s;
+}
 
-  .main-search-form:focus {
-    background-color: #2c2c2c;
-    color: #fff;
-    border-color: #69b987;
-    box-shadow: 0 0 0 0.25rem rgba(105, 185, 135, 0.25);
-  }
+.main-search-form:focus {
+  background-color: #2c2c2c;
+  color: #fff;
+  border-color: #69b987;
+  box-shadow: 0 0 0 0.25rem rgba(105, 185, 135, 0.25);
+}
 
-  .password-toggle {
+.password-toggle {
     position: absolute;
     right: 15px;
     top: 50%;
@@ -43,154 +43,155 @@
     cursor: pointer;
     color: #b3b3b3;
     margin-right: 25rem !important;
+}
+
+.password-toggle:hover {
+  color: #69b987;
+}
+
+.btn-signup {
+  background-color: #69b987;
+  border: none;
+  padding: 12px;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.3s;
+  width: 100%; /* پر کردن عرض کامل */
+}
+
+.btn-signup:hover {
+  background-color: #5aa077;
+  transform: translateY(-2px);
+}
+
+/* ---------- اصلاحات رسپانسیو ---------- */
+@media (max-width: 768px) {
+  .signup-container {
+    padding: 1.5rem;
+    margin: 0 1rem; /* حاشیه در موبایل */
   }
-
-  .password-toggle:hover {
-    color: #69b987;
+  
+  .main-search-form {
+    padding: 12px 15px 12px 40px; /* پدینگ متعادل‌تر */
   }
-
-  .btn-signup {
-    background-color: #69b987;
-    border: none;
-    padding: 12px;
-    font-weight: 600;
-    border-radius: 8px;
-    transition: all 0.3s;
+  
+  .password-toggle {
+    right: 10px; /* موقعیت جدید برای موبایل */
   }
-
-  .btn-signup:hover {
-    background-color: #5aa077;
-    transform: translateY(-2px);
+  
+  .position-relative .position-absolute {
+    right: 10px !important; /* موقعیت آیکون‌ها در موبایل */
   }
+}
 
-  @media (max-width: 576px) {
-    .signup-container {
-      padding: 1.5rem 1rem;
-    }
-
-    .main-search-form {
-      padding-right: 2.5rem !important;
-    }
-
-    .password-toggle {
-      margin-right: 18rem !important;
-    }
-
-    .btn-signup {
-      font-size: 0.95rem;
-    }
+@media (max-width: 480px) {
+  .signup-container {
+    padding: 1.2rem; /* پدینگ فشرده‌تر */
   }
-
-  .login-header {
-      text-align: center;
-      margin-bottom: 2rem;
-  }
-
+  
   .login-header img {
-      width: 80px;
-      margin-bottom: 1rem;
+    width: 60px; /* اندازه لوگو در موبایل */
   }
-
+  
   .login-header h2 {
-      color: #69b987;
-      font-weight: 700;
+    font-size: 1.5rem; /* اندازه عنوان در موبایل */
   }
-
-  .social-login {
-      margin-top: 1.5rem;
-      text-align: center;
-  }
-
-  .social-login p {
-      color: #b3b3b3;
-      position: relative;
-      margin-bottom: 1rem;
-  }
-
-  .social-login p::before,
-  .social-login p::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      width: 30%;
-      height: 1px;
-      background-color: #3e3e3e;
-  }
-
-  .social-login p::before {
-      left: 0;
-  }
-
-  .social-login p::after {
-      right: 0;
-  }
-
-  .login-footer {
-      text-align: center;
-      margin-top: 1.5rem;
-      color: #b3b3b3;
-  }
-
-  .login-footer a {
-      color: #69b987;
-      text-decoration: none;
-      transition: all 0.3s;
-  }
-
-  .login-footer a:hover {
-      color: #5aa077;
-      text-decoration: underline;
-  }
-
+  
   .social-icons {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
+    gap: 0.5rem; /* فاصله آیکون‌ها در موبایل */
   }
-
+  
   .social-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: #2c2c2c;
-      color: #fff;
-      transition: all 0.3s;
+    width: 35px; /* اندازه آیکون‌ها در موبایل */
+    height: 35px;
   }
+}
 
-  .social-icon:hover {
-      background-color: #69b987;
-      transform: translateY(-3px);
-  }
+.login-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
 
-  @media (max-width: 576px) {
-      .login-container {
-          padding: 1.5rem 1rem;
-      }
+.login-header img {
+  width: 80px;
+  margin-bottom: 1rem;
+}
 
-      .main-search-form {
-          padding-right: 2.5rem !important; /* آیکون جا بشه */
-      }
+.login-header h2 {
+  color: #69b987;
+  font-weight: 700;
+}
 
-      .social-icons {
-          gap: 0.75rem;
-      }
+.social-login {
+  margin-top: 1.5rem;
+  text-align: center;
+}
 
-      .btn-login {
-          font-size: 0.95rem;
-      }
+.social-login p {
+  color: #b3b3b3;
+  position: relative;
+  margin-bottom: 1rem;
+  font-size: 0.9rem; /* اندازه متن مناسب برای موبایل */
+}
 
-      .login-header h2 {
-          font-size: 1.25rem;
-      }
+.social-login p::before,
+.social-login p::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 25%; /* کاهش عرض خطوط برای موبایل */
+  height: 1px;
+  background-color: #3e3e3e;
+}
 
-      .login-header img {
-          width: 60px;
-      }
-  }
+.social-login p::before {
+  left: 0;
+}
 
+.social-login p::after {
+  right: 0;
+}
+
+.login-footer {
+  text-align: center;
+  margin-top: 1.5rem;
+  color: #b3b3b3;
+  font-size: 0.9rem; /* اندازه متن مناسب برای موبایل */
+}
+
+.login-footer a {
+  color: #69b987;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.login-footer a:hover {
+  color: #5aa077;
+  text-decoration: underline;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.social-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #2c2c2c;
+  color: #fff;
+  transition: all 0.3s;
+}
+
+.social-icon:hover {
+  background-color: #69b987;
+  transform: translateY(-3px);
+}
     </style>
     <div class="container py-5">
         <div class="signup-container">
@@ -219,9 +220,7 @@
                     <label for="{{ form.username.id_for_label }}" class="form-label">نام کاربری (به انگلیسی)</label>
                     <div class="position-relative">
                         {{ form.username|add_class:"main-search-form ps-5" }}
-                        <span class="position-absolute top-50 translate-middle-y end-0 me-3 text-muted">
-                            <i class="bi bi-person-fill"></i>
-                        </span>
+                       
                     </div>
                 </div>
                 <!-- ایمیل -->
@@ -229,9 +228,7 @@
                     <label for="{{ form.email.id_for_label }}" class="form-label">ایمیل</label>
                     <div class="position-relative">
                         {{ form.email|add_class:"main-search-form ps-5" }}
-                        <span class="position-absolute top-50 translate-middle-y end-0 me-3 text-muted">
-                            <i class="bi bi-envelope-fill"></i>
-                        </span>
+                      
                     </div>
                 </div>
                 <!-- رمز عبور -->
@@ -239,9 +236,7 @@
                     <label for="{{ form.password.id_for_label }}" class="form-label">رمز عبور</label>
                     <div class="position-relative">
                         {{ form.password|add_class:"main-search-form ps-5" }}
-                        <span class="position-absolute top-50 translate-middle-y end-0 me-3 text-muted">
-                            <i class="bi bi-lock-fill"></i>
-                        </span>
+                     
                         <span class="password-toggle position-absolute top-50 translate-middle-y end-0"
                               onclick="togglePassword()">
                             <i class="bi bi-eye" id="togglePasswordIcon"></i>
