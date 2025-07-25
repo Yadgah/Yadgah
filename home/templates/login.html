@@ -27,35 +27,29 @@
         color: #69b987;
         font-weight: 700;
     }
-    .login-header .text-muted {
-        color: #fff !important;
-    }
 
-    .login-input {
-        width: 100%;
+    .main-search-form {
+        width: 100%; /* این خط رو اضافه کن */
         background-color: #2c2c2c;
         border: 1px solid #3e3e3e;
         color: #fff;
-        padding: 12px 15px 12px 45px;
+        padding: 12px 3.5rem 12px 15px;
         border-radius: 8px;
         transition: all 0.3s;
-        font-family: inherit;
-        font-size: 1rem;
     }
 
-    .login-input:focus {
+
+
+    .main-search-form:focus {
         background-color: #2c2c2c;
         color: #fff;
         border-color: #69b987;
         box-shadow: 0 0 0 0.25rem rgba(105, 185, 135, 0.25);
-        outline: none;
     }
 
     .form-label {
         color: #b3b3b3;
         margin-bottom: 0.5rem;
-        display: block;
-        text-align: right;
     }
 
     .btn-login {
@@ -65,10 +59,6 @@
         font-weight: 600;
         border-radius: 8px;
         transition: all 0.3s;
-        width: 100%;
-        color: #fff;
-        font-size: 1.1rem;
-        cursor: pointer;
     }
 
     .btn-login:hover {
@@ -76,31 +66,21 @@
         transform: translateY(-2px);
     }
 
-    .input-wrapper {
-        position: relative;
-        margin-bottom: 1.5rem;
-    }
-
-    .input-icon {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        right: 15px;
-        color: #b3b3b3;
-        z-index: 2;
-    }
-
     .password-toggle {
         position: absolute;
+        right: 15px;
         top: 50%;
         transform: translateY(-50%);
-        left: 15px;
-        background: none;
-        border: none;
-        color: #b3b3b3;
         cursor: pointer;
-        padding: 5px;
-        z-index: 3;
+        color: #b3b3b3;
+        margin-right: 25rem !important;
+    }
+
+    /* موبایل */
+    @media (max-width: 576px) {
+        .password-toggle {
+            margin-right: 18rem !important;
+        }
     }
 
     .password-toggle:hover {
@@ -111,7 +91,6 @@
         text-align: center;
         margin-top: 1.5rem;
         color: #b3b3b3;
-        font-size: 0.95rem;
     }
 
     .login-footer a {
@@ -128,14 +107,12 @@
     .social-login {
         margin-top: 1.5rem;
         text-align: center;
-        position: relative;
     }
 
     .social-login p {
         color: #b3b3b3;
         position: relative;
-        margin-bottom: 1.5rem;
-        font-size: 0.95rem;
+        margin-bottom: 1rem;
     }
 
     .social-login p::before,
@@ -160,12 +137,11 @@
         display: flex;
         justify-content: center;
         gap: 1rem;
-        margin-bottom: 1rem;
     }
 
     .social-icon {
-        width: 45px;
-        height: 45px;
+        width: 40px;
+        height: 40px;
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -173,7 +149,6 @@
         background-color: #2c2c2c;
         color: #fff;
         transition: all 0.3s;
-        font-size: 1.2rem;
     }
 
     .social-icon:hover {
@@ -181,124 +156,66 @@
         transform: translateY(-3px);
     }
 
-    .forgot-password {
-        display: block;
-        text-align: left;
-        margin-top: 0.5rem;
-        color: #69b987;
-        text-decoration: none;
-        font-size: 0.9rem;
-    }
-
-    .forgot-password:hover {
-        text-decoration: underline;
-    }
-
-    .field-errors {
-        color: #ff6b6b;
-        font-size: 0.85rem;
-        margin-top: 0.5rem;
-        text-align: right;
-    }
-
-    .alert-danger {
-        background-color: #ff5252;
-        color: white;
-        padding: 10px 15px;
-        border-radius: 8px;
-        margin-bottom: 1rem;
-        text-align: right;
-        font-size: 0.9rem;
-    }
-
     @media (max-width: 576px) {
         .login-container {
-            padding: 1.5rem;
-            margin: 1rem;
+            padding: 1.5rem 1rem;
         }
-        
-        .login-input {
-            padding: 10px 15px 10px 40px;
+
+        .main-search-form {
+            padding-right: 2.5rem !important; /* آیکون جا بشه */
+        }
+
+        .social-icons {
+            gap: 0.75rem;
+        }
+
+        .btn-login {
             font-size: 0.95rem;
         }
-        
-        .input-icon {
-            right: 12px;
+
+        .login-header h2 {
+            font-size: 1.25rem;
         }
-        
-        .password-toggle {
-            left: 12px;
-        }
-        
-        .social-login p::before,
-        .social-login p::after {
-            width: 25%;
-        }
-        .login-footer {
-            margin-top: 1rem;
-            text-align: center;
-            font-size: 0.9rem;
-        }
-        .btn-login {
-            padding: 10px;
-            font-size: 1rem;
+
+        .login-header img {
+            width: 60px;
         }
     }
     </style>
-    
     <div class="container py-5">
         <div class="login-container">
             <div class="login-header">
-                <img src="{% static 'favicon.ico' %}" alt="لوگوی یادگاه">
+                <img src="{% static 'favicon.ico' %}" alt="یادگاه">
                 <h2>ورود به حساب کاربری</h2>
                 <p class="text-muted">لطفا اطلاعات حساب خود را وارد کنید</p>
             </div>
-            
-            <form method="post" novalidate>
+            <form method="post">
                 {% csrf_token %}
-                
-                <div class="input-wrapper">
+                <div class="mb-4 position-relative">
                     <label for="id_username" class="form-label">نام کاربری یا ایمیل</label>
                     <div class="position-relative">
-                        {{ form.username|add_class:"login-input" }}
-                        <span class="input-icon">
+                        {{ form.username|add_class:"main-search-form ps-5" }}
+                        <span class="position-absolute top-50 translate-middle-y end-0 me-3 text-muted">
                             <i class="bi bi-person-fill"></i>
                         </span>
                     </div>
-                    {% if form.username.errors %}
-                        <div class="field-errors">
-                            {% for error in form.username.errors %}
-                                {{ error }}
-                            {% endfor %}
-                        </div>
-                    {% endif %}
                 </div>
-                
-                <div class="input-wrapper">
+                <div class="mb-4 position-relative">
                     <label for="id_password" class="form-label">رمز عبور</label>
                     <div class="position-relative">
-                        {{ form.password|add_class:"login-input" }}
-                        <span class="input-icon">
+                        {{ form.password|add_class:"main-search-form ps-5" }}
+                        <span class="position-absolute top-50 translate-middle-y end-0 me-3 text-muted">
                             <i class="bi bi-lock-fill"></i>
                         </span>
-                        <button type="button" class="password-toggle" id="togglePasswordButton" aria-label="نمایش رمز عبور">
+                        <span class="password-toggle position-absolute top-50 translate-middle-y end-0"
+                              onclick="togglePassword()">
                             <i class="bi bi-eye" id="togglePasswordIcon"></i>
-                        </button>
+                        </span>
                     </div>
-                    {% if form.password.errors %}
-                        <div class="field-errors">
-                            {% for error in form.password.errors %}
-                                {{ error }}
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                    <a href="{% url 'password_reset' %}" class="forgot-password">فراموشی رمز عبور؟</a>
                 </div>
-                
                 <div class="d-grid gap-2 mb-3">
                     <button type="submit" class="btn btn-login">ورود به حساب</button>
                 </div>
-                
                 {% if form.non_field_errors %}
                     <div class="alert alert-danger">
                         <i class="bi bi-exclamation-triangle-fill me-2"></i>
@@ -306,69 +223,49 @@
                     </div>
                 {% endif %}
             </form>
-            
             <div class="social-login">
                 <p>یا وارد شوید با</p>
                 <div class="social-icons">
-                    <a href="#" class="social-icon" aria-label="ورود با گوگل">
+                    <a href="#" class="social-icon">
                         <i class="bi bi-google"></i>
                     </a>
-                    <a href="#" class="social-icon" aria-label="ورود با گیت‌هاب">
+                    <a href="#" class="social-icon">
                         <i class="bi bi-github"></i>
                     </a>
-                    <a href="#" class="social-icon" aria-label="ورود با توییتر">
-                        <i class="bi bi-twitter-x"></i>
+                    <a href="#" class="social-icon">
+                        <i class="bi bi-twitter"></i>
                     </a>
                 </div>
             </div>
-            
             <div class="login-footer">
                 حساب کاربری ندارید؟ <a href="{% url 'signup' %}">ثبت‌نام کنید</a>
             </div>
         </div>
     </div>
-    
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const togglePasswordButton = document.getElementById('togglePasswordButton');
-        if (togglePasswordButton) {
-            togglePasswordButton.addEventListener('click', togglePassword);
+    function togglePassword() {
+        const passwordField = document.querySelector('#id_password');
+        const toggleIcon = document.querySelector('#togglePasswordIcon');
+
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            toggleIcon.classList.remove('bi-eye');
+            toggleIcon.classList.add('bi-eye-slash');
+        } else {
+            passwordField.type = 'password';
+            toggleIcon.classList.remove('bi-eye-slash');
+            toggleIcon.classList.add('bi-eye');
         }
-        
-        function togglePassword() {
-            const passwordField = document.querySelector('#id_password');
-            const toggleIcon = document.querySelector('#togglePasswordIcon');
-            
-            if (passwordField.type === 'password') {
-                passwordField.type = 'text';
-                toggleIcon.classList.remove('bi-eye');
-                toggleIcon.classList.add('bi-eye-slash');
-                togglePasswordButton.setAttribute('aria-label', 'مخفی کردن رمز عبور');
-            } else {
-                passwordField.type = 'password';
-                toggleIcon.classList.remove('bi-eye-slash');
-                toggleIcon.classList.add('bi-eye');
-                togglePasswordButton.setAttribute('aria-label', 'نمایش رمز عبور');
-            }
-        }
-        
-        // اعتبارسنجی بلادرنگ
-        document.querySelectorAll('.login-input').forEach(input => {
-            input.addEventListener('input', function() {
-                if (this.value.trim() !== '') {
-                    this.classList.remove('is-invalid');
-                    const errorElement = this.closest('.input-wrapper')?.querySelector('.field-errors');
-                    if (errorElement) {
-                        errorElement.style.display = 'none';
-                    }
-                }
-            });
+    }
+
+    // افزودن افکت فوکوس به فیلدها
+    document.querySelectorAll('.form-control').forEach(input => {
+        input.addEventListener('focus', function() {
+            this.parentElement.querySelector('.input-group-text').style.borderColor = '#69b987';
         });
-        
-        // اعمال RTL کامل
-        document.querySelectorAll('input, textarea, select').forEach(element => {
-            element.style.textAlign = 'right';
-            element.style.direction = 'rtl';
+
+        input.addEventListener('blur', function() {
+            this.parentElement.querySelector('.input-group-text').style.borderColor = '#3e3e3e';
         });
     });
     </script>
