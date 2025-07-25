@@ -33,7 +33,6 @@ INSTALLED_APPS = [
     "home",
     "blog",
     "django_ckeditor_5",
-    "ckeditor_uploader",
 ]
 
 MIDDLEWARE = [
