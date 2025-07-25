@@ -19,7 +19,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
-from django.contrib.auth import views as auth_views
 
 from blog.views import post_detail, post_list
 from home import views
