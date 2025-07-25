@@ -34,7 +34,6 @@ urlpatterns = [
     path("", include("home.urls")),
     path("blog/", include("blog.urls")),
     path("ckeditor5/", include("django_ckeditor_5.urls")),
-    # Password reset URLs
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
