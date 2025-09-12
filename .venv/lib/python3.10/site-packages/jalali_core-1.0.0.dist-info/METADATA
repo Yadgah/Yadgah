@@ -1,0 +1,21 @@
+Metadata-Version: 2.1
+Name: jalali_core
+Version: 1.0.0
+Summary: a Gregorian to Jalali and inverse date convertor
+Home-page: https://github.com/slashmili/jalali-core
+Author: Milad Rastian
+Author-email: eslashmili@gmail.com
+License: LGPL
+Platform: any
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: System Administrators
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Requires-Python: >=3.8
+License-File: LICENSE
+
