@@ -7,6 +7,7 @@ from django_ckeditor_5.fields import CKEditor5Field
 def post_image_upload_path(instance, filename):
     return f"posts/{instance.slug}/uploads/{filename}"
 
+
 class Post(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True, blank=True, allow_unicode=True)
