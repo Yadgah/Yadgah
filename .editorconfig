@@ -1,0 +1,26 @@
+# top-most EditorConfig file
+root = true
+
+# Default settings for all files
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 4
+
+# Python files
+[*.py]
+indent_style = space
+indent_size = 4
+max_line_length = 88
+
+# Markdown files
+[*.md]
+trim_trailing_whitespace = false
+
+# YAML and JSON files
+[*.{yml,yaml,json}]
+indent_style = space
+indent_size = 2
