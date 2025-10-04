@@ -34,3 +34,13 @@ repos:
         name: djLint HTML formatter
         files: \.(html|jinja|djhtml)$
         args: [--reformat, --profile=django]
+
+  - repo: local
+    hooks:
+      - id: ls-lint
+        name: ls-lint
+        entry: npx @ls-lint/ls-lint
+        language: node
+        pass_filenames: false
+        additional_dependencies:
+          - '@ls-lint/ls-lint@2.3.1'

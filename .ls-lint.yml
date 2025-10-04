@@ -1,0 +1,37 @@
+version: 1
+
+ls:
+  .:
+    .py: snake_case
+    .yml: kebab-case
+    .yaml: kebab-case
+    .toml: snake_case
+  Yadgah:
+    .py: snake_case
+  blog:
+    .py: snake_case
+    templates:
+      .html: snake_case
+      blog:
+        .html: snake_case
+  home:
+    .py: snake_case
+    templates:
+      .html: snake_case
+      partials:
+        .html: snake_case
+      slides:
+        .html: snake_case
+  .github:
+    workflows:
+      .yml: kebab-case
+
+ignore:
+  - '.git'
+  - 'venv'
+  - 'cache'
+  - 'home/static'
+  - 'blog/static'
+  - '**/__pycache__'
+  - '**/*.pyc'
+  - 'db.sqlite3'
