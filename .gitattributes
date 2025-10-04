@@ -1,0 +1,29 @@
+# Auto normalize line endings across systems
+* text=auto
+
+# Python files
+*.py text eol=lf
+
+# Config and documentation files
+*.md text
+*.yml text
+*.yaml text
+*.json text
+*.toml text
+*.ini text
+*.cfg text
+
+# Shell scripts and Makefiles should always use LF
+*.sh text eol=lf
+Makefile text eol=lf
+
+# Binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+
+# Lock files - merge conflicts handled automatically
+*.lock merge=union
