@@ -89,9 +89,13 @@ Yadgah is a community-driven platform designed for sharing experiences, asking q
 
 Yadgah follows best coding practices to ensure maintainability and quality.
 
-- **Code Linting:** `flake8` for Python.
+- **Code Linting:** `flake8` for Python and `ls-lint` for filesystem naming.
 - **Pre-commit Hooks:** Automates code checks before commits.
 
+Run ls-lint manually with:
+```bash
+npx @ls-lint/ls-lint
+```
 ### GitHub Actions Workflows
 Automated workflows include:
 - **Django CI:** Ensures smooth integration.
@@ -113,3 +117,4 @@ We welcome contributions! To contribute:
 ## 🌐 Connect with Us
 
 Have questions or feedback? Reach out via [GitHub Issues](https://github.com/Yadgah/Yadgah/issues) or join our discussions.
+
