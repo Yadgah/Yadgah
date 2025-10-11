@@ -7,6 +7,7 @@ from django.dispatch import receiver
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.text import slugify
+from django.utils.safestring import mark_safe
 
 
 class UserProfile(models.Model):
@@ -165,7 +166,17 @@ class Reply(models.Model):
         Returns:
             str: The content rendered as HTML.
         """
-        return markdown.markdown(self.content, extensions=["fenced_code"])
+        # استفاده از extensions کامل برای پشتیبانی از لیست‌ها، کد، خطوط جدید و...
+        extensions = [
+            'extra',           # برای جداول، فوتر و...
+            'fenced_code',     # برای کدهای بلاک
+            'tables',          # برای جداول
+            'nl2br',           # برای تبدیل خطوط جدید به <br>
+            'sane_lists',      # برای لیست‌های منطقی
+        ]
+        
+        html_content = markdown.markdown(self.content, extensions=extensions)
+        return mark_safe(html_content)
 
 
 class QuestionReaction(models.Model):

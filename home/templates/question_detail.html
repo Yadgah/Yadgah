@@ -116,7 +116,20 @@
     }
 
     .reply-content p {
-        margin: 0 !important;
+        margin: 0 0 12px 0 !important;
+    }
+
+    .reply-content ul, .reply-content ol {
+        margin: 12px 0;
+        padding-right: 20px;
+    }
+
+    .reply-content li {
+        margin-bottom: 6px;
+    }
+
+    .reply-content strong {
+        color: var(--accent-green);
     }
 
     /* Reactions */
@@ -171,16 +184,17 @@
     .reply-card {
         background: var(--bg-card);
         border-radius: 10px;
-        padding: 16px 16px 56px;
+        padding: 20px;
         margin-bottom: 16px;
         position: relative;
     }
     .reply-content {
-        display: flex;
         font-size: 1rem;
         color: var(--text-primary);
         line-height: 1.6;
-        justify-content: space-between;
+        text-align: right;
+        direction: rtl;
+        margin-bottom: 12px;
     }
     .reply-meta {
         margin: 0;
@@ -199,9 +213,17 @@
     }
     .reply-actions {
         display: flex;
-        gap: 8px;
-        min-width: 120px;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 10px;
     }
+
+    .reply-actions p {
+        margin: 0;
+        font-weight: bold;
+    }
+
 
     /* Reply Form */
     .reply-form {
@@ -215,26 +237,11 @@
         margin-bottom: 16px;
     }
 
-    .reply-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 16px;
-        margin-bottom: 12px;
-        flex-wrap: wrap;
-    }
-
     .reply-content-wrapper {
         display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        gap: 24px;
+        flex-direction: column;
+        gap: 16px;
     }
-
-    .reply-body {
-        flex: 1;
-    }
-
 
     .btn-submit {
         background-color: #198754;
@@ -265,6 +272,13 @@
         }
         .reactions {
             flex-direction: column;
+        }
+        .reply-actions {
+            flex-wrap: wrap;
+        }
+        .reply-actions .btn {
+            flex: 1;
+            min-width: 80px;
         }
     }
     </style>
@@ -330,25 +344,24 @@
                 {% for reply in question.replies.all %}
                     <div class="reply-card {% if reply.is_approved %}approved{% endif %}">
                         <div class="reply-content-wrapper">
-                            <div class="reply-body">
-                                <div class="reply-content">
+                            <div class="reply-content">
+                                {% if reply.content %}
                                     {{ reply.get_content_as_html|safe }}
-                                    {% if reply.is_approved %}
-                                        <p class="reply-status-approve">این پاسخ تایید شده است.</p>
-                                    {% else %}
-                                        <p class="reply-status-wait">منتظر تایید</p>
-                                    {% endif %}
-                                </div>
-                                <p class="reply-meta">
-                                    پاسخ
-                                    {% if reply.user %}
-                                        <a href="{% url 'user_profile' reply.user.username %}">{{ reply.user.username }}</a>
-                                    {% else %}
-                                        کاربر ناشناس
-                                    {% endif %}
-                                    - تاریخ {{ reply.created_at|jalali_date }}
-                                </p>
+                                {% else %}
+                                    {{ reply.get_content_as_html|safe }}
+                                {% endif %}
                             </div>
+                            
+                            <p class="reply-meta">
+                                پاسخ
+                                {% if reply.user %}
+                                    <a href="{% url 'user_profile' reply.user.username %}">{{ reply.user.username }}</a>
+                                {% else %}
+                                    کاربر ناشناس
+                                {% endif %}
+                                - تاریخ {{ reply.created_at|jalali_date }}
+                            </p>
+                            
                             {% if reply.user == user or user.is_staff %}
                                 <div class="reply-actions">
                                     {% if not reply.is_approved and user == question.user %}
@@ -364,6 +377,12 @@
                                                 class="btn btn-danger"
                                                 onclick="return confirm('آیا مطمئن هستید؟')">حذف</button>
                                     </form>
+
+                                    {% if reply.is_approved %}
+                                        <p class="reply-status-approve">✔ این پاسخ تایید شده است.</p>
+                                    {% else %}
+                                        <p class="reply-status-wait">منتظر تایید</p>
+                                    {% endif %}
                                 </div>
                             {% endif %}
                         </div>
