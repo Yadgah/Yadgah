@@ -1,4 +1,4 @@
-django<5.0
+django<7.0
 django-bootstrap-v5==1.0.11
 django-ckeditor==6.7.3
 django-ckeditor-5==0.2.17
