@@ -146,7 +146,9 @@
                 <div class="slide-hero-gradient"></div>
             {% endif %}
             <div class="slide-hero-title">
-                <span class="slide-type-badge">{% block slide_badge %}<i class="bi bi-megaphone"></i> یادگاه{% endblock %}</span>
+                <span class="slide-type-badge">
+                    {% block slide_badge %}<i class="bi bi-megaphone"></i> یادگاه{% endblock %}
+                </span>
                 <h1>{{ slide.title }}</h1>
                 <p>{{ slide.description }}</p>
             </div>
@@ -172,9 +174,7 @@
             {% endif %}
         </div>
         {% block slide_extra %}{% endblock %}
-        {% if slide.content %}
-            <article class="slide-body">{{ slide.content|linebreaks }}</article>
-        {% endif %}
+        {% if slide.content %}<article class="slide-body">{{ slide.content|linebreaks }}</article>{% endif %}
         <div class="slide-actions">
             {% block slide_cta %}
                 <a href="{% url 'index' %}" class="btn btn-slide-cta">{{ slide.button_text }}</a>

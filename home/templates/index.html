@@ -207,8 +207,7 @@
                             <p class="text-muted">{{ question.content|striptags|truncatewords:20 }}</p>
                             <div class="mt-2">
                                 {% for label in question.labels.all %}
-                                    <span class="label"
-                                          style="background-color: {{ label.color }}">{{ label.name }}</span>
+                                    <span class="label" style="background-color: {{ label.color }}">{{ label.name }}</span>
                                 {% endfor %}
                             </div>
                         </div>

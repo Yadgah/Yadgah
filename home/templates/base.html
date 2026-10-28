@@ -4,7 +4,9 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         {% load static %}
-        <title>{% block title %}یادگاه - Yadgah{% endblock %}</title>
+        <title>
+            {% block title %}یادگاه - Yadgah{% endblock %}
+        </title>
         <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
         <!-- Third-party assets are vendored under static/vendor/ instead of
              being loaded from CDNs (issue #181). Versions: Vazirmatn 33.003,
@@ -350,9 +352,7 @@
                         <h5 class="mb-3" style="color: #69b987;">لینک‌ها</h5>
                         <ul class="list-unstyled mb-0">
                             <li class="mb-2">
-                                <a href="/privacy-policy/"
-                                   style="color: #fff;
-                                          text-decoration: none">سیاست حفظ حریم خصوصی</a>
+                                <a href="/privacy-policy/" style="color: #fff; text-decoration: none">سیاست حفظ حریم خصوصی</a>
                             </li>
                             <li class="mb-2">
                                 <a href="https://raw.githubusercontent.com/Yadgah/Yadgah/refs/heads/main/LICENSE"

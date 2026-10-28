@@ -10,7 +10,8 @@
                     {{ reply.parent.user.username }}
                 {% else %}
                     کاربر ناشناس
-                {% endif %}:
+                {% endif %}
+                :
                 «{{ reply.parent.content|truncatechars:70 }}»
             </a>
         {% endif %}
@@ -22,9 +23,7 @@
             {% else %}
                 کاربر ناشناس
             {% endif %}
-            {% if reply.is_ai_reply %}
-                <span class="badge ai-badge"><i class="bi bi-robot"></i> هوش مصنوعی</span>
-            {% endif %}
+            {% if reply.is_ai_reply %}<span class="badge ai-badge"><i class="bi bi-robot"></i> هوش مصنوعی</span>{% endif %}
             - تاریخ {{ reply.created_at|jalali_date }}
         </p>
         {% if user.is_authenticated %}
