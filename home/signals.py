@@ -27,6 +27,33 @@ def delete_old_avatar_on_update(sender, instance, **kwargs):
 
 
 @receiver(post_migrate)
+def create_ai_agent_user(sender, **kwargs):
+    """
+    Creates the AI_Agent user after migrations have run.
+
+    This used to live in HomeConfig.ready(), which runs before any
+    migration is applied, so on a fresh database it failed with
+    "Error creating AI_Agent user: no such table: auth_user" (#167).
+    post_migrate only fires once the tables actually exist.
+    """
+    # post_migrate is emitted once per app; only run for our own app.
+    if sender is not None and getattr(sender, "name", None) not in (None, "home"):
+        return
+
+    from django.contrib.auth.models import User
+
+    User.objects.get_or_create(
+        username="AI_Agent",
+        defaults={
+            "is_active": False,
+            "email": "ai@yadgahh.com",
+            "first_name": "AI",
+            "last_name": "Agent",
+        },
+    )
+
+
+@receiver(post_migrate)
 def create_default_labels(sender, **kwargs):
     """
     Creates default labels after migrations if they don't already exist.

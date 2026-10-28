@@ -1,16 +1,13 @@
-{% extends 'base.html' %}
-{% block content %}
-    <div class="competition-slide">
-        <h1>🎯 {{ slide.title }}</h1>
-        {% if slide.thumbnail %}
-            <img src="{{ slide.thumbnail.url }}"
-                 alt="{{ slide.title }}"
-                 class="img-thumbnail my-3">
+{% extends "slides/slide_base.html" %}
+{% block slide_accent_class %}accent-competition{% endblock %}
+{% block slide_badge %}<i class="bi bi-trophy"></i> مسابقه{% endblock %}
+{% block slide_extra %}
+    <div class="slide-highlight">
+        <strong><i class="bi bi-bullseye"></i> شرکت در مسابقه!</strong>
+        {% if slide.is_expired %}
+            مهلت شرکت در این مسابقه به پایان رسیده است؛ منتظر مسابقات بعدی یادگاه باشید.
+        {% else %}
+            شرایط شرکت و جوایز این مسابقه را در ادامه بخوانید و قبل از پایان مهلت شرکت کنید.
         {% endif %}
-        <div class="alert alert-warning">
-            <strong>شرکت در مسابقه!</strong> - {{ slide.description }}
-        </div>
-        <div>{{ slide.content|linebreaks }}</div>
-        <a href="#" class="btn btn-danger mt-3">{{ slide.button_text }}</a>
     </div>
 {% endblock %}

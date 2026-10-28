@@ -1,8 +1,4 @@
-import logging
-
 from django.apps import AppConfig
-
-logger = logging.getLogger(__name__)
 
 
 class HomeConfig(AppConfig):
@@ -10,20 +6,9 @@ class HomeConfig(AppConfig):
     name = "home"
 
     def ready(self):
+        # NOTE: Do NOT query the database here. ready() runs on every
+        # management command (including `migrate` on a fresh database),
+        # before the tables exist -- see issue #167. Database defaults
+        # (AI_Agent user, default labels) are created via the
+        # `post_migrate` signal in home/signals.py instead.
         import home.signals  # noqa: F401
-
-        try:
-            from django.contrib.auth.models import User  # ایمپورت داخل متد
-
-            User.objects.get_or_create(
-                username="AI_Agent",
-                defaults={
-                    "is_active": False,
-                    "email": "ai@yadgahh.com",
-                    "first_name": "AI",
-                    "last_name": "Agent",
-                },
-            )
-            logger.info("AI_Agent user is ready.")
-        except Exception as e:
-            logger.error(f"Error creating AI_Agent user: {e}")

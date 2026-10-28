@@ -1,0 +1,56 @@
+name: ✨ Feature Request | درخواست قابلیت جدید
+description: Suggest an idea or improvement for Yadgah
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting an improvement! 💡
+        ممنون از پیشنهادتون؛ ایده‌های شما یادگاه رو بهتر می‌کنه.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve? | چه مشکلی را حل می‌کند؟
+      description: Describe the problem or the missing capability.
+      placeholder: As a user, I want ... so that ...
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution | راه‌حل پیشنهادی
+      description: Describe what you would like to happen.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered | گزینه‌های دیگر
+      description: Any alternative solutions or workarounds you have considered.
+    validations:
+      required: false
+  - type: dropdown
+    id: area
+    attributes:
+      label: Affected area | بخش درگیر
+      options:
+        - Front-end (templates/UI)
+        - Back-end (Django)
+        - Database
+        - AI
+        - SEO
+        - Security
+        - Performance / Optimization
+        - Documentation
+        - Config / CI
+        - Not sure
+    validations:
+      required: false
+  - type: textarea
+    id: extra
+    attributes:
+      label: Additional context | توضیحات بیشتر
+      description: Mockups, links, examples -- anything else that helps.
+    validations:
+      required: false

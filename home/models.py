@@ -6,8 +6,10 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.urls import reverse
 from django.utils import timezone
-from django.utils.text import slugify
 from django.utils.safestring import mark_safe
+from django.utils.text import slugify
+
+from .utils import optimize_image_field
 
 
 class UserProfile(models.Model):
@@ -23,6 +25,11 @@ class UserProfile(models.Model):
     show_email = models.BooleanField(
         default=False, verbose_name="نمایش ایمیل به دیگران"
     )
+
+    def save(self, *args, **kwargs):
+        # Reuse the blog image-optimization mechanism for avatars (#175).
+        optimize_image_field(self, "avatar", max_size=(512, 512))
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.user.username} Profile"
@@ -145,19 +152,51 @@ class Question(models.Model):
 class Reply(models.Model):
     """
     Represents a reply to a question, with Markdown content.
+
+    Replies can be nested: a reply may point to a `parent` reply when a
+    user answers (quotes) a previous reply instead of the question
+    itself -- e.g. the question owner continuing the chat with the AI
+    under the AI's answer (issue #187).
     """
 
     content = models.TextField()  # Stores the reply content in Markdown format
     question = models.ForeignKey(
         Question, related_name="replies", on_delete=models.CASCADE
     )
+    parent = models.ForeignKey(
+        "self",
+        related_name="children",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+    )
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     is_approved = models.BooleanField(default=False)
     modified_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ["created_at"]
+
     def __str__(self):
         return self.content[:50]
+
+    @property
+    def is_ai_reply(self):
+        """Whether this reply was written by the AI_Agent user."""
+        return self.user is not None and self.user.username == "AI_Agent"
+
+    def get_thread_chain(self):
+        """
+        Returns this reply's thread from the root reply down to itself,
+        oldest first -- used to give the AI the conversation context.
+        """
+        chain = []
+        node = self
+        while node is not None:
+            chain.append(node)
+            node = node.parent
+        return list(reversed(chain))
 
     def get_content_as_html(self):
         """
@@ -168,13 +207,13 @@ class Reply(models.Model):
         """
         # استفاده از extensions کامل برای پشتیبانی از لیست‌ها، کد، خطوط جدید و...
         extensions = [
-            'extra',           # برای جداول، فوتر و...
-            'fenced_code',     # برای کدهای بلاک
-            'tables',          # برای جداول
-            'nl2br',           # برای تبدیل خطوط جدید به <br>
-            'sane_lists',      # برای لیست‌های منطقی
+            "extra",  # برای جداول، فوتر و...
+            "fenced_code",  # برای کدهای بلاک
+            "tables",  # برای جداول
+            "nl2br",  # برای تبدیل خطوط جدید به <br>
+            "sane_lists",  # برای لیست‌های منطقی
         ]
-        
+
         html_content = markdown.markdown(self.content, extensions=extensions)
         return mark_safe(html_content)
 
@@ -235,6 +274,10 @@ class Slide(models.Model):
             # ایجاد slug عددی بر اساس ترتیب ساخت
             base_id = Slide.objects.aggregate(models.Max("id"))["id__max"] or 0
             self.slug = str(base_id + 1)
+
+        # Optimize slide thumbnails the same way blog post images are
+        # optimized (converted to WebP) -- see issue #175.
+        optimize_image_field(self, "thumbnail", max_size=(1600, 1600))
 
         super().save(*args, **kwargs)
 
