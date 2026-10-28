@@ -6,5 +6,5 @@ djangorestframework==3.15.2
 djangorestframework_simplejwt==5.5.1
 jdatetime==5.0.0
 markdown==3.8.1
-Pillow==12.2.0
+Pillow==13.0.0
 requests==2.33.1
