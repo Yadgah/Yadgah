@@ -1,7 +1,7 @@
 django<7.0
 django-bootstrap-v5==1.0.11
-django-ckeditor==6.7.4
-django-ckeditor-5==0.2.17
+django-ckeditor==6.7.3
+django-ckeditor-5==0.2.20
 djangorestframework==3.15.2
 djangorestframework_simplejwt==5.5.1
 jdatetime==5.0.0
