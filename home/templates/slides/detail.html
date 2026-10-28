@@ -1,4 +1,2 @@
-<h1>{{ slide.title }}</h1>
-{% if slide.thumbnail %}<img src="{{ slide.thumbnail.url }}" alt="{{ slide.title }}">{% endif %}
-<p>{{ slide.description }}</p>
-<div>{{ slide.content|linebreaks }}</div>
+{% extends "slides/slide_base.html" %}
+{# Fallback template for slide types without a dedicated template. #}

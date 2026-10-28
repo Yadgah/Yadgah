@@ -1,8 +1,6 @@
 import json
-import os
 import re
 from datetime import timedelta
-from io import BytesIO
 
 import jdatetime
 import markdown
@@ -13,17 +11,21 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.sessions.models import Session
 from django.core.exceptions import ValidationError
-from django.core.files.base import ContentFile
 from django.core.paginator import EmptyPage, Paginator
 from django.db import models
 from django.db.models import Count, ExpressionWrapper, F, FloatField, Q
-from django.http import HttpResponse, HttpResponseForbidden, JsonResponse
+from django.http import (
+    HttpResponse,
+    HttpResponseForbidden,
+    HttpResponseRedirect,
+    JsonResponse,
+)
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.safestring import mark_safe
 from django.views.decorators.csrf import csrf_exempt
-from PIL import Image
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -31,7 +33,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 from blog.models import Post
 
-from .ai import get_ai_reply
+from .ai import get_ai_followup_reply, get_ai_reply, get_ai_user
 from .forms import (
     LoginForm,
     QuestionForm,
@@ -230,27 +232,9 @@ def profile_view(request):
         )
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
-            profile_instance = profile_form.save(commit=False)
-
-            # Handle image conversion to WebP format
-            if profile_instance.avatar:
-                try:
-                    img = Image.open(profile_instance.avatar)
-                    if img.mode != "RGB":
-                        img = img.convert("RGB")
-                    webp_io = BytesIO()
-                    img.save(webp_io, format="WEBP")
-                    webp_content = ContentFile(webp_io.getvalue())
-                    webp_filename = (
-                        f"{os.path.splitext(profile_instance.avatar.name)[0]}.webp"
-                    )
-                    profile_instance.avatar.save(
-                        webp_filename, webp_content, save=False
-                    )
-                except Exception as e:
-                    print(f"Error converting image to WebP: {e}")
-
-            profile_instance.save()
+            # The avatar is converted to optimized WebP in
+            # UserProfile.save() via home.utils.optimize_image_field (#175).
+            profile_form.save()
             return redirect("profile")
     else:
         user_form = UserForm(instance=request.user)
@@ -278,14 +262,11 @@ def ask_question(request):
             form.save_m2m()
 
             ai_reply_content = get_ai_reply(question.content)  # ارسال فقط content به AI
-            ai_user, _ = User.objects.get_or_create(
-                username="AI_Agent", defaults={"is_active": False}
-            )
 
             Reply.objects.create(
                 content=ai_reply_content,
                 question=question,
-                user=ai_user,
+                user=get_ai_user(),
             )
 
             return redirect("question_detail", question_id=question.id)
@@ -329,6 +310,29 @@ def create_label(request):
     return JsonResponse({"error": "Invalid request method."}, status=405)
 
 
+def _build_reply_tree(question):
+    """
+    Fetch all replies of a question in a single query and link them
+    into a tree via a ``thread_children`` attribute (issue #187).
+
+    Returns the list of top-level replies (``parent`` is None).
+    """
+    replies = list(
+        question.replies.select_related("user", "parent").order_by("created_at")
+    )
+    for reply in replies:
+        reply.thread_children = []
+    top_level = []
+    by_id = {reply.id: reply for reply in replies}
+    for reply in replies:
+        parent = by_id.get(reply.parent_id)
+        if parent is None:
+            top_level.append(reply)
+        else:
+            parent.thread_children.append(reply)
+    return top_level
+
+
 # Detail view for a specific question
 def question_detail(request, question_id):
     question = get_object_or_404(Question, id=question_id)
@@ -358,14 +362,43 @@ def question_detail(request, question_id):
         markdown.markdown(question.content, extensions=["fenced_code"])
     )
 
-    # Handle the reply form
+    # Handle the reply form (only logged-in users can post replies)
     form = ReplyForm(request.POST or None)
-    if form.is_valid():
+    if request.method == "POST" and request.user.is_authenticated and form.is_valid():
         reply = form.save(commit=False)
         reply.user = request.user
         reply.question = question
+
+        # Replying to a previous reply (quote-style) instead of directly
+        # to the question -- issue #187.
+        parent = None
+        parent_id = request.POST.get("parent_id")
+        if parent_id:
+            parent = question.replies.filter(id=parent_id).first()
+            reply.parent = parent
+
         reply.save()
-        return redirect("question_detail", question_id=question.id)
+
+        # If the user replied to the AI's answer, continue the chat:
+        # send the conversation so far (with a pre-prompt explaining
+        # which messages are the user's and which are the AI's) and
+        # post the AI's follow-up under the user's message.
+        if parent is not None and parent.is_ai_reply:
+            ai_content = get_ai_followup_reply(
+                question,
+                parent.get_thread_chain(),
+                reply.content,
+            )
+            ai_reply = Reply.objects.create(
+                content=ai_content,
+                question=question,
+                parent=reply,
+                user=get_ai_user(),
+            )
+            reply = ai_reply
+
+        url = reverse("question_detail", kwargs={"question_id": question.id})
+        return HttpResponseRedirect(f"{url}#reply-{reply.id}")
 
     return render(
         request,
@@ -379,6 +412,7 @@ def question_detail(request, question_id):
             "user_disliked": user_disliked,
             "form": form,
             "view_count": question.view_count,
+            "top_replies": _build_reply_tree(question),
         },
     )
 

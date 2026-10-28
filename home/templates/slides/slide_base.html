@@ -1,0 +1,211 @@
+{% extends "base.html" %}
+{% load static custom_filters %}
+{% block title %}{{ slide.title }} - یادگاه{% endblock %}
+{% block og_meta %}
+    <meta property="og:title" content="{{ slide.title }} - یادگاه" />
+    <meta property="og:description" content="{{ slide.description }}" />
+    <meta property="og:image"
+          content="{% if slide.thumbnail %}{{ slide.thumbnail.url }}{% else %}{% static 'thumbnail.png' %}{% endif %}" />
+    <meta property="og:type" content="article" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="{{ slide.title }} - یادگاه" />
+    <meta name="twitter:description" content="{{ slide.description }}" />
+{% endblock %}
+{% block content %}
+    <style>
+    .slide-page {
+        --slide-accent: #69b987;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    .slide-page.accent-course { --slide-accent: #69b987; }
+    .slide-page.accent-competition { --slide-accent: #ffc107; }
+    .slide-page.accent-news { --slide-accent: #4dabf7; }
+
+    .slide-hero {
+        position: relative;
+        border-radius: 16px;
+        overflow: hidden;
+        background-color: #1c1c1c;
+        margin-bottom: 24px;
+    }
+    .slide-hero img {
+        width: 100%;
+        aspect-ratio: 21 / 9;
+        object-fit: cover;
+        display: block;
+    }
+    .slide-hero .slide-hero-gradient {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(18, 18, 18, 0.92) 0%, rgba(18, 18, 18, 0.35) 55%, transparent 100%);
+    }
+    .slide-hero .slide-hero-title {
+        padding: 20px 24px;
+    }
+    .slide-hero.has-thumbnail .slide-hero-title {
+        position: absolute;
+        right: 0;
+        left: 0;
+        bottom: 0;
+    }
+    .slide-hero .slide-hero-title h1 {
+        color: #fff;
+        font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+        font-weight: 700;
+        margin: 12px 0 8px;
+        line-height: 1.5;
+    }
+    .slide-hero .slide-hero-title p {
+        color: #d6d6d6;
+        margin: 0;
+        line-height: 1.9;
+    }
+
+    .slide-type-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background-color: var(--slide-accent);
+        color: #121212;
+        font-weight: 700;
+        font-size: 0.85rem;
+        padding: 5px 14px;
+        border-radius: 999px;
+    }
+
+    .slide-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 24px;
+    }
+    .slide-meta .meta-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        background: #1c1c1c;
+        color: #bbb;
+        border-radius: 10px;
+        padding: 8px 14px;
+        font-size: 0.9rem;
+    }
+    .slide-meta .meta-item i { color: var(--slide-accent); }
+    .slide-meta .meta-item.expired { color: #ff8787; }
+    .slide-meta .meta-item.expired i { color: #ff8787; }
+
+    .slide-body {
+        background-color: #1c1c1c;
+        border-radius: 16px;
+        padding: 28px 24px;
+        color: #e6e6e6;
+        line-height: 2.1;
+        font-size: 1.05rem;
+        margin-bottom: 24px;
+        overflow-wrap: break-word;
+    }
+    .slide-body:empty { display: none; }
+
+    .slide-highlight {
+        border: 1px solid var(--slide-accent);
+        border-radius: 12px;
+        padding: 16px 20px;
+        margin-bottom: 24px;
+        color: #f1f1f1;
+        background-color: #1c1c1c;
+        line-height: 1.9;
+    }
+    .slide-highlight strong { color: var(--slide-accent); }
+
+    .slide-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: center;
+    }
+    .btn-slide-cta {
+        background-color: var(--slide-accent);
+        border-color: var(--slide-accent);
+        color: #121212;
+        font-weight: 700;
+        padding: 10px 28px;
+        border-radius: 10px;
+    }
+    .btn-slide-cta:hover,
+    .btn-slide-cta:focus {
+        background-color: var(--slide-accent);
+        border-color: var(--slide-accent);
+        color: #121212;
+        opacity: 0.85;
+    }
+    </style>
+    <div class="slide-page {% block slide_accent_class %}{% endblock %}">
+        <div class="slide-hero {% if slide.thumbnail %}has-thumbnail{% endif %}">
+            {% if slide.thumbnail %}
+                <img src="{{ slide.thumbnail.url }}" alt="{{ slide.title }}">
+                <div class="slide-hero-gradient"></div>
+            {% endif %}
+            <div class="slide-hero-title">
+                <span class="slide-type-badge">{% block slide_badge %}<i class="bi bi-megaphone"></i> یادگاه{% endblock %}</span>
+                <h1>{{ slide.title }}</h1>
+                <p>{{ slide.description }}</p>
+            </div>
+        </div>
+        <div class="slide-meta">
+            <span class="meta-item">
+                <i class="bi bi-calendar-event"></i>
+                {{ slide.created_at|jalali_time }}
+            </span>
+            {% if slide.expires_at %}
+                {% if slide.is_expired %}
+                    <span class="meta-item expired">
+                        <i class="bi bi-hourglass-bottom"></i>
+                        مهلت این مورد در {{ slide.expires_at|jalali_time }} به پایان رسیده است
+                    </span>
+                {% else %}
+                    <span class="meta-item">
+                        <i class="bi bi-hourglass-split"></i>
+                        مهلت تا {{ slide.expires_at|jalali_time }}
+                        (<span class="countdown" data-expiry="{{ slide.expires_at|date:'c' }}"></span>)
+                    </span>
+                {% endif %}
+            {% endif %}
+        </div>
+        {% block slide_extra %}{% endblock %}
+        {% if slide.content %}
+            <article class="slide-body">{{ slide.content|linebreaks }}</article>
+        {% endif %}
+        <div class="slide-actions">
+            {% block slide_cta %}
+                <a href="{% url 'index' %}" class="btn btn-slide-cta">{{ slide.button_text }}</a>
+            {% endblock %}
+            <a href="{% url 'index' %}" class="btn btn-outline-light">
+                <i class="bi bi-arrow-right"></i> بازگشت به خانه
+            </a>
+        </div>
+    </div>
+    <script>
+    // Live countdown to the expiry time, when one is shown.
+    document.querySelectorAll('.countdown[data-expiry]').forEach(function (el) {
+        const target = new Date(el.dataset.expiry).getTime();
+        const persianDigits = (n) => String(n).replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[d]);
+        function tick() {
+            const diff = target - Date.now();
+            if (diff <= 0) {
+                el.textContent = 'به پایان رسید';
+                clearInterval(timer);
+                return;
+            }
+            const days = Math.floor(diff / 86400000);
+            const hours = Math.floor(diff % 86400000 / 3600000);
+            const minutes = Math.floor(diff % 3600000 / 60000);
+            const seconds = Math.floor(diff % 60000 / 1000);
+            el.textContent = (days ? persianDigits(days) + ' روز و ' : '')
+                + persianDigits(hours) + ':' + persianDigits(String(minutes).padStart(2, '0'))
+                + ':' + persianDigits(String(seconds).padStart(2, '0'));
+        }
+        const timer = setInterval(tick, 1000);
+        tick();
+    });
+    </script>
+{% endblock %}

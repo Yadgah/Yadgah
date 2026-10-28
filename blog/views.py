@@ -1,11 +1,6 @@
-import os
-from io import BytesIO
-
 from django.contrib.auth.decorators import login_required
-from django.core.files.base import ContentFile
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
-from PIL import Image
 
 from home.models import UserProfile
 
@@ -59,24 +54,8 @@ def post_create(request):
             post = form.save(commit=False)
             post.author = request.user
 
-            # Handle image conversion to WebP format if provided
-            if "image" in request.FILES:
-                uploaded_file = request.FILES["image"]
-                try:
-                    img = Image.open(uploaded_file)
-                    if img.mode != "RGB":
-                        img = img.convert("RGB")
-                    webp_io = BytesIO()
-                    img.save(webp_io, format="WEBP")
-                    webp_content = ContentFile(webp_io.getvalue())
-
-                    filename_without_ext, _ = os.path.splitext(uploaded_file.name)
-                    webp_filename = f"{filename_without_ext}.webp"
-
-                    post.image.save(webp_filename, webp_content, save=False)
-                except Exception as e:
-                    print(f"Error converting image to WebP: {e}")
-
+            # The image is converted to optimized WebP in Post.save()
+            # via home.utils.optimize_image_field (#175).
             post.save()
 
             # Increase score if the post is published
@@ -99,23 +78,7 @@ def post_edit(request, slug):
         if form.is_valid():
             post = form.save(commit=False)
 
-            # پردازش تصویر و تبدیل به WebP (در صورت ارسال)
-            if "image" in request.FILES:
-                uploaded_file = request.FILES["image"]
-                try:
-                    img = Image.open(uploaded_file)
-                    if img.mode != "RGB":
-                        img = img.convert("RGB")
-                    webp_io = BytesIO()
-                    img.save(webp_io, format="WEBP")
-                    webp_content = ContentFile(webp_io.getvalue())
-
-                    filename_without_ext, _ = os.path.splitext(uploaded_file.name)
-                    webp_filename = f"{filename_without_ext}.webp"
-
-                    post.image.save(webp_filename, webp_content, save=False)
-                except Exception as e:
-                    print(f"Error converting image to WebP: {e}")
+            # پردازش تصویر و تبدیل به WebP در Post.save() انجام می‌شود (#175)
 
             # اگر وضعیت پست از "پیش‌نویس" به "منتشر شده" تغییر کرده باشد، امتیاز کاربر را افزایش بده
             if post.published and not post.pk:  # بررسی اولین بار انتشار

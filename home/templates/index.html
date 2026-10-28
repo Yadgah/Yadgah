@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% load custom_filters %}
 {% load static %}
 {% block content %}
@@ -207,7 +207,8 @@
                             <p class="text-muted">{{ question.content|striptags|truncatewords:20 }}</p>
                             <div class="mt-2">
                                 {% for label in question.labels.all %}
-                                    <span class="label" style="background-color: {{ label.color }}">{{ label.name }}</span>
+                                    <span class="label"
+                                          style="background-color: {{ label.color }}">{{ label.name }}</span>
                                 {% endfor %}
                             </div>
                         </div>
@@ -228,10 +229,10 @@
         <a href="{% url 'search' %}"><i class="bi bi-search"></i></a>
         <a href="{% url 'profile' %}"><i class="bi bi-person"></i></a>
     </div> -->
-    <!-- اسکریپت‌های مورد نیاز -->
+    <!-- اسکریپت‌های مورد نیاز (نسخه استاتیک داخلی، Swiper 8.4.7 - #181) -->
     <link rel="stylesheet"
-          href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
-    <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+          href="{% static 'vendor/swiper/swiper-bundle.min.css' %}" />
+    <script src="{% static 'vendor/swiper/swiper-bundle.min.js' %}"></script>
     <script>
     document.addEventListener("DOMContentLoaded", () => {
         const intro = document.getElementById("intro-welcome");

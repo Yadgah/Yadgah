@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% block title %}{{ question.title }} - یادگاه{% endblock %}
 {% load custom_filters %}
 {% block content %}
@@ -224,6 +224,62 @@
         font-weight: bold;
     }
 
+    /* Nested (threaded) replies */
+    .reply-children {
+        margin-inline-start: 20px;
+        padding-inline-start: 16px;
+        border-inline-start: 2px solid #2c2c2c;
+    }
+    .reply-quote-link {
+        display: block;
+        background: #2c2c2c;
+        border-radius: 8px;
+        padding: 8px 12px;
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        text-decoration: none;
+    }
+    .reply-quote-link:hover {
+        color: var(--accent-green);
+    }
+    .ai-badge {
+        background-color: #35543f;
+        color: var(--accent-green);
+        font-weight: 500;
+    }
+    .reply-card:target {
+        outline: 2px solid var(--accent-green);
+        outline-offset: 2px;
+    }
+
+    /* "Replying to ..." banner above the reply form */
+    .replying-to-banner {
+        display: none;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        background: #2c2c2c;
+        border-inline-start: 3px solid var(--accent-green);
+        border-radius: 8px;
+        padding: 10px 14px;
+        margin-bottom: 14px;
+        color: var(--text-muted);
+        font-size: 0.9rem;
+    }
+    .replying-to-banner.active {
+        display: flex;
+    }
+    .replying-to-banner .btn-close-reply {
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        cursor: pointer;
+        flex-shrink: 0;
+    }
+    .replying-to-banner .btn-close-reply:hover {
+        color: var(--accent-red);
+    }
+
 
     /* Reply Form */
     .reply-form {
@@ -291,7 +347,7 @@
                         <div class="question-actions">
                             <a href="{% url 'edit_question' question.id %}" class="btn btn-warning">ویرایش</a>
                             <form action="{% url 'delete_question' question.id %}"
-                                  method="POST"
+                                  method="post"
                                   class="delete-question"
                                   style="display:inline">
                                 {% csrf_token %}
@@ -339,54 +395,10 @@
         </div>
         <!-- Replies Section -->
         <div class="reply-section">
-            <h3 id='replies' class="text-white mb-3">پاسخ‌ها</h3>
-            {% if question.replies.all %}
-                {% for reply in question.replies.all %}
-                    <div class="reply-card {% if reply.is_approved %}approved{% endif %}">
-                        <div class="reply-content-wrapper">
-                            <div class="reply-content">
-                                {% if reply.content %}
-                                    {{ reply.get_content_as_html|safe }}
-                                {% else %}
-                                    {{ reply.get_content_as_html|safe }}
-                                {% endif %}
-                            </div>
-                            
-                            <p class="reply-meta">
-                                پاسخ
-                                {% if reply.user %}
-                                    <a href="{% url 'user_profile' reply.user.username %}">{{ reply.user.username }}</a>
-                                {% else %}
-                                    کاربر ناشناس
-                                {% endif %}
-                                - تاریخ {{ reply.created_at|jalali_date }}
-                            </p>
-                            
-                            {% if reply.user == user or user.is_staff %}
-                                <div class="reply-actions">
-                                    {% if not reply.is_approved and user == question.user %}
-                                        <form action="{% url 'approve_reply' reply.id %}" method="POST">
-                                            {% csrf_token %}
-                                            <button class="btn btn-success">تایید</button>
-                                        </form>
-                                    {% endif %}
-                                    <a href="{% url 'edit_reply' reply.id %}" class="btn btn-warning">ویرایش</a>
-                                    <form action="{% url 'delete_reply' reply.id %}" method="POST">
-                                        {% csrf_token %}
-                                        <button type="submit"
-                                                class="btn btn-danger"
-                                                onclick="return confirm('آیا مطمئن هستید؟')">حذف</button>
-                                    </form>
-
-                                    {% if reply.is_approved %}
-                                        <p class="reply-status-approve">✔ این پاسخ تایید شده است.</p>
-                                    {% else %}
-                                        <p class="reply-status-wait">منتظر تایید</p>
-                                    {% endif %}
-                                </div>
-                            {% endif %}
-                        </div>
-                    </div>
+            <h3 id="replies" class="text-white mb-3">پاسخ‌ها</h3>
+            {% if top_replies %}
+                {% for reply in top_replies %}
+                    {% include "partials/reply_item.html" %}
                 {% endfor %}
             {% else %}
                 <p class="text-muted">هیچ پاسخی برای این سوال ثبت نشده است.</p>
@@ -394,10 +406,25 @@
         </div>
         <!-- Reply Form -->
         {% if user.is_authenticated %}
-            <div class="reply-form">
+            <div class="reply-form" id="reply-form">
                 <h3>ارسال پاسخ</h3>
-                <form method="POST">
-                    {% csrf_token %} {{ form.as_p }}
+                <div class="replying-to-banner" id="replying-to-banner">
+                    <span>
+                        <i class="bi bi-reply-fill"></i>
+                        در حال پاسخ دادن به <strong id="replying-to-user"></strong>:
+                        «<span id="replying-to-snippet"></span>»
+                    </span>
+                    <button type="button"
+                            class="btn-close-reply"
+                            id="btn-cancel-reply-to"
+                            aria-label="لغو پاسخ به این پیام">
+                        <i class="bi bi-x-lg"></i>
+                    </button>
+                </div>
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="parent_id" id="reply-parent-id" value="">
+                    {{ form.as_p }}
                     <button class="btn-success btn-submit" type="submit">ارسال پاسخ</button>
                 </form>
             </div>
@@ -431,5 +458,29 @@
         });
     }
 
+    // Quote-style replying: attach the reply form to a previous reply
+    // (replying to the AI continues the chat with it).
+    document.querySelectorAll(".btn-reply-to").forEach((btn) => {
+        btn.addEventListener("click", () => {
+            const parentInput = document.getElementById("reply-parent-id");
+            const banner = document.getElementById("replying-to-banner");
+            parentInput.value = btn.dataset.replyId;
+            document.getElementById("replying-to-user").textContent = btn.dataset.replyUser;
+            document.getElementById("replying-to-snippet").textContent = btn.dataset.replySnippet;
+            banner.classList.add("active");
+            const form = document.getElementById("reply-form");
+            form.scrollIntoView({ behavior: "smooth" });
+            const textarea = form.querySelector("textarea");
+            if (textarea) textarea.focus();
+        });
+    });
+
+    const cancelReplyTo = document.getElementById("btn-cancel-reply-to");
+    if (cancelReplyTo) {
+        cancelReplyTo.addEventListener("click", () => {
+            document.getElementById("reply-parent-id").value = "";
+            document.getElementById("replying-to-banner").classList.remove("active");
+        });
+    }
     </script>
 {% endblock %}

@@ -1,10 +1,11 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+{% load static %}
 {% block content %}
     <style>
   @font-face {
     font-family: 'Vazir';
-    src: url('https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font/dist/Vazir.woff2') format('woff2'),
-         url('https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font/dist/Vazir.woff') format('woff');
+    src: url('{% static 'vendor/vazir/Vazir.woff2' %}') format('woff2'),
+         url('{% static 'vendor/vazir/Vazir.woff' %}') format('woff');
   }
 
   .law-container {
