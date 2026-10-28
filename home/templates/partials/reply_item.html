@@ -1,0 +1,70 @@
+{% load custom_filters %}
+<div class="reply-card {% if reply.is_approved %}approved{% endif %}"
+     id="reply-{{ reply.id }}">
+    <div class="reply-content-wrapper">
+        {% if reply.parent %}
+            <a href="#reply-{{ reply.parent.id }}" class="reply-quote-link">
+                <i class="bi bi-reply-fill"></i>
+                در پاسخ به
+                {% if reply.parent.user %}
+                    {{ reply.parent.user.username }}
+                {% else %}
+                    کاربر ناشناس
+                {% endif %}
+                :
+                «{{ reply.parent.content|truncatechars:70 }}»
+            </a>
+        {% endif %}
+        <div class="reply-content">{{ reply.get_content_as_html|safe }}</div>
+        <p class="reply-meta">
+            پاسخ
+            {% if reply.user %}
+                <a href="{% url 'user_profile' reply.user.username %}">{{ reply.user.username }}</a>
+            {% else %}
+                کاربر ناشناس
+            {% endif %}
+            {% if reply.is_ai_reply %}<span class="badge ai-badge"><i class="bi bi-robot"></i> هوش مصنوعی</span>{% endif %}
+            - تاریخ {{ reply.created_at|jalali_date }}
+        </p>
+        {% if user.is_authenticated %}
+            <div class="reply-actions">
+                <button type="button"
+                        class="btn btn-outline-light btn-sm btn-reply-to"
+                        data-reply-id="{{ reply.id }}"
+                        data-reply-user="{% if reply.user %}{{ reply.user.username }}{% else %}کاربر ناشناس{% endif %}"
+                        data-reply-snippet="{{ reply.content|truncatechars:80 }}">
+                    <i class="bi bi-reply"></i> پاسخ دادن
+                </button>
+                {% if not reply.is_approved and user == question.user %}
+                    <form action="{% url 'approve_reply' reply.id %}" method="post">
+                        {% csrf_token %}
+                        <button class="btn btn-success btn-sm">تایید</button>
+                    </form>
+                {% endif %}
+                {% if reply.user == user or user.is_staff %}
+                    <a href="{% url 'edit_reply' reply.id %}" class="btn btn-warning btn-sm">ویرایش</a>
+                    <form action="{% url 'delete_reply' reply.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit"
+                                class="btn btn-danger btn-sm"
+                                onclick="return confirm('آیا مطمئن هستید؟')">حذف</button>
+                    </form>
+                {% endif %}
+                {% if reply.is_approved %}
+                    <p class="reply-status-approve">✔ این پاسخ تایید شده است.</p>
+                {% elif reply.user == user or user == question.user or user.is_staff %}
+                    <p class="reply-status-wait">منتظر تایید</p>
+                {% endif %}
+            </div>
+        {% elif reply.is_approved %}
+            <p class="reply-status-approve">✔ این پاسخ تایید شده است.</p>
+        {% endif %}
+    </div>
+</div>
+{% if reply.thread_children %}
+    <div class="reply-children">
+        {% for child in reply.thread_children %}
+            {% include "partials/reply_item.html" with reply=child %}
+        {% endfor %}
+    </div>
+{% endif %}

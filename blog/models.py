@@ -3,6 +3,8 @@ from django.db import models
 from django.utils.text import slugify
 from django_ckeditor_5.fields import CKEditor5Field
 
+from home.utils import optimize_image_field
+
 
 def post_image_upload_path(instance, filename):
     return f"posts/{instance.slug}/uploads/{filename}"
@@ -28,6 +30,10 @@ class Post(models.Model):
             PostSlugHistory.objects.create(post=self, slug=old_slug)
         elif not self.slug:
             self.slug = slugify(self.title, allow_unicode=True)
+        # Convert the uploaded image to optimized WebP (#175). This used
+        # to be duplicated in the create/edit views; doing it here also
+        # covers uploads made through the admin.
+        optimize_image_field(self, "image")
         super().save(*args, **kwargs)
 
     class Meta:

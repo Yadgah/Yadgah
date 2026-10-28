@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% load static custom_filters %}
 {% block content %}
     <style>
@@ -8,25 +8,44 @@
     .card {
         background-color: #2c2c2c;
     }
+    /*
+      Keep every post image in a fixed 16:9 box and let the browser crop
+      (not stretch) it to fill the box, so the aspect ratio is preserved
+      and images are never distorted. The explicit CSS is required
+      because Bootstrap 5.1.3 has no `object-fit-*` utility classes.
+    */
+    .post-card-image {
+        aspect-ratio: 16 / 9;
+        overflow: hidden;
+        background-color: #1c1c1c;
+    }
+    .post-card-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
     </style>
     <div class="container py-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h1 class="mb-0 text-white">فهرست مقالات</h1>
-            <a href="/blog/create/" class="btn btn-success">ایجاد مقاله جدید</a>
+            <a href="{% url 'post_create' %}" class="btn btn-success">ایجاد مقاله جدید</a>
         </div>
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
             {% for post in posts %}
                 <div class="col">
-                    <div class="card">
-                        <div style="overflow:hidden; height:200px;">
+                    <div class="card h-100">
+                        <div class="post-card-image">
                             {% if post.image %}
                                 <img src="{{ post.image.url }}"
-                                     class="card-img-top h-100 w-100 object-fit-cover"
-                                     alt="{{ post.title }}">
+                                     alt="{{ post.title }}"
+                                     loading="lazy"
+                                     decoding="async">
                             {% else %}
                                 <img src="{% static 'images/default-post-image.jpg' %}"
-                                     class="card-img-top h-100 w-100 object-fit-cover"
-                                     alt="Default Image">
+                                     alt="Default Image"
+                                     loading="lazy"
+                                     decoding="async">
                             {% endif %}
                         </div>
                         <div class="card-body d-flex flex-column">
